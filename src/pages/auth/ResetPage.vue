@@ -10,6 +10,7 @@
 					label="Token"
 					placeholder="Masukkan token!"
 					hint="Token yang Anda dapatkan dari email"
+					autocomplete="off"
 				/>
 				<q-input
 					bg-color="teal-1"
@@ -19,6 +20,7 @@
 					required
 					label="Email"
 					placeholder="Masukkan email!"
+					autocomplete="off"
 				/>
 				<q-input
 					bg-color="teal-1"
@@ -80,21 +82,24 @@
 
 <script setup>
 import { api } from '../../config/api';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
 import toArray from '../../utils/to-array';
 import { notifyAlert } from 'src/utils/notify';
 
 const showSpinner = ref(false);
 const router = useRouter();
-const token = ref('');
 const email = ref('');
 const password = ref('');
-const password_confirm = ref('');
+const password_confirmation = ref('');
 
 const emit = defineEmits(['title', 'errors']);
 emit('title', 'Reset Password');
 emit('errors', []);
+
+const { query } = useRoute();
+const token = ref(query.token);
+// console.log(token.value);
 
 const reset = async () => {
 	emit('errors', []);
@@ -104,7 +109,7 @@ const reset = async () => {
 			token: token.value,
 			email: email.value,
 			password: password.value,
-			password_confirm: password_confirm.value,
+			password_confirmation: password_confirmation.value,
 		});
 		const notification = notifyAlert(response.data.message, 0);
 		await notification; // tunggu notifikasi ditutup

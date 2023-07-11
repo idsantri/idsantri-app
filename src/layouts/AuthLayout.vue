@@ -2,11 +2,13 @@
 	<q-card class="my-card q-pa-lg bg-teal-5 text-teal-1">
 		<q-card-section class="no-padding q-mb-md">
 			<div class="container-title">
-				<h1 class="title">Aplikasi</h1>
-				<h1 class="title">{{ constanta.APP_NAME_2 }}</h1>
+				<h1 class="title">{{ constanta.APP_NAME_1 }}</h1>
+				<h2 class="text-subtitle1 text-center q-ma-none">
+					{{ constanta.APP_NAME_2 }}
+				</h2>
 			</div>
 			<q-separator dark />
-			<h2 class="sub-title">{{ title }}</h2>
+			<h3 class="sub-title">{{ title }}</h3>
 		</q-card-section>
 
 		<q-card flat v-if="errors.length > 0" class="q-ma-xs" id="error">

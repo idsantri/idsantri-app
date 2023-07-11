@@ -57,7 +57,7 @@ export default route(function (/* { store, ssrContext } */) {
 		}
 	});
 
-	const DEFAULT_TITLE = constanta.APP_NAME_2;
+	const DEFAULT_TITLE = constanta.APP_NAME_1;
 	Router.afterEach((to) => {
 		nextTick(() => {
 			document.title = to.meta.title

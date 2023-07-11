@@ -4,7 +4,7 @@
 		<q-card class="my-card q-mb-lg" flat>
 			<q-card-section class="no-padding no-margin">
 				<p
-					class="q-pa-sm no-margin text-teal-10 text-justify bg-teal-1"
+					class="q-pa-sm no-margin text-teal-10 text-justify bg-teal-2 rounded-borders"
 				>
 					Tidak masalah. Masukkan email Anda di bawah ini dan kami
 					akan mengirimkan instruksi untuk mengatur ulang kata sandi
@@ -48,7 +48,7 @@
 							color="teal-10"
 							class="full-width text-weight-regular q-mt-sm"
 							no-caps
-							to="/reset"
+							to="/reset-password"
 							label="Atur ulang password"
 						/>
 					</q-card-section>
@@ -83,12 +83,12 @@ const reset = async () => {
 	emit('errors', []);
 	try {
 		showSpinner.value = true;
-		const response = await api.post('forgot', {
+		const response = await api.post('forgot-password', {
 			email: email.value,
 		});
 		const notification = notifyAlert(response.data.message, 0);
 		await notification; // tunggu notifikasi ditutup
-		router.push('/reset');
+		router.push('/reset-password');
 	} catch (error) {
 		emit('errors', toArray(error.response.data.message));
 	} finally {

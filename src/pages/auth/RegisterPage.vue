@@ -59,7 +59,7 @@
 				<q-btn
 					type="submit"
 					class="full-width q-pa-sm text-teal-10"
-					color="teal-1"
+					color="teal-3"
 					label="Daftar"
 				/>
 
