@@ -17,7 +17,7 @@ module.exports = {
 	// Rules order is important, please avoid shuffling them
 	extends: [
 		// Base ESLint recommended rules
-		// 'eslint:recommended',
+		'eslint:recommended',
 
 		// Uncomment any of the lines below to choose desired strictness,
 		// but leave only one uncommented!
@@ -60,5 +60,6 @@ module.exports = {
 
 		// allow debugger during development only
 		'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+		'no-unused-vars': 0,
 	},
 };

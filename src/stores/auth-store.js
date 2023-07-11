@@ -29,7 +29,9 @@ const useAuthStore = defineStore('auth', {
 			this.token = null;
 		},
 	},
-	persist: true,
+	persist: {
+		storage: sessionStorage,
+	},
 });
 
 export default useAuthStore;
