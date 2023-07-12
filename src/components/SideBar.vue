@@ -14,6 +14,27 @@
 
 		<!-- KATEGORI -->
 
+		<!-- SEKRETARIAT -->
+		<q-separator dark />
+		<q-expansion-item
+			expand-separator
+			label="Sekretariat"
+			caption="Kesantrian"
+			header-class="text-body1 text-green-1"
+			expand-icon-class="text-green-1"
+		>
+			<!-- APP -->
+			<q-item clickable v-ripple to="/sekretariat">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="home" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Beranda</q-item-label>
+					<q-item-label caption>Beranda sekretariat</q-item-label>
+				</q-item-section>
+			</q-item>
+		</q-expansion-item>
+
 		<!-- SETTING -->
 		<q-separator dark />
 		<q-expansion-item

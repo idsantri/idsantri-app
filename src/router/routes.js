@@ -53,6 +53,12 @@ const routes = [
 			{
 				path: 'home',
 				component: () => import('src/pages/home/HomeIndex.vue'),
+				meta: { title: 'Home' },
+			},
+			{
+				path: 'sekretariat',
+				component: () => import('src/pages/sekretariat/IndexPage.vue'),
+				meta: { title: 'Sekretariat' },
 			},
 			{
 				path: 'products/:id',
