@@ -17,46 +17,11 @@
         <q-card-section class="no-padding">
             <div class="row" style="max-width: 1024px">
                 <div class="col-12 col-md-6 q-pa-sm">
-                    <!-- registrasi -->
-                    <q-card class="q-mb-sm">
-                        <q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
-                            <div class="flex items-center">
-                                <div class="text-subtitle2">Registrasi</div>
-                                <q-space />
-                                <q-btn
-                                    no-caps
-                                    size="sm"
-                                    color="teal-2"
-                                    class="text-teal-10"
-                                    icon="info"
-                                    disabled
-                                />
-                            </div>
-                        </q-card-section>
-                        <q-card-section class="q-pa-sm">
-                            <div class="row">
-                                <div class="col-3 text-caption">ID</div>
-                                <div class="col">
-                                    {{ santri.id }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 text-caption">Tanggal</div>
-                                <div class="col">
-                                    {{ fullDate(santri.tgl_daftar_m) }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 text-caption">
-                                    Tahun Ajaran
-                                </div>
-                                <div class="col">
-                                    {{ santri.th_ajaran_h }}
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-
+                    <card-list
+                        :data="register"
+                        title="Registrasi"
+                        class="q-mb-sm"
+                    />
                     <!-- identitas -->
                     <q-card>
                         <q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
@@ -90,7 +55,7 @@
                             <div class="row">
                                 <div class="col-3 text-caption">Alamat</div>
                                 <div class="col">
-                                    {{ alamatLengkap }}
+                                    {{ identity.Alamat }}
                                 </div>
                             </div>
                             <div class="row">
@@ -104,69 +69,17 @@
                 </div>
 
                 <div class="col-12 col-md-6 q-pa-sm">
-                    <!-- orang tua -->
-                    <q-card class="q-mb-sm">
-                        <q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
-                            <div class="flex items-center">
-                                <div class="text-subtitle2">Orang Tua</div>
-                                <q-space />
-                                <q-btn
-                                    no-caps
-                                    size="sm"
-                                    color="teal-2"
-                                    class="text-teal-10"
-                                    icon="info"
-                                />
-                            </div>
-                        </q-card-section>
-                        <q-card-section class="q-pa-sm">
-                            <div class="row">
-                                <div class="col-3 text-caption">Ayah</div>
-                                <div class="col">
-                                    {{ santri.ortu.ayah }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 text-caption">Ibu</div>
-                                <div class="col">{{ santri.ortu.ibu }}</div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
-
-                    <!-- wali -->
-                    <q-card>
-                        <q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
-                            <div class="flex items-center">
-                                <div class="text-subtitle2">Wali</div>
-                                <q-space />
-                                <q-btn
-                                    no-caps
-                                    size="sm"
-                                    color="teal-2"
-                                    class="text-teal-10"
-                                    icon="info"
-                                />
-                            </div>
-                        </q-card-section>
-                        <q-card-section class="q-pa-sm">
-                            <div class="row">
-                                <div class="col-3 text-caption">Nama</div>
-                                <div class="col">
-                                    {{ santri.wali.nama }} ({{
-                                        santri.wali.sex
-                                    }})
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 text-caption">Status</div>
-                                <div class="col">{{ santri.wali_status }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 text-caption">Telepon</div>
-                                <div class="col">{{ santri.wali.telepon }}</div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
+                    <card-list :data="ortu" title="Orang Tua" class="q-mb-sm" />
+                    <card-list :data="wali" title="Wali">
+                        <template #button>
+                            <q-btn
+                                icon="info"
+                                color="teal-12"
+                                class="text-teal-10"
+                                size="sm"
+                            />
+                        </template>
+                    </card-list>
                 </div>
             </div>
         </q-card-section>
@@ -178,11 +91,11 @@ import { reactive } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
 import { fullDate } from "../../utils/format-date";
+import CardList from "../../components/CardList.vue";
 
 const santri = reactive({});
 const route = useRoute();
 const santriId = route.params.id;
-let alamatLengkap = "";
 
 try {
     const { data } = await apiTokened.get(`santri/${santriId}`);
@@ -191,12 +104,34 @@ try {
     console.log(error);
 }
 
-alamatLengkap = `${santri.jl} RT ${String(santri.rt).padStart(
-    3,
-    0
-)} RW ${String(santri.rw).padStart(3, "0")} ${santri.desa} ${
-    santri.kecamatan
-} ${santri.kabupaten} ${santri.provinsi} ${santri.kode_pos}`;
-alamatLengkap.replace(/\s\s+/g, " ");
-santri.nama = santri.nama.toUpperCase();
+// register
+const register = {
+    ID: santri.id,
+    "Tanggal Daftar": fullDate(santri.tgl_daftar_m),
+    "Tahun Ajaran": santri.th_ajaran_h,
+};
+
+// identity
+const identity = {
+    Nama: santri.nama.toUpperCase(),
+    Alamat: `${santri.jl} RT ${String(santri.rt).padStart(3, 0)} RW ${String(
+        santri.rw
+    ).padStart(3, "0")} ${santri.desa} ${santri.kecamatan} ${
+        santri.kabupaten
+    } ${santri.provinsi} ${santri.kode_pos}`.replace(/\s\s+/g, " "),
+    "Data Akhir": santri.data_akhir.data_akhir,
+};
+
+// ortu
+const ortu = {
+    Ayah: santri.ortu.ayah,
+    Ibu: santri.ortu.ibu,
+};
+
+// wali
+const wali = {
+    Nama: `${santri.wali.nama} (${santri.wali.sex.toUpperCase()})`,
+    Status: santri.wali_status,
+    Telepon: santri.wali.telepon,
+};
 </script>
