@@ -59,12 +59,6 @@ const options = ref({
 	order: [],
 	columns: [
 		{
-			class: 'dt-control',
-			orderable: false,
-			data: null,
-			defaultContent: '',
-		},
-		{
 			class: 'hidden',
 			title: 'ID',
 			data: 'id',
@@ -123,8 +117,7 @@ const options = ref({
 
 onMounted(() => {
 	document.goToSantri = (id) => {
-		alert(id);
-		// router.push(`/products/${id}`);
+		router.push(`/santri/${id}`);
 	};
 	document.goToWali = (id) => {
 		alert(id);

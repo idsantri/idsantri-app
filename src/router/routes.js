@@ -61,8 +61,9 @@ const routes = [
 				meta: { title: 'Sekretariat' },
 			},
 			{
-				path: 'products/:id',
-				component: () => import('src/pages/products/ProductDetail.vue'),
+				path: 'santri/:id',
+				component: () => import('src/pages/santri/SantriDetail.vue'),
+				meta: { title: 'Santri' },
 			},
 			{
 				path: 'products/categories/:category',
