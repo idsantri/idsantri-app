@@ -22,50 +22,17 @@
                         title="Registrasi"
                         class="q-mb-sm"
                     />
+
                     <!-- identitas -->
-                    <q-card>
-                        <q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
-                            <div class="flex items-center">
-                                <div class="text-subtitle2">Identitas</div>
-                                <q-space />
-                                <q-btn
-                                    no-caps
-                                    size="sm"
-                                    color="teal-2"
-                                    class="text-teal-10"
-                                    icon="info"
-                                    disabled
-                                />
-                            </div>
-                        </q-card-section>
-                        <q-card-section class="q-pa-sm">
-                            <div class="row">
-                                <div class="col-3 text-caption">Nama</div>
-                                <div class="col">
-                                    {{ santri.nama }} ({{ santri.sex }})
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 text-caption">Kelahiran</div>
-                                <div class="col">
-                                    {{ santri.tmp_lahir }},
-                                    {{ fullDate(santri.tgl_lahir) }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 text-caption">Alamat</div>
-                                <div class="col">
-                                    {{ identity.Alamat }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 text-caption">Data Akhir</div>
-                                <div class="col">
-                                    {{ santri.data_akhir.data_akhir }}
-                                </div>
-                            </div>
-                        </q-card-section>
-                    </q-card>
+                    <card-image
+                        :data="identity"
+                        title="Identitas"
+                        class="q-mb-sm"
+                        :image="
+                            santri.image ||
+                            require('../../assets/foto-default.jpg')
+                        "
+                    />
                 </div>
 
                 <div class="col-12 col-md-6 q-pa-sm">
@@ -92,6 +59,7 @@ import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
 import { fullDate } from "../../utils/format-date";
 import CardList from "../../components/CardList.vue";
+import CardImage from "../../components/CardImage.vue";
 
 const santri = reactive({});
 const route = useRoute();
@@ -113,19 +81,26 @@ const register = {
 
 // identity
 const identity = {
-    Nama: santri.nama.toUpperCase(),
-    Alamat: `${santri.jl} RT ${String(santri.rt).padStart(3, 0)} RW ${String(
-        santri.rw
-    ).padStart(3, "0")} ${santri.desa} ${santri.kecamatan} ${
-        santri.kabupaten
-    } ${santri.provinsi} ${santri.kode_pos}`.replace(/\s\s+/g, " "),
+    Nama: `${santri.nama.toUpperCase()} (${santri.sex.toUpperCase()})`,
+    Alamat: `${santri.jl || " "} RT ${String(santri.rt || 0).padStart(
+        3,
+        0
+    )} RW ${String(santri.rw || 0).padStart(3, "0")} ${santri.desa || " "} ${
+        santri.kecamatan || " "
+    } ${santri.kabupaten || " "} ${santri.provinsi || " "} ${
+        santri.kode_pos || " "
+    }`.replace(/\s\s+/g, " "),
     "Data Akhir": santri.data_akhir.data_akhir,
+    Kelahiran: `${santri.tmp_lahir || "-"}, ${fullDate(santri.tgl_lahir)}`,
 };
 
 // ortu
 const ortu = {
     Ayah: santri.ortu.ayah,
     Ibu: santri.ortu.ibu,
+    "Anak ke": `${santri.anak_ke || "?"} dari ${
+        santri.ortu.count_anak || "?"
+    }  bersaudara`,
 };
 
 // wali

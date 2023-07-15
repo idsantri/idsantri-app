@@ -9,7 +9,7 @@
         </q-card-section>
         <q-card-section class="q-pa-sm">
             <div class="row" v-for="(value, key) in props.data" :key="key">
-                <div class="col-3 text-caption">{{ key }}</div>
+                <div class="col-4 text-caption">{{ key }}</div>
                 <div class="col">{{ value }}</div>
             </div>
         </q-card-section>
