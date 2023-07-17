@@ -9,18 +9,8 @@
         <q-card-section class="q-pa-sm">
             <div class="row">
                 <div class="col-4 q-pr-sm">
-                    <q-img :src="image" :ratio="3 / 4" />
-                    <q-btn
-                        class="q-mt-sm full-width"
-                        icon="edit"
-                        no-caps=""
-                        label="Foto"
-                        dense=""
-                        size="sm"
-                        outline=""
-                        color="teal-10"
-                        alt="Santri"
-                    />
+                    <q-img :src="image" :ratio="3 / 4" alt="santri" />
+                    <slot name="button" />
                 </div>
                 <div class="col">
                     <div v-for="(value, key) in props.data" :key="key">

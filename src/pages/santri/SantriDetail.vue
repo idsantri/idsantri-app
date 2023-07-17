@@ -29,10 +29,23 @@
                         title="Identitas"
                         class="q-mb-sm"
                         :image="
-                            santri.image ||
-                            require('../../assets/foto-default.jpg')
+                            santri?.image?.path ||
+                            require('../../assets/user-default.png')
                         "
-                    />
+                    >
+                        <template #button>
+                            <q-btn
+                                class="q-mt-sm full-width"
+                                icon="edit"
+                                no-caps=""
+                                label="Foto"
+                                dense=""
+                                size="sm"
+                                outline=""
+                                color="teal-10"
+                            />
+                        </template>
+                    </card-image>
                 </div>
 
                 <div class="col-12 col-md-6 q-pa-sm">
