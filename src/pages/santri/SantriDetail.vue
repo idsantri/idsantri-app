@@ -43,6 +43,7 @@
                                 size="sm"
                                 outline=""
                                 color="teal-10"
+                                @click="showUploader = true"
                             />
                         </template>
                     </card-image>
@@ -64,15 +65,27 @@
             </div>
         </q-card-section>
     </q-card>
-    <pre>{{ santri }}</pre>
+
+    <!-- modal -->
+    <upload-image
+        :show-uploader="showUploader"
+        :url="`${apiTokened.defaults.baseURL}/santri/${santriId}/images`"
+        :headers="{
+            Authorization: apiTokened.defaults.headers.common.Authorization,
+        }"
+        @update-uploader="handleUploader"
+    />
+
+    <!-- <pre>{{ santri }}</pre> -->
 </template>
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
 import { fullDate } from "../../utils/format-date";
 import CardList from "../../components/CardList.vue";
 import CardImage from "../../components/CardImage.vue";
+import UploadImage from "./UploadImage.vue";
 
 const santri = reactive({});
 const route = useRoute();
@@ -84,6 +97,10 @@ try {
 } catch (error) {
     console.log(error);
 }
+
+// uploader
+const showUploader = ref(false);
+const handleUploader = (value) => (showUploader.value = value);
 
 // register
 const register = {

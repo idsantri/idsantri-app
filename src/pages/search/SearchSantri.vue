@@ -1,37 +1,21 @@
 <template>
-    <q-card style="width: 100%">
-        <q-card-section class="bg-teal-8 text-teal-1 q-pa-sm flex items-center">
-            <h2 class="text-subtitle1 no-margin">Cari</h2>
-            <q-space />
-            <q-btn
-                label="Tambah"
-                color="teal-6"
-                class="text-teal-11"
-                icon="add"
-                no-caps=""
-                dense=""
+    <suspense>
+        <template #default>
+            <data-table
+                class="display table nowrap"
+                :options="options"
+                style="overflow: hidden"
+                id="dt-santri"
             />
-        </q-card-section>
-        <q-card-section>
-            <Suspense>
-                <template #default>
-                    <data-table
-                        class="display table nowrap"
-                        :options="options"
-                        style="overflow: hidden"
-                        id="dt-santri"
-                    />
-                </template>
-                <template #fallback>
-                    <q-spinner-cube
-                        color="teal-12"
-                        size="14em"
-                        class="absolute-center"
-                    />
-                </template>
-            </Suspense>
-        </q-card-section>
-    </q-card>
+        </template>
+        <template #fallback>
+            <q-spinner-cube
+                color="teal-12"
+                size="14em"
+                class="absolute-center"
+            />
+        </template>
+    </suspense>
 </template>
 
 <script setup>
@@ -96,12 +80,16 @@ const options = ref({
         },
         {
             title: "Alamat",
-            data: "alamat_lengkap",
+            data: "alamat_pendek",
             render: function (data, type, row, meta) {
-                return type === "display" && data.length > 30
-                    ? `<span title='${data}'>${data.substr(0, 30)}&mldr;</span>`
+                return type === "display" && data.length > 50
+                    ? `<span title='${data}'>${data.substr(0, 50)}&mldr;</span>`
                     : data;
             },
+        },
+        {
+            title: "Data Akhir",
+            data: "data_akhir",
         },
         {
             title: "Wali",

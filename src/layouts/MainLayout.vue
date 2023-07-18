@@ -19,9 +19,9 @@
                     round
                     flat
                     dense
-                    icon="shopping_cart_checkout"
+                    icon="search"
                     color="teal-1"
-                    to="/orders/current"
+                    to="/search"
                 >
                     <q-badge v-if="badge" floating color="teal-13" rounded />
                 </q-btn>
