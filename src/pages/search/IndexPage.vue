@@ -14,7 +14,7 @@
                         icon="add"
                         no-caps=""
                         dense=""
-                        @click="(modalCrudSantri) => true"
+                        @click="showModalSantri = true"
                     />
                 </q-card-section>
                 <q-card-section>
@@ -23,11 +23,16 @@
             </q-card>
         </q-card-section>
     </q-card>
+
+    <!-- modal -->
+    <q-dialog persistent="" v-model="showModalSantri">
+        <santri-modal-crud />
+    </q-dialog>
 </template>
 <script setup>
-import { ref } from "vue";
 import SearchSantri from "./SearchSantri";
+import SantriModalCrud from "../santri/SantriModalCrud.vue";
+import { ref } from "vue";
 
-const modalCrudSantri = ref(false);
+const showModalSantri = ref(false);
 </script>
-<style></style>

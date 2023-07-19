@@ -1,5 +1,5 @@
 function isDate(dateStr) {
-    return !isNaN(new Date(dateStr).getDate());
+    return dateStr != null && !isNaN(new Date(dateStr).getDate());
 }
 
 function m2h(inputMasehi, koreksi = 0) {
@@ -157,4 +157,184 @@ function m2h(inputMasehi, koreksi = 0) {
         .padStart(2, "0")}${hTgl.toString().padStart(2, "0")}`;
 }
 
-export { m2h, isDate };
+function bulanMasehi(inputMonth) {
+    let month = "";
+    const caseMonth = parseInt(inputMonth);
+    switch (caseMonth) {
+        case 1:
+            month = "Januari";
+            break;
+        case 2:
+            month = "Februari";
+            break;
+        case 3:
+            month = "Maret";
+            break;
+        case 4:
+            month = "April";
+            break;
+        case 5:
+            month = "Mei";
+            break;
+        case 6:
+            month = "Juni";
+            break;
+        case 7:
+            month = "Juli";
+            break;
+        case 8:
+            month = "Agustus";
+            break;
+        case 9:
+            month = "September";
+            break;
+        case 10:
+            month = "Oktober";
+            break;
+        case 11:
+            month = "November";
+            break;
+        case 12:
+            month = "Desember";
+            break;
+        default:
+            month = "";
+    }
+    return month;
+}
+
+function bulanHijri(inputMonth) {
+    let month = "";
+    const caseMonth = parseInt(inputMonth);
+    switch (caseMonth) {
+        case 1:
+            month = "Muharram";
+            break;
+        case 2:
+            month = "Shafar";
+            break;
+        case 3:
+            month = "Rabiul Awal";
+            break;
+        case 4:
+            month = "Rabiul Akhir";
+            break;
+        case 5:
+            month = "Jumadal Ula";
+            break;
+        case 6:
+            month = "Jumadal Akhirah";
+            break;
+        case 7:
+            month = "Rajab";
+            break;
+        case 8:
+            month = "Syaban";
+            break;
+        case 9:
+            month = "Ramadan";
+            break;
+        case 10:
+            month = "Syawal";
+            break;
+        case 11:
+            month = "Dzul Qadah";
+            break;
+        case 12:
+            month = "Dzul Hijjah";
+            break;
+        default:
+            month = "";
+    }
+    return month;
+}
+
+function hari(inputDay) {
+    let day = "";
+    const caseDay = parseInt(inputDay);
+    switch (caseDay) {
+        case 0:
+            day = "Ahad";
+            break;
+        case 1:
+            day = "Senin";
+            break;
+        case 2:
+            day = "Selasa";
+            break;
+        case 3:
+            day = "Rabu";
+            break;
+        case 4:
+            day = "Kamis";
+            break;
+        case 5:
+            day = "Jumat";
+            break;
+        case 6:
+            day = "Sabtu";
+            break;
+        default:
+            day = "";
+    }
+    return day;
+}
+
+function formatDateFull(inputDate) {
+    if (!isDate(inputDate)) return;
+
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = bulanMasehi(date.getMonth() + 1);
+    const day = String(date.getDate()).padStart(2, "0");
+    const Day = date.getDay();
+    return `${hari(Day)}, ${day} ${month} ${year}`;
+}
+
+function formatDateShort(inputDate) {
+    if (!isDate(inputDate)) return;
+
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${day}-${month}-${year}`;
+}
+
+function formatDateSql(inputDate) {
+    if (!isDate(inputDate)) return;
+
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day} `;
+}
+function numbersOnly(inputString) {
+    // Gunakan ekspresi reguler untuk mencari karakter angka
+    const regex = /\d/g;
+    // Ambil semua karakter angka dari inputString menggunakan ekspresi reguler
+    const numbersOnly = inputString.match(regex);
+    // Gabungkan karakter angka menjadi satu string
+    const result = numbersOnly ? numbersOnly.join("") : "";
+    return result;
+}
+
+function bacaHijri(input) {
+    const cleanInput = numbersOnly(input);
+    let dd = String(cleanInput).substring(6, 8);
+    let mm = String(cleanInput).substring(4, 6);
+    let yy = String(cleanInput).substring(0, 4);
+    if (String(cleanInput).length != 8 || dd < 1 || mm < 1 || yy < 1) {
+        return "Format salah!";
+    }
+    return `${dd} ${bulanHijri(mm)} ${yy}`;
+}
+export {
+    m2h,
+    isDate,
+    formatDateFull,
+    formatDateShort,
+    formatDateSql,
+    bacaHijri,
+};
