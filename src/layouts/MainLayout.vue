@@ -105,7 +105,9 @@
         </div>
 
         <q-footer bordered class="bg-teal-6 text-teal-12">
-            <p class="text-center no-margin q-pa-xs">by idsantri</p>
+            <p class="text-center no-margin q-pa-xs">
+                by idsantri {{ m2h("2007-12-10", 0) }}
+            </p>
         </q-footer>
     </q-layout>
 </template>
@@ -115,6 +117,7 @@ import { ref, watchEffect, onMounted, computed } from "vue";
 import SideBar from "src/components/SideBar.vue";
 import ordersStore from "src/stores/orders-store";
 import constanta from "src/config/constanta";
+import { m2h } from "src/utils/calendar";
 
 const leftDrawerOpen = ref(false);
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
@@ -168,3 +171,4 @@ const installApp = async () => {
     margin: 30px auto;
 }
 </style>
+src/utils/calendar

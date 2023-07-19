@@ -1,6 +1,6 @@
-# Awet Makmur (awet-makmur)
+# ID Santri (idsantri)
 
-Aplikasi Awet Makmur
+Aplikasi ID Santri
 
 ## Install the dependencies
 
