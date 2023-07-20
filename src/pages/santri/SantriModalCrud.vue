@@ -43,7 +43,13 @@
                             label="Tanggal Daftar (M)"
                             v-model="data.tgl_daftar_m"
                             type="date"
-                            @change="changeTglDaftarM"
+                            @change="
+                                isDate(data.tgl_daftar_m)
+                                    ? (data.tgl_daftar_h = m2h(
+                                          data.tgl_daftar_m
+                                      ))
+                                    : ''
+                            "
                         />
                         <q-input
                             dense
@@ -58,13 +64,27 @@
                             v-model="data.tgl_daftar_h"
                             mask="####-##-##"
                         />
-                        <q-input
+                        <q-select
                             dense
-                            hint=""
+                            :hint="
+                                data.th_ajaran_h?.length == 9
+                                    ? listThAjaran.find(
+                                          (item) =>
+                                              item.val0 === data.th_ajaran_h
+                                      )?.val1
+                                    : ''
+                            "
                             class="q-mt-sm"
                             outlined
                             label="Tahun Ajaran"
-                            v-model="id"
+                            v-model="data.th_ajaran_h"
+                            :options="listThAjaran"
+                            option-value="val0"
+                            option-label="val0"
+                            emit-value
+                            map-options
+                            :rules="[(val) => !!val || 'Harus diisi!']"
+                            error-color="red-6"
                         />
                     </q-carousel-slide>
 
@@ -78,19 +98,56 @@
                         </div>
                         <q-input
                             dense
-                            hint="Kosongkan jika ingin diisi otomatis!"
+                            hint=""
                             class="q-mt-sm"
                             outlined
-                            label="ID"
-                            v-model="id"
+                            label="Nama"
+                            v-model="data.nama"
                         />
                         <q-input
                             dense
                             hint=""
                             class="q-mt-sm"
                             outlined
-                            label="Tanggal Daftar (M)"
-                            v-model="id"
+                            label="Nomor Kartu Keluarga"
+                            v-model="data.nkk"
+                        />
+                        <q-input
+                            dense
+                            hint=""
+                            class="q-mt-sm"
+                            outlined
+                            label="Nomor Induk Kependudukan"
+                            v-model="data.nik"
+                        />
+                        <q-select
+                            dense
+                            hint="Kota kelahiran"
+                            class="q-mt-sm"
+                            outlined
+                            label="Tempat Lahir"
+                            v-model="data.tmp_lahir"
+                            :options="listThAjaran"
+                            option-value="val0"
+                            option-label="val0"
+                            emit-value
+                            map-options
+                            error-color="red-6"
+                        />
+                        <q-input
+                            dense
+                            :hint="
+                                isDate(data.tgl_lahir)
+                                    ? formatDateFull(data.tgl_lahir) +
+                                      ' | ' +
+                                      bacaHijri(m2h(data.tgl_lahir))
+                                    : ''
+                            "
+                            class="q-mt-sm"
+                            outlined
+                            label="Tanggal Lahir"
+                            v-model="data.tgl_lahir"
+                            type="date"
                         />
                     </q-carousel-slide>
 
@@ -232,24 +289,32 @@ const data = reactive({
     tgl_daftar_m: null,
     tgl_daftar_h: null,
     th_ajaran_h: null,
+    nama: null,
+    nkk: null,
+    nik: null,
+    tmp_lahir: null,
+    tgl_lahir: null,
 });
 
-const changeTglDaftarM = () => {
-    if (isDate(data.tgl_daftar_m)) {
-        data.tgl_daftar_h = m2h(data.tgl_daftar_m);
-    }
-};
-
+const listThAjaran = reactive([]);
+try {
+    const { data } = await apiTokened.get(`lists/key/tahun-ajaran`);
+    const th = data["tahun-ajaran"];
+    th.sort((a, b) => {
+        if (a.val0 > b.val0) {
+            return -1;
+        }
+    });
+    Object.assign(listThAjaran, th);
+} catch (error) {
+    console.log("Not Found: categories -> list", error.response);
+}
 const onSubmit = async () => {
-    const data = {
-        id: id.value.trim(),
-        nama: nama.value.trim(),
-        jl: jl.value.trim(),
-    };
+    const form = JSON.parse(JSON.stringify(data));
 
-    return console.log(data);
+    return console.log(form);
     try {
-        const response = await apiTokened.post(`products`, data);
+        const response = await apiTokened.post(`products`, form);
         const id = response.data.data.product.id;
         notifySuccess(response.data.message);
         router.push(`/products/${id}`);
