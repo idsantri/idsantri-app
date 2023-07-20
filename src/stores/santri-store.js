@@ -15,7 +15,7 @@ export default defineStore("santri", {
                 tgl_lahir: null,
                 sex: "L",
                 provinsi: "Jawa Timur",
-                kabapaten: null,
+                kabupaten: "Bangkalan",
                 kecamatan: null,
                 desa: null,
                 rt: 1,

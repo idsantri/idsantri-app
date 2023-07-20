@@ -91,7 +91,7 @@ try {
         santri.th_ajaran_h = listThAjaran[0]?.val0;
     }
 } catch (error) {
-    console.log("Not Found: categories -> list", error.response);
+    console.log("Not Found: tahun ajaran -> list", error.response);
 }
 </script>
 <style></style>

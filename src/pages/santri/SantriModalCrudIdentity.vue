@@ -131,7 +131,7 @@ try {
     const response = await apiTokened.get(`alamat/kota-lahir`);
     Object.assign(listKotaLahir, response.data.kota_lahir);
 } catch (error) {
-    console.log("Not Found: categories -> list", error.response);
+    console.log("Not Found: kota lahir -> list", error.response);
 }
 </script>
 <style></style>
