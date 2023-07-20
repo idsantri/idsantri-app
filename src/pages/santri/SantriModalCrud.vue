@@ -1,5 +1,5 @@
 <template>
-    <q-card class="full-width" style="max-width: 768px">
+    <q-card class="full-width" style="max-width: 425px">
         <q-form @submit.prevent="onSubmit">
             <q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
                 <div class="text-subtitle1">Input Data Santri</div>
@@ -103,6 +103,21 @@
                             outlined
                             label="Nama"
                             v-model="data.nama"
+                            :rules="[(val) => !!val || 'Harus diisi!']"
+                            error-color="red-6"
+                            autocapitalize="words"
+                        />
+                        <q-input
+                            dense
+                            hint=""
+                            class="q-mt-sm"
+                            outlined
+                            label="Nomor Induk Siswa Nasional"
+                            v-model="data.nisn"
+                            :rules="[
+                                (val) => !val || !isNaN(val) || 'Hanya angka!',
+                            ]"
+                            error-color="red-6"
                         />
                         <q-input
                             dense
@@ -111,6 +126,13 @@
                             outlined
                             label="Nomor Kartu Keluarga"
                             v-model="data.nkk"
+                            :rules="[
+                                (val) =>
+                                    !val ||
+                                    (val?.length == 16 && !isNaN(val)) ||
+                                    '16 digit angka!',
+                            ]"
+                            error-color="red-6"
                         />
                         <q-input
                             dense
@@ -119,6 +141,13 @@
                             outlined
                             label="Nomor Induk Kependudukan"
                             v-model="data.nik"
+                            :rules="[
+                                (val) =>
+                                    !val ||
+                                    (val?.length == 16 && !isNaN(val)) ||
+                                    '16 digit angka!',
+                            ]"
+                            error-color="red-6"
                         />
                         <q-select
                             dense
@@ -127,12 +156,12 @@
                             outlined
                             label="Tempat Lahir"
                             v-model="data.tmp_lahir"
-                            :options="listThAjaran"
-                            option-value="val0"
-                            option-label="val0"
+                            :options="optionsKotaLahir"
                             emit-value
                             map-options
                             error-color="red-6"
+                            use-input
+                            @filter="filterKotaLahir"
                         />
                         <q-input
                             dense
@@ -149,6 +178,25 @@
                             v-model="data.tgl_lahir"
                             type="date"
                         />
+
+                        <q-select
+                            dense
+                            :hint="
+                                data.sex == 'L'
+                                    ? 'Laki-Laki'
+                                    : data.sex == 'P'
+                                    ? 'Perempuan'
+                                    : ''
+                            "
+                            class="q-mt-sm"
+                            outlined
+                            label="Jenis Kelamin"
+                            v-model="data.sex"
+                            :options="['L', 'P']"
+                            emit-value
+                            map-options
+                            error-color="red-6"
+                        />
                     </q-carousel-slide>
 
                     <!-- alamat -->
@@ -159,13 +207,38 @@
                         <div class="text-subtitle2">
                             {{ carousel.alamat.title }}
                         </div>
+                        <q-select
+                            dense
+                            hint=""
+                            class="q-mt-sm"
+                            outlined
+                            label="Provinsi"
+                            v-model="data.provinsi"
+                            :options="optionsKotaLahir"
+                            emit-value
+                            map-options
+                        />
+                        <q-select
+                            dense
+                            hint=""
+                            class="q-mt-sm"
+                            outlined
+                            label="Kabupaten"
+                            v-model="data.kabapaten"
+                            :options="listThAjaran"
+                            option-value="val0"
+                            option-label="val0"
+                            emit-value
+                            map-options
+                        />
+
                         <q-input
                             dense
                             hint="Kosongkan jika ingin diisi otomatis!"
                             class="q-mt-sm"
                             outlined
                             label="ID"
-                            v-model="id"
+                            v-model="data.id"
                         />
                         <q-input
                             dense
@@ -173,7 +246,7 @@
                             class="q-mt-sm"
                             outlined
                             label="Tanggal Daftar (M)"
-                            v-model="id"
+                            v-model="data.id"
                         />
                     </q-carousel-slide>
 
@@ -279,36 +352,66 @@ const toggleOptions = [
     },
 ];
 
-// form
-const nama = ref("");
-const id = ref("");
-const jl = ref("");
+const listThAjaran = reactive([]);
+const listKotaLahir = reactive([]);
+const optionsKotaLahir = ref(listKotaLahir);
 
+// form
 const data = reactive({
     id: null,
     tgl_daftar_m: null,
     tgl_daftar_h: null,
     th_ajaran_h: null,
     nama: null,
+    nisn: null,
     nkk: null,
     nik: null,
     tmp_lahir: null,
     tgl_lahir: null,
+    sex: "L",
+    provinsi: null,
+    kabapaten: null,
+    kecamatan: null,
+    desa: null,
+    rt: 1,
+    rw: 1,
+    jl: null,
+    kode_pos: null,
 });
 
-const listThAjaran = reactive([]);
+const filterKotaLahir = (val, update) => {
+    if (val === "") {
+        update(() => {
+            optionsKotaLahir.value = listKotaLahir;
+        });
+        return;
+    }
+
+    update(() => {
+        const needle = val.toLowerCase();
+        optionsKotaLahir.value = listKotaLahir.filter(
+            (v) => v.toLowerCase().indexOf(needle) > -1
+        );
+    });
+};
+
 try {
+    // tahun ajaran
     const { data } = await apiTokened.get(`lists/key/tahun-ajaran`);
-    const th = data["tahun-ajaran"];
+    const th = data.tahun_ajaran;
     th.sort((a, b) => {
         if (a.val0 > b.val0) {
             return -1;
         }
     });
     Object.assign(listThAjaran, th);
+    // kota lahir
+    const response = await apiTokened.get(`alamat/kota-lahir`);
+    Object.assign(listKotaLahir, response.data.kota_lahir);
 } catch (error) {
     console.log("Not Found: categories -> list", error.response);
 }
+
 const onSubmit = async () => {
     const form = JSON.parse(JSON.stringify(data));
 
