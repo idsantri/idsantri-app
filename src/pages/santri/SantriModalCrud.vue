@@ -12,7 +12,7 @@
                     animated
                     control-color="primary"
                     class="full-width"
-                    style="height: 60vh"
+                    style="height: 70vh"
                 >
                     <!-- registrasi -->
                     <q-carousel-slide
