@@ -80,6 +80,14 @@
         label="Dusun"
         v-model="jl"
     />
+    <q-input
+        dense
+        hint=""
+        class="q-mt-sm"
+        outlined
+        label="Kode Pos"
+        v-model="kode_pos"
+    />
 </template>
 <script setup>
 import { apiTokened } from "src/config/api";
