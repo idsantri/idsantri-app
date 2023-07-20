@@ -54,24 +54,27 @@
         @focus="fetchAlamat('desa')"
     />
 
-    <q-input
-        dense
-        hint=""
-        class="q-mt-sm"
-        outlined
-        label="RT"
-        v-model="rt"
-        type="number"
-    />
-    <q-input
-        dense
-        hint=""
-        class="q-mt-sm"
-        outlined
-        label="RW"
-        v-model="rw"
-        type="number"
-    />
+    <div class="row">
+        <q-input
+            dense
+            hint=""
+            class="q-mt-sm col q-mr-sm"
+            outlined
+            label="RT"
+            v-model="rt"
+            type="number"
+        />
+
+        <q-input
+            dense
+            hint=""
+            class="q-mt-sm col q-ml-sm"
+            outlined
+            label="RW"
+            v-model="rw"
+            type="number"
+        />
+    </div>
     <q-input
         dense
         hint="Dusun, kampung, jalan, gang, nomor rumah ..."
