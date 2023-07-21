@@ -94,6 +94,11 @@
         outlined
         label="Kode Pos"
         v-model="kode_pos"
+        :rules="[
+            (val) =>
+                !val || (val?.length == 5 && !isNaN(val)) || '5 digit angka!',
+        ]"
+        error-color="negative"
     />
 </template>
 <script setup>
@@ -101,13 +106,13 @@ import { apiTokened } from "src/config/api";
 import santriState from "src/stores/santri-store";
 import { onMounted, ref, toRefs, watch } from "vue";
 
-const state = santriState().santri;
-const { provinsi, kabupaten, kecamatan, desa, rt, rw, jl, kode_pos } =
-    toRefs(state);
-
 const props = defineProps({
     title: { type: String, default: "" },
 });
+
+const { santri } = santriState();
+const { provinsi, kabupaten, kecamatan, desa, rt, rw, jl, kode_pos } =
+    toRefs(santri);
 
 const lists = ref([]);
 const loading = ref([]);

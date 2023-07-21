@@ -8,9 +8,9 @@
         class="q-mt-sm"
         outlined
         label="Nama"
-        v-model="santri.nama"
+        v-model="nama"
         :rules="[(val) => !!val || 'Harus diisi!']"
-        error-color="red-6"
+        error-color="negative"
         autocapitalize="words"
     />
     <q-input
@@ -19,9 +19,9 @@
         class="q-mt-sm"
         outlined
         label="Nomor Induk Siswa Nasional"
-        v-model="santri.nisn"
+        v-model="nisn"
         :rules="[(val) => !val || !isNaN(val) || 'Hanya angka!']"
-        error-color="red-6"
+        error-color="negative"
     />
     <q-input
         dense
@@ -29,12 +29,12 @@
         class="q-mt-sm"
         outlined
         label="Nomor Kartu Keluarga"
-        v-model="santri.nkk"
+        v-model="nkk"
         :rules="[
             (val) =>
                 !val || (val?.length == 16 && !isNaN(val)) || '16 digit angka!',
         ]"
-        error-color="red-6"
+        error-color="negative"
     />
     <q-input
         dense
@@ -42,12 +42,12 @@
         class="q-mt-sm"
         outlined
         label="Nomor Induk Kependudukan"
-        v-model="santri.nik"
+        v-model="nik"
         :rules="[
             (val) =>
                 !val || (val?.length == 16 && !isNaN(val)) || '16 digit angka!',
         ]"
-        error-color="red-6"
+        error-color="negative"
     />
     <q-select
         dense
@@ -55,83 +55,88 @@
         class="q-mt-sm"
         outlined
         label="Tempat Lahir"
-        v-model="santri.tmp_lahir"
+        v-model="tmp_lahir"
         :options="optionsKotaLahir"
         emit-value
         map-options
-        error-color="red-6"
+        error-color="negative"
         use-input
         @filter="filterKotaLahir"
+        :loading="loadingKotaLahir"
     />
     <q-input
         dense
         :hint="
-            isDate(santri.tgl_lahir)
-                ? formatDateFull(santri.tgl_lahir) +
-                  ' | ' +
-                  bacaHijri(m2h(santri.tgl_lahir))
+            isDate(tgl_lahir)
+                ? formatDateFull(tgl_lahir) + ' | ' + bacaHijri(m2h(tgl_lahir))
                 : ''
         "
         class="q-mt-sm"
         outlined
         label="Tanggal Lahir"
-        v-model="santri.tgl_lahir"
+        v-model="tgl_lahir"
         type="date"
     />
 
     <q-select
         dense
-        :hint="
-            santri.sex == 'L'
-                ? 'Laki-Laki'
-                : santri.sex == 'P'
-                ? 'Perempuan'
-                : ''
-        "
+        :hint="sex == 'L' ? 'Laki-Laki' : sex == 'P' ? 'Perempuan' : ''"
         class="q-mt-sm"
         outlined
         label="Jenis Kelamin"
-        v-model="santri.sex"
+        v-model="sex"
         :options="['L', 'P']"
         emit-value
         map-options
-        error-color="red-6"
+        error-color="negative"
     />
 </template>
 <script setup>
 import { apiTokened } from "src/config/api";
 import santriState from "src/stores/santri-store";
 import { m2h, isDate, formatDateFull, bacaHijri } from "src/utils/calendar";
-import { reactive, ref } from "vue";
+import { onMounted, ref, toRefs } from "vue";
 
-const { santri } = santriState();
 const props = defineProps({
     title: { type: String, default: "" },
 });
 
-const listKotaLahir = reactive([]);
+const { santri } = santriState();
+const { nama, nisn, nkk, nik, tmp_lahir, tgl_lahir, sex } = toRefs(santri);
+
+const loadingKotaLahir = ref(false);
+const listKotaLahir = ref([]);
 const optionsKotaLahir = ref(listKotaLahir);
 const filterKotaLahir = (val, update) => {
     if (val === "") {
         update(() => {
-            optionsKotaLahir.value = listKotaLahir;
+            optionsKotaLahir.value = listKotaLahir.value;
         });
         return;
     }
 
     update(() => {
         const needle = val.toLowerCase();
-        optionsKotaLahir.value = listKotaLahir.filter(
+        optionsKotaLahir.value = listKotaLahir.value.filter(
             (v) => v.toLowerCase().indexOf(needle) > -1
         );
     });
 };
 
-try {
-    const response = await apiTokened.get(`alamat/kota-lahir`);
-    Object.assign(listKotaLahir, response.data.kota_lahir);
-} catch (error) {
-    console.log("Not Found: kota lahir -> list", error.response);
+onMounted(async () => {
+    await fetchKotaLahir();
+});
+
+async function fetchKotaLahir() {
+    loadingKotaLahir.value = true;
+    try {
+        const response = await apiTokened.get(`alamat/kota-lahir`);
+        listKotaLahir.value = response.data.kota_lahir;
+    } catch (error) {
+        console.log("Not Found: kota lahir -> list", error);
+    } finally {
+        loadingKotaLahir.value = false;
+    }
 }
 </script>
 <style></style>

@@ -85,7 +85,7 @@ import { apiTokened } from "src/config/api.js";
 import { fullDate } from "../../utils/format-date";
 import CardList from "../../components/CardList.vue";
 import CardImage from "../../components/CardImage.vue";
-import UploadImage from "./UploadImage.vue";
+import UploadImage from "./SantriUploadImage.vue";
 
 const santri = reactive({});
 const route = useRoute();

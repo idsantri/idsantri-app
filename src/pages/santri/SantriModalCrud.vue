@@ -46,22 +46,6 @@
                         <div class="text-subtitle2">
                             {{ carousel.pendidikan.title }}
                         </div>
-                        <q-input
-                            dense
-                            hint="Kosongkan jika ingin diisi otomatis!"
-                            class="q-mt-sm"
-                            outlined
-                            label="ID"
-                            v-model="santri.id"
-                        />
-                        <q-input
-                            dense
-                            hint=""
-                            class="q-mt-sm"
-                            outlined
-                            label="Tanggal Daftar (M)"
-                            v-model="santri.id"
-                        />
                     </q-carousel-slide>
                 </q-carousel>
             </q-card-section>
@@ -78,7 +62,12 @@
                 </div>
             </q-card-section>
             <q-card-actions class="flex bg-teal-6">
-                <q-btn label="Reset" class="bg-red text-red-1" no-caps="" />
+                <q-btn
+                    label="Reset"
+                    class="bg-red text-red-1"
+                    no-caps=""
+                    @click="resetForm"
+                />
                 <q-space />
                 <q-btn
                     label="Tutup"
@@ -157,6 +146,11 @@ const onSubmit = async () => {
     //         notifyError(message);
     //     });
     // }
+};
+
+const resetForm = () => {
+    console.log("reset");
+    santriState().$reset();
 };
 </script>
 <style></style>
