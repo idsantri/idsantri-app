@@ -13,7 +13,7 @@
         map-options
         v-model="provinsi"
         :options="lists[0]"
-        @focus="fetchAlamat('provinsi')"
+        :loading="loading[0]"
     />
 
     <q-select
@@ -26,6 +26,7 @@
         map-options
         v-model="kabupaten"
         :options="lists[1]"
+        :loading="loading[1]"
         @focus="fetchAlamat('kabupaten')"
     />
 
@@ -39,8 +40,10 @@
         map-options
         v-model="kecamatan"
         :options="lists[2]"
+        :loading="loading[2]"
         @focus="fetchAlamat('kecamatan')"
     />
+
     <q-select
         dense
         hint=""
@@ -51,6 +54,7 @@
         map-options
         v-model="desa"
         :options="lists[3]"
+        :loading="loading[3]"
         @focus="fetchAlamat('desa')"
     />
 
@@ -95,34 +99,38 @@
 <script setup>
 import { apiTokened } from "src/config/api";
 import santriState from "src/stores/santri-store";
-import { ref, toRefs, watch } from "vue";
+import { onMounted, ref, toRefs, watch } from "vue";
 
 const state = santriState().santri;
 const { provinsi, kabupaten, kecamatan, desa, rt, rw, jl, kode_pos } =
     toRefs(state);
 
-// console.log("s", state);
 const props = defineProps({
     title: { type: String, default: "" },
 });
 
 const lists = ref([]);
+const loading = ref([]);
 async function fetchAlamat(alamat) {
     let url = "";
     if (alamat == "provinsi") {
+        loading.value[0] = true;
         url = `alamat/provinsi`;
     }
 
     if (alamat == "kabupaten") {
         if (!provinsi.value) return;
+        loading.value[1] = true;
         url = `alamat/kabupaten?provinsi=${provinsi.value}`;
     }
     if (alamat == "kecamatan") {
         if (!provinsi.value || !kabupaten.value) return;
+        loading.value[2] = true;
         url = `alamat/kecamatan?provinsi=${provinsi.value}&kabupaten=${kabupaten.value}`;
     }
     if (alamat == "desa") {
         if (!provinsi.value || !kabupaten.value || !kecamatan.value) return;
+        loading.value[3] = true;
         url = `alamat/desa?provinsi=${provinsi.value}&kabupaten=${kabupaten.value}&kecamatan=${kecamatan.value}`;
     }
 
@@ -142,8 +150,17 @@ async function fetchAlamat(alamat) {
         }
     } catch (error) {
         console.log(`Not Found: ${alamat} -> list`, error);
+    } finally {
+        loading.value[0] = false;
+        loading.value[1] = false;
+        loading.value[2] = false;
+        loading.value[3] = false;
     }
 }
+
+onMounted(async () => {
+    await fetchAlamat("provinsi");
+});
 
 watch(
     [provinsi, kabupaten, kecamatan],
@@ -155,6 +172,7 @@ watch(
             kabupaten.value = null;
             kecamatan.value = null;
             desa.value = null;
+            // openDropdown();
         }
         if (newKabupaten != oldKabupaten) {
             kecamatan.value = null;
@@ -165,5 +183,22 @@ watch(
         }
     }
 );
+
+/**
+ * TODO: dropdown
+ * pasang pada q-select:
+ * ref="kabupatenSelectRef"
+ *
+ * TODO:
+ * perlu use-input pada q-select desa
+ *  */
+const kabupatenSelectRef = ref(null);
+const openDropdown = () => {
+    // Periksa apakah ref untuk q-select tersedia
+    if (kabupatenSelectRef.value !== null) {
+        // Panggil metode showPopup() untuk membuka dropdown
+        kabupatenSelectRef.value.showPopup();
+    }
+};
 </script>
 <style></style>
