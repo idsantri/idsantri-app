@@ -22,6 +22,18 @@ export default defineStore("santri", {
                 rw: 1,
                 jl: null,
                 kode_pos: null,
+
+                pa_formal: null,
+                pa_formal_kelas: null,
+                pa_formal_alamat: null,
+                pa_diniyah: null,
+                pa_diniyah_kelas: null,
+                pa_diniyah_alamat: null,
+
+                ortu_id: null,
+                anak_ke: null,
+                wali_id: null,
+                wali_status: null,
             },
         };
     },

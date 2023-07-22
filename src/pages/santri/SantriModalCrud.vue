@@ -43,9 +43,17 @@
                         :name="carousel.pendidikan.button"
                         class="no-wrap flex-center"
                     >
-                        <input-r-pendidikan
+                        <input-pendidikan-akhir
                             :title="carousel.pendidikan.title"
                         />
+                    </q-carousel-slide>
+
+                    <!-- ortu wali -->
+                    <q-carousel-slide
+                        :name="carousel.ortu_wali.button"
+                        class="no-wrap flex-center"
+                    >
+                        <input-ortu-wali :title="carousel.ortu_wali.title" />
                     </q-carousel-slide>
                 </q-carousel>
             </q-card-section>
@@ -91,7 +99,8 @@ import { apiTokened } from "src/config/api";
 import InputRegister from "./SantriModalCrudRegister.vue";
 import InputIdentity from "./SantriModalCrudIdentity.vue";
 import InputAlamat from "./SantriModalCrudAlamat.vue";
-import InputRPendidikan from "./SantriModalCrudRPendidikan.vue";
+import InputPendidikanAkhir from "./SantriModalCrudPendidikanAkhir.vue";
+import InputOrtuWali from "./SantriModalCrudOrtuWali.vue";
 
 import santriState from "src/stores/santri-store";
 const { santri } = santriState();
@@ -113,6 +122,10 @@ const carousel = {
         title: "Riwayat Pendidikan",
         button: "4",
     },
+    ortu_wali: {
+        title: "Orang Tua dan Wali",
+        button: "5",
+    },
 };
 const slide = ref(carousel.registrasi.button);
 const toggleOptions = [
@@ -131,6 +144,10 @@ const toggleOptions = [
     {
         label: carousel.pendidikan.button,
         value: carousel.pendidikan.button,
+    },
+    {
+        label: carousel.ortu_wali.button,
+        value: carousel.ortu_wali.button,
     },
 ];
 

@@ -12,8 +12,8 @@
         emit-value
         map-options
         v-model="provinsi"
-        :options="lists[0]"
-        :loading="loading[0]"
+        :options="lists['provinsi']"
+        :loading="loading['provinsi']"
     />
 
     <q-select
@@ -25,8 +25,8 @@
         emit-value
         map-options
         v-model="kabupaten"
-        :options="lists[1]"
-        :loading="loading[1]"
+        :options="lists['kabupaten']"
+        :loading="loading['kabupaten']"
         @focus="fetchAlamat('kabupaten')"
     />
 
@@ -39,8 +39,8 @@
         emit-value
         map-options
         v-model="kecamatan"
-        :options="lists[2]"
-        :loading="loading[2]"
+        :options="lists['kecamatan']"
+        :loading="loading['kecamatan']"
         @focus="fetchAlamat('kecamatan')"
     />
 
@@ -53,9 +53,11 @@
         emit-value
         map-options
         v-model="desa"
-        :options="lists[3]"
-        :loading="loading[3]"
+        :options="lists['desa']"
+        :loading="loading['desa']"
         @focus="fetchAlamat('desa')"
+        use-input=""
+        new-value-mode="add"
     />
 
     <div class="row">
@@ -87,6 +89,7 @@
         outlined
         label="Dusun"
         v-model="jl"
+        autogrow=""
     />
 
     <q-input
@@ -119,48 +122,37 @@ const lists = ref([]);
 const loading = ref([]);
 async function fetchAlamat(alamat) {
     let url = "";
+    loading.value[alamat] = true;
+
     if (alamat == "provinsi") {
-        loading.value[0] = true;
         url = `alamat/provinsi`;
     }
 
     if (alamat == "kabupaten") {
         if (!provinsi.value) return;
-        loading.value[1] = true;
         url = `alamat/kabupaten?provinsi=${provinsi.value}`;
     }
+
     if (alamat == "kecamatan") {
         if (!provinsi.value || !kabupaten.value) return;
-        loading.value[2] = true;
         url = `alamat/kecamatan?provinsi=${provinsi.value}&kabupaten=${kabupaten.value}`;
     }
+
     if (alamat == "desa") {
         if (!provinsi.value || !kabupaten.value || !kecamatan.value) return;
-        loading.value[3] = true;
         url = `alamat/desa?provinsi=${provinsi.value}&kabupaten=${kabupaten.value}&kecamatan=${kecamatan.value}`;
     }
 
     try {
         const response = await apiTokened.get(url);
-        if (alamat == "provinsi") {
-            lists.value[0] = response.data.provinsi;
-        }
-        if (alamat == "kabupaten") {
-            lists.value[1] = response.data.kabupaten;
-        }
-        if (alamat == "kecamatan") {
-            lists.value[2] = response.data.kecamatan;
-        }
-        if (alamat == "desa") {
-            lists.value[3] = response.data.desa;
-        }
+        lists.value[alamat] = response.data[alamat];
+        // if (alamat == "provinsi") {
+        //     lists.value["provinsi"] = response.data.provinsi;
+        // }
     } catch (error) {
         console.log(`Not Found: ${alamat} -> list`, error);
     } finally {
-        loading.value[0] = false;
-        loading.value[1] = false;
-        loading.value[2] = false;
-        loading.value[3] = false;
+        loading.value[alamat] = false;
     }
 }
 
