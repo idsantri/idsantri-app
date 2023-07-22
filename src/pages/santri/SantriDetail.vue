@@ -110,8 +110,8 @@ try {
  * send to modal edit with props
  */
 function editSantri() {
-    const propsSantri = JSON.parse(JSON.stringify(santri));
-    santriStore().setSantri(propsSantri);
+    const setSantri = JSON.parse(JSON.stringify(santri));
+    santriStore().setSantri(setSantri);
     showModalSantri.value = true;
 }
 
