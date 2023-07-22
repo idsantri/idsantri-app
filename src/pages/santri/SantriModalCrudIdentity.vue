@@ -60,10 +60,13 @@
         emit-value
         map-options
         error-color="negative"
-        use-input
         @filter="filterKotaLahir"
         :loading="loadingKotaLahir"
+        use-input
+        new-value-mode="add"
+        clearable=""
     />
+
     <q-input
         dense
         :hint="
@@ -107,6 +110,7 @@ const { nama, nisn, nkk, nik, tmp_lahir, tgl_lahir, sex } = toRefs(santri);
 const loadingKotaLahir = ref(false);
 const listKotaLahir = ref([]);
 const optionsKotaLahir = ref(listKotaLahir);
+
 const filterKotaLahir = (val, update) => {
     if (val === "") {
         update(() => {

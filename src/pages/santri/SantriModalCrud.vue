@@ -43,9 +43,9 @@
                         :name="carousel.pendidikan.button"
                         class="no-wrap flex-center"
                     >
-                        <div class="text-subtitle2">
-                            {{ carousel.pendidikan.title }}
-                        </div>
+                        <input-r-pendidikan
+                            :title="carousel.pendidikan.title"
+                        />
                     </q-carousel-slide>
                 </q-carousel>
             </q-card-section>
@@ -91,6 +91,7 @@ import { apiTokened } from "src/config/api";
 import InputRegister from "./SantriModalCrudRegister.vue";
 import InputIdentity from "./SantriModalCrudIdentity.vue";
 import InputAlamat from "./SantriModalCrudAlamat.vue";
+import InputRPendidikan from "./SantriModalCrudRPendidikan.vue";
 
 import santriState from "src/stores/santri-store";
 const { santri } = santriState();

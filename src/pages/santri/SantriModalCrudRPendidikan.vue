@@ -2,6 +2,8 @@
     <div class="text-subtitle2">
         {{ props.title }}
     </div>
+    <div class="text-italic">Sebelum masuk ke lembaga ini</div>
+    <div class="text-capitalize">Formal</div>
 
     <q-select
         dense
@@ -15,7 +17,7 @@
         :options="lists[0]"
         :loading="loading[0]"
     />
-
+    <div class="text-capitalize">Diniyah</div>
     <q-select
         dense
         hint=""
