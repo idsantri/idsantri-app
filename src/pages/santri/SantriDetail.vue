@@ -11,6 +11,7 @@
                     class="text-teal-10"
                     icon="edit"
                     label="Edit"
+                    @click="editSantri"
                 />
             </div>
         </q-card-section>
@@ -76,6 +77,10 @@
         @update-uploader="handleUploader"
     />
 
+    <!-- modal -->
+    <q-dialog persistent="" v-model="showModalSantri">
+        <santri-modal-crud :is-new="false" />
+    </q-dialog>
     <!-- <pre>{{ santri }}</pre> -->
 </template>
 <script setup>
@@ -86,16 +91,28 @@ import { fullDate } from "../../utils/format-date";
 import CardList from "../../components/CardList.vue";
 import CardImage from "../../components/CardImage.vue";
 import UploadImage from "./SantriUploadImage.vue";
+import SantriModalCrud from "./SantriModalCrud.vue";
+import santriStore from "src/stores/santri-store";
 
 const santri = reactive({});
 const route = useRoute();
 const santriId = route.params.id;
+const showModalSantri = ref(false);
 
 try {
     const { data } = await apiTokened.get(`santri/${santriId}`);
     Object.assign(santri, data.santri);
 } catch (error) {
     console.log(error);
+}
+
+/**
+ * send to modal edit with props
+ */
+function editSantri() {
+    const propsSantri = JSON.parse(JSON.stringify(santri));
+    santriStore().setSantri(propsSantri);
+    showModalSantri.value = true;
 }
 
 // uploader

@@ -101,9 +101,26 @@ import InputIdentity from "./SantriModalCrudIdentity.vue";
 import InputAlamat from "./SantriModalCrudAlamat.vue";
 import InputPendidikanAkhir from "./SantriModalCrudPendidikanAkhir.vue";
 import InputOrtuWali from "./SantriModalCrudOrtuWali.vue";
+import santriStore from "src/stores/santri-store";
 
-import santriState from "src/stores/santri-store";
-const { santri } = santriState();
+const props = defineProps({ isNew: { type: Boolean, default: true } });
+if (props.isNew) santriStore().$reset();
+
+const onSubmit = async () => {
+    const data = JSON.parse(JSON.stringify(santriStore().santri));
+    console.log("data", data);
+    return;
+    // try {
+    //     const response = await apiTokened.post(`products`, form);
+    //     const id = response.data.data.product.id;
+    //     notifySuccess(response.data.message);
+    //     router.push(`/products/${id}`);
+    // } catch (error) {
+    //     toArray(error.response.data.message).forEach((message) => {
+    //         notifyError(message);
+    //     });
+    // }
+};
 
 const carousel = {
     registrasi: {
@@ -151,24 +168,9 @@ const toggleOptions = [
     },
 ];
 
-const onSubmit = async () => {
-    console.log("s", JSON.parse(JSON.stringify(santri)));
-    return;
-    // try {
-    //     const response = await apiTokened.post(`products`, form);
-    //     const id = response.data.data.product.id;
-    //     notifySuccess(response.data.message);
-    //     router.push(`/products/${id}`);
-    // } catch (error) {
-    //     toArray(error.response.data.message).forEach((message) => {
-    //         notifyError(message);
-    //     });
-    // }
-};
-
 const resetForm = () => {
     console.log("reset");
-    santriState().$reset();
+    santriStore().setNull();
 };
 </script>
 <style></style>

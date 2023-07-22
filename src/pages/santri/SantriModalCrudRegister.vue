@@ -52,6 +52,7 @@
         error-color="negative"
         :loading="loadingTh"
     />
+    <pre>{{ santri }}</pre>
 </template>
 <script setup>
 import { apiTokened } from "src/config/api";

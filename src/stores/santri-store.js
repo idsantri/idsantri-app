@@ -35,7 +35,23 @@ export default defineStore("santri", {
                 wali_id: null,
                 wali_status: null,
             },
+            wali: { id: null, nama: null, sex: null },
+            ortu: { id: null, ayah: null, ibu: null, count_anak: null },
         };
+    },
+    actions: {
+        setSantri(payload) {
+            for (const key in this.santri) {
+                if (key in payload) {
+                    this.santri[key] = payload[key];
+                }
+            }
+        },
+        setNull() {
+            for (const key in this.santri) {
+                this.santri[key] = null;
+            }
+        },
     },
     persist: {
         storage: sessionStorage,
