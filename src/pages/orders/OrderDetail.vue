@@ -7,7 +7,9 @@
                 <div class="text-subtitle1 text-weight-light">
                     {{ order.store_name }} ({{ order.store_address }})
                 </div>
-                <div class="text-caption">{{ fullDate(order.created_at) }}</div>
+                <div class="text-caption">
+                    {{ formatDateFull(order.created_at) }}
+                </div>
             </template>
             <template #buttons>
                 <div>
@@ -175,14 +177,14 @@ import { notifyError, notifySuccess } from "src/utils/notify";
 import toArray from "src/utils/to-array";
 import { reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { fullDate } from "src/utils/format-date";
-import digitSeparator from "src/utils/digit-separator";
+import { formatDateFull } from "src/utils/format-date";
+import { digitSeparator } from "src/utils/format-number";
 import BannerTitle from "src/components/BannerTitle.vue";
 import html2pdf from "html2pdf.js";
 import OrderInvoice from "./OrderInvoice.vue";
-import slugify from "src/utils/slugify";
+import { slugify } from "src/utils/format-text";
 import { useQuasar } from "quasar";
-import getInitials from "src/utils/initial";
+import { getInitials } from "src/utils/format-text";
 import OrderModal from "./OrderModal.vue";
 
 const order = reactive({});
@@ -276,3 +278,4 @@ const deleteOrder = async () => {
     });
 };
 </script>
+src/utils/format-number

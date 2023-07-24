@@ -14,7 +14,7 @@
                 <div class="col-4">
                     <div class="text-h5 text-right">INVOICE</div>
                     <div class="text-caption text-right">
-                        {{ fullDate(order.created_at) }}
+                        {{ formatDateFull(order.created_at) }}
                     </div>
                 </div>
             </div>
@@ -92,8 +92,8 @@
     </q-card>
 </template>
 <script setup>
-import digitSeparator from "src/utils/digit-separator";
-import { fullDate } from "src/utils/format-date";
+import { digitSeparator } from "src/utils/format-number";
+import { formatDateFull } from "src/utils/format-date";
 import { reactive } from "vue";
 
 const props = defineProps({
@@ -101,3 +101,4 @@ const props = defineProps({
 });
 const order = reactive(props.order);
 </script>
+src/utils/format-number

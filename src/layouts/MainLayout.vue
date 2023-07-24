@@ -117,7 +117,7 @@ import { ref, watchEffect, onMounted, computed } from "vue";
 import SideBar from "src/components/SideBar.vue";
 import ordersStore from "src/stores/orders-store";
 import constanta from "src/config/constanta";
-import { m2h } from "src/utils/calendar";
+import { m2h } from "src/utils/hijri";
 
 const leftDrawerOpen = ref(false);
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
@@ -171,4 +171,4 @@ const installApp = async () => {
     margin: 30px auto;
 }
 </style>
-src/utils/calendar
+src/utils/calendar src/utils/hijri

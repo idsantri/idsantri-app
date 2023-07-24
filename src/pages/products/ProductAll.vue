@@ -125,12 +125,12 @@
 import { apiTokened } from "../../config/api";
 import { reactive, ref } from "vue";
 import { useRoute } from "vue-router";
-import digitSeparator from "src/utils/digit-separator";
+import { digitSeparator } from "src/utils/format-number";
 import ordersStore from "src/stores/orders-store";
 import ModalProduct from "./ModalProduct.vue";
 import ModalSearch from "./ProductSearch.vue";
 import BannerTitle from "src/components/BannerTitle.vue";
-import titleCase from "src/utils/tittle-case";
+import { titleCase } from "src/utils/format-text";
 
 const showModalProduct = ref(false);
 const showModalSearch = ref(false);
@@ -170,3 +170,4 @@ const addToCart = (product) => {
     -webkit-box-orient: vertical;
 }
 </style>
+src/utils/format-number

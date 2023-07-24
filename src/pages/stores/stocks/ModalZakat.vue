@@ -164,7 +164,7 @@
 </template>
 
 <script setup>
-import digitSeparator from "src/utils/digit-separator";
+import { digitSeparator } from "src/utils/format-number";
 import { ref, computed } from "vue";
 
 const props = defineProps({
@@ -190,3 +190,4 @@ const calculateZakat = () => {
     zakat.value = (total.value * 2.5) / 100;
 };
 </script>
+src/utils/format-number

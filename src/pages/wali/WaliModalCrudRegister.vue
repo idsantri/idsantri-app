@@ -99,3 +99,4 @@ async function fetchThAjaran() {
 }
 </script>
 <style></style>
+src/utils/hijri

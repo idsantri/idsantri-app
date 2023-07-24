@@ -1,65 +1,129 @@
-export const simpleDate = (inputDate) => {
-    if (!inputDate) return "-";
-    const dateObj = new Date(inputDate);
-    const newDate = `${String(dateObj.getDate()).padStart(2, "0")}-${String(
-        dateObj.getMonth() + 1
-    ).padStart(2, "0")}-${dateObj.getFullYear()}`;
-    return newDate;
-};
+function isDate(dateStr) {
+    return dateStr != null && !isNaN(new Date(dateStr).getDate());
+}
 
-const stringMonth = (month) => {
-    let sMonth;
-    switch (Number(month)) {
+function formatDateSql(inputDate) {
+    if (!isDate(inputDate)) return;
+
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day} `;
+}
+
+function hari(inputDay) {
+    let day = "";
+    const caseDay = parseInt(inputDay);
+    switch (caseDay) {
+        case 0:
+            day = "Ahad";
+            break;
         case 1:
-            sMonth = "Januari";
+            day = "Senin";
             break;
         case 2:
-            sMonth = "Februari";
+            day = "Selasa";
             break;
         case 3:
-            sMonth = "Maret";
+            day = "Rabu";
             break;
         case 4:
-            sMonth = "April";
+            day = "Kamis";
             break;
         case 5:
-            sMonth = "Mei";
+            day = "Jumat";
             break;
         case 6:
-            sMonth = "Juni";
-            break;
-        case 7:
-            sMonth = "Juli";
-            break;
-        case 8:
-            sMonth = "Agustus";
-            break;
-        case 9:
-            sMonth = "September";
-            break;
-        case 10:
-            sMonth = "Oktober";
-            break;
-        case 11:
-            sMonth = "November";
-            break;
-        case 12:
-            sMonth = "Desember";
+            day = "Sabtu";
             break;
         default:
-            "x";
-            break;
+            day = "";
     }
-    return sMonth;
-};
-export const fullDate = (inputDate) => {
-    if (!inputDate) return "-";
-    const dateObj = new Date(inputDate);
-    const months = String(dateObj.getMonth() + 1).padStart(2, "0");
-    const month = stringMonth(months);
-    const newDate = `${String(dateObj.getDate()).padStart(
-        2,
-        "0"
-    )} ${month} ${dateObj.getFullYear()}`;
-    return newDate;
+    return day;
+}
+
+function bulanMasehi(inputMonth) {
+    let month = "";
+    const caseMonth = parseInt(inputMonth);
+    switch (caseMonth) {
+        case 1:
+            month = "Januari";
+            break;
+        case 2:
+            month = "Februari";
+            break;
+        case 3:
+            month = "Maret";
+            break;
+        case 4:
+            month = "April";
+            break;
+        case 5:
+            month = "Mei";
+            break;
+        case 6:
+            month = "Juni";
+            break;
+        case 7:
+            month = "Juli";
+            break;
+        case 8:
+            month = "Agustus";
+            break;
+        case 9:
+            month = "September";
+            break;
+        case 10:
+            month = "Oktober";
+            break;
+        case 11:
+            month = "November";
+            break;
+        case 12:
+            month = "Desember";
+            break;
+        default:
+            month = "";
+    }
+    return month;
+}
+
+function formatDateFull(inputDate) {
+    if (!isDate(inputDate)) return;
+
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = bulanMasehi(date.getMonth() + 1);
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${day} ${month} ${year}`;
+}
+
+function formatDateFullDay(inputDate) {
+    if (!isDate(inputDate)) return;
+
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = bulanMasehi(date.getMonth() + 1);
+    const day = String(date.getDate()).padStart(2, "0");
+    const Day = date.getDay();
+    return `${hari(Day)}, ${day} ${month} ${year}`;
+}
+
+function formatDateShort(inputDate) {
+    if (!isDate(inputDate)) return;
+
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${day}-${month}-${year}`;
+}
+
+export {
+    isDate,
+    formatDateSql,
+    formatDateShort,
+    formatDateFull,
+    formatDateFullDay,
 };

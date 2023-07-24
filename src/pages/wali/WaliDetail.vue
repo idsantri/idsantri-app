@@ -45,7 +45,7 @@
 import { reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
-import { fullDate } from "../../utils/format-date";
+import { formatDateFull } from "../../utils/format-date";
 import CardColumn from "../../components/CardColumn.vue";
 import CardListSantri from "src/components/CardListSantri.vue";
 // import SantriModalCrud from "./WaliModalCrud.vue";
@@ -86,7 +86,7 @@ const identity = {
         wali.provinsi,
         wali.kode_pos
     ),
-    Kelahiran: `${wali.tmp_lahir || "-"}, ${fullDate(wali.tgl_lahir)}`,
+    Kelahiran: `${wali.tmp_lahir || "-"}, ${formatDateFull(wali.tgl_lahir)}`,
     Pekerjaan: wali.pekerjaan,
     Kontak: (wali.telepon || "-") + ";" + (wali.email || "-"),
 };

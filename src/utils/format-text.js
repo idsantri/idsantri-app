@@ -15,4 +15,28 @@ function formatAlamatLengkap(
     } ${provinsi || " "} ${kode_pos || " "}`.replace(/\s\s+/g, " ");
 }
 
-export { formatAlamatLengkap };
+function getInitials(str) {
+    const words = str.split(" ");
+    const initials = words.map((word) => word.charAt(0).toLowerCase());
+    return initials.join("");
+}
+
+function slugify(text) {
+    return text
+        .toString()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w-]+/g, "")
+        .replace(/--+/g, "-");
+}
+function titleCase(text) {
+    return text
+        .split(" ")
+        .map((w) => w[0].toUpperCase() + w.substring(1).toLowerCase())
+        .join(" ");
+}
+
+export { formatAlamatLengkap, getInitials, slugify, titleCase };

@@ -76,7 +76,7 @@
 </template>
 <script setup>
 import { apiTokened } from "src/config/api";
-import digitSeparator from "src/utils/digit-separator";
+import { digitSeparator } from "src/utils/format-number";
 import { notifyError } from "src/utils/notify";
 import toArray from "src/utils/to-array";
 import { reactive, ref } from "vue";
@@ -142,3 +142,4 @@ const columns = [
     },
 ];
 </script>
+src/utils/format-number

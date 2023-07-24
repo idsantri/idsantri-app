@@ -37,12 +37,12 @@
 </template>
 <script setup>
 import { apiTokened } from "src/config/api";
-import digitSeparator from "src/utils/digit-separator";
+import { digitSeparator } from "src/utils/format-number";
 import { notifyError } from "src/utils/notify";
 import toArray from "src/utils/to-array";
 import { reactive, ref } from "vue";
 import { useRoute } from "vue-router";
-import { simpleDate } from "src/utils/format-date";
+import { formatDateShort } from "src/utils/format-date";
 import BannerTitle from "src/components/BannerTitle.vue";
 
 const columns = [
@@ -51,7 +51,7 @@ const columns = [
         field: "created_at",
         label: "Tanggal",
         align: "left",
-        format: (val, row) => `${simpleDate(val)}`,
+        format: (val, row) => `${formatDateShort(val)}`,
         sortable: true,
     },
     {
@@ -97,3 +97,4 @@ try {
     });
 }
 </script>
+src/utils/format-number

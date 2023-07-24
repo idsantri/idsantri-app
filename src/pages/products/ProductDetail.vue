@@ -351,3 +351,4 @@ td {
     padding-right: 8px;
 }
 </style>
+../../utils/format-number

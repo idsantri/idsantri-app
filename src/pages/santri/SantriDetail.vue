@@ -92,7 +92,7 @@
 import { reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
-import { fullDate } from "../../utils/format-date";
+import { formatDateFull } from "../../utils/format-date";
 import CardColumn from "../../components/CardColumn.vue";
 import CardImage from "../../components/CardImage.vue";
 import UploadImage from "./SantriUploadImage.vue";
@@ -127,7 +127,7 @@ const handleUploader = (value) => (showUploader.value = value);
 // register
 const register = {
     ID: santri.id,
-    "Tanggal Daftar": fullDate(santri.tgl_daftar_m),
+    "Tanggal Daftar": formatDateFull(santri.tgl_daftar_m),
     "Tahun Ajaran": santri.th_ajaran_h,
 };
 
@@ -143,7 +143,9 @@ const identity = {
         santri.kode_pos || " "
     }`.replace(/\s\s+/g, " "),
     "Data Akhir": santri.data_akhir.data_akhir,
-    Kelahiran: `${santri.tmp_lahir || "-"}, ${fullDate(santri.tgl_lahir)}`,
+    Kelahiran: `${santri.tmp_lahir || "-"}, ${formatDateFull(
+        santri.tgl_lahir
+    )}`,
 };
 
 // ortu

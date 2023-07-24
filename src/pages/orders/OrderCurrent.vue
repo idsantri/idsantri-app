@@ -317,7 +317,7 @@
 import ordersStore from "src/stores/orders-store";
 import { reactive, ref } from "vue";
 import { apiTokened } from "../../config/api";
-import digitSeparator from "src/utils/digit-separator";
+import { digitSeparator } from "src/utils/format-number";
 import toArray from "src/utils/to-array";
 import { notifyError, notifySuccess } from "src/utils/notify";
 import BannerTitle from "src/components/BannerTitle.vue";
@@ -399,3 +399,4 @@ const submitOrder = async () => {
     }
 };
 </script>
+src/utils/format-number

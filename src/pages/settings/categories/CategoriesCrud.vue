@@ -63,7 +63,7 @@ import { notifySuccess, notifyError } from "src/utils/notify";
 import { forceRerender } from "src/utils/buttons-click";
 import { apiTokened } from "src/config/api";
 import toArray from "src/utils/to-array";
-import slugify from "src/utils/slugify.js";
+import { slugify } from "src/utils/format-text";
 import { useQuasar } from "quasar";
 
 const props = defineProps({
