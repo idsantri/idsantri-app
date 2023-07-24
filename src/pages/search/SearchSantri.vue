@@ -128,8 +128,7 @@ onMounted(() => {
         router.push(`/santri/${id}`);
     };
     document.goToWali = (id) => {
-        alert(id);
-        // router.push(`/products/${id}`);
+        router.push(`/wali/${id}`);
     };
     document.goToOrtu = (id) => {
         alert(id);

@@ -18,7 +18,7 @@
         <q-card-section class="no-padding">
             <div class="row" style="max-width: 1024px">
                 <div class="col-12 col-md-6 q-pa-sm">
-                    <card-list
+                    <card-column
                         :data="register"
                         title="Registrasi"
                         class="q-mb-sm"
@@ -51,17 +51,22 @@
                 </div>
 
                 <div class="col-12 col-md-6 q-pa-sm">
-                    <card-list :data="ortu" title="Orang Tua" class="q-mb-sm" />
-                    <card-list :data="wali" title="Wali">
+                    <card-column
+                        :data="ortu"
+                        title="Orang Tua"
+                        class="q-mb-sm"
+                    />
+                    <card-column :data="wali" title="Wali">
                         <template #button>
                             <q-btn
                                 icon="info"
                                 color="teal-12"
                                 class="text-teal-10"
                                 size="sm"
+                                :to="'/wali/' + santri.wali_id"
                             />
                         </template>
-                    </card-list>
+                    </card-column>
                 </div>
             </div>
         </q-card-section>
@@ -88,7 +93,7 @@ import { reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
 import { fullDate } from "../../utils/format-date";
-import CardList from "../../components/CardList.vue";
+import CardColumn from "../../components/CardColumn.vue";
 import CardImage from "../../components/CardImage.vue";
 import UploadImage from "./SantriUploadImage.vue";
 import SantriModalCrud from "./SantriModalCrud.vue";
@@ -107,7 +112,7 @@ try {
 }
 
 /**
- * send to modal edit with props
+ * send to modal edit
  */
 function editSantri() {
     const setSantri = JSON.parse(JSON.stringify(santri));
@@ -143,15 +148,17 @@ const identity = {
 
 // ortu
 const ortu = {
+    "ID Ortu": santri.ortu_id,
     Ayah: santri.ortu.ayah,
     Ibu: santri.ortu.ibu,
     "Anak ke": `${santri.anak_ke || "?"} dari ${
-        santri.ortu.count_anak || "?"
+        santri.ortu.jumlah_anak || "?"
     }  bersaudara`,
 };
 
 // wali
 const wali = {
+    "ID Wali": santri.wali_id,
     Nama: `${santri.wali.nama} (${santri.wali.sex.toUpperCase()})`,
     Status: santri.wali_status,
     Telepon: santri.wali.telepon,

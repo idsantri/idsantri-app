@@ -13,7 +13,7 @@
         label="Tingkat"
         emit-value
         map-options
-        v-model="pa_formal_tingkat"
+        v-model="pa_formal"
         :options="lists['pendidikan-akhir-formal']"
         :loading="loading['pendidikan-akhir-formal']"
         use-input=""
@@ -55,7 +55,7 @@
         label="Tingkat"
         emit-value
         map-options
-        v-model="pa_diniyah_tingkat"
+        v-model="pa_diniyah"
         :options="lists['pendidikan-akhir-diniyah']"
         :loading="loading['pendidikan-akhir-diniyah']"
         use-input=""
@@ -98,10 +98,10 @@ const props = defineProps({
 });
 const { santri } = santriState();
 const {
-    pa_formal_tingkat,
+    pa_formal,
     pa_formal_kelas,
     pa_formal_alamat,
-    pa_diniyah_tingkat,
+    pa_diniyah,
     pa_diniyah_kelas,
     pa_diniyah_alamat,
 } = toRefs(santri);

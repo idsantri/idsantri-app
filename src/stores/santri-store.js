@@ -23,10 +23,10 @@ export default defineStore("santri", {
                 jl: null,
                 kode_pos: null,
 
-                pa_formal: null,
+                pa_formal_tingkat: null,
                 pa_formal_kelas: null,
                 pa_formal_alamat: null,
-                pa_diniyah: null,
+                pa_diniyah_tingkat: null,
                 pa_diniyah_kelas: null,
                 pa_diniyah_alamat: null,
 
@@ -50,6 +50,12 @@ export default defineStore("santri", {
         setNull() {
             for (const key in this.santri) {
                 this.santri[key] = null;
+            }
+            for (const key in this.wali) {
+                this.wali[key] = null;
+            }
+            for (const key in this.ortu) {
+                this.ortu[key] = null;
             }
         },
     },

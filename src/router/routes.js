@@ -71,6 +71,11 @@ const routes = [
                 meta: { title: "Santri" },
             },
             {
+                path: "wali/:id",
+                component: () => import("src/pages/wali/WaliDetail.vue"),
+                meta: { title: "Wali" },
+            },
+            {
                 path: "products/categories/:category",
                 component: () => import("src/pages/products/ProductAll.vue"),
             },
