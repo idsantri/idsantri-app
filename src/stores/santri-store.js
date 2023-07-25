@@ -49,11 +49,19 @@ export default defineStore("santri", {
         },
 
         setWali(payload) {
-            this.wali = payload;
+            for (const key in this.wali) {
+                if (key in payload) {
+                    this.wali[key] = payload[key];
+                }
+            }
         },
 
         setOrtu(payload) {
-            this.ortu = payload;
+            for (const key in this.ortu) {
+                if (key in payload) {
+                    this.ortu[key] = payload[key];
+                }
+            }
         },
 
         setNull() {

@@ -90,7 +90,7 @@ function bulanMasehi(inputMonth) {
 }
 
 function formatDateFull(inputDate) {
-    if (!isDate(inputDate)) return;
+    if (!isDate(inputDate)) return "-";
 
     const date = new Date(inputDate);
     const year = date.getFullYear();

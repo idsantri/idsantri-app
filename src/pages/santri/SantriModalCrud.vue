@@ -13,6 +13,8 @@
                     control-color="primary"
                     class="full-width"
                     style="height: 70vh"
+                    swipeable
+                    infinite
                 >
                     <!-- registrasi -->
                     <q-carousel-slide
@@ -94,7 +96,7 @@
     </q-card>
 </template>
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { apiTokened } from "src/config/api";
 import InputRegister from "./SantriModalCrudRegister.vue";
 import InputIdentity from "./SantriModalCrudIdentity.vue";
@@ -102,28 +104,33 @@ import InputAlamat from "./SantriModalCrudAlamat.vue";
 import InputPendidikanAkhir from "./SantriModalCrudPendidikanAkhir.vue";
 import InputOrtuWali from "./SantriModalCrudOrtuWali.vue";
 import santriStore from "src/stores/santri-store";
+import { notifyError, notifySuccess } from "src/utils/notify";
+import toArray from "src/utils/to-array";
+import { forceRerender } from "src/utils/buttons-click";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
 const props = defineProps({ isNew: { type: Boolean, default: true } });
 if (props.isNew) santriStore().$reset();
 
-// console.log(santriStore().santri);
-// console.log(santriStore().wali);
-// console.log(santriStore().ortu);
+const santri = reactive(santriStore().santri);
 
 const onSubmit = async () => {
-    const data = JSON.parse(JSON.stringify(santriStore().santri));
-    console.log("data", data);
-    return;
-    // try {
-    //     const response = await apiTokened.post(`products`, form);
-    //     const id = response.data.data.product.id;
-    //     notifySuccess(response.data.message);
-    //     router.push(`/products/${id}`);
-    // } catch (error) {
-    //     toArray(error.response.data.message).forEach((message) => {
-    //         notifyError(message);
-    //     });
-    // }
+    const data = JSON.parse(JSON.stringify(santri));
+    try {
+        let response = null;
+        if (props.isNew) response = await apiTokened.post(`santri`, data);
+        else response = await apiTokened.put(`santri/${santri.id}`, data);
+
+        // console.log("response", response);
+        notifySuccess(response.data.message);
+        forceRerender();
+    } catch (error) {
+        // console.log("error", error);
+        toArray(error.response.data.message).forEach((message) => {
+            notifyError(message);
+        });
+    }
 };
 
 const carousel = {
@@ -172,12 +179,35 @@ const toggleOptions = [
     },
 ];
 
+const $q = useQuasar();
+
+const router = useRouter();
+
+const deleteSantri = async (id) => {
+    $q.dialog({
+        title: "Konfirmasi",
+        message: `<span style="color:'red'">Hapus santri?</span>`,
+        cancel: true,
+        persistent: false,
+        html: true,
+    }).onOk(async () => {
+        try {
+            const response = await apiTokened.delete(`santri/${id}`);
+            notifySuccess(response.data.message);
+            router.go(-1);
+        } catch (error) {
+            toArray(error.response.data.message).forEach((message) => {
+                notifyError(message);
+            });
+        }
+    });
+};
+
 const resetOrDelete = () => {
     if (props.isNew) {
         santriStore().setNull();
-        console.log("reset");
     } else {
-        console.log("delete");
+        deleteSantri(santri.id);
     }
 };
 </script>

@@ -58,7 +58,7 @@ import { apiTokened } from "src/config/api";
 import santriState from "src/stores/santri-store";
 import { m2h, bacaHijri } from "src/utils/hijri";
 import { isDate, formatDateFull } from "src/utils/format-date";
-import { onMounted, ref, toRefs } from "vue";
+import { onMounted, ref, toRefs, watch } from "vue";
 
 const props = defineProps({
     title: { type: String, default: "" },
@@ -72,6 +72,13 @@ const listThAjaran = ref([]);
 
 onMounted(async () => {
     await fetchThAjaran();
+});
+
+watch(tgl_daftar_h, (newValue, oldValue) => {
+    // Menghapus karakter "-" dari tgl_daftar_h
+    if (newValue !== oldValue) {
+        tgl_daftar_h.value = newValue.replace(/-/g, "");
+    }
 });
 
 async function fetchThAjaran() {
@@ -98,5 +105,3 @@ async function fetchThAjaran() {
     }
 }
 </script>
-<style></style>
-src/utils/hijri
