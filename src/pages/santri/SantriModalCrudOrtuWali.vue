@@ -2,90 +2,80 @@
     <div class="text-subtitle2">
         {{ props.title }}
     </div>
-    <div class="text-italic">Sebelum masuk ke lembaga ini</div>
-    <div class="text-overline">Formal</div>
+    <div class="text-overline q-mt-sm">Orang Tua</div>
+
+    <q-input
+        hint=""
+        dense
+        class=""
+        outlined
+        label="ID Orang Tua*"
+        v-model="ortu_id"
+    >
+        <template v-slot:after>
+            <q-btn-group glossy flat>
+                <q-btn outline color="teal-10" icon="search" />
+                <q-btn outline color="teal-10" icon="visibility" />
+            </q-btn-group>
+        </template>
+    </q-input>
+
+    <q-input
+        hint=""
+        dense
+        class="q-mt-sm"
+        outlined
+        label="Nama Orang Tua"
+        :model-value="ortu?.ayah + ' | ' + ortu?.ibu"
+        readonly=""
+    />
+
+    <q-input hint="" dense class="" outlined label="Anak ke?" v-model="anak_ke">
+        <template #after>
+            <div class="text-body2">
+                dari {{ ortu?.jumlah_anak || "?" }} bersaudara
+            </div>
+        </template>
+    </q-input>
+
+    <div class="text-overline q-mt-sm">Wali</div>
+    <q-input
+        hint=""
+        dense
+        class="q-mt-sm"
+        outlined
+        label="ID Wali*"
+        v-model="wali_id"
+    >
+        <template v-slot:after>
+            <q-btn-group glossy flat>
+                <q-btn outline color="teal-10" icon="search" />
+                <q-btn outline color="teal-10" icon="visibility" />
+            </q-btn-group>
+        </template>
+    </q-input>
+
+    <q-input
+        hint=""
+        dense
+        class="q-mt-sm"
+        outlined
+        label="Nama Wali"
+        :model-value="wali?.nama + ' (' + wali?.sex + ')'"
+        readonly=""
+    />
 
     <q-select
         dense
         hint=""
         class="q-mt-sm"
         outlined
-        label="Tingkat"
+        label="Hubungan dengan Wali"
         emit-value
         map-options
-        v-model="pa_formal"
-        :options="lists['pendidikan-akhir-formal']"
-        :loading="loading['pendidikan-akhir-formal']"
-        use-input=""
-        new-value-mode="add"
-        clearable
-    />
-    <q-select
-        dense
-        hint=""
-        class="q-mt-sm"
-        outlined
-        label="Kelas"
-        emit-value
-        map-options
-        v-model="pa_formal_kelas"
-        :options="lists['kelas']"
-        :loading="loading['kelas']"
-        use-input=""
-        new-value-mode="add"
-        clearable
-    />
-    <q-input
-        dense
-        hint="Nama sekolah dan alamat"
-        class="q-mt-sm"
-        outlined
-        label="Alamat"
-        v-model="pa_formal_alamat"
-        autogrow
-        clearable
-    />
-
-    <div class="text-overline">Diniyah</div>
-    <q-select
-        dense
-        hint=""
-        class="q-mt-sm"
-        outlined
-        label="Tingkat"
-        emit-value
-        map-options
-        v-model="pa_diniyah"
-        :options="lists['pendidikan-akhir-diniyah']"
-        :loading="loading['pendidikan-akhir-diniyah']"
-        use-input=""
-        new-value-mode="add"
-        clearable
-    />
-    <q-select
-        dense
-        hint=""
-        class="q-mt-sm"
-        outlined
-        label="Kelas"
-        emit-value
-        map-options
-        v-model="pa_diniyah_kelas"
-        :options="lists['kelas']"
-        :loading="loading['kelas']"
-        use-input=""
-        new-value-mode="add"
-        clearable
-    />
-    <q-input
-        dense
-        hint="Nama sekolah dan alamat"
-        class="q-mt-sm"
-        outlined
-        label="Alamat"
-        v-model="pa_diniyah_alamat"
-        clearable
-        autogrow
+        v-model="wali_status"
+        :options="lists['hubungan-wali']"
+        :loading="loading['hubungan-wali']"
     />
 </template>
 <script setup>
@@ -97,19 +87,17 @@ const props = defineProps({
     title: { type: String, default: "" },
 });
 const { santri } = santriState();
-const {
-    pa_formal,
-    pa_formal_kelas,
-    pa_formal_alamat,
-    pa_diniyah,
-    pa_diniyah_kelas,
-    pa_diniyah_alamat,
-} = toRefs(santri);
+const { ortu_id, anak_ke, wali_id, wali_status } = toRefs(santri);
+
+const { ortu } = santriState();
+const { wali } = santriState();
 
 const lists = ref([]);
 const loading = ref([]);
+
 async function fetchLists(listsRequest) {
     const url = `lists/key/${listsRequest}`;
+    // console.log("url", url);
     loading.value[listsRequest] = true;
     try {
         const response = await apiTokened.get(url);
@@ -122,9 +110,7 @@ async function fetchLists(listsRequest) {
 }
 
 onMounted(async () => {
-    await fetchLists("pendidikan-akhir-formal");
-    await fetchLists("pendidikan-akhir-diniyah");
-    await fetchLists("kelas");
+    await fetchLists("hubungan-wali");
 });
 </script>
 <style></style>

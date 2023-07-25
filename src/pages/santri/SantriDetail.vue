@@ -115,8 +115,9 @@ try {
  * send to modal edit
  */
 function editSantri() {
-    const setSantri = JSON.parse(JSON.stringify(santri));
-    santriStore().setSantri(setSantri);
+    santriStore().setSantri(santri);
+    santriStore().setOrtu(santri?.ortu);
+    santriStore().setWali(santri?.wali);
     showModalSantri.value = true;
 }
 

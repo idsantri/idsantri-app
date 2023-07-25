@@ -3,7 +3,7 @@
         {{ props.title }}
     </div>
     <div class="text-italic">Sebelum masuk ke lembaga ini</div>
-    <div class="text-overline">Formal</div>
+    <div class="text-overline q-mt-sm">Formal</div>
 
     <q-select
         dense
@@ -40,13 +40,13 @@
         hint="Nama sekolah dan alamat"
         class="q-mt-sm"
         outlined
-        label="Alamat"
+        label="Sekolah"
         v-model="pa_formal_alamat"
         autogrow
         clearable
     />
 
-    <div class="text-overline">Diniyah</div>
+    <div class="text-overline q-mt-sm">Diniyah</div>
     <q-select
         dense
         hint=""
@@ -82,7 +82,7 @@
         hint="Nama sekolah dan alamat"
         class="q-mt-sm"
         outlined
-        label="Alamat"
+        label="Sekolah"
         v-model="pa_diniyah_alamat"
         clearable
         autogrow

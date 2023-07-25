@@ -71,10 +71,10 @@
             </q-card-section>
             <q-card-actions class="flex bg-teal-6">
                 <q-btn
-                    label="Reset"
+                    :label="props.isNew ? 'Reset' : 'Hapus'"
                     class="bg-red text-red-1"
                     no-caps=""
-                    @click="resetForm"
+                    @click="resetOrDelete"
                 />
                 <q-space />
                 <q-btn
@@ -105,6 +105,10 @@ import santriStore from "src/stores/santri-store";
 
 const props = defineProps({ isNew: { type: Boolean, default: true } });
 if (props.isNew) santriStore().$reset();
+
+// console.log(santriStore().santri);
+// console.log(santriStore().wali);
+// console.log(santriStore().ortu);
 
 const onSubmit = async () => {
     const data = JSON.parse(JSON.stringify(santriStore().santri));
@@ -168,9 +172,13 @@ const toggleOptions = [
     },
 ];
 
-const resetForm = () => {
-    console.log("reset");
-    santriStore().setNull();
+const resetOrDelete = () => {
+    if (props.isNew) {
+        santriStore().setNull();
+        console.log("reset");
+    } else {
+        console.log("delete");
+    }
 };
 </script>
 <style></style>

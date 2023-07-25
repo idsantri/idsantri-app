@@ -27,7 +27,6 @@
         v-model="kabupaten"
         :options="lists['kabupaten']"
         :loading="loading['kabupaten']"
-        @focus="fetchAlamat('kabupaten')"
     />
 
     <q-select
@@ -41,7 +40,6 @@
         v-model="kecamatan"
         :options="lists['kecamatan']"
         :loading="loading['kecamatan']"
-        @focus="fetchAlamat('kecamatan')"
     />
 
     <q-select
@@ -55,7 +53,6 @@
         v-model="desa"
         :options="lists['desa']"
         :loading="loading['desa']"
-        @focus="fetchAlamat('desa')"
         use-input=""
         new-value-mode="add"
     />
@@ -122,7 +119,6 @@ const lists = ref([]);
 const loading = ref([]);
 async function fetchAlamat(alamat) {
     let url = "";
-    loading.value[alamat] = true;
 
     if (alamat == "provinsi") {
         url = `alamat/provinsi`;
@@ -144,6 +140,8 @@ async function fetchAlamat(alamat) {
     }
 
     try {
+        loading.value[alamat] = true;
+
         const response = await apiTokened.get(url);
         lists.value[alamat] = response.data[alamat];
         // if (alamat == "provinsi") {
@@ -158,11 +156,14 @@ async function fetchAlamat(alamat) {
 
 onMounted(async () => {
     await fetchAlamat("provinsi");
+    await fetchAlamat("kabupaten");
+    await fetchAlamat("kecamatan");
+    await fetchAlamat("desa");
 });
 
 watch(
     [provinsi, kabupaten, kecamatan],
-    (
+    async (
         [newProvinsi, newKabupaten, newKecamatan],
         [oldProvinsi, oldKabupaten, oldKecamatan]
     ) => {
@@ -170,14 +171,28 @@ watch(
             kabupaten.value = null;
             kecamatan.value = null;
             desa.value = null;
-            // openDropdown();
+
+            lists.value["kabupaten"] = [];
+            lists.value["kecamatan"] = [];
+            lists.value["desa"] = [];
+
+            await fetchAlamat("kabupaten");
         }
         if (newKabupaten != oldKabupaten) {
             kecamatan.value = null;
             desa.value = null;
+
+            lists.value["kecamatan"] = [];
+            lists.value["desa"] = [];
+
+            await fetchAlamat("kecamatan");
         }
         if (newKecamatan != oldKecamatan) {
             desa.value = null;
+
+            lists.value["desa"] = [];
+
+            await fetchAlamat("desa");
         }
     }
 );
