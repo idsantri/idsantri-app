@@ -96,7 +96,7 @@ import santriState from "src/stores/santri-store";
 import { notifyError } from "src/utils/notify";
 import toArray from "src/utils/to-array";
 import { onMounted, reactive, ref, toRefs } from "vue";
-
+import { fetchLists } from "src/utils/fetch-list";
 const props = defineProps({
     title: { type: String, default: "" },
 });
@@ -110,22 +110,8 @@ const lists = ref([]);
 const loading = ref([]);
 
 onMounted(async () => {
-    await fetchLists("hubungan-wali");
+    await fetchLists({ key: "hubungan-wali", loading, lists });
 });
-
-async function fetchLists(listsRequest) {
-    const url = `lists/key/${listsRequest}`;
-    // console.log("url", url);
-    loading.value[listsRequest] = true;
-    try {
-        const response = await apiTokened.get(url);
-        lists.value[listsRequest] = response.data.lists;
-    } catch (error) {
-        console.log(`Not Found: ${listsRequest} -> list`, error);
-    } finally {
-        loading.value[listsRequest] = false;
-    }
-}
 
 const check = async (param, id) => {
     loading.value[param] = true;

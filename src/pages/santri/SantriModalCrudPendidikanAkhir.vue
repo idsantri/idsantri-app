@@ -92,6 +92,7 @@
 import { apiTokened } from "src/config/api";
 import santriState from "src/stores/santri-store";
 import { onMounted, ref, toRefs } from "vue";
+import { fetchLists } from "/src/utils/fetch-list.js";
 
 const props = defineProps({
     title: { type: String, default: "" },
@@ -108,23 +109,11 @@ const {
 
 const lists = ref([]);
 const loading = ref([]);
-async function fetchLists(listsRequest) {
-    const url = `lists/key/${listsRequest}`;
-    loading.value[listsRequest] = true;
-    try {
-        const response = await apiTokened.get(url);
-        lists.value[listsRequest] = response.data.lists;
-    } catch (error) {
-        console.log(`Not Found: ${listsRequest} -> list`, error);
-    } finally {
-        loading.value[listsRequest] = false;
-    }
-}
 
 onMounted(async () => {
-    await fetchLists("pendidikan-akhir-formal");
-    await fetchLists("pendidikan-akhir-diniyah");
-    await fetchLists("kelas");
+    await fetchLists({ loading, lists, key: "pendidikan-akhir-formal" });
+    await fetchLists({ loading, lists, key: "pendidikan-akhir-diniyah" });
+    await fetchLists({ loading, lists, key: "kelas" });
 });
 </script>
 <style></style>

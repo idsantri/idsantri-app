@@ -36,10 +36,10 @@
     </q-card>
 
     <!-- modal -->
-    <!-- <q-dialog persistent="" v-model="showModalSantri">
-        <santri-modal-crud :is-new="false" />
-    </q-dialog> -->
-    <!-- <pre>{{ wali }}</pre> -->
+    <q-dialog persistent="" v-model="showModalWali">
+        <wali-modal-crud :is-new="false" />
+    </q-dialog>
+    <pre>{{ wali }}</pre>
 </template>
 <script setup>
 import { reactive, ref } from "vue";
@@ -48,9 +48,10 @@ import { apiTokened } from "src/config/api.js";
 import { formatDateFull } from "../../utils/format-date";
 import CardColumn from "../../components/CardColumn.vue";
 import CardListSantri from "src/components/CardListSantri.vue";
-// import SantriModalCrud from "./WaliModalCrud.vue";
-import santriStore from "src/stores/santri-store";
+import WaliModalCrud from "./WaliModalCrud.vue";
+import waliStore from "src/stores/wali-store";
 import { formatAlamatLengkap } from "src/utils/format-text";
+
 const wali = reactive({});
 const route = useRoute();
 const waliId = route.params.id;
@@ -67,8 +68,7 @@ try {
  * send to modal edit
  */
 function editWali() {
-    const setSantri = JSON.parse(JSON.stringify(wali));
-    santriStore().setSantri(setSantri);
+    waliStore().setWali(wali);
     showModalWali.value = true;
 }
 

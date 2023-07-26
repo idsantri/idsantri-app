@@ -2,7 +2,7 @@
     <q-card class="full-width" style="max-width: 425px">
         <q-form @submit.prevent="onSubmit">
             <q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
-                <div class="text-subtitle1">Input Data Santri</div>
+                <div class="text-subtitle1">Input Data Wali</div>
             </q-card-section>
             <q-card-section class="no-padding">
                 <q-carousel
@@ -14,14 +14,6 @@
                     class="full-width"
                     style="height: 70vh"
                 >
-                    <!-- registrasi -->
-                    <q-carousel-slide
-                        :name="carousel.registrasi.button"
-                        class="no-wrap flex-center"
-                    >
-                        <input-register :title="carousel.registrasi.title" />
-                    </q-carousel-slide>
-
                     <!-- identitas -->
                     <q-carousel-slide
                         :name="carousel.identitas.button"
@@ -40,23 +32,14 @@
 
                     <!-- pendidikan -->
                     <q-carousel-slide
-                        :name="carousel.pendidikan.button"
+                        :name="carousel.others.button"
                         class="no-wrap flex-center"
                     >
-                        <input-pendidikan-akhir
-                            :title="carousel.pendidikan.title"
-                        />
-                    </q-carousel-slide>
-
-                    <!-- ortu wali -->
-                    <q-carousel-slide
-                        :name="carousel.ortu_wali.button"
-                        class="no-wrap flex-center"
-                    >
-                        <input-ortu-wali :title="carousel.ortu_wali.title" />
+                        <input-others :title="carousel.others.title" />
                     </q-carousel-slide>
                 </q-carousel>
             </q-card-section>
+
             <q-card-section class="q-pa-sm">
                 <div class="row justify-center">
                     <q-btn-toggle
@@ -94,20 +77,20 @@
     </q-card>
 </template>
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { apiTokened } from "src/config/api";
-import InputRegister from "./SantriModalCrudRegister.vue";
-import InputIdentity from "./SantriModalCrudIdentity.vue";
-import InputAlamat from "./SantriModalCrudAlamat.vue";
-import InputPendidikanAkhir from "./SantriModalCrudPendidikanAkhir.vue";
-import InputOrtuWali from "./SantriModalCrudOrtuWali.vue";
-import santriStore from "src/stores/santri-store";
+import InputIdentity from "./WaliModalCrudIdentity.vue";
+import InputAlamat from "./WaliModalCrudAlamat.vue";
+import InputOthers from "./WaliModalCrudOthers.vue";
+import waliStore from "src/stores/wali-store";
 
 const props = defineProps({ isNew: { type: Boolean, default: true } });
-if (props.isNew) santriStore().$reset();
+if (props.isNew) waliStore().$reset();
+
+const wali = reactive(waliStore().wali);
 
 const onSubmit = async () => {
-    const data = JSON.parse(JSON.stringify(santriStore().santri));
+    const data = JSON.parse(JSON.stringify(wali));
     console.log("data", data);
     return;
     // try {
@@ -123,33 +106,21 @@ const onSubmit = async () => {
 };
 
 const carousel = {
-    registrasi: {
-        title: "Data Registrasi",
-        button: "1",
-    },
     identitas: {
         title: "Identitas Diri",
-        button: "2",
+        button: "1",
     },
     alamat: {
         title: "Data Alamat",
+        button: "2",
+    },
+    others: {
+        title: "Lain-Lain",
         button: "3",
     },
-    pendidikan: {
-        title: "Riwayat Pendidikan",
-        button: "4",
-    },
-    ortu_wali: {
-        title: "Orang Tua dan Wali",
-        button: "5",
-    },
 };
-const slide = ref(carousel.registrasi.button);
+const slide = ref(carousel.identitas.button);
 const toggleOptions = [
-    {
-        label: carousel.registrasi.button,
-        value: carousel.registrasi.button,
-    },
     {
         label: carousel.identitas.button,
         value: carousel.identitas.button,
@@ -159,18 +130,14 @@ const toggleOptions = [
         value: carousel.alamat.button,
     },
     {
-        label: carousel.pendidikan.button,
-        value: carousel.pendidikan.button,
-    },
-    {
-        label: carousel.ortu_wali.button,
-        value: carousel.ortu_wali.button,
+        label: carousel.others.button,
+        value: carousel.others.button,
     },
 ];
 
 const resetForm = () => {
     console.log("reset");
-    santriStore().setNull();
+    waliStore().setNull();
 };
 </script>
 <style></style>

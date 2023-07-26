@@ -63,7 +63,7 @@
         emit-value
         map-options
         error-color="negative"
-        @filter="filterKotaLahir"
+        @filter="filterTempatLahir"
         :loading="loadingKotaLahir"
         use-input
         new-value-mode="add"
@@ -103,6 +103,7 @@ import santriState from "src/stores/santri-store";
 import { m2h, bacaHijri } from "src/utils/hijri";
 import { isDate, formatDateFull } from "src/utils/format-date";
 import { onMounted, ref, toRefs } from "vue";
+import { filterKotaLahir, fetchKotaLahir } from "src/utils/fetch-alamat";
 
 const props = defineProps({
     title: { type: String, default: "" },
@@ -115,37 +116,11 @@ const loadingKotaLahir = ref(false);
 const listKotaLahir = ref([]);
 const optionsKotaLahir = ref(listKotaLahir);
 
-const filterKotaLahir = (val, update) => {
-    if (val === "") {
-        update(() => {
-            optionsKotaLahir.value = listKotaLahir.value;
-        });
-        return;
-    }
-
-    update(() => {
-        const needle = val.toLowerCase();
-        optionsKotaLahir.value = listKotaLahir.value.filter(
-            (v) => v.toLowerCase().indexOf(needle) > -1
-        );
-    });
+const filterTempatLahir = (val, update) => {
+    filterKotaLahir(val, update, optionsKotaLahir, listKotaLahir);
 };
 
 onMounted(async () => {
-    await fetchKotaLahir();
+    await fetchKotaLahir(listKotaLahir, loadingKotaLahir);
 });
-
-async function fetchKotaLahir() {
-    loadingKotaLahir.value = true;
-    try {
-        const response = await apiTokened.get(`alamat/kota-lahir`);
-        listKotaLahir.value = response.data.kota_lahir;
-    } catch (error) {
-        console.log("Not Found: kota lahir -> list", error);
-    } finally {
-        loadingKotaLahir.value = false;
-    }
-}
 </script>
-<style></style>
-src/utils/hijri

@@ -3,6 +3,16 @@
         {{ props.title }}
     </div>
     <q-input
+        hint=""
+        dense
+        class="q-mt-sm"
+        outlined
+        label="ID"
+        :model-value="id"
+        readonly=""
+        disable=""
+    />
+    <q-input
         dense
         hint=""
         class="q-mt-sm"
@@ -16,29 +26,7 @@
         error-color="negative"
         autocapitalize="words"
     />
-    <q-input
-        dense
-        hint=""
-        class="q-mt-sm"
-        outlined
-        label="Nomor Induk Siswa Nasional"
-        v-model="nisn"
-        :rules="[(val) => !val || !isNaN(val) || 'Hanya angka!']"
-        error-color="negative"
-    />
-    <q-input
-        dense
-        hint=""
-        class="q-mt-sm"
-        outlined
-        label="Nomor Kartu Keluarga"
-        v-model="nkk"
-        :rules="[
-            (val) =>
-                !val || (val?.length == 16 && !isNaN(val)) || '16 digit angka!',
-        ]"
-        error-color="negative"
-    />
+
     <q-input
         dense
         hint=""
@@ -63,7 +51,7 @@
         emit-value
         map-options
         error-color="negative"
-        @filter="filterKotaLahir"
+        @filter="filterTempatLahir"
         :loading="loadingKotaLahir"
         use-input
         new-value-mode="add"
@@ -99,52 +87,27 @@
 </template>
 <script setup>
 import { apiTokened } from "src/config/api";
-import santriState from "src/stores/santri-store";
-import { m2h, isDate, formatDateFull, bacaHijri } from "src/utils/calendar";
+import waliState from "src/stores/wali-store";
+import { m2h, bacaHijri } from "src/utils/hijri";
+import { isDate, formatDateFull } from "src/utils/format-date";
 import { onMounted, ref, toRefs } from "vue";
-
+import { fetchKotaLahir, filterKotaLahir } from "src/utils/fetch-alamat";
 const props = defineProps({
     title: { type: String, default: "" },
 });
 
-const { santri } = santriState();
-const { nama, nisn, nkk, nik, tmp_lahir, tgl_lahir, sex } = toRefs(santri);
+const { wali } = waliState();
+const { id, nama, tgl_lahir, tmp_lahir, nik, sex } = toRefs(wali);
 
 const loadingKotaLahir = ref(false);
 const listKotaLahir = ref([]);
 const optionsKotaLahir = ref(listKotaLahir);
 
-const filterKotaLahir = (val, update) => {
-    if (val === "") {
-        update(() => {
-            optionsKotaLahir.value = listKotaLahir.value;
-        });
-        return;
-    }
-
-    update(() => {
-        const needle = val.toLowerCase();
-        optionsKotaLahir.value = listKotaLahir.value.filter(
-            (v) => v.toLowerCase().indexOf(needle) > -1
-        );
-    });
+const filterTempatLahir = (val, update) => {
+    filterKotaLahir(val, update, optionsKotaLahir, listKotaLahir);
 };
 
 onMounted(async () => {
-    await fetchKotaLahir();
+    await fetchKotaLahir(listKotaLahir, loadingKotaLahir);
 });
-
-async function fetchKotaLahir() {
-    loadingKotaLahir.value = true;
-    try {
-        const response = await apiTokened.get(`alamat/kota-lahir`);
-        listKotaLahir.value = response.data.kota_lahir;
-    } catch (error) {
-        console.log("Not Found: kota lahir -> list", error);
-    } finally {
-        loadingKotaLahir.value = false;
-    }
-}
 </script>
-<style></style>
-src/utils/hijri

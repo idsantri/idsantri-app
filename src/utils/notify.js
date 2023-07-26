@@ -23,8 +23,8 @@ const notifyAlert = (message, delay = 10) => {
     return new Promise((resolve) => {
         Notify.create({
             message: message,
-            color: "green-1",
-            textColor: "green-10",
+            color: "teal-1",
+            textColor: "teal-10",
             timeout: 1000 * delay,
             html: true,
             icon: "announcement",

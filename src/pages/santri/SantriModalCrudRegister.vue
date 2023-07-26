@@ -50,7 +50,7 @@
         map-options
         :rules="[(val) => !!val || 'Harus diisi!']"
         error-color="negative"
-        :loading="loadingTh"
+        :loading="loading"
     />
 </template>
 <script setup>
@@ -67,7 +67,7 @@ const props = defineProps({
 const { santri } = santriState();
 const { id, tgl_daftar_m, tgl_daftar_h, th_ajaran_h } = toRefs(santri);
 
-const loadingTh = ref(false);
+const loading = ref(false);
 const listThAjaran = ref([]);
 
 onMounted(async () => {
@@ -81,10 +81,14 @@ watch(tgl_daftar_h, (newValue, oldValue) => {
     }
 });
 
+/**
+ * TODO: jadikan dinamis
+ */
+
 async function fetchThAjaran() {
-    loadingTh.value = true;
+    loading.value = true;
     try {
-        const { data } = await apiTokened.get(`lists/key/tahun-ajaran`);
+        const { data } = await apiTokened.get(`lists/tahun-ajaran`);
         const th = data.tahun_ajaran;
         // console.log("th", th);
         th.sort((a, b) => {
@@ -101,7 +105,7 @@ async function fetchThAjaran() {
     } catch (error) {
         console.log("Not Found: tahun ajaran -> list", error);
     } finally {
-        loadingTh.value = false;
+        loading.value = false;
     }
 }
 </script>

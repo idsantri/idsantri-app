@@ -211,4 +211,3 @@ const resetOrDelete = () => {
     }
 };
 </script>
-<style></style>
