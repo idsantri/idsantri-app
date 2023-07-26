@@ -88,7 +88,7 @@ const identity = {
     ),
     Kelahiran: `${wali.tmp_lahir || "-"}, ${formatDateFull(wali.tgl_lahir)}`,
     Pekerjaan: wali.pekerjaan,
-    Kontak: (wali.telepon || "-") + ";" + (wali.email || "-"),
+    Kontak: (wali.telepon || "-") + "; " + (wali.email || "-"),
 };
 
 // santri

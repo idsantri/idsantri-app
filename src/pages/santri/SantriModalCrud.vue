@@ -180,10 +180,9 @@ const toggleOptions = [
 ];
 
 const $q = useQuasar();
-
 const router = useRouter();
 
-const deleteSantri = async (id) => {
+const deleteData = async (id) => {
     $q.dialog({
         title: "Konfirmasi",
         message: `<span style="color:'red'">Hapus santri?</span>`,
@@ -207,7 +206,7 @@ const resetOrDelete = () => {
     if (props.isNew) {
         santriStore().setNull();
     } else {
-        deleteSantri(santri.id);
+        deleteData(santri.id);
     }
 };
 </script>

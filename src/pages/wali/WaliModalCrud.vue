@@ -54,10 +54,10 @@
             </q-card-section>
             <q-card-actions class="flex bg-teal-6">
                 <q-btn
-                    label="Reset"
+                    :label="props.isNew ? 'Reset' : 'Hapus'"
                     class="bg-red text-red-1"
                     no-caps=""
-                    @click="resetForm"
+                    @click="resetOrDelete"
                 />
                 <q-space />
                 <q-btn
@@ -83,6 +83,11 @@ import InputIdentity from "./WaliModalCrudIdentity.vue";
 import InputAlamat from "./WaliModalCrudAlamat.vue";
 import InputOthers from "./WaliModalCrudOthers.vue";
 import waliStore from "src/stores/wali-store";
+import { notifyError, notifySuccess } from "src/utils/notify";
+import { forceRerender } from "src/utils/buttons-click";
+import toArray from "src/utils/to-array";
+import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
 const props = defineProps({ isNew: { type: Boolean, default: true } });
 if (props.isNew) waliStore().$reset();
@@ -91,18 +96,20 @@ const wali = reactive(waliStore().wali);
 
 const onSubmit = async () => {
     const data = JSON.parse(JSON.stringify(wali));
-    console.log("data", data);
-    return;
-    // try {
-    //     const response = await apiTokened.post(`products`, form);
-    //     const id = response.data.data.product.id;
-    //     notifySuccess(response.data.message);
-    //     router.push(`/products/${id}`);
-    // } catch (error) {
-    //     toArray(error.response.data.message).forEach((message) => {
-    //         notifyError(message);
-    //     });
-    // }
+    try {
+        let response = null;
+        if (props.isNew) response = await apiTokened.post(`wali`, data);
+        else response = await apiTokened.put(`wali/${wali.id}`, data);
+
+        // console.log("response", response);
+        notifySuccess(response.data.message);
+        forceRerender();
+    } catch (error) {
+        // console.log("error", error);
+        toArray(error.response.data.message).forEach((message) => {
+            notifyError(message);
+        });
+    }
 };
 
 const carousel = {
@@ -135,9 +142,35 @@ const toggleOptions = [
     },
 ];
 
-const resetForm = () => {
-    console.log("reset");
-    waliStore().setNull();
+const $q = useQuasar();
+const router = useRouter();
+
+const deleteData = async (id) => {
+    $q.dialog({
+        title: "Konfirmasi",
+        message: `<span style="color:'red'">Hapus Wali?</span>`,
+        cancel: true,
+        persistent: false,
+        html: true,
+    }).onOk(async () => {
+        try {
+            const response = await apiTokened.delete(`wali/${id}`);
+            notifySuccess(response.data.message);
+            router.go(-1);
+        } catch (error) {
+            toArray(error.response.data.message).forEach((message) => {
+                notifyError(message);
+            });
+        }
+    });
+};
+
+const resetOrDelete = () => {
+    if (props.isNew) {
+        waliStore().setNull();
+    } else {
+        deleteData(wali.id);
+    }
 };
 </script>
 <style></style>

@@ -34,6 +34,47 @@
         new-value-mode="add"
         clearable
     />
+
+    <q-select
+        dense
+        hint=""
+        class="q-mt-sm"
+        outlined
+        label="Pekerjaan"
+        emit-value
+        map-options
+        v-model="pekerjaan"
+        :options="lists['pekerjaan']"
+        :loading="loading['pekerjaan']"
+        use-input=""
+        new-value-mode="add"
+        clearable
+    />
+
+    <q-input
+        dense
+        hint="081x-xxxx-xxxx"
+        class="q-mt-sm"
+        outlined
+        label="Telepon"
+        v-model="telepon"
+    />
+    <q-input
+        dense
+        hint=""
+        class="q-mt-sm"
+        outlined
+        label="Email"
+        v-model="email"
+    />
+    <q-input
+        dense
+        hint="Penghasilan bulanan"
+        class="q-mt-sm"
+        outlined
+        label="Penghasilan"
+        v-model="penghasilan"
+    />
 </template>
 <script setup>
 import waliState from "src/stores/wali-store";
@@ -59,6 +100,7 @@ const loading = ref([]);
 onMounted(async () => {
     await fetchLists({ loading, lists, key: "pendidikan-akhir-formal" });
     await fetchLists({ loading, lists, key: "pendidikan-akhir-diniyah" });
+    await fetchLists({ loading, lists, key: "pekerjaan" });
 });
 </script>
 <style></style>

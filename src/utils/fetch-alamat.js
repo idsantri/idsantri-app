@@ -39,8 +39,8 @@ async function fetchAlamat(request, components) {
 async function fetchKotaLahir(list, loading) {
     loading.value = true;
     try {
-        const response = await apiTokened.get(`alamat/kota-lahir`);
-        list.value = response.data.kota_lahir;
+        const response = await apiTokened.get(`alamat/lists-kabupaten-kota`);
+        list.value = response.data.lists_kabupaten_kota;
     } catch (error) {
         console.log("Not Found list kota lahir", error);
     } finally {
