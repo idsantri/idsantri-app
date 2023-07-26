@@ -68,35 +68,19 @@ const routes = [
             {
                 path: "santri/:id",
                 component: () => import("src/pages/santri/SantriDetail.vue"),
-                meta: { title: "Santri" },
+                meta: { title: "Data Santri" },
             },
             {
                 path: "wali/:id",
                 component: () => import("src/pages/wali/WaliDetail.vue"),
-                meta: { title: "Wali" },
+                meta: { title: "Data Wali" },
             },
             {
-                path: "products/categories/:category",
-                component: () => import("src/pages/products/ProductAll.vue"),
+                path: "ortu/:id",
+                component: () => import("src/pages/ortu/OrtuDetail.vue"),
+                meta: { title: "Data Orang Tua" },
             },
-            {
-                path: "orders/current",
-                component: () => import("src/pages/orders/OrderCurrent.vue"),
-            },
-            {
-                path: "orders/:id",
-                component: () => import("src/pages/orders/OrderDetail.vue"),
-            },
-            {
-                path: "stores/:id/stocks",
-                component: () =>
-                    import("src/pages/stores/stocks/StoresStocks.vue"),
-            },
-            {
-                path: "stores/:id/orders",
-                component: () =>
-                    import("src/pages/stores/orders/StoresOrders.vue"),
-            },
+
             {
                 path: "settings",
                 children: [

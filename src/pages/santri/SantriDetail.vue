@@ -51,11 +51,17 @@
                 </div>
 
                 <div class="col-12 col-md-6 q-pa-sm">
-                    <card-column
-                        :data="ortu"
-                        title="Orang Tua"
-                        class="q-mb-sm"
-                    />
+                    <card-column :data="ortu" title="Orang Tua" class="q-mb-sm">
+                        <template #button>
+                            <q-btn
+                                icon="info"
+                                color="teal-12"
+                                class="text-teal-10"
+                                size="sm"
+                                :to="'/ortu/' + santri.ortu_id"
+                            />
+                        </template>
+                    </card-column>
                     <card-column :data="wali" title="Wali">
                         <template #button>
                             <q-btn

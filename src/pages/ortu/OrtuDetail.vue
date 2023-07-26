@@ -11,7 +11,7 @@
                     class="text-teal-10"
                     icon="edit"
                     label="Edit"
-                    @click="editWali"
+                    @click="editOrtu"
                 />
             </div>
         </q-card-section>
@@ -21,6 +21,16 @@
                     <card-column
                         :data="identity"
                         title="Identitas"
+                        class="q-mb-sm"
+                    />
+                    <card-column
+                        :data="dataAyah"
+                        title="Data Ayah"
+                        class="q-mb-sm"
+                    />
+                    <card-column
+                        :data="dataIbu"
+                        title="Data Ibu"
                         class="q-mb-sm"
                     />
                 </div>
@@ -36,30 +46,28 @@
     </q-card>
 
     <!-- modal -->
-    <q-dialog persistent="" v-model="showModalWali">
-        <wali-modal-crud :is-new="false" />
+    <q-dialog persistent="" v-model="showModalOrtu">
+        <ortu-modal-crud :is-new="false" />
     </q-dialog>
-    <pre>{{ wali }}</pre>
+    <!-- <pre>{{ ortu }}</pre> -->
 </template>
 <script setup>
 import { reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
-import { formatDateFull } from "../../utils/format-date";
 import CardColumn from "../../components/CardColumn.vue";
 import CardListSantri from "src/components/CardListSantri.vue";
-import WaliModalCrud from "./WaliModalCrud.vue";
-import waliStore from "src/stores/wali-store";
-import { formatAlamatLengkap } from "src/utils/format-text";
+import OrtuModalCrud from "./OrtuModalCrud.vue";
+import ortuStore from "src/stores/ortu-store.js";
 
-const wali = reactive({});
+const ortu = reactive({});
 const route = useRoute();
-const waliId = route.params.id;
-const showModalWali = ref(false);
+const ortuId = route.params.id;
+const showModalOrtu = ref(false);
 
 try {
-    const { data } = await apiTokened.get(`wali/${waliId}`);
-    Object.assign(wali, data.wali);
+    const { data } = await apiTokened.get(`ortu/${ortuId}`);
+    Object.assign(ortu, data.ortu);
 } catch (error) {
     console.log(error);
 }
@@ -67,31 +75,29 @@ try {
 /**
  * send to modal edit
  */
-function editWali() {
-    waliStore().setWali(wali);
-    showModalWali.value = true;
+function editOrtu() {
+    ortuStore().setOrtu(ortu);
+    showModalOrtu.value = true;
 }
 
 // identity
 const identity = {
-    ID: wali.id,
-    Nama: `${wali.nama.toUpperCase()} (${wali.sex.toUpperCase()})`,
-    NIK: wali.nik || "-",
-    Alamat: formatAlamatLengkap(
-        wali.jl,
-        wali.rt,
-        wali.rw,
-        wali.desa,
-        wali.kecamatan,
-        wali.kabupaten,
-        wali.provinsi,
-        wali.kode_pos
-    ),
-    Kelahiran: `${wali.tmp_lahir || "-"}, ${formatDateFull(wali.tgl_lahir)}`,
-    Pekerjaan: wali.pekerjaan || "-",
-    Kontak: (wali.telepon || "-") + "; " + (wali.email || "-"),
+    ID: ortu.id,
+    "Jumlah Anak": ortu.jumlah_anak,
+};
+// ayah
+const dataAyah = {
+    Ayah: ortu.ayah?.toUpperCase(),
+    NIK: ortu.a_nik,
+    Hidup: ortu.a_hidup ? "Ya" : "Tidak",
+};
+// ibu
+const dataIbu = {
+    Ibu: ortu.ibu?.toUpperCase(),
+    NIK: ortu.i_nik,
+    Hidup: ortu.i_hidup ? "Ya" : "Tidak",
 };
 
 // santri
-const { santri } = wali;
+const { santri } = ortu;
 </script>

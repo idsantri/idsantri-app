@@ -131,8 +131,7 @@ onMounted(() => {
         router.push(`/wali/${id}`);
     };
     document.goToOrtu = (id) => {
-        alert(id);
-        // router.push(`/products/${id}`);
+        router.push(`/ortu/${id}`);
     };
 });
 

@@ -22,20 +22,20 @@
                         <input-identity :title="carousel.identitas.title" />
                     </q-carousel-slide>
 
-                    <!-- alamat -->
+                    <!-- ayah -->
                     <q-carousel-slide
-                        :name="carousel.alamat.button"
+                        :name="carousel.ayah.button"
                         class="no-wrap flex-center"
                     >
-                        <input-alamat :title="carousel.alamat.title" />
+                        <input-ayah :title="carousel.ayah.title" />
                     </q-carousel-slide>
 
-                    <!-- pendidikan -->
+                    <!-- ibu -->
                     <q-carousel-slide
-                        :name="carousel.others.button"
+                        :name="carousel.ibu.button"
                         class="no-wrap flex-center"
                     >
-                        <input-others :title="carousel.others.title" />
+                        <input-ibu :title="carousel.ibu.title" />
                     </q-carousel-slide>
                 </q-carousel>
             </q-card-section>
@@ -79,10 +79,10 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { apiTokened } from "src/config/api";
-import InputIdentity from "./WaliModalCrudIdentity.vue";
-import InputAlamat from "./WaliModalCrudAlamat.vue";
-import InputOthers from "./WaliModalCrudOthers.vue";
-import waliStore from "src/stores/wali-store";
+import InputIdentity from "./OrtuModalCrudIdentity.vue";
+import InputAyah from "./OrtuModalCrudAyah.vue";
+import InputIbu from "./OrtuModalCrudIbu.vue";
+import ortuStore from "src/stores/ortu-store.js";
 import { notifyError, notifySuccess } from "src/utils/notify";
 import { forceRerender } from "src/utils/buttons-click";
 import toArray from "src/utils/to-array";
@@ -90,16 +90,16 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 
 const props = defineProps({ isNew: { type: Boolean, default: true } });
-if (props.isNew) waliStore().$reset();
+if (props.isNew) ortuStore().$reset();
 
-const wali = reactive(waliStore().wali);
+const ortu = reactive(ortuStore().ortu);
 
 const onSubmit = async () => {
-    const data = JSON.parse(JSON.stringify(wali));
+    const data = JSON.parse(JSON.stringify(ortu));
     try {
         let response = null;
-        if (props.isNew) response = await apiTokened.post(`wali`, data);
-        else response = await apiTokened.put(`wali/${wali.id}`, data);
+        if (props.isNew) response = await apiTokened.post(`ortu`, data);
+        else response = await apiTokened.put(`ortu/${ortu.id}`, data);
 
         // console.log("response", response);
         notifySuccess(response.data.message);
@@ -114,15 +114,15 @@ const onSubmit = async () => {
 
 const carousel = {
     identitas: {
-        title: "Identitas Diri",
+        title: "Identitas",
         button: "1",
     },
-    alamat: {
-        title: "Data Alamat",
+    ayah: {
+        title: "Data Ayah",
         button: "2",
     },
-    others: {
-        title: "Lain-Lain",
+    ibu: {
+        title: "Data Ibu",
         button: "3",
     },
 };
@@ -133,12 +133,12 @@ const toggleOptions = [
         value: carousel.identitas.button,
     },
     {
-        label: carousel.alamat.button,
-        value: carousel.alamat.button,
+        label: carousel.ayah.button,
+        value: carousel.ayah.button,
     },
     {
-        label: carousel.others.button,
-        value: carousel.others.button,
+        label: carousel.ibu.button,
+        value: carousel.ibu.button,
     },
 ];
 
@@ -148,13 +148,13 @@ const router = useRouter();
 const deleteData = async (id) => {
     $q.dialog({
         title: "Konfirmasi",
-        message: `<span style="color:'red'">Hapus Wali?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>`,
+        message: `<span style="color:'red'">Hapus Orang Tua?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>`,
         cancel: true,
         persistent: false,
         html: true,
     }).onOk(async () => {
         try {
-            const response = await apiTokened.delete(`wali/${id}`);
+            const response = await apiTokened.delete(`ortu/${id}`);
             notifySuccess(response.data.message);
             router.go(-1);
         } catch (error) {
@@ -167,9 +167,9 @@ const deleteData = async (id) => {
 
 const resetOrDelete = () => {
     if (props.isNew) {
-        waliStore().setNull();
+        ortuStore().setNull();
     } else {
-        deleteData(wali.id);
+        deleteData(ortu.id);
     }
 };
 </script>
