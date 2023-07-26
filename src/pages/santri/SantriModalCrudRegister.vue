@@ -36,29 +36,31 @@
         dense
         :hint="
             th_ajaran_h?.length == 9
-                ? listThAjaran.find((item) => item.val0 === th_ajaran_h)?.val1
+                ? lists['tahun-ajaran']?.find(
+                      (item) => item.val0 === th_ajaran_h
+                  )?.val1
                 : ''
         "
         class="q-mt-sm"
         outlined
         label="Tahun Ajaran"
         v-model="th_ajaran_h"
-        :options="listThAjaran"
+        :options="lists['tahun-ajaran']"
         option-value="val0"
         option-label="val0"
         emit-value
         map-options
         :rules="[(val) => !!val || 'Harus diisi!']"
         error-color="negative"
-        :loading="loading"
+        :loading="loading['tahun-ajaran']"
     />
 </template>
 <script setup>
-import { apiTokened } from "src/config/api";
 import santriState from "src/stores/santri-store";
 import { m2h, bacaHijri } from "src/utils/hijri";
 import { isDate, formatDateFull } from "src/utils/format-date";
 import { onMounted, ref, toRefs, watch } from "vue";
+import { fetchListKey } from "src/utils/fetch-list";
 
 const props = defineProps({
     title: { type: String, default: "" },
@@ -67,11 +69,17 @@ const props = defineProps({
 const { santri } = santriState();
 const { id, tgl_daftar_m, tgl_daftar_h, th_ajaran_h } = toRefs(santri);
 
-const loading = ref(false);
-const listThAjaran = ref([]);
+const loading = ref([]);
+const lists = ref([]);
 
 onMounted(async () => {
-    await fetchThAjaran();
+    await fetchListKey({
+        key: "tahun-ajaran",
+        loading,
+        lists,
+        ascending: false,
+    });
+    // console.log(lists.value["tahun-ajaran"]);
 });
 
 watch(tgl_daftar_h, (newValue, oldValue) => {
@@ -80,32 +88,4 @@ watch(tgl_daftar_h, (newValue, oldValue) => {
         tgl_daftar_h.value = newValue.replace(/-/g, "");
     }
 });
-
-/**
- * TODO: jadikan dinamis
- */
-
-async function fetchThAjaran() {
-    loading.value = true;
-    try {
-        const { data } = await apiTokened.get(`lists/tahun-ajaran`);
-        const th = data.tahun_ajaran;
-        // console.log("th", th);
-        th.sort((a, b) => {
-            if (a.val0 > b.val0) {
-                return -1;
-            }
-        });
-
-        listThAjaran.value = th;
-
-        if (!th_ajaran_h.value?.length) {
-            th_ajaran_h.value = listThAjaran.value[0]?.val0;
-        }
-    } catch (error) {
-        console.log("Not Found: tahun ajaran -> list", error);
-    } finally {
-        loading.value = false;
-    }
-}
 </script>
