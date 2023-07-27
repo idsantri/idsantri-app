@@ -6,7 +6,7 @@
                     class="bg-teal-8 text-teal-1 q-pa-sm flex items-center"
                 >
                     <h2 class="text-subtitle1 no-margin text-teal-11">
-                        Cari Santri
+                        Cari Wali
                     </h2>
                     <q-space />
                     <q-btn
@@ -16,7 +16,7 @@
                         icon="add"
                         no-caps=""
                         dense=""
-                        @click="showModalSantri = true"
+                        @click="showModal = true"
                     />
                 </q-card-section>
                 <q-card-section>
@@ -29,7 +29,7 @@
                 </q-card-section>
                 <q-card-actions class="bg-teal-7">
                     <div class="text-body2 text-teal-11 text-italic">
-                        Cari berdsarkan ID, Nama Santri, NIK, atau alamat
+                        Cari berdsarkan ID, Nama Wali, NIK, atau alamat
                     </div>
                     <q-space />
                     <slot name="button" />
@@ -46,8 +46,8 @@
     </suspense>
 
     <!-- modal -->
-    <q-dialog persistent="" v-model="showModalSantri">
-        <santri-modal-crud />
+    <q-dialog persistent="" v-model="showModal">
+        <modal-crud />
     </q-dialog>
 </template>
 
@@ -57,13 +57,13 @@ import DataTablesLib from "datatables.net-dt";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { apiTokened } from "../../config/api";
-import SantriModalCrud from "./SantriModalCrud.vue";
+import ModalCrud from "./WaliModalCrud.vue";
 
-const showModalSantri = ref(false);
+const showModal = ref(false);
 
 const router = useRouter();
 
-const url = `${apiTokened.defaults.baseURL}/santri/search`;
+const url = `${apiTokened.defaults.baseURL}/wali/search`;
 const headers = {
     Authorization: apiTokened.defaults.headers.common.Authorization,
 };
@@ -87,7 +87,7 @@ const options = ref({
             title: "Nama",
             data: "nama",
             render: function (data, type, row, meta) {
-                return `<span class="dt-link" onclick='goToSantri(${row.id})'>${row.nama}</span>`;
+                return `<span class="dt-link" onclick='goToWali(${row.id})'>${row.nama}</span>`;
             },
         },
         {
@@ -100,23 +100,47 @@ const options = ref({
             },
         },
         {
-            title: "Data Akhir",
-            data: "data_akhir",
-        },
-        {
             title: "NIK",
             data: "nik",
         },
         {
-            title: "Wali",
+            title: "Anak1",
             render: function (data, type, row, meta) {
-                return `<span class="dt-link" onclick='goToWali(${row.wali_id})'>${row.wali_nama} (${row.wali_status})</span>`;
+                return `<span class="dt-link" onclick='goToSantri(${
+                    row.santri1_id
+                })'>${row.santri1_nama || "-"}</span>`;
             },
         },
         {
-            title: "Ortu",
+            title: "Anak2",
             render: function (data, type, row, meta) {
-                return `<span class="dt-link" onclick='goToOrtu(${row.ortu_id})'>${row.ayah} | ${row.ibu}</span>`;
+                return `<span class="dt-link" onclick='goToSantri(${
+                    row.santri2_id
+                })'>${row.santri2_nama || "-"}</span>`;
+            },
+        },
+        {
+            title: "Anak3",
+            render: function (data, type, row, meta) {
+                return `<span class="dt-link" onclick='goToSantri(${
+                    row.santri3_id
+                })'>${row.santri3_nama || "-"}</span>`;
+            },
+        },
+        {
+            title: "Anak4",
+            render: function (data, type, row, meta) {
+                return `<span class="dt-link" onclick='goToSantri(${
+                    row.santri4_id
+                })'>${row.santri4_nama || "-"}</span>`;
+            },
+        },
+        {
+            title: "Anak5",
+            render: function (data, type, row, meta) {
+                return `<span class="dt-link" onclick='goToSantri(${
+                    row.santri5_id
+                })'>${row.santri5_nama || "-"}</span>`;
             },
         },
     ],
@@ -145,15 +169,11 @@ onMounted(() => {
     document.goToWali = (id) => {
         router.push(`/wali/${id}`);
     };
-    document.goToOrtu = (id) => {
-        router.push(`/ortu/${id}`);
-    };
 });
 
 onUnmounted(() => {
     delete document.goToSantri;
     delete document.goToWali;
-    delete document.goToOrtu;
 });
 </script>
 <style lang="scss">

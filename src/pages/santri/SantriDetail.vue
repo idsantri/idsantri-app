@@ -121,7 +121,7 @@
     <!-- <pre>{{ santri }}</pre> -->
 </template>
 <script setup>
-import { reactive, ref } from "vue";
+import { onBeforeMount, onMounted, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
 import { formatDateFull } from "../../utils/format-date";
@@ -131,6 +131,9 @@ import UploadImage from "./SantriUploadImage.vue";
 import SantriModalCrud from "./SantriModalCrud.vue";
 import santriStore from "src/stores/santri-store";
 import SantriDataTables from "./SantriDatatables.vue";
+import { bacaHijri } from "src/utils/hijri";
+import toArray from "src/utils/to-array";
+import { notifyError } from "src/utils/notify";
 
 const santri = reactive({});
 const route = useRoute();
@@ -142,7 +145,9 @@ try {
     const { data } = await apiTokened.get(`santri/${santriId}`);
     Object.assign(santri, data.santri);
 } catch (error) {
-    console.log(error);
+    toArray(error.response.data.message).forEach((message) => {
+        notifyError(message);
+    });
 }
 
 /**
@@ -162,7 +167,10 @@ const handleUploader = (value) => (showUploader.value = value);
 // register
 const register = {
     ID: santri.id,
-    "Tanggal Daftar": formatDateFull(santri.tgl_daftar_m),
+    "Tanggal Daftar":
+        formatDateFull(santri.tgl_daftar_m) +
+        " | " +
+        bacaHijri(santri.tgl_daftar_h),
     "Tahun Ajaran": santri.th_ajaran_h,
 };
 

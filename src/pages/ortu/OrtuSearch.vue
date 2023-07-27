@@ -1,7 +1,10 @@
-<template lang="">
-    <div>cari ortu</div>
+<template>
+    <q-card class="q-ma-sm">
+        <q-card-section class="q-pa-none">
+            <data-tables />
+        </q-card-section>
+    </q-card>
 </template>
-<script>
-export default {};
+<script setup>
+import DataTables from "./OrtuDatatables.vue";
 </script>
-<style lang=""></style>

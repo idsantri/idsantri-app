@@ -40,7 +40,7 @@ export default route(function (/* { store, ssrContext } */) {
 
     Router.beforeEach((to, from, next) => {
         if (to.fullPath == "/") {
-            return next("/home");
+            return next("/search");
         }
 
         const store = authStore();

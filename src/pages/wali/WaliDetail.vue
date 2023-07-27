@@ -5,6 +5,14 @@
                 <div class="text-subtitle1">Data Wali</div>
                 <q-space />
                 <q-btn
+                    label="Cari"
+                    @click="showSearchWali = true"
+                    size="sm"
+                    color="teal-2"
+                    class="text-teal-10 q-mr-sm"
+                    icon="search"
+                />
+                <q-btn
                     no-caps
                     size="sm"
                     color="teal-2"
@@ -39,7 +47,21 @@
     <q-dialog persistent="" v-model="showModalWali">
         <wali-modal-crud :is-new="false" />
     </q-dialog>
-    <pre>{{ wali }}</pre>
+
+    <q-dialog v-model="showSearchWali" full-width="" style="max-width: 1024px">
+        <wali-datatables>
+            <template #button>
+                <q-btn
+                    label="Tutup"
+                    color="teal-1"
+                    class="text-teal-10"
+                    no-caps=""
+                    v-close-popup
+                />
+            </template>
+        </wali-datatables>
+    </q-dialog>
+    <!-- <pre>{{ wali }}</pre> -->
 </template>
 <script setup>
 import { reactive, ref } from "vue";
@@ -51,17 +73,23 @@ import CardListSantri from "src/components/CardListSantri.vue";
 import WaliModalCrud from "./WaliModalCrud.vue";
 import waliStore from "src/stores/wali-store";
 import { formatAlamatLengkap } from "src/utils/format-text";
+import WaliDatatables from "./WaliDatatables.vue";
+import toArray from "src/utils/to-array";
+import { notifyError } from "src/utils/notify";
 
 const wali = reactive({});
 const route = useRoute();
 const waliId = route.params.id;
 const showModalWali = ref(false);
+const showSearchWali = ref(false);
 
 try {
     const { data } = await apiTokened.get(`wali/${waliId}`);
     Object.assign(wali, data.wali);
 } catch (error) {
-    console.log(error);
+    toArray(error.response.data.message).forEach((message) => {
+        notifyError(message);
+    });
 }
 
 /**

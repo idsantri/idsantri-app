@@ -5,6 +5,14 @@
                 <div class="text-subtitle1">Data Wali</div>
                 <q-space />
                 <q-btn
+                    label="Cari"
+                    @click="showSearchOrtu = true"
+                    size="sm"
+                    color="teal-2"
+                    class="text-teal-10 q-mr-sm"
+                    icon="search"
+                />
+                <q-btn
                     no-caps
                     size="sm"
                     color="teal-2"
@@ -49,6 +57,20 @@
     <q-dialog persistent="" v-model="showModalOrtu">
         <ortu-modal-crud :is-new="false" />
     </q-dialog>
+
+    <q-dialog v-model="showSearchOrtu" full-width="" style="max-width: 1024px">
+        <ortu-datatables>
+            <template #button>
+                <q-btn
+                    label="Tutup"
+                    color="teal-1"
+                    class="text-teal-10"
+                    no-caps=""
+                    v-close-popup
+                />
+            </template>
+        </ortu-datatables>
+    </q-dialog>
     <!-- <pre>{{ ortu }}</pre> -->
 </template>
 <script setup>
@@ -59,17 +81,23 @@ import CardColumn from "../../components/CardColumn.vue";
 import CardListSantri from "src/components/CardListSantri.vue";
 import OrtuModalCrud from "./OrtuModalCrud.vue";
 import ortuStore from "src/stores/ortu-store.js";
+import OrtuDatatables from "./OrtuDatatables.vue";
+import toArray from "src/utils/to-array";
+import { notifyError } from "src/utils/notify";
 
 const ortu = reactive({});
 const route = useRoute();
 const ortuId = route.params.id;
 const showModalOrtu = ref(false);
+const showSearchOrtu = ref(false);
 
 try {
     const { data } = await apiTokened.get(`ortu/${ortuId}`);
     Object.assign(ortu, data.ortu);
 } catch (error) {
-    console.log(error);
+    toArray(error.response.data.message).forEach((message) => {
+        notifyError(message);
+    });
 }
 
 /**

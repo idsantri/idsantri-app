@@ -47,20 +47,6 @@ const routes = [
         component: () => import("layouts/MainLayout.vue"),
         children: [
             {
-                path: "",
-                redirect: "/home",
-            },
-            {
-                path: "home",
-                component: () => import("src/pages/home/HomeIndex.vue"),
-                meta: { title: "Home" },
-            },
-            {
-                path: "sekretariat",
-                component: () => import("src/pages/sekretariat/IndexPage.vue"),
-                meta: { title: "Sekretariat" },
-            },
-            {
                 path: "search",
                 component: () => import("src/pages/search/IndexPage.vue"),
                 meta: { title: "Cari" },
@@ -94,6 +80,17 @@ const routes = [
                 path: "ortu/:id",
                 component: () => import("src/pages/ortu/OrtuDetail.vue"),
                 meta: { title: "Detail Orang Tua" },
+            },
+
+            {
+                path: "home",
+                component: () => import("src/pages/home/HomeIndex.vue"),
+                meta: { title: "Home" },
+            },
+            {
+                path: "sekretariat",
+                component: () => import("src/pages/sekretariat/IndexPage.vue"),
+                meta: { title: "Sekretariat" },
             },
 
             {
