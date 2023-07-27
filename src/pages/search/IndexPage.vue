@@ -1,38 +1,38 @@
 <template>
-    <q-card class="q-ma-sm">
-        <q-card-section class="q-pa-none">
-            <q-card style="width: 100%">
-                <q-card-section
-                    class="bg-teal-8 text-teal-1 q-pa-sm flex items-center"
-                >
-                    <h2 class="text-subtitle1 no-margin">Cari</h2>
-                    <q-space />
-                    <q-btn
-                        label="Tambah"
-                        color="teal-6"
-                        class="text-teal-11"
-                        icon="add"
-                        no-caps=""
-                        dense=""
-                        @click="showModalSantri = true"
-                    />
-                </q-card-section>
-                <q-card-section>
-                    <search-santri />
-                </q-card-section>
-            </q-card>
-        </q-card-section>
-    </q-card>
+    <div class="q-pa-sm">
+        <q-toolbar class="bg-teal-8 text-teal-11 shadow-2 rounded-borders">
+            <!-- <q-btn flat label="Homepage" /> -->
+            <div class="text-subtitle1">Cari &hellip;</div>
+            <q-space />
 
-    <!-- modal -->
-    <q-dialog persistent="" v-model="showModalSantri">
-        <santri-modal-crud />
-    </q-dialog>
+            <q-tabs shrink stretch class="text-teal-11" v-model="tab">
+                <q-tab name="santri" label="Santri" to="/santri" exact />
+                <q-tab name="wali" label="Wali" to="/wali" exact />
+                <q-tab name="ortu" label="Ortu" to="/ortu" exact />
+            </q-tabs>
+        </q-toolbar>
+
+        <q-tab-panels animated :model-value="tab">
+            <q-tab-panel name="santri" class="no-padding">
+                <santri-search />
+            </q-tab-panel>
+
+            <q-tab-panel name="wali" class="no-padding">
+                <wali-search />
+            </q-tab-panel>
+
+            <q-tab-panel name="ortu" class="no-padding">
+                <ortu-search />
+            </q-tab-panel>
+        </q-tab-panels>
+    </div>
 </template>
+
 <script setup>
-import SearchSantri from "./SearchSantri";
-import SantriModalCrud from "../santri/SantriModalCrud.vue";
+import SantriSearch from "../santri/SantriSearch.vue";
+import WaliSearch from "../wali/WaliSearch.vue";
+import OrtuSearch from "../ortu/OrtuSearch.vue";
 import { ref } from "vue";
 
-const showModalSantri = ref(false);
+const tab = ref("santri");
 </script>

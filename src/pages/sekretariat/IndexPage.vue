@@ -1,12 +1,9 @@
-<template>
-    <SearchSantri />
-</template>
+<template>halo... sekreatriat</template>
 <script setup>
 import toArray from "../../utils/to-array";
 import { notifyError } from "../../utils/notify";
 import { apiTokened } from "../../config/api";
 import { reactive } from "vue";
-import SearchSantri from "../search/SearchSantri.vue";
 const santri = reactive({});
 (async () => {
     try {

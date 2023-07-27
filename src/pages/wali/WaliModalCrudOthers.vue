@@ -53,11 +53,13 @@
 
     <q-input
         dense
-        hint="081x-xxxx-xxxx"
+        hint="08123456789"
         class="q-mt-sm"
         outlined
         label="Telepon"
         v-model="telepon"
+        :rules="[(val) => !val || !isNaN(val) || 'Hanya angka!']"
+        error-color="negative"
     />
     <q-input
         dense
@@ -74,6 +76,8 @@
         outlined
         label="Penghasilan"
         v-model="penghasilan"
+        :rules="[(val) => !val || !isNaN(val) || 'Hanya angka!']"
+        error-color="negative"
     />
 </template>
 <script setup>

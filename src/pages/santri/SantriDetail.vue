@@ -5,6 +5,14 @@
                 <div class="text-subtitle1">Data Santri</div>
                 <q-space />
                 <q-btn
+                    label="Cari"
+                    @click="showSearchSantri = true"
+                    size="sm"
+                    color="teal-2"
+                    class="text-teal-10 q-mr-sm"
+                    icon="search"
+                />
+                <q-btn
                     no-caps
                     size="sm"
                     color="teal-2"
@@ -37,7 +45,7 @@
                         <template #button>
                             <q-btn
                                 class="q-mt-sm full-width"
-                                icon="edit"
+                                icon="upload"
                                 no-caps=""
                                 label="Foto"
                                 dense=""
@@ -92,6 +100,24 @@
     <q-dialog persistent="" v-model="showModalSantri">
         <santri-modal-crud :is-new="false" />
     </q-dialog>
+
+    <q-dialog
+        v-model="showSearchSantri"
+        full-width=""
+        style="max-width: 1024px"
+    >
+        <santri-data-tables>
+            <template #button>
+                <q-btn
+                    label="Tutup"
+                    color="teal-1"
+                    class="text-teal-10"
+                    no-caps=""
+                    v-close-popup
+                />
+            </template>
+        </santri-data-tables>
+    </q-dialog>
     <!-- <pre>{{ santri }}</pre> -->
 </template>
 <script setup>
@@ -104,11 +130,13 @@ import CardImage from "../../components/CardImage.vue";
 import UploadImage from "./SantriUploadImage.vue";
 import SantriModalCrud from "./SantriModalCrud.vue";
 import santriStore from "src/stores/santri-store";
+import SantriDataTables from "./SantriDatatables.vue";
 
 const santri = reactive({});
 const route = useRoute();
 const santriId = route.params.id;
 const showModalSantri = ref(false);
+const showSearchSantri = ref(false);
 
 try {
     const { data } = await apiTokened.get(`santri/${santriId}`);

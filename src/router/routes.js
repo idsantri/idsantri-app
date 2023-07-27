@@ -66,19 +66,34 @@ const routes = [
                 meta: { title: "Cari" },
             },
             {
+                path: "santri",
+                component: () => import("src/pages/santri/SantriSearch.vue"),
+                meta: { title: "Cari Santri" },
+            },
+            {
                 path: "santri/:id",
                 component: () => import("src/pages/santri/SantriDetail.vue"),
-                meta: { title: "Data Santri" },
+                meta: { title: "Detail Santri" },
             },
             {
                 path: "wali/:id",
                 component: () => import("src/pages/wali/WaliDetail.vue"),
-                meta: { title: "Data Wali" },
+                meta: { title: "Detail Wali" },
+            },
+            {
+                path: "wali",
+                component: () => import("src/pages/wali/WaliSearch.vue"),
+                meta: { title: "Cari Wali" },
+            },
+            {
+                path: "ortu",
+                component: () => import("src/pages/ortu/OrtuSearch.vue"),
+                meta: { title: "Cari Orang Tua" },
             },
             {
                 path: "ortu/:id",
                 component: () => import("src/pages/ortu/OrtuDetail.vue"),
-                meta: { title: "Data Orang Tua" },
+                meta: { title: "Detail Orang Tua" },
             },
 
             {
