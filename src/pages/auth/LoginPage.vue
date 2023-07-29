@@ -101,7 +101,7 @@ const submitLogin = async () => {
             "Bearer " + authState().getToken;
 
         notifySuccess(response.data.message);
-        router.push("/home");
+        router.push("/");
     } catch (error) {
         emit("errors", toArray(error.response.data.message));
     } finally {

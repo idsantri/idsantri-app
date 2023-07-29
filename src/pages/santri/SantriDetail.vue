@@ -24,21 +24,22 @@
             </div>
         </q-card-section>
         <q-card-section class="no-padding">
-            <div class="row" style="max-width: 1024px">
-                <div class="col-12 col-md-6 q-pa-sm">
+            <div class="row">
+                <!-- santri -->
+                <div class="col-12 col-sm-6 col-md-4 q-pa-sm">
                     <card-column
+                        class="q-mb-sm"
                         :data="register"
                         title="Registrasi"
-                        class="q-mb-sm"
                     />
 
                     <!-- identitas -->
                     <card-image
+                        class="q-mb-sm"
                         :data="identity"
                         title="Identitas"
-                        class="q-mb-sm"
                         :image="
-                            santri?.image?.path ||
+                            santri?.image ||
                             require('../../assets/user-default.png')
                         "
                     >
@@ -58,8 +59,9 @@
                     </card-image>
                 </div>
 
-                <div class="col-12 col-md-6 q-pa-sm">
-                    <card-column :data="ortu" title="Orang Tua" class="q-mb-sm">
+                <!-- wali/ortu -->
+                <div class="col-12 col-sm-6 col-md-4 q-pa-sm">
+                    <card-column class="q-mb-sm" :data="ortu" title="Orang Tua">
                         <template #button>
                             <q-btn
                                 icon="info"
@@ -70,7 +72,7 @@
                             />
                         </template>
                     </card-column>
-                    <card-column :data="wali" title="Wali">
+                    <card-column class="q-mb-sm" :data="wali" title="Wali">
                         <template #button>
                             <q-btn
                                 icon="info"
@@ -81,6 +83,35 @@
                             />
                         </template>
                     </card-column>
+                </div>
+
+                <!-- status/kelas/domisili -->
+                <div class="col-12 col-sm-6 col-md-4 q-pa-sm">
+                    <!-- <suspense> -->
+                    <card-column-array
+                        :data="santriStatus"
+                        title="Riwayat Status"
+                        class="q-mb-sm"
+                    />
+                    <!-- <template #fallback>
+                            <q-spinner-cube
+                                color="teal-12"
+                                size="14em"
+                                class="absolute-center"
+                            />
+                        </template>
+                    </suspense> -->
+
+                    <card-column-array
+                        :data="santriKelas"
+                        title="Riwayat Kelas"
+                        class="q-mb-sm"
+                    />
+                    <card-column-array
+                        :data="santriDomisili"
+                        class="q-mb-sm"
+                        title="Riwayat Domisili"
+                    />
                 </div>
             </div>
         </q-card-section>
@@ -119,6 +150,7 @@
         </santri-data-tables>
     </q-dialog>
     <!-- <pre>{{ santri }}</pre> -->
+    <!-- <pre>{{ kelas }}</pre> -->
 </template>
 <script setup>
 import { onBeforeMount, onMounted, reactive, ref } from "vue";
@@ -134,20 +166,25 @@ import SantriDataTables from "./SantriDatatables.vue";
 import { bacaHijri } from "src/utils/hijri";
 import toArray from "src/utils/to-array";
 import { notifyError } from "src/utils/notify";
+import CardColumnArray from "src/components/CardColumnArray.vue";
 
 const santri = reactive({});
 const route = useRoute();
 const santriId = route.params.id;
 const showModalSantri = ref(false);
 const showSearchSantri = ref(false);
+const showSpinner = ref(false);
 
 try {
+    showSpinner.value = true;
     const { data } = await apiTokened.get(`santri/${santriId}`);
     Object.assign(santri, data.santri);
 } catch (error) {
     toArray(error.response.data.message).forEach((message) => {
         notifyError(message);
     });
+} finally {
+    showSpinner.value = false;
 }
 
 /**
@@ -171,7 +208,9 @@ const register = {
         formatDateFull(santri.tgl_daftar_m) +
         " | " +
         bacaHijri(santri.tgl_daftar_h),
-    "Tahun Ajaran": santri.th_ajaran_h,
+    "Tahun Ajaran": `${santri.th_ajaran_h || "-"} | ${
+        santri.th_ajaran_m || "-"
+    }`,
 };
 
 // identity
@@ -208,4 +247,47 @@ const wali = {
     Status: santri.wali_status,
     Telepon: santri.wali.telepon,
 };
+
+// status
+const status = reactive([]);
+try {
+    const { data } = await apiTokened.get(`santri/${santriId}/status`);
+    Object.assign(status, data.status);
+} catch (error) {
+    console.log(error);
+}
+const santriStatus = status.map((v, i) => ({
+    Status: v.status,
+    Keterangan: v.keterangan,
+    id: v.id,
+}));
+
+// kelas
+const kelas = reactive([]);
+try {
+    const { data } = await apiTokened.get(`santri/${santriId}/kelas`);
+    Object.assign(kelas, data.kelas);
+} catch (error) {
+    console.log(error);
+}
+const santriKelas = kelas.map((v, i) => ({
+    "Tahun Ajaran": `${v.th_ajaran_h}  |  ${v.th_ajaran_m || ""} `,
+    Kelas: `${v.kelas} ${v.tingkat}`,
+    Keterangan: v.keterangan,
+    id: v.id,
+}));
+
+// domisili
+const domisili = reactive([]);
+try {
+    const { data } = await apiTokened.get(`santri/${santriId}/domisili`);
+    Object.assign(domisili, data.domisili);
+} catch (error) {
+    console.log(error);
+}
+const santriDomisili = domisili.map((v, i) => ({
+    Domisili: v.domisili,
+    Keterangan: v.keterangan,
+    id: v.id,
+}));
 </script>

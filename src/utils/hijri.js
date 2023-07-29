@@ -203,7 +203,9 @@ function bulanHijri(inputMonth) {
 }
 
 function bacaHijri(input) {
+    if (!input) return "-";
     const cleanInput = numbersOnly(input);
+
     let dd = String(cleanInput).substring(6, 8);
     let mm = String(cleanInput).substring(4, 6);
     let yy = String(cleanInput).substring(0, 4);
