@@ -89,7 +89,6 @@
     />
 </template>
 <script setup>
-import { apiTokened } from "src/config/api";
 import santriState from "src/stores/santri-store";
 import { onMounted, ref, toRefs } from "vue";
 import { fetchLists } from "/src/utils/fetch-list.js";

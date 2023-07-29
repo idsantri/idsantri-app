@@ -59,59 +59,9 @@
                     </card-image>
                 </div>
 
-                <!-- wali/ortu -->
+                <!-- relations -->
                 <div class="col-12 col-sm-6 col-md-4 q-pa-sm">
-                    <card-column class="q-mb-sm" :data="ortu" title="Orang Tua">
-                        <template #button>
-                            <q-btn
-                                icon="info"
-                                color="teal-12"
-                                class="text-teal-10"
-                                size="sm"
-                                :to="'/ortu/' + santri.ortu_id"
-                            />
-                        </template>
-                    </card-column>
-                    <card-column class="q-mb-sm" :data="wali" title="Wali">
-                        <template #button>
-                            <q-btn
-                                icon="info"
-                                color="teal-12"
-                                class="text-teal-10"
-                                size="sm"
-                                :to="'/wali/' + santri.wali_id"
-                            />
-                        </template>
-                    </card-column>
-                </div>
-
-                <!-- status/kelas/domisili -->
-                <div class="col-12 col-sm-6 col-md-4 q-pa-sm">
-                    <!-- <suspense> -->
-                    <card-column-array
-                        :data="santriStatus"
-                        title="Riwayat Status"
-                        class="q-mb-sm"
-                    />
-                    <!-- <template #fallback>
-                            <q-spinner-cube
-                                color="teal-12"
-                                size="14em"
-                                class="absolute-center"
-                            />
-                        </template>
-                    </suspense> -->
-
-                    <card-column-array
-                        :data="santriKelas"
-                        title="Riwayat Kelas"
-                        class="q-mb-sm"
-                    />
-                    <card-column-array
-                        :data="santriDomisili"
-                        class="q-mb-sm"
-                        title="Riwayat Domisili"
-                    />
+                    <tab-component :santri-id="santriId" />
                 </div>
             </div>
         </q-card-section>
@@ -150,10 +100,9 @@
         </santri-data-tables>
     </q-dialog>
     <!-- <pre>{{ santri }}</pre> -->
-    <!-- <pre>{{ kelas }}</pre> -->
 </template>
 <script setup>
-import { onBeforeMount, onMounted, reactive, ref } from "vue";
+import { reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
 import { formatDateFull } from "../../utils/format-date";
@@ -166,8 +115,7 @@ import SantriDataTables from "./SantriDatatables.vue";
 import { bacaHijri } from "src/utils/hijri";
 import toArray from "src/utils/to-array";
 import { notifyError } from "src/utils/notify";
-import CardColumnArray from "src/components/CardColumnArray.vue";
-
+import TabComponent from "./relations/TabComponent";
 const santri = reactive({});
 const route = useRoute();
 const santriId = route.params.id;
@@ -229,65 +177,4 @@ const identity = {
         santri.tgl_lahir
     )}`,
 };
-
-// ortu
-const ortu = {
-    "ID Ortu": santri.ortu_id,
-    Ayah: santri.ortu.ayah,
-    Ibu: santri.ortu.ibu,
-    "Anak ke": `${santri.anak_ke || "?"} dari ${
-        santri.ortu.jumlah_anak || "?"
-    }  bersaudara`,
-};
-
-// wali
-const wali = {
-    "ID Wali": santri.wali_id,
-    Nama: `${santri.wali.nama} (${santri.wali.sex.toUpperCase()})`,
-    Status: santri.wali_status,
-    Telepon: santri.wali.telepon,
-};
-
-// status
-const status = reactive([]);
-try {
-    const { data } = await apiTokened.get(`santri/${santriId}/status`);
-    Object.assign(status, data.status);
-} catch (error) {
-    console.log(error);
-}
-const santriStatus = status.map((v, i) => ({
-    Status: v.status,
-    Keterangan: v.keterangan,
-    id: v.id,
-}));
-
-// kelas
-const kelas = reactive([]);
-try {
-    const { data } = await apiTokened.get(`santri/${santriId}/kelas`);
-    Object.assign(kelas, data.kelas);
-} catch (error) {
-    console.log(error);
-}
-const santriKelas = kelas.map((v, i) => ({
-    "Tahun Ajaran": `${v.th_ajaran_h}  |  ${v.th_ajaran_m || ""} `,
-    Kelas: `${v.kelas} ${v.tingkat}`,
-    Keterangan: v.keterangan,
-    id: v.id,
-}));
-
-// domisili
-const domisili = reactive([]);
-try {
-    const { data } = await apiTokened.get(`santri/${santriId}/domisili`);
-    Object.assign(domisili, data.domisili);
-} catch (error) {
-    console.log(error);
-}
-const santriDomisili = domisili.map((v, i) => ({
-    Domisili: v.domisili,
-    Keterangan: v.keterangan,
-    id: v.id,
-}));
 </script>

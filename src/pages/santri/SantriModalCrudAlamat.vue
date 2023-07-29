@@ -105,7 +105,7 @@
 </template>
 <script setup>
 import santriState from "src/stores/santri-store";
-import { onMounted, ref, toRefs, watch } from "vue";
+import { onMounted, ref, toRefs } from "vue";
 import { fetchAlamat, watchAlamat } from "src/utils/fetch-alamat";
 const props = defineProps({
     title: { type: String, default: "" },
