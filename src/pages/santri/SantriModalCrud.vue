@@ -107,11 +107,7 @@ import InputOrtuWali from "./SantriModalCrudOrtuWali.vue";
 import santriStore from "src/stores/santri-store";
 import { notifyError, notifySuccess } from "src/utils/notify";
 import toArray from "src/utils/to-array";
-import {
-    closeSantriCrud,
-    closeSantriSearch,
-    forceRerender,
-} from "src/utils/buttons-click";
+import { forceRerender } from "src/utils/buttons-click";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import dialogStore from "src/stores/dialog-store";

@@ -90,6 +90,7 @@ import toArray from "src/utils/to-array";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { closeOrtuCrud, closeOrtuSearch } from "src/utils/buttons-click";
+import dialogStore from "src/stores/dialog-store";
 const props = defineProps({ isNew: { type: Boolean, default: true } });
 
 if (props.isNew) ortuStore().$reset();
@@ -105,9 +106,9 @@ const onSubmit = async () => {
 
         // console.log("response", response);
         notifySuccess(response.data.message);
+        dialogStore().toggleCrudOrtu(false);
+        dialogStore().toggleSearchOrtu(false);
         if (props.isNew) {
-            // closeOrtuCrud();
-            // closeOrtuSearch();
             navigator.clipboard.writeText(response.data.ortu.id);
             notifySuccess(
                 `ID (${response.data.ortu.id}) sudah disalin/dicopy ke clipboard`

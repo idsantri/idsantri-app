@@ -85,14 +85,11 @@ import InputAlamat from "./WaliModalCrudAlamat.vue";
 import InputOthers from "./WaliModalCrudOthers.vue";
 import waliStore from "src/stores/wali-store";
 import { notifyError, notifySuccess } from "src/utils/notify";
-import {
-    closeWaliCrud,
-    closeWaliSearch,
-    forceRerender,
-} from "src/utils/buttons-click";
+import { forceRerender } from "src/utils/buttons-click";
 import toArray from "src/utils/to-array";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+import dialogStore from "src/stores/dialog-store";
 
 const props = defineProps({ isNew: { type: Boolean, default: true } });
 if (props.isNew) waliStore().$reset();
@@ -108,9 +105,9 @@ const onSubmit = async () => {
 
         // console.log("response", response);
         notifySuccess(response.data.message);
+        dialogStore().toggleCrudWali(false);
+        dialogStore().toggleSearchWali(false);
         if (props.isNew) {
-            closeWaliCrud();
-            // closeWaliSearch();
             navigator.clipboard.writeText(response.data.wali.id);
             notifySuccess(
                 `ID (${response.data.wali.id}) sudah disalin/dicopy ke clipboard`
