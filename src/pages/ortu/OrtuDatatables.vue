@@ -28,7 +28,7 @@
                 </q-card-section>
                 <q-card-actions class="bg-teal-7">
                     <div class="text-body2 text-teal-11 text-italic">
-                        Cari berdsarkan ID, Nama Ayah/Ibu, dan NIK
+                        Cari berdsarkan ID, Nama Ayah/Ibu, atau NIK
                     </div>
                     <q-space />
                     <q-btn
