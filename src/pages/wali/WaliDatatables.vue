@@ -52,6 +52,7 @@
         </template>
     </suspense>
 
+    <!-- TODO: modal crud harus keluarkan agar modal search bisa ditutup -->
     <!-- modal -->
     <q-dialog persistent="" v-model="crudWali">
         <modal-crud />
