@@ -12,16 +12,25 @@
         label="ID Orang Tua*"
         v-model="ortu_id"
     >
+        <template v-slot:append>
+            <q-btn
+                dense
+                flat
+                color="teal-10"
+                icon="content_paste"
+                @click="pasteOrtu()"
+                label="Tempel"
+                no-caps=""
+            />
+        </template>
         <template v-slot:after>
-            <q-btn-group glossy flat>
-                <q-btn outline color="teal-10" icon="search" />
-                <q-btn
-                    outline
-                    color="teal-10"
-                    icon="visibility"
-                    @click="check('ortu', ortu_id)"
-                />
-            </q-btn-group>
+            <q-btn
+                label="Cari"
+                no-caps=""
+                outline=""
+                icon="search"
+                class="slot-after text-teal-10"
+            />
         </template>
     </q-input>
 
@@ -34,11 +43,22 @@
         :model-value="ortu?.ayah + ' | ' + ortu?.ibu"
         readonly=""
         :loading="loading['ortu']"
-    />
+    >
+        <template v-slot:after>
+            <q-btn
+                class="slot-after text-teal-10"
+                label="Cek"
+                no-caps=""
+                outline=""
+                icon="visibility"
+                @click="check('ortu', ortu_id)"
+            />
+        </template>
+    </q-input>
 
     <q-input hint="" dense class="" outlined label="Anak ke?" v-model="anak_ke">
         <template #after>
-            <div class="text-body2">
+            <div class="text-body2 slot-after">
                 dari {{ ortu?.jumlah_anak || "?" }} bersaudara
             </div>
         </template>
@@ -53,16 +73,25 @@
         label="ID Wali*"
         v-model="wali_id"
     >
+        <template v-slot:append>
+            <q-btn
+                dense
+                flat
+                color="teal-10"
+                icon="content_paste"
+                label="Tempel"
+                no-caps=""
+                @click="pasteWali()"
+            />
+        </template>
         <template v-slot:after>
-            <q-btn-group glossy flat>
-                <q-btn outline color="teal-10" icon="search" />
-                <q-btn
-                    outline
-                    color="teal-10"
-                    icon="visibility"
-                    @click="check('wali', wali_id)"
-                />
-            </q-btn-group>
+            <q-btn
+                class="slot-after text-teal-10"
+                no-caps=""
+                outline=""
+                icon="search"
+                label="Cari"
+            />
         </template>
     </q-input>
 
@@ -75,7 +104,17 @@
         :model-value="wali?.nama + ' (' + wali?.sex + ')'"
         readonly=""
         :loading="loading['wali']"
-    />
+    >
+        <template v-slot:after>
+            <q-btn
+                class="slot-after text-teal-10"
+                no-caps=""
+                outline=""
+                label="Cek"
+                icon="visibility"
+                @click="check('wali', wali_id)"
+        /></template>
+    </q-input>
 
     <q-select
         dense
@@ -128,5 +167,16 @@ const check = async (param, id) => {
         loading.value[param] = false;
     }
 };
+
+async function pasteOrtu() {
+    ortu_id.value = await navigator.clipboard.readText();
+}
+async function pasteWali() {
+    wali_id.value = await navigator.clipboard.readText();
+}
 </script>
-<style></style>
+<style scoped>
+.slot-after {
+    width: 100px;
+}
+</style>

@@ -4,6 +4,8 @@ const notifySuccess = (message) => {
     Notify.create({
         type: "positive",
         message: message,
+        color: "teal-5",
+        textColor: "teal-11",
     });
 };
 const notifyError = (message) => {
