@@ -1,29 +1,37 @@
-// import memberCrudState from "../stores/member-crud-store";
 const forceRerender = () => {
     document.getElementById("btn-force-rerender").click();
 };
 
-// const crudState = (param = {}) => {
-//   // memberCrudState().$reset();
-//   memberCrudState().familyId = param.familyId || null;
-//   memberCrudState().isHusband = param.isHusband || false;
-//   memberCrudState().isWife = param.isWife || false;
-//   memberCrudState().isChild = param.isChild || false;
-//   memberCrudState().member = param.member || {};
-// };
-
-const showModalSearch = (param = {}) => {
-    crudState(param);
-    document.getElementById("btn-show-modal-search").click();
+const closeSantriSearch = () => {
+    document.getElementById("btn-close-santri-search").click();
 };
 
-const closeModalSearch = () => {
-    document.getElementById("btn-close-modal-search").click();
+const closeSantriCrud = () => {
+    document.getElementById("btn-close-santri-crud").click();
 };
 
-const showModalCrud = (reset = true) => {
-    if (reset) crudState();
-    document.getElementById("btn-show-modal-crud").click();
+const closeWaliSearch = () => {
+    document.getElementById("btn-close-wali-search").click();
 };
 
-export { forceRerender, showModalSearch, showModalCrud, closeModalSearch };
+const closeWaliCrud = () => {
+    document.getElementById("btn-close-wali-crud").click();
+};
+
+const closeOrtuSearch = () => {
+    document.getElementById("btn-close-ortu-search").click();
+};
+
+const closeOrtuCrud = () => {
+    document.getElementById("btn-close-ortu-crud").click();
+};
+
+export {
+    forceRerender,
+    closeOrtuCrud,
+    closeOrtuSearch,
+    closeSantriCrud,
+    closeSantriSearch,
+    closeWaliCrud,
+    closeWaliSearch,
+};

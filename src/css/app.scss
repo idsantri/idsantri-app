@@ -15,12 +15,7 @@ body {
 /**
 * datatables
 */
-#data-tables {
-    .nama-link {
-        color: rgb(17, 36, 77);
-        cursor: pointer;
-    }
-
+.dt {
     @media screen and (max-width: 480px) {
         tbody > tr:nth-child(odd) > td {
             padding: 4px;
@@ -28,6 +23,56 @@ body {
         tbody > tr:nth-child(even) > td {
             padding: 4px;
         }
+    }
+
+    .dt-link {
+        color: rgb(8, 46, 56);
+        cursor: pointer;
+    }
+    .dt-btn {
+        background-image: linear-gradient(#f7f8fa, #e7e9ec);
+        border-color: #adb1b8 #a2a6ac #8d9096;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 3px;
+        box-shadow: rgba(255, 255, 255, 0.6) 0 1px 0 inset;
+        box-sizing: border-box;
+        color: #0f1111;
+        cursor: pointer;
+        display: inline-block;
+        // font-family: "Amazon Ember", Arial, sans-serif;
+        // font-size: 14px;
+        // height: 25px;
+        // font-size: 13px;
+        outline: 0;
+        overflow: hidden;
+        padding: 2px 10px;
+        text-align: center;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        white-space: nowrap;
+        min-width: 50px;
+    }
+
+    .dt-btn:active {
+        border-bottom-color: #a2a6ac;
+    }
+
+    .dt-btn:active:hover {
+        border-bottom-color: #a2a6ac;
+    }
+
+    .dt-btn:hover {
+        border-color: #a2a6ac #979aa1 #82858a;
+    }
+
+    .dt-btn:focus {
+        border-color: #485a3c;
+        box-shadow: rgba(154, 228, 17, 0.322) 0 0 2px 2px;
+        outline: 0;
     }
 }
 

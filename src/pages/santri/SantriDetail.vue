@@ -87,17 +87,7 @@
         full-width=""
         style="max-width: 1024px"
     >
-        <santri-data-tables>
-            <template #button>
-                <q-btn
-                    label="Tutup"
-                    color="teal-1"
-                    class="text-teal-10"
-                    no-caps=""
-                    v-close-popup
-                />
-            </template>
-        </santri-data-tables>
+        <santri-datatables />
     </q-dialog>
     <!-- <pre>{{ santri }}</pre> -->
 </template>
@@ -111,7 +101,7 @@ import CardImage from "../../components/CardImage.vue";
 import UploadImage from "./SantriUploadImage.vue";
 import SantriModalCrud from "./SantriModalCrud.vue";
 import santriStore from "src/stores/santri-store";
-import SantriDataTables from "./SantriDatatables.vue";
+import SantriDatatables from "./SantriDatatables.vue";
 import { bacaHijri } from "src/utils/hijri";
 import toArray from "src/utils/to-array";
 import { notifyError } from "src/utils/notify";

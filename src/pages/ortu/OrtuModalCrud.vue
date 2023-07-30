@@ -2,7 +2,7 @@
     <q-card class="full-width" style="max-width: 425px">
         <q-form @submit.prevent="onSubmit">
             <q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
-                <div class="text-subtitle1">Input Data Wali</div>
+                <div class="text-subtitle1">Input Data Orang Tua</div>
             </q-card-section>
             <q-card-section class="no-padding">
                 <q-carousel
@@ -65,6 +65,7 @@
                     v-close-popup
                     class="bg-teal-11"
                     no-caps=""
+                    id="btn-close-ortu-crud"
                 />
                 <q-btn
                     type="submit"
@@ -88,8 +89,9 @@ import { forceRerender } from "src/utils/buttons-click";
 import toArray from "src/utils/to-array";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
-
+import { closeOrtuCrud, closeOrtuSearch } from "src/utils/buttons-click";
 const props = defineProps({ isNew: { type: Boolean, default: true } });
+
 if (props.isNew) ortuStore().$reset();
 
 const ortu = reactive(ortuStore().ortu);
@@ -103,7 +105,16 @@ const onSubmit = async () => {
 
         // console.log("response", response);
         notifySuccess(response.data.message);
-        forceRerender();
+        if (props.isNew) {
+            // closeOrtuCrud();
+            closeOrtuSearch();
+            navigator.clipboard.writeText(response.data.ortu.id);
+            notifySuccess(
+                `ID (${response.data.ortu.id}) sudah disalin/dicopy ke clipboard`
+            );
+        } else {
+            forceRerender();
+        }
     } catch (error) {
         // console.log("error", error);
         toArray(error.response.data.message).forEach((message) => {

@@ -49,17 +49,7 @@
     </q-dialog>
 
     <q-dialog v-model="showSearchWali" full-width="" style="max-width: 1024px">
-        <wali-datatables>
-            <template #button>
-                <q-btn
-                    label="Tutup"
-                    color="teal-1"
-                    class="text-teal-10"
-                    no-caps=""
-                    v-close-popup
-                />
-            </template>
-        </wali-datatables>
+        <wali-datatables />
     </q-dialog>
     <!-- <pre>{{ wali }}</pre> -->
 </template>

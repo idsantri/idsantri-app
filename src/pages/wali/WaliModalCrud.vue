@@ -65,6 +65,7 @@
                     v-close-popup
                     class="bg-teal-11"
                     no-caps=""
+                    id="btn-close-wali-crud"
                 />
                 <q-btn
                     type="submit"
@@ -84,7 +85,11 @@ import InputAlamat from "./WaliModalCrudAlamat.vue";
 import InputOthers from "./WaliModalCrudOthers.vue";
 import waliStore from "src/stores/wali-store";
 import { notifyError, notifySuccess } from "src/utils/notify";
-import { forceRerender } from "src/utils/buttons-click";
+import {
+    closeWaliCrud,
+    closeWaliSearch,
+    forceRerender,
+} from "src/utils/buttons-click";
 import toArray from "src/utils/to-array";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -103,7 +108,16 @@ const onSubmit = async () => {
 
         // console.log("response", response);
         notifySuccess(response.data.message);
-        forceRerender();
+        if (props.isNew) {
+            // closeWaliCrud();
+            closeWaliSearch();
+            navigator.clipboard.writeText(response.data.wali.id);
+            notifySuccess(
+                `ID (${response.data.wali.id}) sudah disalin/dicopy ke clipboard`
+            );
+        } else {
+            forceRerender();
+        }
     } catch (error) {
         // console.log("error", error);
         toArray(error.response.data.message).forEach((message) => {

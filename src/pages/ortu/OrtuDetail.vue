@@ -59,17 +59,7 @@
     </q-dialog>
 
     <q-dialog v-model="showSearchOrtu" full-width="" style="max-width: 1024px">
-        <ortu-datatables>
-            <template #button>
-                <q-btn
-                    label="Tutup"
-                    color="teal-1"
-                    class="text-teal-10"
-                    no-caps=""
-                    v-close-popup
-                />
-            </template>
-        </ortu-datatables>
+        <ortu-datatables />
     </q-dialog>
     <!-- <pre>{{ ortu }}</pre> -->
 </template>

@@ -30,6 +30,7 @@
                 outline=""
                 icon="search"
                 class="slot-after text-teal-10"
+                @click="showSearchOrtu = true"
             />
         </template>
     </q-input>
@@ -91,6 +92,7 @@
                 outline=""
                 icon="search"
                 label="Cari"
+                @click="showSearchWali = true"
             />
         </template>
     </q-input>
@@ -128,6 +130,14 @@
         :options="lists['hubungan-wali']"
         :loading="loading['hubungan-wali']"
     />
+
+    <!-- modal -->
+    <q-dialog v-model="showSearchOrtu" full-width="" style="max-width: 1024px">
+        <ortu-datatables />
+    </q-dialog>
+    <q-dialog v-model="showSearchWali" full-width="" style="max-width: 1024px">
+        <wali-datatables />
+    </q-dialog>
 </template>
 <script setup>
 import { apiTokened } from "src/config/api";
@@ -136,11 +146,17 @@ import { notifyError } from "src/utils/notify";
 import toArray from "src/utils/to-array";
 import { onMounted, reactive, ref, toRefs } from "vue";
 import { fetchLists } from "src/utils/fetch-list";
+import WaliDatatables from "../wali/WaliDatatables.vue";
+import OrtuDatatables from "../ortu/OrtuDatatables.vue";
+
 const props = defineProps({
     title: { type: String, default: "" },
 });
 const { santri } = santriState();
 const { ortu_id, anak_ke, wali_id, wali_status } = toRefs(santri);
+
+const showSearchWali = ref(false);
+const showSearchOrtu = ref(false);
 
 const ortu = reactive(santriState().ortu);
 const wali = reactive(santriState().wali);

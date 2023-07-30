@@ -21,10 +21,9 @@
                 </q-card-section>
                 <q-card-section>
                     <data-table
-                        class="display table nowrap"
+                        class="display table nowrap dt"
                         :options="options"
                         style="overflow: hidden"
-                        id="dt-santri"
                     />
                 </q-card-section>
                 <q-card-actions class="bg-teal-7">
@@ -32,7 +31,14 @@
                         Cari berdsarkan ID, Nama Santri, NIK, atau alamat
                     </div>
                     <q-space />
-                    <slot name="button" />
+                    <q-btn
+                        label="Tutup"
+                        color="teal-1"
+                        class="text-teal-10"
+                        no-caps=""
+                        v-close-popup
+                        id="btn-close-wali-search"
+                    />
                 </q-card-actions>
             </q-card>
         </template>
@@ -58,6 +64,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { apiTokened } from "../../config/api";
 import SantriModalCrud from "./SantriModalCrud.vue";
+import { notifySuccess } from "src/utils/notify";
 
 const showModalSantri = ref(false);
 
@@ -82,6 +89,9 @@ const options = ref({
         {
             title: "ID",
             data: "id",
+            render: function (data, type, row, meta) {
+                return `<button onclick='copyId(${row.id})' class='dt-btn'>${row.id}</button>`;
+            },
         },
         {
             title: "Nama",
@@ -148,12 +158,17 @@ onMounted(() => {
     document.goToOrtu = (id) => {
         router.push(`/ortu/${id}`);
     };
+    document.copyId = (id) => {
+        navigator.clipboard.writeText(id);
+        notifySuccess(`ID (${id}) sudah disalin/dicopy ke clipboard`);
+    };
 });
 
 onUnmounted(() => {
     delete document.goToSantri;
     delete document.goToWali;
     delete document.goToOrtu;
+    delete document.copyId;
 });
 </script>
 <style lang="scss">
