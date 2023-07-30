@@ -106,8 +106,8 @@ const onSubmit = async () => {
         // console.log("response", response);
         notifySuccess(response.data.message);
         if (props.isNew) {
-            // closeOrtuCrud();
-            closeOrtuSearch();
+            closeOrtuCrud();
+            // closeOrtuSearch();
             navigator.clipboard.writeText(response.data.ortu.id);
             notifySuccess(
                 `ID (${response.data.ortu.id}) sudah disalin/dicopy ke clipboard`

@@ -109,8 +109,8 @@ const onSubmit = async () => {
         // console.log("response", response);
         notifySuccess(response.data.message);
         if (props.isNew) {
-            // closeWaliCrud();
-            closeWaliSearch();
+            closeWaliCrud();
+            // closeWaliSearch();
             navigator.clipboard.writeText(response.data.wali.id);
             notifySuccess(
                 `ID (${response.data.wali.id}) sudah disalin/dicopy ke clipboard`
