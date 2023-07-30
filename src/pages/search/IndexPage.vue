@@ -12,7 +12,11 @@
             </q-tabs>
         </q-toolbar>
 
-        <q-tab-panels animated :model-value="tab">
+        <q-tab-panels
+            animated
+            :model-value="tab"
+            class="bg-teal-1 rounded-borders q-card--bordered"
+        >
             <q-tab-panel name="santri" class="no-padding">
                 <santri-search />
             </q-tab-panel>

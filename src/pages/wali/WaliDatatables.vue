@@ -17,6 +17,7 @@
                         no-caps=""
                         dense=""
                         @click="crudWali = true"
+                        v-show="searchWali"
                     />
                 </q-card-section>
                 <q-card-section>

@@ -30,7 +30,7 @@
                 outline=""
                 icon="search"
                 class="slot-after text-teal-10"
-                @click="showSearchOrtu = true"
+                @click="searchOrtu = true"
             />
         </template>
     </q-input>
@@ -92,7 +92,7 @@
                 outline=""
                 icon="search"
                 label="Cari"
-                @click="showSearchWali = true"
+                @click="searchWali = true"
             />
         </template>
     </q-input>
@@ -132,10 +132,10 @@
     />
 
     <!-- modal -->
-    <q-dialog v-model="showSearchOrtu" full-width="" style="max-width: 1024px">
+    <q-dialog v-model="searchOrtu" full-width="" style="max-width: 1024px">
         <ortu-datatables />
     </q-dialog>
-    <q-dialog v-model="showSearchWali" full-width="" style="max-width: 1024px">
+    <q-dialog v-model="searchWali" full-width="" style="max-width: 1024px">
         <wali-datatables />
     </q-dialog>
 </template>
@@ -148,6 +148,7 @@ import { onMounted, reactive, ref, toRefs } from "vue";
 import { fetchLists } from "src/utils/fetch-list";
 import WaliDatatables from "../wali/WaliDatatables.vue";
 import OrtuDatatables from "../ortu/OrtuDatatables.vue";
+import dialogStore from "src/stores/dialog-store";
 
 const props = defineProps({
     title: { type: String, default: "" },
@@ -155,8 +156,8 @@ const props = defineProps({
 const { santri } = santriState();
 const { ortu_id, anak_ke, wali_id, wali_status } = toRefs(santri);
 
-const showSearchWali = ref(false);
-const showSearchOrtu = ref(false);
+const dialog = dialogStore();
+const { searchOrtu, searchWali } = toRefs(dialog);
 
 const ortu = reactive(santriState().ortu);
 const wali = reactive(santriState().wali);

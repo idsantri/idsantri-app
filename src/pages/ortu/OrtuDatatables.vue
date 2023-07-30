@@ -17,6 +17,7 @@
                         no-caps=""
                         dense=""
                         @click="crudOrtu = true"
+                        v-show="searchOrtu"
                     />
                 </q-card-section>
                 <q-card-section>
