@@ -6,7 +6,7 @@
                 <q-space />
                 <q-btn
                     label="Cari"
-                    @click="showSearchOrtu = true"
+                    @click="searchOrtu = true"
                     size="sm"
                     color="teal-2"
                     class="text-teal-10 q-mr-sm"
@@ -54,17 +54,17 @@
     </q-card>
 
     <!-- modal -->
-    <q-dialog persistent="" v-model="showModalOrtu">
+    <q-dialog persistent="" v-model="crudOrtu">
         <ortu-modal-crud :is-new="false" />
     </q-dialog>
 
-    <q-dialog v-model="showSearchOrtu" full-width="" style="max-width: 1024px">
+    <q-dialog v-model="searchOrtu" full-width="" style="max-width: 1024px">
         <ortu-datatables />
     </q-dialog>
     <!-- <pre>{{ ortu }}</pre> -->
 </template>
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, toRefs } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
 import CardColumn from "../../components/CardColumn.vue";
@@ -74,12 +74,14 @@ import ortuStore from "src/stores/ortu-store.js";
 import OrtuDatatables from "./OrtuDatatables.vue";
 import toArray from "src/utils/to-array";
 import { notifyError } from "src/utils/notify";
+import dialogStore from "src/stores/dialog-store";
 
 const ortu = reactive({});
 const route = useRoute();
 const ortuId = route.params.id;
-const showModalOrtu = ref(false);
-const showSearchOrtu = ref(false);
+
+const dialog = dialogStore();
+const { searchOrtu, crudOrtu } = toRefs(dialog);
 
 try {
     const { data } = await apiTokened.get(`ortu/${ortuId}`);
@@ -95,7 +97,7 @@ try {
  */
 function editOrtu() {
     ortuStore().setOrtu(ortu);
-    showModalOrtu.value = true;
+    crudOrtu.value = true;
 }
 
 // identity

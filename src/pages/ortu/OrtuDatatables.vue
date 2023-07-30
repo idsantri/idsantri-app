@@ -16,7 +16,7 @@
                         icon="add"
                         no-caps=""
                         dense=""
-                        @click="showModal = true"
+                        @click="crudOrtu = true"
                     />
                 </q-card-section>
                 <q-card-section>
@@ -38,6 +38,7 @@
                         no-caps=""
                         v-close-popup
                         id="btn-close-ortu-search"
+                        v-show="searchOrtu"
                     />
                 </q-card-actions>
             </q-card>
@@ -52,7 +53,7 @@
     </suspense>
 
     <!-- modal -->
-    <q-dialog persistent="" v-model="showModal">
+    <q-dialog persistent="" v-model="crudOrtu">
         <modal-crud />
     </q-dialog>
 </template>
@@ -60,13 +61,15 @@
 <script setup>
 import DataTable from "datatables.net-vue3";
 import DataTablesLib from "datatables.net-dt";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { apiTokened } from "../../config/api";
 import ModalCrud from "./OrtuModalCrud.vue";
 import { notifySuccess } from "src/utils/notify";
+import dialogStore from "src/stores/dialog-store";
 
-const showModal = ref(false);
+const dialog = dialogStore();
+const { searchOrtu, crudOrtu } = toRefs(dialog);
 
 const router = useRouter();
 

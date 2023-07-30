@@ -16,7 +16,7 @@
                         icon="add"
                         no-caps=""
                         dense=""
-                        @click="showModal = true"
+                        @click="crudWali = true"
                     />
                 </q-card-section>
                 <q-card-section>
@@ -38,6 +38,7 @@
                         no-caps=""
                         v-close-popup
                         id="btn-close-wali-search"
+                        v-show="searchWali"
                     />
                 </q-card-actions>
             </q-card>
@@ -52,7 +53,7 @@
     </suspense>
 
     <!-- modal -->
-    <q-dialog persistent="" v-model="showModal">
+    <q-dialog persistent="" v-model="crudWali">
         <modal-crud />
     </q-dialog>
 </template>
@@ -60,20 +61,17 @@
 <script setup>
 import DataTable from "datatables.net-vue3";
 import DataTablesLib from "datatables.net-dt";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { apiTokened } from "../../config/api";
 import ModalCrud from "./WaliModalCrud.vue";
 import { notifySuccess } from "src/utils/notify";
-import {
-    closeWaliCrud,
-    closeWaliSearch,
-    forceRerender,
-} from "src/utils/buttons-click";
-const showModal = ref(false);
+import dialogStore from "src/stores/dialog-store";
+
+const dialog = dialogStore();
+const { searchWali, crudWali } = toRefs(dialog);
 
 const router = useRouter();
-
 const url = `${apiTokened.defaults.baseURL}/wali/search`;
 const headers = {
     Authorization: apiTokened.defaults.headers.common.Authorization,
@@ -197,8 +195,4 @@ onUnmounted(() => {
 </script>
 <style lang="scss">
 @import "datatables.net-dt";
-.dt-link {
-    color: rgb(8, 46, 56);
-    cursor: pointer;
-}
 </style>

@@ -106,7 +106,7 @@ const onSubmit = async () => {
         // console.log("response", response);
         notifySuccess(response.data.message);
         if (props.isNew) {
-            closeOrtuCrud();
+            // closeOrtuCrud();
             // closeOrtuSearch();
             navigator.clipboard.writeText(response.data.ortu.id);
             notifySuccess(

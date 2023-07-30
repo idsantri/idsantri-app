@@ -107,15 +107,19 @@ import InputOrtuWali from "./SantriModalCrudOrtuWali.vue";
 import santriStore from "src/stores/santri-store";
 import { notifyError, notifySuccess } from "src/utils/notify";
 import toArray from "src/utils/to-array";
-import { forceRerender } from "src/utils/buttons-click";
+import {
+    closeSantriCrud,
+    closeSantriSearch,
+    forceRerender,
+} from "src/utils/buttons-click";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+import dialogStore from "src/stores/dialog-store";
 
 const props = defineProps({ isNew: { type: Boolean, default: true } });
 if (props.isNew) santriStore().$reset();
 
 const santri = reactive(santriStore().santri);
-
 const onSubmit = async () => {
     const data = JSON.parse(JSON.stringify(santri));
     try {
@@ -125,7 +129,14 @@ const onSubmit = async () => {
 
         // console.log("response", response);
         notifySuccess(response.data.message);
-        forceRerender();
+
+        dialogStore().toggleCrudSantri(false);
+        dialogStore().toggleSearchSantri(false);
+        if (props.isNew) {
+            useRouter().push(`/santri/${response.data.santri.id}`);
+        } else {
+            forceRerender();
+        }
     } catch (error) {
         // console.log("error", error);
         toArray(error.response.data.message).forEach((message) => {

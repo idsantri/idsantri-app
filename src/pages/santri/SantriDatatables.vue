@@ -16,7 +16,7 @@
                         icon="add"
                         no-caps=""
                         dense=""
-                        @click="showModalSantri = true"
+                        @click="crudSantri = true"
                     />
                 </q-card-section>
                 <q-card-section>
@@ -37,7 +37,8 @@
                         class="text-teal-10"
                         no-caps=""
                         v-close-popup
-                        id="btn-close-wali-search"
+                        id="btn-close-santri-search"
+                        v-show="searchSantri"
                     />
                 </q-card-actions>
             </q-card>
@@ -52,7 +53,7 @@
     </suspense>
 
     <!-- modal -->
-    <q-dialog persistent="" v-model="showModalSantri">
+    <q-dialog persistent="" v-model="crudSantri">
         <santri-modal-crud />
     </q-dialog>
 </template>
@@ -60,13 +61,15 @@
 <script setup>
 import DataTable from "datatables.net-vue3";
 import DataTablesLib from "datatables.net-dt";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { apiTokened } from "../../config/api";
 import SantriModalCrud from "./SantriModalCrud.vue";
 import { notifySuccess } from "src/utils/notify";
+import dialogStore from "src/stores/dialog-store";
 
-const showModalSantri = ref(false);
+const dialog = dialogStore();
+const { searchSantri, crudSantri } = toRefs(dialog);
 
 const router = useRouter();
 
@@ -173,8 +176,4 @@ onUnmounted(() => {
 </script>
 <style lang="scss">
 @import "datatables.net-dt";
-.dt-link {
-    color: rgb(8, 46, 56);
-    cursor: pointer;
-}
 </style>

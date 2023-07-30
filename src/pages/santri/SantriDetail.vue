@@ -6,7 +6,7 @@
                 <q-space />
                 <q-btn
                     label="Cari"
-                    @click="showSearchSantri = true"
+                    @click="searchSantri = true"
                     size="sm"
                     color="teal-2"
                     class="text-teal-10 q-mr-sm"
@@ -78,21 +78,17 @@
     />
 
     <!-- modal -->
-    <q-dialog persistent="" v-model="showModalSantri">
+    <q-dialog persistent="" v-model="crudSantri">
         <santri-modal-crud :is-new="false" />
     </q-dialog>
 
-    <q-dialog
-        v-model="showSearchSantri"
-        full-width=""
-        style="max-width: 1024px"
-    >
+    <q-dialog v-model="searchSantri" full-width="" style="max-width: 1024px">
         <santri-datatables />
     </q-dialog>
     <!-- <pre>{{ santri }}</pre> -->
 </template>
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, toRefs, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
 import { formatDateFull } from "../../utils/format-date";
@@ -106,12 +102,15 @@ import { bacaHijri } from "src/utils/hijri";
 import toArray from "src/utils/to-array";
 import { notifyError } from "src/utils/notify";
 import TabComponent from "./relations/TabComponent";
+import dialogStore from "src/stores/dialog-store";
+
 const santri = reactive({});
 const route = useRoute();
 const santriId = route.params.id;
-const showModalSantri = ref(false);
-const showSearchSantri = ref(false);
 const showSpinner = ref(false);
+
+const dialog = dialogStore();
+const { searchSantri, crudSantri } = toRefs(dialog);
 
 try {
     showSpinner.value = true;
@@ -132,7 +131,7 @@ function editSantri() {
     santriStore().setSantri(santri);
     santriStore().setOrtu(santri?.ortu);
     santriStore().setWali(santri?.wali);
-    showModalSantri.value = true;
+    crudSantri.value = true;
 }
 
 // uploader
