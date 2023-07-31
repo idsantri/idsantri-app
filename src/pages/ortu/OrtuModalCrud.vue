@@ -13,6 +13,8 @@
                     control-color="primary"
                     class="full-width"
                     style="height: 70vh"
+                    swipeable
+                    infinite
                 >
                     <!-- identitas -->
                     <q-carousel-slide
