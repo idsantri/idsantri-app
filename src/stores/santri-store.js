@@ -37,6 +37,7 @@ export default defineStore("santri", {
             },
             wali: { id: null, nama: null, sex: null },
             ortu: { id: null, ayah: null, ibu: null, jumlah_anak: null },
+            isNew: true,
         };
     },
     actions: {
@@ -74,6 +75,12 @@ export default defineStore("santri", {
             for (const key in this.ortu) {
                 this.ortu[key] = null;
             }
+        },
+        setEdit() {
+            this.isNew = false;
+        },
+        setNew() {
+            this.isNew = true;
         },
     },
     persist: {

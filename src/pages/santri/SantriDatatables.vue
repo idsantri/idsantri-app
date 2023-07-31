@@ -16,7 +16,7 @@
                         icon="add"
                         no-caps=""
                         dense=""
-                        @click="crudSantri = true"
+                        @click="addNew"
                     />
                 </q-card-section>
                 <q-card-section>
@@ -51,12 +51,6 @@
             />
         </template>
     </suspense>
-
-    <!-- TODO: modal crud harus keluarkan agar modal search bisa ditutup -->
-    <!-- modal -->
-    <q-dialog persistent="" v-model="crudSantri">
-        <santri-modal-crud />
-    </q-dialog>
 </template>
 
 <script setup>
@@ -65,13 +59,18 @@ import DataTablesLib from "datatables.net-dt";
 import { ref, onMounted, onUnmounted, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { apiTokened } from "../../config/api";
-import SantriModalCrud from "./SantriModalCrud.vue";
 import { notifySuccess } from "src/utils/notify";
 import dialogStore from "src/stores/dialog-store";
+import santriStore from "src/stores/santri-store";
 
 const dialog = dialogStore();
 const { searchSantri, crudSantri } = toRefs(dialog);
+// const santri = reactive(santriStore().santri);
 
+const addNew = () => {
+    santriStore().$reset();
+    crudSantri.value = true;
+};
 const router = useRouter();
 
 const url = `${apiTokened.defaults.baseURL}/santri/search`;

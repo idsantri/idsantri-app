@@ -16,8 +16,8 @@
                         icon="add"
                         no-caps=""
                         dense=""
-                        @click="crudOrtu = true"
-                        v-show="searchOrtu"
+                        @click="addNew"
+                        v-show="crudSantri"
                     />
                 </q-card-section>
                 <q-card-section>
@@ -52,12 +52,6 @@
             />
         </template>
     </suspense>
-
-    <!-- TODO: modal crud harus keluarkan agar modal search bisa ditutup -->
-    <!-- modal -->
-    <q-dialog persistent="" v-model="crudOrtu">
-        <modal-crud />
-    </q-dialog>
 </template>
 
 <script setup>
@@ -66,15 +60,18 @@ import DataTablesLib from "datatables.net-dt";
 import { ref, onMounted, onUnmounted, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { apiTokened } from "../../config/api";
-import ModalCrud from "./OrtuModalCrud.vue";
 import { notifySuccess } from "src/utils/notify";
 import dialogStore from "src/stores/dialog-store";
 import santriStore from "src/stores/santri-store";
-
+import ortuStore from "src/stores/ortu-store";
 const dialog = dialogStore();
 const { searchOrtu, crudOrtu, crudSantri } = toRefs(dialog);
 const { santri } = santriStore();
 const { ortu_id } = toRefs(santri);
+const addNew = () => {
+    ortuStore().$reset();
+    crudOrtu.value = true;
+};
 
 const router = useRouter();
 

@@ -25,6 +25,7 @@ export default defineStore("ortu", {
 
                 jumlah_anak: null,
             },
+            isNew: true,
         };
     },
     actions: {
@@ -42,6 +43,12 @@ export default defineStore("ortu", {
             }
             this.ortu.a_hidup = 1;
             this.ortu.i_hidup = 1;
+        },
+        setEdit() {
+            this.isNew = false;
+        },
+        setNew() {
+            this.isNew = true;
         },
     },
     persist: {

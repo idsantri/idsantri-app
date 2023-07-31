@@ -16,8 +16,8 @@
                         icon="add"
                         no-caps=""
                         dense=""
-                        @click="crudWali = true"
-                        v-show="searchWali"
+                        @click="addNew"
+                        v-show="crudSantri"
                     />
                 </q-card-section>
                 <q-card-section>
@@ -52,12 +52,6 @@
             />
         </template>
     </suspense>
-
-    <!-- TODO: modal crud harus keluarkan agar modal search bisa ditutup -->
-    <!-- modal -->
-    <q-dialog persistent="" v-model="crudWali">
-        <modal-crud />
-    </q-dialog>
 </template>
 
 <script setup>
@@ -66,15 +60,19 @@ import DataTablesLib from "datatables.net-dt";
 import { ref, onMounted, onUnmounted, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { apiTokened } from "../../config/api";
-import ModalCrud from "./WaliModalCrud.vue";
 import { notifySuccess } from "src/utils/notify";
 import dialogStore from "src/stores/dialog-store";
 import santriStore from "src/stores/santri-store";
+import waliStore from "src/stores/wali-store";
 
 const dialog = dialogStore();
 const { searchWali, crudWali, crudSantri } = toRefs(dialog);
 const { santri } = santriStore();
 const { wali_id } = toRefs(santri);
+const addNew = () => {
+    waliStore().$reset();
+    crudWali.value = true;
+};
 
 const router = useRouter();
 const url = `${apiTokened.defaults.baseURL}/wali/search`;

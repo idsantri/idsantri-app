@@ -26,6 +26,7 @@ export default defineStore("wali", {
                 pa_formal_tingkat: null,
                 pa_diniyah_tingkat: null,
             },
+            isNew: true,
         };
     },
     actions: {
@@ -41,6 +42,12 @@ export default defineStore("wali", {
             for (const key in this.wali) {
                 this.wali[key] = null;
             }
+        },
+        setEdit() {
+            this.isNew = false;
+        },
+        setNew() {
+            this.isNew = true;
         },
     },
     persist: {

@@ -54,7 +54,7 @@
             </q-card-section>
             <q-card-actions class="flex bg-teal-6">
                 <q-btn
-                    :label="props.isNew ? 'Reset' : 'Hapus'"
+                    :label="isNew ? 'Reset' : 'Hapus'"
                     class="bg-red text-red-1"
                     no-caps=""
                     @click="resetOrDelete"
@@ -92,10 +92,8 @@ import { useRouter } from "vue-router";
 import dialogStore from "src/stores/dialog-store";
 import santriStore from "src/stores/santri-store";
 
-const props = defineProps({ isNew: { type: Boolean, default: true } });
-if (props.isNew) waliStore().$reset();
-
 const { wali } = reactive(waliStore());
+const { isNew } = reactive(waliStore());
 const { santri } = santriStore();
 const { wali_id } = toRefs(santri);
 
@@ -103,19 +101,15 @@ const onSubmit = async () => {
     const data = JSON.parse(JSON.stringify(wali));
     try {
         let response = null;
-        if (props.isNew) response = await apiTokened.post(`wali`, data);
+        if (isNew) response = await apiTokened.post(`wali`, data);
         else response = await apiTokened.put(`wali/${wali.id}`, data);
 
         // console.log("response", response);
         notifySuccess(response.data.message);
         dialogStore().toggleCrudWali(false);
         dialogStore().toggleSearchWali(false);
-        if (props.isNew) {
+        if (isNew) {
             wali_id.value = response.data.wali.id;
-            // navigator.clipboard.writeText(response.data.wali.id);
-            // notifySuccess(
-            //     `ID (${response.data.wali.id}) sudah disalin/dicopy ke clipboard`
-            // );
         } else {
             forceRerender();
         }
@@ -181,7 +175,7 @@ const deleteData = async (id) => {
 };
 
 const resetOrDelete = () => {
-    if (props.isNew) {
+    if (isNew) {
         waliStore().setNull();
     } else {
         deleteData(wali.id);

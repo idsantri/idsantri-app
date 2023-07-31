@@ -104,6 +104,9 @@
             </button>
         </div>
 
+        <!-- inject modal -->
+        <modals-main />
+
         <q-footer bordered class="bg-teal-6 text-teal-12">
             <p class="text-center no-margin q-pa-xs">
                 by idsantri {{ m2h("2007-12-10", 0) }}
@@ -118,7 +121,7 @@ import SideBar from "src/components/SideBar.vue";
 import ordersStore from "src/stores/orders-store";
 import constanta from "src/config/constanta";
 import { m2h } from "src/utils/hijri";
-
+import ModalsMain from "src/components/ModalsMain.vue";
 const leftDrawerOpen = ref(false);
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 

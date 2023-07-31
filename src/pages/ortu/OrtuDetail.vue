@@ -2,7 +2,7 @@
     <q-card class="q-ma-sm">
         <q-card-section class="bg-teal-8 text-teal-11 q-pa-sm">
             <div class="flex items-center">
-                <div class="text-subtitle1">Data Wali</div>
+                <div class="text-subtitle1">Data Orang Tua</div>
                 <q-space />
                 <q-btn
                     label="Cari"
@@ -52,26 +52,15 @@
             </div>
         </q-card-section>
     </q-card>
-
-    <!-- modal -->
-    <q-dialog persistent="" v-model="crudOrtu">
-        <ortu-modal-crud :is-new="false" />
-    </q-dialog>
-
-    <q-dialog v-model="searchOrtu" full-width="" style="max-width: 1024px">
-        <ortu-datatables />
-    </q-dialog>
     <!-- <pre>{{ ortu }}</pre> -->
 </template>
 <script setup>
-import { reactive, ref, toRefs } from "vue";
+import { reactive, toRefs } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
 import CardColumn from "../../components/CardColumn.vue";
 import CardListSantri from "src/components/CardListSantri.vue";
-import OrtuModalCrud from "./OrtuModalCrud.vue";
 import ortuStore from "src/stores/ortu-store.js";
-import OrtuDatatables from "./OrtuDatatables.vue";
 import toArray from "src/utils/to-array";
 import { notifyError } from "src/utils/notify";
 import dialogStore from "src/stores/dialog-store";
@@ -97,6 +86,7 @@ try {
  */
 function editOrtu() {
     ortuStore().setOrtu(ortu);
+    ortuStore().setEdit();
     crudOrtu.value = true;
 }
 

@@ -42,28 +42,17 @@
             </div>
         </q-card-section>
     </q-card>
-
-    <!-- modal -->
-    <q-dialog persistent="" v-model="crudWali">
-        <wali-modal-crud :is-new="false" />
-    </q-dialog>
-
-    <q-dialog v-model="searchWali" full-width="" style="max-width: 1024px">
-        <wali-datatables />
-    </q-dialog>
     <!-- <pre>{{ wali }}</pre> -->
 </template>
 <script setup>
-import { reactive, ref, toRefs } from "vue";
+import { reactive, toRefs } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
 import { formatDateFull } from "../../utils/format-date";
 import CardColumn from "../../components/CardColumn.vue";
 import CardListSantri from "src/components/CardListSantri.vue";
-import WaliModalCrud from "./WaliModalCrud.vue";
 import waliStore from "src/stores/wali-store";
 import { formatAlamatLengkap } from "src/utils/format-text";
-import WaliDatatables from "./WaliDatatables.vue";
 import toArray from "src/utils/to-array";
 import { notifyError } from "src/utils/notify";
 import dialogStore from "src/stores/dialog-store";
@@ -89,6 +78,7 @@ try {
  */
 function editWali() {
     waliStore().setWali(wali);
+    waliStore().setEdit();
     crudWali.value = true;
 }
 

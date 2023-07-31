@@ -54,7 +54,7 @@
             </q-card-section>
             <q-card-actions class="flex bg-teal-6">
                 <q-btn
-                    :label="props.isNew ? 'Reset' : 'Hapus'"
+                    :label="isNew ? 'Reset' : 'Hapus'"
                     class="bg-red text-red-1"
                     no-caps=""
                     @click="resetOrDelete"
@@ -92,10 +92,8 @@ import { useRouter } from "vue-router";
 import dialogStore from "src/stores/dialog-store";
 import santriStore from "src/stores/santri-store";
 
-const props = defineProps({ isNew: { type: Boolean, default: true } });
-if (props.isNew) ortuStore().$reset();
-
 const { ortu } = reactive(ortuStore());
+const { isNew } = reactive(ortuStore());
 const { santri } = santriStore();
 const { ortu_id } = toRefs(santri);
 
@@ -103,19 +101,15 @@ const onSubmit = async () => {
     const data = JSON.parse(JSON.stringify(ortu));
     try {
         let response = null;
-        if (props.isNew) response = await apiTokened.post(`ortu`, data);
+        if (isNew) response = await apiTokened.post(`ortu`, data);
         else response = await apiTokened.put(`ortu/${ortu.id}`, data);
 
         // console.log("response", response);
         notifySuccess(response.data.message);
         dialogStore().toggleCrudOrtu(false);
         dialogStore().toggleSearchOrtu(false);
-        if (props.isNew) {
+        if (isNew) {
             ortu_id.value = response.data.ortu.id;
-            // navigator.clipboard.writeText(response.data.ortu.id);
-            // notifySuccess(
-            //     `ID (${response.data.ortu.id}) sudah disalin/dicopy ke clipboard`
-            // );
         } else {
             forceRerender();
         }
@@ -181,7 +175,7 @@ const deleteData = async (id) => {
 };
 
 const resetOrDelete = () => {
-    if (props.isNew) {
+    if (isNew) {
         ortuStore().setNull();
     } else {
         deleteData(ortu.id);

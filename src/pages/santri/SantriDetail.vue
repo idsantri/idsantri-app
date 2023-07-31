@@ -77,14 +77,6 @@
         @update-uploader="handleUploader"
     />
 
-    <!-- modal -->
-    <q-dialog persistent="" v-model="crudSantri">
-        <santri-modal-crud :is-new="false" />
-    </q-dialog>
-
-    <q-dialog v-model="searchSantri" full-width="" style="max-width: 1024px">
-        <santri-datatables />
-    </q-dialog>
     <!-- <pre>{{ santri }}</pre> -->
 </template>
 <script setup>
@@ -95,9 +87,7 @@ import { formatDateFull } from "../../utils/format-date";
 import CardColumn from "../../components/CardColumn.vue";
 import CardImage from "../../components/CardImage.vue";
 import UploadImage from "./SantriUploadImage.vue";
-import SantriModalCrud from "./SantriModalCrud.vue";
 import santriStore from "src/stores/santri-store";
-import SantriDatatables from "./SantriDatatables.vue";
 import { bacaHijri } from "src/utils/hijri";
 import toArray from "src/utils/to-array";
 import { notifyError } from "src/utils/notify";
@@ -131,6 +121,7 @@ function editSantri() {
     santriStore().setSantri(santri);
     santriStore().setOrtu(santri?.ortu);
     santriStore().setWali(santri?.wali);
+    santriStore().setEdit();
     crudSantri.value = true;
 }
 

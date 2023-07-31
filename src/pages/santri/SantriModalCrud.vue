@@ -73,7 +73,7 @@
             </q-card-section>
             <q-card-actions class="flex bg-teal-6">
                 <q-btn
-                    :label="props.isNew ? 'Reset' : 'Hapus'"
+                    :label="isNew ? 'Reset' : 'Hapus'"
                     class="bg-red text-red-1"
                     no-caps=""
                     @click="resetOrDelete"
@@ -104,31 +104,31 @@ import InputIdentity from "./SantriModalCrudIdentity.vue";
 import InputAlamat from "./SantriModalCrudAlamat.vue";
 import InputPendidikanAkhir from "./SantriModalCrudPendidikanAkhir.vue";
 import InputOrtuWali from "./SantriModalCrudOrtuWali.vue";
-import santriStore from "src/stores/santri-store";
 import { notifyError, notifySuccess } from "src/utils/notify";
 import toArray from "src/utils/to-array";
 import { forceRerender } from "src/utils/buttons-click";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import dialogStore from "src/stores/dialog-store";
+import santriStore from "src/stores/santri-store";
 
 const router = useRouter();
-const props = defineProps({ isNew: { type: Boolean, default: true } });
-if (props.isNew) santriStore().$reset();
 
-const santri = reactive(santriStore().santri);
+const { santri } = reactive(santriStore());
+const { isNew } = reactive(santriStore());
+
 const onSubmit = async () => {
     const data = JSON.parse(JSON.stringify(santri));
     try {
         let response = null;
-        if (props.isNew) response = await apiTokened.post(`santri`, data);
+        if (isNew) response = await apiTokened.post(`santri`, data);
         else response = await apiTokened.put(`santri/${santri.id}`, data);
 
         // console.log("data", data);
         notifySuccess(response.data.message);
         dialogStore().toggleCrudSantri(false);
         dialogStore().toggleSearchSantri(false);
-        if (props.isNew) {
+        if (isNew) {
             router.push(`/santri/${response.data.santri.id}`);
         } else {
             forceRerender();
@@ -210,7 +210,7 @@ const deleteData = async (id) => {
 };
 
 const resetOrDelete = () => {
-    if (props.isNew) {
+    if (isNew) {
         santriStore().setNull();
     } else {
         deleteData(santri.id);
