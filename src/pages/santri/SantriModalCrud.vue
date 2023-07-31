@@ -2,7 +2,10 @@
     <q-card class="full-width" style="max-width: 425px">
         <q-form @submit.prevent="onSubmit">
             <q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
-                <div class="text-subtitle1">Input Data Santri</div>
+                <div class="text-subtitle1">
+                    Input Data Santri &mdash;
+                    <em> {{ isNew ? "baru" : "edit" }}</em>
+                </div>
             </q-card-section>
             <q-card-section class="no-padding">
                 <q-carousel

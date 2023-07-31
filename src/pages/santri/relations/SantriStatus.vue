@@ -1,5 +1,9 @@
 <template>
-    <template-array :data="lists" />
+    <template-array
+        :data="lists"
+        @add="handleAdd"
+        @edit="handleEdit"
+    ></template-array>
 </template>
 <script setup>
 import { apiTokened } from "src/config/api.js";
@@ -24,4 +28,11 @@ try {
 } catch (error) {
     console.log(error);
 }
+
+const handleAdd = () => {
+    console.log("add");
+};
+const handleEdit = ({ id }) => {
+    console.log(id);
+};
 </script>
