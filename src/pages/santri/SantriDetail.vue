@@ -88,7 +88,7 @@
     <!-- <pre>{{ santri }}</pre> -->
 </template>
 <script setup>
-import { reactive, ref, toRefs, watchEffect } from "vue";
+import { reactive, ref, toRefs } from "vue";
 import { useRoute } from "vue-router";
 import { apiTokened } from "src/config/api.js";
 import { formatDateFull } from "../../utils/format-date";

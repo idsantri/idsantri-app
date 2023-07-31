@@ -69,9 +69,12 @@ import { apiTokened } from "../../config/api";
 import ModalCrud from "./WaliModalCrud.vue";
 import { notifySuccess } from "src/utils/notify";
 import dialogStore from "src/stores/dialog-store";
+import santriStore from "src/stores/santri-store";
 
 const dialog = dialogStore();
-const { searchWali, crudWali } = toRefs(dialog);
+const { searchWali, crudWali, crudSantri } = toRefs(dialog);
+const { santri } = santriStore();
+const { wali_id } = toRefs(santri);
 
 const router = useRouter();
 const url = `${apiTokened.defaults.baseURL}/wali/search`;
@@ -184,8 +187,13 @@ onMounted(() => {
         router.push(`/wali/${id}`);
     };
     document.copyId = (id) => {
-        navigator.clipboard.writeText(id);
-        notifySuccess(`ID (${id}) sudah disalin/dicopy ke clipboard`);
+        if (crudSantri.value) {
+            wali_id.value = id;
+        } else {
+            navigator.clipboard.writeText(id);
+            notifySuccess(`ID (${id}) sudah disalin/dicopy ke clipboard`);
+        }
+        searchWali.value = false;
     };
 });
 

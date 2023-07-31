@@ -165,6 +165,7 @@ onMounted(() => {
     document.copyId = (id) => {
         navigator.clipboard.writeText(id);
         notifySuccess(`ID (${id}) sudah disalin/dicopy ke clipboard`);
+        searchSantri.value = false;
     };
 });
 

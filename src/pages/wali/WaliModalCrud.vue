@@ -78,7 +78,7 @@
     </q-card>
 </template>
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, toRefs } from "vue";
 import { apiTokened } from "src/config/api";
 import InputIdentity from "./WaliModalCrudIdentity.vue";
 import InputAlamat from "./WaliModalCrudAlamat.vue";
@@ -90,11 +90,14 @@ import toArray from "src/utils/to-array";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import dialogStore from "src/stores/dialog-store";
+import santriStore from "src/stores/santri-store";
 
 const props = defineProps({ isNew: { type: Boolean, default: true } });
 if (props.isNew) waliStore().$reset();
 
-const wali = reactive(waliStore().wali);
+const { wali } = reactive(waliStore());
+const { santri } = santriStore();
+const { wali_id } = toRefs(santri);
 
 const onSubmit = async () => {
     const data = JSON.parse(JSON.stringify(wali));
@@ -108,10 +111,11 @@ const onSubmit = async () => {
         dialogStore().toggleCrudWali(false);
         dialogStore().toggleSearchWali(false);
         if (props.isNew) {
-            navigator.clipboard.writeText(response.data.wali.id);
-            notifySuccess(
-                `ID (${response.data.wali.id}) sudah disalin/dicopy ke clipboard`
-            );
+            wali_id.value = response.data.wali.id;
+            // navigator.clipboard.writeText(response.data.wali.id);
+            // notifySuccess(
+            //     `ID (${response.data.wali.id}) sudah disalin/dicopy ke clipboard`
+            // );
         } else {
             forceRerender();
         }

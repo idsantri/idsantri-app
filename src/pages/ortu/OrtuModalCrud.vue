@@ -78,7 +78,7 @@
     </q-card>
 </template>
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, toRefs } from "vue";
 import { apiTokened } from "src/config/api";
 import InputIdentity from "./OrtuModalCrudIdentity.vue";
 import InputAyah from "./OrtuModalCrudAyah.vue";
@@ -89,13 +89,15 @@ import { forceRerender } from "src/utils/buttons-click";
 import toArray from "src/utils/to-array";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
-import { closeOrtuCrud, closeOrtuSearch } from "src/utils/buttons-click";
 import dialogStore from "src/stores/dialog-store";
-const props = defineProps({ isNew: { type: Boolean, default: true } });
+import santriStore from "src/stores/santri-store";
 
+const props = defineProps({ isNew: { type: Boolean, default: true } });
 if (props.isNew) ortuStore().$reset();
 
-const ortu = reactive(ortuStore().ortu);
+const { ortu } = reactive(ortuStore());
+const { santri } = santriStore();
+const { ortu_id } = toRefs(santri);
 
 const onSubmit = async () => {
     const data = JSON.parse(JSON.stringify(ortu));
@@ -109,10 +111,11 @@ const onSubmit = async () => {
         dialogStore().toggleCrudOrtu(false);
         dialogStore().toggleSearchOrtu(false);
         if (props.isNew) {
-            navigator.clipboard.writeText(response.data.ortu.id);
-            notifySuccess(
-                `ID (${response.data.ortu.id}) sudah disalin/dicopy ke clipboard`
-            );
+            ortu_id.value = response.data.ortu.id;
+            // navigator.clipboard.writeText(response.data.ortu.id);
+            // notifySuccess(
+            //     `ID (${response.data.ortu.id}) sudah disalin/dicopy ke clipboard`
+            // );
         } else {
             forceRerender();
         }

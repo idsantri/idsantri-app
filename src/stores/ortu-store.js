@@ -9,7 +9,7 @@ export default defineStore("ortu", {
                 a_tgl_lahir: null,
                 a_tmp_lahir: null,
                 a_nik: null,
-                a_hidup: true,
+                a_hidup: 1,
                 a_pa_formal_tingkat: null,
                 a_pa_diniyah_tingkat: null,
                 a_pekerjaan: null,
@@ -18,7 +18,7 @@ export default defineStore("ortu", {
                 i_tgl_lahir: null,
                 i_tmp_lahir: null,
                 i_nik: null,
-                i_hidup: true,
+                i_hidup: 1,
                 i_pa_formal_tingkat: null,
                 i_pa_diniyah_tingkat: null,
                 i_pekerjaan: null,
@@ -40,6 +40,8 @@ export default defineStore("ortu", {
             for (const key in this.ortu) {
                 this.ortu[key] = null;
             }
+            this.ortu.a_hidup = 1;
+            this.ortu.i_hidup = 1;
         },
     },
     persist: {

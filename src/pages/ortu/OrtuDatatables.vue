@@ -69,9 +69,12 @@ import { apiTokened } from "../../config/api";
 import ModalCrud from "./OrtuModalCrud.vue";
 import { notifySuccess } from "src/utils/notify";
 import dialogStore from "src/stores/dialog-store";
+import santriStore from "src/stores/santri-store";
 
 const dialog = dialogStore();
-const { searchOrtu, crudOrtu } = toRefs(dialog);
+const { searchOrtu, crudOrtu, crudSantri } = toRefs(dialog);
+const { santri } = santriStore();
+const { ortu_id } = toRefs(santri);
 
 const router = useRouter();
 
@@ -188,8 +191,13 @@ onMounted(() => {
         router.push(`/ortu/${id}`);
     };
     document.copyId = (id) => {
-        navigator.clipboard.writeText(id);
-        notifySuccess(`ID (${id}) sudah disalin/dicopy ke clipboard`);
+        if (crudSantri.value) {
+            ortu_id.value = id;
+        } else {
+            navigator.clipboard.writeText(id);
+            notifySuccess(`ID (${id}) sudah disalin/dicopy ke clipboard`);
+        }
+        searchOrtu.value = false;
     };
 });
 

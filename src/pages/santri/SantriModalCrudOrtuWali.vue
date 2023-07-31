@@ -144,7 +144,7 @@ import { apiTokened } from "src/config/api";
 import santriState from "src/stores/santri-store";
 import { notifyError } from "src/utils/notify";
 import toArray from "src/utils/to-array";
-import { onMounted, reactive, ref, toRefs } from "vue";
+import { onMounted, reactive, ref, toRefs, watch } from "vue";
 import { fetchLists } from "src/utils/fetch-list";
 import WaliDatatables from "../wali/WaliDatatables.vue";
 import OrtuDatatables from "../ortu/OrtuDatatables.vue";
@@ -191,6 +191,15 @@ async function pasteOrtu() {
 async function pasteWali() {
     wali_id.value = await navigator.clipboard.readText();
 }
+
+watch([ortu_id, wali_id], ([newOrtu, newWali], [oldOrtu, oldWali]) => {
+    if (newOrtu != oldOrtu) {
+        check("ortu", newOrtu);
+    }
+    if (newWali != oldWali) {
+        check("wali", newWali);
+    }
+});
 </script>
 <style scoped>
 .slot-after {

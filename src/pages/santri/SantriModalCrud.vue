@@ -112,6 +112,7 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import dialogStore from "src/stores/dialog-store";
 
+const router = useRouter();
 const props = defineProps({ isNew: { type: Boolean, default: true } });
 if (props.isNew) santriStore().$reset();
 
@@ -123,13 +124,12 @@ const onSubmit = async () => {
         if (props.isNew) response = await apiTokened.post(`santri`, data);
         else response = await apiTokened.put(`santri/${santri.id}`, data);
 
-        // console.log("response", response);
+        // console.log("data", data);
         notifySuccess(response.data.message);
-
         dialogStore().toggleCrudSantri(false);
         dialogStore().toggleSearchSantri(false);
         if (props.isNew) {
-            useRouter().push(`/santri/${response.data.santri.id}`);
+            router.push(`/santri/${response.data.santri.id}`);
         } else {
             forceRerender();
         }
@@ -188,7 +188,6 @@ const toggleOptions = [
 ];
 
 const $q = useQuasar();
-const router = useRouter();
 
 const deleteData = async (id) => {
     $q.dialog({
