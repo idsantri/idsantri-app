@@ -1,15 +1,15 @@
 <template>
-    <div class="q-pa-xs" style="height: 12rem"></div>
-    <q-spinner-cube
-        v-show="showSpinner"
-        color="teal-12"
-        size="14em"
-        class="absolute-center"
-    />
+	<div class="q-pa-xs" style="height: 12rem"></div>
+	<q-spinner-cube
+		v-show="showSpinner"
+		color="teal-12"
+		size="14em"
+		class="absolute-center"
+	/>
 </template>
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import toArray from "../../utils/to-array";
 import { notifyAlert, notifyError } from "src/utils/notify";
 import axios from "axios";
@@ -26,21 +26,22 @@ const url = query["email-verify-url"];
 const signature = query["signature"];
 
 async function makeRequest() {
-    const config = url + "&signature=" + signature;
-    showSpinner.value = true;
-    try {
-        const { data } = await axios.request(config);
-        const notification = notifyAlert(data.message, 0);
-        await notification; // tunggu notifikasi ditutup
-        router.push({ name: "Login" });
-    } catch (error) {
-        toArray(error.response.data.message).forEach((message) => {
-            notifyError(message);
-        });
-    } finally {
-        showSpinner.value = false;
-    }
+	const config = url + "&signature=" + signature;
+	showSpinner.value = true;
+	try {
+		const { data } = await axios.request(config);
+		const notification = notifyAlert(data.message, 0);
+		await notification; // tunggu notifikasi ditutup
+		router.push({ name: "Login" });
+	} catch (error) {
+		toArray(error.response.data.message).forEach((message) => {
+			notifyError(message);
+		});
+	} finally {
+		showSpinner.value = false;
+	}
 }
-
-makeRequest();
+onMounted(async () => {
+	await makeRequest();
+});
 </script>

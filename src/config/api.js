@@ -6,6 +6,6 @@ const api = axios.create({ baseURL: baseUrl.defaults.baseURL });
 const apiTokened = axios.create({ baseURL: baseUrl.defaults.baseURL });
 const auth = JSON.parse(sessionStorage.getItem("auth"));
 const token = auth ? auth.token : "FAIL TO GET TOKEN";
-apiTokened.defaults.headers.common["Authorization"] = "Bearer " + token;
+apiTokened.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
 export { api, apiTokened };
