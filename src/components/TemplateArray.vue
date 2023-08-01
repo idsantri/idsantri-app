@@ -31,8 +31,8 @@
 				</q-item-section>
 			</q-item>
 		</div>
-		<div v-else style="min-height: 50px">
-			<div class="text-body2 text-center">
+		<div v-else style="height: 40px">
+			<div class="text-body2 text-center" style="line-height: 40px">
 				Tidak ada data untuk ditampilkan!
 			</div>
 		</div>

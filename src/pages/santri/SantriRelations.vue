@@ -16,7 +16,7 @@
 			<q-tab name="domisili" label="Domisili" />
 		</q-tabs>
 		<q-card-section class="q-pa-sm">
-			<q-tab-panels animated :model-value="tab">
+			<q-tab-panels v-model="tab" animated="" swipeable="" infinite="">
 				<q-tab-panel class="no-padding" name="wali">
 					<suspense>
 						<template #default>
@@ -95,7 +95,7 @@
 import { ref } from 'vue';
 import SantriWali from './relations/SantriWali.vue';
 import SantriOrtu from './relations/SantriOrtu.vue';
-import SantriStatus from './relations/SantriStatus.vue';
+import SantriStatus from 'src/views/santri-status/SantriStatus.vue';
 import SantriKelas from './relations/SantriKelas.vue';
 import SantriDomisili from './relations/SantriDomisili.vue';
 

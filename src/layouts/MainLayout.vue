@@ -109,19 +109,19 @@
 
 		<q-footer bordered class="bg-teal-6 text-teal-12">
 			<p class="text-center no-margin q-pa-xs">
-				by idsantri {{ m2h("2007-12-10", 0) }}
+				by idsantri {{ m2h('2007-12-10', 0) }}
 			</p>
 		</q-footer>
 	</q-layout>
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted, computed } from "vue";
-import SideBar from "src/components/SideBar.vue";
-import ordersStore from "src/stores/orders-store";
-import constanta from "src/config/constanta";
-import { m2h } from "src/utils/hijri";
-import ModalsMain from "src/components/ModalsMain.vue";
+import { ref, watchEffect, onMounted, computed } from 'vue';
+import SideBar from 'src/components/SideBar.vue';
+import ordersStore from 'src/stores/orders-store';
+import constanta from 'src/config/constanta';
+import { m2h } from 'src/utils/hijri';
+import ModalsMain from 'src/components/ModalsMain.vue';
 const leftDrawerOpen = ref(false);
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 
@@ -144,26 +144,26 @@ watchEffect(() => {
  */
 const deferredPrompt = ref(null);
 onMounted(async () => {
-	window.addEventListener("beforeinstallprompt", (e) => {
+	window.addEventListener('beforeinstallprompt', (e) => {
 		e.preventDefault();
 		deferredPrompt.value = e;
 	});
 });
 
 const pwaIsInstalled = computed(() => {
-	if (window.matchMedia("(display-mode:standalone)").matches) {
-		console.log("this is standalone");
+	if (window.matchMedia('(display-mode:standalone)').matches) {
+		console.log('this is standalone');
 		return true;
 	}
-	console.log("this is not standalone");
+	console.log('this is not standalone');
 	return false;
 });
 
 const installApp = async () => {
 	deferredPrompt.value.prompt();
 	const { outcome } = await deferredPrompt.value.userChoice;
-	if (outcome === "dismissed") {
-		console.log("this is standalone");
+	if (outcome === 'dismissed') {
+		console.log('this is standalone');
 		return true;
 	}
 };

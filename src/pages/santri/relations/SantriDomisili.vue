@@ -4,7 +4,7 @@
 <script setup>
 import { apiTokened } from 'src/config/api.js';
 import { ref, onMounted } from 'vue';
-import TemplateArray from './TemplateArray.vue';
+import TemplateArray from 'src/components/TemplateArray.vue';
 import { m2hFormat } from 'src/utils/hijri.js';
 import { formatDateShort } from 'src/utils/format-date.js';
 

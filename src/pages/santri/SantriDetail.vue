@@ -88,7 +88,7 @@ import santriStore from 'src/stores/santri-store';
 import { bacaHijri } from 'src/utils/hijri';
 import { toArray } from 'src/utils/array-object';
 import { notifyError } from 'src/utils/notify';
-import SantriRelations from 'src/pages/santri/SantriRelations';
+import SantriRelations from 'src/pages/santri/SantriRelations.vue';
 import dialogStore from 'src/stores/dialog-store';
 
 const santri = reactive({});

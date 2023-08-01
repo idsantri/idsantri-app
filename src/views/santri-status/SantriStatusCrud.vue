@@ -1,0 +1,126 @@
+<template>
+	<q-card class="full-width" style="max-width: 425px">
+		<q-form @submit.prevent="submit">
+			<q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
+				<div class="text-subtitle1">
+					Input Status &mdash; <em>{{ isNew ? 'baru' : 'edit' }}</em>
+				</div>
+			</q-card-section>
+			<q-card-section>
+				<q-input
+					dense
+					outlined
+					label="Nama"
+					:model-value="input?.nama + ' (' + input?.santri_id + ')'"
+					disable=""
+					filled=""
+				/>
+				<q-select
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Status"
+					emit-value
+					map-options
+					v-model="input.status"
+					:options="lists['status']"
+					:loading="loading['status']"
+				/>
+				<q-input
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Keterangan"
+					v-model="input.keterangan"
+					autogrow=""
+				/>
+			</q-card-section>
+			<q-card-actions class="flex bg-teal-6">
+				<q-btn
+					v-show="!props.isNew"
+					label="Hapus"
+					class="bg-red text-red-1"
+					no-caps=""
+					@click="deleteData(input.id)"
+				/>
+				<q-space />
+				<q-btn
+					label="Tutup"
+					v-close-popup
+					class="bg-teal-11"
+					no-caps=""
+					id="btn-close-santri-crud"
+				/>
+				<q-btn
+					type="submit"
+					label="Simpan"
+					class="bg-teal-10 text-teal-11"
+					no-caps=""
+				/>
+			</q-card-actions>
+		</q-form>
+		<!-- <pre>{{ input }}</pre> -->
+	</q-card>
+</template>
+<script setup>
+import { useQuasar } from 'quasar';
+import { apiTokened } from 'src/config/api';
+import { toArray } from 'src/utils/array-object';
+import { forceRerender } from 'src/utils/buttons-click';
+import { fetchLists } from 'src/utils/fetch-list';
+import { notifyError, notifySuccess } from 'src/utils/notify';
+import { onMounted, ref } from 'vue';
+
+const props = defineProps({
+	status: { type: Object, required: true },
+	isNew: { type: Boolean, default: true },
+});
+
+// eslint-disable-next-line vue/no-setup-props-destructure
+const input = ref({});
+const lists = ref([]);
+const loading = ref([]);
+onMounted(async () => {
+	input.value = props.status;
+	await fetchLists({ key: 'status', loading, lists });
+});
+
+const submit = async () => {
+	const data = JSON.parse(JSON.stringify(input.value));
+	delete data.nama;
+	console.log(data);
+	try {
+		let response = null;
+		if (props.isNew) response = await apiTokened.post(`status`, data);
+		else response = await apiTokened.put(`status/${data.id}`, data);
+		notifySuccess(response.data.message);
+		forceRerender();
+	} catch (error) {
+		toArray(error.response.data.message).forEach((message) => {
+			notifyError(message);
+		});
+	}
+};
+
+const $q = useQuasar();
+const deleteData = async (id) => {
+	$q.dialog({
+		title: 'Konfirmasi',
+		message: `<span style="color:'red'">Hapus data?</span>`,
+		cancel: true,
+		persistent: false,
+		html: true,
+	}).onOk(async () => {
+		try {
+			const response = await apiTokened.delete(`status/${id}`);
+			notifySuccess(response.data.message);
+			forceRerender();
+		} catch (error) {
+			toArray(error.response.data.message).forEach((message) => {
+				notifyError(message);
+			});
+		}
+	});
+};
+</script>
+<style></style>
