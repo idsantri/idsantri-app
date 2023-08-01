@@ -20,12 +20,12 @@
 					dense
 					class="q-mt-sm"
 					outlined
-					label="Status"
+					label="Domisili"
 					emit-value
 					map-options
-					v-model="input.status"
-					:options="lists['status']"
-					:loading="loading['status']"
+					v-model="input.domisili"
+					:options="lists['domisili']"
+					:loading="loading['domisili']"
 				/>
 				<q-input
 					dense
@@ -64,6 +64,7 @@
 	</q-card>
 </template>
 <script setup>
+import { useQuasar } from 'quasar';
 import { apiTokened } from 'src/config/api';
 import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
@@ -71,7 +72,6 @@ import { fetchLists } from 'src/utils/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
 import { deleteById } from 'src/api/delete';
-
 const props = defineProps({
 	data: { type: Object, required: true },
 	isNew: { type: Boolean, default: true },
@@ -84,7 +84,7 @@ const lists = ref([]);
 const loading = ref([]);
 onMounted(async () => {
 	input.value = props.data;
-	await fetchLists({ key: 'status', loading, lists });
+	await fetchLists({ key: 'domisili', loading, lists });
 });
 
 const submit = async () => {
@@ -93,8 +93,8 @@ const submit = async () => {
 	// console.log(data);
 	try {
 		let response = null;
-		if (props.isNew) response = await apiTokened.post(`status`, data);
-		else response = await apiTokened.put(`status/${data.id}`, data);
+		if (props.isNew) response = await apiTokened.post(`domisili`, data);
+		else response = await apiTokened.put(`domisili/${data.id}`, data);
 		notifySuccess(response.data.message);
 		forceRerender();
 	} catch (error) {
@@ -106,7 +106,7 @@ const submit = async () => {
 
 const deleteData = async (id) => {
 	const data = {
-		endPoint: 'status',
+		endPoint: 'domisili',
 		id: id,
 		rerender: true,
 	};

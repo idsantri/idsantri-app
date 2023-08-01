@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<template-array :data="statusMap" @add="handleAdd" @edit="handleEdit" />
+		<template-array :data="kelasMap" @add="handleAdd" @edit="handleEdit" />
 
 		<q-dialog v-model="crudShow">
-			<santri-status-crud
-				:data="status"
+			<santri-kelas-crud
+				:data="kelas"
 				:is-new="isNew"
-				title="Input Status"
+				title="Input Kelas"
 			/>
 		</q-dialog>
 	</div>
@@ -18,7 +18,7 @@ import TemplateArray from 'src/components/TemplateArray.vue';
 import { formatDateShort } from 'src/utils/format-date.js';
 import { m2hFormat } from 'src/utils/hijri.js';
 import { getObjectById } from 'src/utils/array-object';
-import SantriStatusCrud from './SantriStatusCrud.vue';
+import SantriKelasCrud from './SantriKelasCrud.vue';
 import santriStore from 'src/stores/santri-store';
 
 const { santri } = santriStore();
@@ -27,13 +27,13 @@ const props = defineProps({
 });
 
 const crudShow = ref(false);
-const status = ref({});
-const statusMap = ref([]);
-const statusArr = ref([]);
+const kelas = ref({});
+const kelasMap = ref([]);
+const kelasArr = ref([]);
 const isNew = ref(false);
 async function fetchByIdSantri(id) {
 	try {
-		const { data } = await apiTokened.get(`santri/${id}/status`);
+		const { data } = await apiTokened.get(`santri/${id}/kelas`);
 		return data;
 	} catch (error) {
 		console.log(error);
@@ -41,28 +41,27 @@ async function fetchByIdSantri(id) {
 }
 
 onMounted(async () => {
-	const { status } = await fetchByIdSantri(props.santriId);
-	statusArr.value = status;
-	statusMap.value = status.map((v, i) => ({
-		Tanggal:
-			formatDateShort(v.created_at) + ' | ' + m2hFormat(v.created_at),
-		Status: v.status,
+	const { kelas } = await fetchByIdSantri(props.santriId);
+	kelasArr.value = kelas;
+	kelasMap.value = kelas.map((v, i) => ({
+		'Tahun Ajaran': `${v.th_ajaran_h}  |  ${v.th_ajaran_m || ''} `,
+		Kelas: `${v.kelas} ${v.tingkat}`,
 		Keterangan: v.keterangan || '-',
 		id: v.id,
 	}));
 });
 
 const handleAdd = () => {
-	status.value = {
-		santri_id: statusArr.value[0]?.santri_id || santri.id,
-		nama: statusArr.value[0]?.nama || santri.nama,
+	kelas.value = {
+		santri_id: kelasArr.value[0]?.santri_id || santri.id,
+		nama: kelasArr.value[0]?.nama || santri.nama,
 	};
 	isNew.value = true;
 	crudShow.value = true;
 };
 
 const handleEdit = ({ id }) => {
-	status.value = getObjectById(statusArr, id);
+	kelas.value = getObjectById(kelasArr, id);
 	isNew.value = false;
 	crudShow.value = true;
 };

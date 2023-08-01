@@ -96,8 +96,8 @@ import { ref } from 'vue';
 import SantriWali from './relations/SantriWali.vue';
 import SantriOrtu from './relations/SantriOrtu.vue';
 import SantriStatus from 'src/views/santri-status/SantriStatus.vue';
-import SantriKelas from './relations/SantriKelas.vue';
-import SantriDomisili from './relations/SantriDomisili.vue';
+import SantriKelas from 'src/views/santri-kelas/SantriKelas.vue';
+import SantriDomisili from 'src/views/santri-domisili/SantriDomisili.vue';
 
 const props = defineProps({ santriId: { default: null } });
 const tab = ref('wali');
