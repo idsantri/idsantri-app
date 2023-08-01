@@ -58,7 +58,7 @@
 
 				<!-- relations -->
 				<div class="col-12 col-sm-6 col-md-4 q-pa-sm">
-					<tab-component :santri-id="santriId" />
+					<santri-relations :santri-id="santriId" />
 				</div>
 			</div>
 		</q-card-section>
@@ -74,7 +74,7 @@
 		@update-uploader="handleUploader"
 	/>
 
-	<pre>{{ santri }}</pre>
+	<!-- <pre>{{ santri }}</pre> -->
 </template>
 <script setup>
 import { reactive, ref, toRefs, onMounted } from 'vue';
@@ -86,9 +86,9 @@ import CardImage from '../../components/CardImage.vue';
 import UploadImage from './SantriUploadImage.vue';
 import santriStore from 'src/stores/santri-store';
 import { bacaHijri } from 'src/utils/hijri';
-import toArray from 'src/utils/to-array';
+import { toArray } from 'src/utils/array-object';
 import { notifyError } from 'src/utils/notify';
-import TabComponent from 'src/pages/santri/relations/TabComponent.vue';
+import SantriRelations from 'src/pages/santri/SantriRelations';
 import dialogStore from 'src/stores/dialog-store';
 
 const santri = reactive({});

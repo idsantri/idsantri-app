@@ -65,32 +65,32 @@
 </template>
 
 <script setup>
-import { api } from "../../config/api";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-import toArray from "../../utils/to-array";
-import { notifyAlert } from "src/utils/notify";
+import { api } from '../../config/api';
+import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import { toArray } from 'src/utils/array-object';
+import { notifyAlert } from 'src/utils/notify';
 
 const showSpinner = ref(false);
 const router = useRouter();
-const email = ref("");
+const email = ref('');
 
-const emit = defineEmits(["title", "errors"]);
-emit("title", "Lupa Kata Sandi?");
-emit("errors", []);
+const emit = defineEmits(['title', 'errors']);
+emit('title', 'Lupa Kata Sandi?');
+emit('errors', []);
 
 const reset = async () => {
-	emit("errors", []);
+	emit('errors', []);
 	try {
 		showSpinner.value = true;
-		const response = await api.post("forgot-password", {
+		const response = await api.post('forgot-password', {
 			email: email.value,
 		});
 		const notification = notifyAlert(response.data.message, 0);
 		await notification; // tunggu notifikasi ditutup
-		router.push("/reset-password");
+		router.push('/reset-password');
 	} catch (error) {
-		emit("errors", toArray(error.response.data.message));
+		emit('errors', toArray(error.response.data.message));
 	} finally {
 		showSpinner.value = false;
 	}

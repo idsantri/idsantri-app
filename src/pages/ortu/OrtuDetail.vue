@@ -61,7 +61,7 @@ import { apiTokened } from 'src/config/api.js';
 import CardColumn from '../../components/CardColumn.vue';
 import CardListSantri from 'src/components/CardListSantri.vue';
 import ortuStore from 'src/stores/ortu-store.js';
-import toArray from 'src/utils/to-array';
+import { toArray } from 'src/utils/array-object';
 import { notifyError } from 'src/utils/notify';
 import dialogStore from 'src/stores/dialog-store';
 

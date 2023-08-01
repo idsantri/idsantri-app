@@ -1,18 +1,18 @@
 <template>halo... sekreatriat</template>
 <script setup>
-import toArray from "../../utils/to-array";
-import { notifyError } from "../../utils/notify";
-import { apiTokened } from "../../config/api";
-import { reactive } from "vue";
+import { toArray } from 'src/utils/array-object';
+import { notifyError } from '../../utils/notify';
+import { apiTokened } from '../../config/api';
+import { reactive } from 'vue';
 const santri = reactive({});
 (async () => {
-    try {
-        const response = await apiTokened.get(`santri`);
-        Object.assign(santri, response.data.santri);
-    } catch (error) {
-        toArray(error.response.data.message).forEach((message) => {
-            notifyError(message);
-        });
-    }
+	try {
+		const response = await apiTokened.get(`santri`);
+		Object.assign(santri, response.data.santri);
+	} catch (error) {
+		toArray(error.response.data.message).forEach((message) => {
+			notifyError(message);
+		});
+	}
 })();
 </script>

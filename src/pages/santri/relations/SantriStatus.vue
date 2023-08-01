@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<template-array :data="listsMap" @add="handleAdd" @edit="handleEdit" />
+		<template-array :data="dataMap" @add="handleAdd" @edit="handleEdit" />
 		<q-dialog v-model="crudStatus">
 			<q-card class="full-width" style="max-width: 425px">
 				<q-form @submit.prevent="submit">
@@ -8,7 +8,18 @@
 						<div class="text-subtitle1">Input Status</div>
 					</q-card-section>
 					<q-card-section>
-						<q-input v-model="status.status" />
+						<q-select
+							dense
+							hint=""
+							class="q-mt-sm"
+							outlined
+							label="Status"
+							emit-value
+							map-options
+							v-model="data.status"
+							:options="lists['status']"
+							:loading="loading['status']"
+						/>
 					</q-card-section>
 					<q-card-actions class="flex bg-teal-6">
 						<q-btn
@@ -44,21 +55,24 @@ import { ref, onMounted } from 'vue';
 import TemplateArray from './TemplateArray.vue';
 import { formatDateShort } from 'src/utils/format-date.js';
 import { m2hFormat } from 'src/utils/hijri.js';
+import { fetchLists } from 'src/utils/fetch-list';
+import { getObjectById } from 'src/utils/array-object';
+
 const props = defineProps({
 	santriId: { default: null },
 });
 
 const crudStatus = ref(false);
 const status = ref({});
-const listsMap = ref([]);
-const lists = ref([]);
+const dataMap = ref([]);
+const data = ref([]);
 async function fetchData() {
 	try {
 		const { data } = await apiTokened.get(
 			`santri/${props.santriId}/status`
 		);
-		lists.value = data.status;
-		listsMap.value = data.status.map((v, i) => ({
+		data.value = data.status;
+		dataMap.value = data.status.map((v, i) => ({
 			Tanggal:
 				formatDateShort(v.created_at) + ' | ' + m2hFormat(v.created_at),
 			Status: v.status,
@@ -70,8 +84,12 @@ async function fetchData() {
 	}
 }
 
+const lists = ref([]);
+const loading = ref([]);
 onMounted(async () => {
 	await fetchData();
+	await fetchLists({ key: 'status', loading, lists });
+	// console.log(lists.value['status']);
 });
 
 const handleAdd = () => {
@@ -79,17 +97,11 @@ const handleAdd = () => {
 };
 
 const handleEdit = ({ id }) => {
-	status.value = getObjectById(lists, id);
+	status.value = getObjectById(data, id);
 	crudStatus.value = true;
 };
 
 const submit = () => {
 	console.log('submit');
 };
-
-function getObjectById(arr, id) {
-	// Periksa apakah array merupakan Proxy
-	const dataArr = Array.isArray(arr) ? arr : arr.value;
-	return dataArr.find((obj) => obj.id === id);
-}
 </script>

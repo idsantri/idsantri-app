@@ -53,7 +53,7 @@ import CardColumn from '../../components/CardColumn.vue';
 import CardListSantri from 'src/components/CardListSantri.vue';
 import waliStore from 'src/stores/wali-store';
 import { formatAlamatLengkap } from 'src/utils/format-text';
-import toArray from 'src/utils/to-array';
+import { toArray } from 'src/utils/array-object';
 import { notifyError } from 'src/utils/notify';
 import dialogStore from 'src/stores/dialog-store';
 
