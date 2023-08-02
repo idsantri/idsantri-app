@@ -45,7 +45,9 @@ onMounted(async () => {
 	kelasArr.value = kelas;
 	kelasMap.value = kelas.map((v, i) => ({
 		'Tahun Ajaran': `${v.th_ajaran_h}  |  ${v.th_ajaran_m || ''} `,
-		Kelas: `${v.kelas} ${v.tingkat}`,
+		Kelas:
+			`${v.kelas} ${v.tingkat}` +
+			(v.no_absen ? ` (No. ${v.no_absen})` : ''),
 		Keterangan: v.keterangan || '-',
 		id: v.id,
 	}));

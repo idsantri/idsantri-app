@@ -24,7 +24,7 @@
 								<div class="col-4 text-caption">
 									{{ key }}
 								</div>
-								<div class="col">{{ val }}</div>
+								<div class="col ellipsis">{{ val }}</div>
 							</div>
 						</div>
 					</q-item-label>
