@@ -93,8 +93,8 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import SantriWali from './relations/SantriWali.vue';
-import SantriOrtu from './relations/SantriOrtu.vue';
+import SantriWali from 'src/views/santri-wali/SantriWali.vue';
+import SantriOrtu from 'src/views/santri-ortu/SantriOrtu.vue';
 import SantriStatus from 'src/views/santri-status/SantriStatus.vue';
 import SantriKelas from 'src/views/santri-kelas/SantriKelas.vue';
 import SantriDomisili from 'src/views/santri-domisili/SantriDomisili.vue';

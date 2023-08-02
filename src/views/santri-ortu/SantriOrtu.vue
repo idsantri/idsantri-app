@@ -4,7 +4,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { apiTokened } from 'src/config/api.js';
-import TemplateObject from './TemplateObject.vue';
+import TemplateObject from 'src/components/TemplateObject.vue';
 const props = defineProps({
 	santriId: { default: null },
 });
