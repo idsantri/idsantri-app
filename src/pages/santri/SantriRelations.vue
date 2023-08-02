@@ -7,6 +7,11 @@
 		>
 			rerender
 		</button>
+		<!--
+		TODO:
+		url tidak berubah jika pindah dengan swipe
+		-->
+
 		<q-tabs
 			v-model="tab"
 			no-caps
@@ -43,6 +48,7 @@
 			/>
 		</q-tabs>
 		<q-card-section class="q-pa-sm">
+			<!-- swipe tak jalan -->
 			<!-- <suspense>
 				<template #default>
 					<router-view />
