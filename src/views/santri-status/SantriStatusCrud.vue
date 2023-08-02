@@ -66,7 +66,10 @@
 <script setup>
 import { apiTokened } from 'src/config/api';
 import { toArray } from 'src/utils/array-object';
-import { forceRerender } from 'src/utils/buttons-click';
+import {
+	forceRerender,
+	rerenderSantriRelations,
+} from 'src/utils/buttons-click';
 import { fetchLists } from 'src/utils/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
@@ -101,7 +104,7 @@ const submit = async () => {
 		if (props.isNew) response = await apiTokened.post(`status`, data);
 		else response = await apiTokened.put(`status/${data.id}`, data);
 		notifySuccess(response.data.message);
-		forceRerender();
+		rerenderSantriRelations();
 	} catch (error) {
 		toArray(error.response.data.message).forEach((message) => {
 			notifyError(message);

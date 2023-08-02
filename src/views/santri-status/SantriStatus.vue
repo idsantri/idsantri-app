@@ -1,7 +1,11 @@
 <template>
 	<div>
-		<template-array :data="statusMap" @add="handleAdd" @edit="handleEdit" />
-
+		<template-array
+			:data="statusMap"
+			@add="handleAdd"
+			@edit="handleEdit"
+			:key="keyStatus"
+		/>
 		<q-dialog v-model="crudShow">
 			<santri-status-crud
 				:data="status"
@@ -20,11 +24,13 @@ import { m2hFormat } from 'src/utils/hijri.js';
 import { getObjectById } from 'src/utils/array-object';
 import SantriStatusCrud from './SantriStatusCrud.vue';
 import santriStore from 'src/stores/santri-store';
+import { useRoute } from 'vue-router';
 
 const { santri } = santriStore();
-const props = defineProps({
-	santriId: { default: null },
-});
+const keyStatus = ref(0);
+
+const route = useRoute();
+const santriId = route.params.id;
 
 const crudShow = ref(false);
 const status = ref({});
@@ -41,7 +47,7 @@ async function fetchByIdSantri(id) {
 }
 
 onMounted(async () => {
-	const { status } = await fetchByIdSantri(props.santriId);
+	const { status } = await fetchByIdSantri(santriId);
 	statusArr.value = status;
 	statusMap.value = status.map((v, i) => ({
 		Tanggal:

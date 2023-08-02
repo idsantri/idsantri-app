@@ -24,11 +24,12 @@ import { m2hFormat } from 'src/utils/hijri.js';
 import { getObjectById } from 'src/utils/array-object';
 import SantriDomisiliCrud from './SantriDomisiliCrud.vue';
 import santriStore from 'src/stores/santri-store';
+import { useRoute } from 'vue-router';
 
 const { santri } = santriStore();
-const props = defineProps({
-	santriId: { default: null },
-});
+
+const route = useRoute();
+const santriId = route.params.id;
 
 const crudShow = ref(false);
 const domisili = ref({});
@@ -45,7 +46,7 @@ async function fetchByIdSantri(id) {
 }
 
 onMounted(async () => {
-	const { domisili } = await fetchByIdSantri(props.santriId);
+	const { domisili } = await fetchByIdSantri(santriId);
 	domisiliArr.value = domisili;
 	domisiliMap.value = domisili.map((v, i) => ({
 		Tanggal:

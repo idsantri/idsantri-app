@@ -66,6 +66,34 @@ const routes = [
 				path: 'santri/:id',
 				component: () => import('src/pages/santri/SantriDetail.vue'),
 				meta: { title: 'Detail Santri' },
+				children: [
+					{
+						path: 'status',
+						component: () =>
+							import('src/pages/santri/SantriDetail.vue'),
+					},
+
+					{
+						path: 'kelas',
+						component: () =>
+							import('src/pages/santri/SantriDetail.vue'),
+					},
+					{
+						path: 'domisili',
+						component: () =>
+							import('src/pages/santri/SantriDetail.vue'),
+					},
+					{
+						path: 'wali',
+						component: () =>
+							import('src/pages/santri/SantriDetail.vue'),
+					},
+					{
+						path: 'ortu',
+						component: () =>
+							import('src/pages/santri/SantriDetail.vue'),
+					},
+				],
 			},
 			{
 				path: 'wali/:id',

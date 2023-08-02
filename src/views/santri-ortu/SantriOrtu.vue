@@ -5,14 +5,15 @@
 import { ref, onMounted } from 'vue';
 import { apiTokened } from 'src/config/api.js';
 import TemplateObject from 'src/components/TemplateObject.vue';
-const props = defineProps({
-	santriId: { default: null },
-});
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const santriId = route.params.id;
 
 const result = ref({});
 async function fetchData() {
 	try {
-		const { data } = await apiTokened.get(`santri/${props.santriId}/ortu`);
+		const { data } = await apiTokened.get(`santri/${santriId}/ortu`);
 		result.value = data.ortu;
 	} catch (error) {
 		console.log(error);

@@ -43,7 +43,7 @@
 			dense=""
 			color="teal-14"
 			glossy=""
-			class="absolute-bottom-right q-ma-xs"
+			class="absolute-bottom-right q-ma-sm"
 			@click="$emit('add')"
 		/>
 	</q-list>

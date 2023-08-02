@@ -1,5 +1,12 @@
 <template>
-	<q-card>
+	<q-card :key="keySantriRelations">
+		<button
+			@click="keySantriRelations++"
+			id="btn-rerender-santri-relations"
+			style="display: none"
+		>
+			rerender
+		</button>
 		<q-tabs
 			v-model="tab"
 			no-caps
@@ -9,13 +16,45 @@
 			dense=""
 			indicator-color="teal-13"
 		>
-			<q-tab name="wali" label="Wali" />
-			<q-tab name="ortu" label="Ortu" />
-			<q-tab name="status" label="Status" />
-			<q-tab name="kelas" label="Kelas" />
-			<q-tab name="domisili" label="Domisili" />
+			<q-route-tab
+				name="wali"
+				label="Wali"
+				:to="'/santri/' + props.santriId + '/wali'"
+			/>
+			<q-route-tab
+				name="ortu"
+				label="Ortu"
+				:to="'/santri/' + props.santriId + '/ortu'"
+			/>
+			<q-route-tab
+				name="status"
+				label="Status"
+				:to="'/santri/' + props.santriId + '/status'"
+			/>
+			<q-route-tab
+				name="kelas"
+				label="Kelas"
+				:to="'/santri/' + props.santriId + '/kelas'"
+			/>
+			<q-route-tab
+				name="domisili"
+				label="Domisili"
+				:to="'/santri/' + props.santriId + '/domisili'"
+			/>
 		</q-tabs>
 		<q-card-section class="q-pa-sm">
+			<!-- <suspense>
+				<template #default>
+					<router-view />
+				</template>
+				<template #fallback>
+					<q-spinner-cube
+						color="teal-12"
+						size="8em"
+						class="flex q-mx-auto"
+					/>
+				</template>
+			</suspense> -->
 			<q-tab-panels v-model="tab" animated="" swipeable="" infinite="">
 				<q-tab-panel class="no-padding" name="wali">
 					<suspense>
@@ -100,5 +139,7 @@ import SantriKelas from 'src/views/santri-kelas/SantriKelas.vue';
 import SantriDomisili from 'src/views/santri-domisili/SantriDomisili.vue';
 
 const props = defineProps({ santriId: { default: null } });
-const tab = ref('wali');
+const tab = ref('kelas');
+
+const keySantriRelations = ref(0);
 </script>

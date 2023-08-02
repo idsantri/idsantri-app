@@ -20,11 +20,11 @@ import { m2hFormat } from 'src/utils/hijri.js';
 import { getObjectById } from 'src/utils/array-object';
 import SantriKelasCrud from './SantriKelasCrud.vue';
 import santriStore from 'src/stores/santri-store';
+import { useRoute } from 'vue-router';
 
 const { santri } = santriStore();
-const props = defineProps({
-	santriId: { default: null },
-});
+const route = useRoute();
+const santriId = route.params.id;
 
 const crudShow = ref(false);
 const kelas = ref({});
@@ -41,7 +41,7 @@ async function fetchByIdSantri(id) {
 }
 
 onMounted(async () => {
-	const { kelas } = await fetchByIdSantri(props.santriId);
+	const { kelas } = await fetchByIdSantri(santriId);
 	kelasArr.value = kelas;
 	kelasMap.value = kelas.map((v, i) => ({
 		'Tahun Ajaran': `${v.th_ajaran_h}  |  ${v.th_ajaran_m || ''} `,
