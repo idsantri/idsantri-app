@@ -18,6 +18,50 @@
 				/>
 				<q-select
 					dense
+					:hint="
+						input.th_ajaran_h?.length == 9
+							? lists['tahun-ajaran']?.find(
+									(item) => item.val0 === input.th_ajaran_h
+							  )?.val1
+							: ''
+					"
+					class="q-mt-sm"
+					outlined
+					label="Tahun Ajaran"
+					v-model="input.th_ajaran_h"
+					:options="lists['tahun-ajaran']"
+					option-value="val0"
+					option-label="val0"
+					emit-value
+					map-options
+					:rules="[(val) => !!val || 'Harus diisi!']"
+					error-color="negative"
+					:loading="loading['tahun-ajaran']"
+				/>
+				<q-select
+					dense
+					:hint="
+						!isNaN(input.tingkat_id)
+							? lists['tingkat']?.find(
+									(item) => item.val0 == input.tingkat_id
+							  )?.val1
+							: 'Jenjang Pendidikan'
+					"
+					class="q-mt-sm"
+					outlined
+					label="Tingkat"
+					v-model="input.tingkat_id"
+					:options="lists['tingkat']"
+					option-value="val0"
+					option-label="val1"
+					emit-value
+					map-options
+					:rules="[(val) => !!val || 'Harus diisi!']"
+					error-color="negative"
+					:loading="loading['tingkat']"
+				/>
+				<q-select
+					dense
 					class="q-mt-sm"
 					outlined
 					label="Kelas"
@@ -26,6 +70,14 @@
 					v-model="input.kelas"
 					:options="lists['kelas']"
 					:loading="loading['kelas']"
+				/>
+				<q-input
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Nomor Absen"
+					v-model="input.no_absen"
+					type="number"
 				/>
 				<q-input
 					dense
@@ -60,15 +112,14 @@
 				/>
 			</q-card-actions>
 		</q-form>
-		<pre>{{ input }}</pre>
+		<!-- <pre>{{ input }}</pre> -->
 	</q-card>
 </template>
 <script setup>
-import { useQuasar } from 'quasar';
 import { apiTokened } from 'src/config/api';
 import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
-import { fetchLists } from 'src/utils/fetch-list';
+import { fetchListKey, fetchLists } from 'src/utils/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
 import { deleteById } from 'src/api/delete';
@@ -85,13 +136,34 @@ const lists = ref([]);
 const loading = ref([]);
 onMounted(async () => {
 	input.value = props.data;
+
+	await fetchListKey({
+		key: 'tahun-ajaran',
+		loading,
+		lists,
+		ascending: false,
+	});
+	await fetchListKey({
+		key: 'tingkat',
+		loading,
+		lists,
+		ascending: true,
+	});
 	await fetchLists({ key: 'kelas', loading, lists });
 });
 
 const submit = async () => {
-	const data = JSON.parse(JSON.stringify(input.value));
-	delete data.nama;
+	const data = {
+		id: input.value.id,
+		santri_id: input.value.santri_id,
+		th_ajaran_h: input.value.th_ajaran_h,
+		tingkat_id: input.value.tingkat_id,
+		kelas: input.value.kelas,
+		no_absen: input.value.no_absen,
+		keterangan: input.value.keterangan,
+	};
 	// console.log(data);
+	// return;
 	try {
 		let response = null;
 		if (props.isNew) response = await apiTokened.post(`kelas`, data);
@@ -115,4 +187,3 @@ const deleteData = async (id) => {
 };
 </script>
 <style></style>
-src/api/delete

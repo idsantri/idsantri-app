@@ -88,9 +88,14 @@ onMounted(async () => {
 });
 
 const submit = async () => {
-	const data = JSON.parse(JSON.stringify(input.value));
-	delete data.nama;
+	const data = {
+		id: input.value.id,
+		santri_id: input.value.santri_id,
+		status: input.value.status,
+		keterangan: input.value.keterangan,
+	};
 	// console.log(data);
+	// return;
 	try {
 		let response = null;
 		if (props.isNew) response = await apiTokened.post(`status`, data);
@@ -114,4 +119,3 @@ const deleteData = async (id) => {
 };
 </script>
 <style></style>
-src/api/delete
