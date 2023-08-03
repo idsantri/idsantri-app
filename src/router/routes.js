@@ -68,30 +68,36 @@ const routes = [
 				meta: { title: 'Detail Santri' },
 				children: [
 					{
+						path: '',
+						redirect: (to) => to.fullPath + '/status',
+					},
+					{
 						path: 'status',
 						component: () =>
-							import('src/pages/santri/SantriDetail.vue'),
+							import('src/views/santri-status/SantriStatus.vue'),
 					},
 
 					{
 						path: 'kelas',
 						component: () =>
-							import('src/pages/santri/SantriDetail.vue'),
+							import('src/views/santri-kelas/SantriKelas.vue'),
 					},
 					{
 						path: 'domisili',
 						component: () =>
-							import('src/pages/santri/SantriDetail.vue'),
+							import(
+								'src/views/santri-domisili/SantriDomisili.vue'
+							),
 					},
 					{
 						path: 'wali',
 						component: () =>
-							import('src/pages/santri/SantriDetail.vue'),
+							import('src/views/santri-wali/SantriWali.vue'),
 					},
 					{
 						path: 'ortu',
 						component: () =>
-							import('src/pages/santri/SantriDetail.vue'),
+							import('src/views/santri-ortu/SantriOrtu.vue'),
 					},
 				],
 			},
@@ -125,27 +131,6 @@ const routes = [
 				path: 'sekretariat',
 				component: () => import('src/pages/sekretariat/IndexPage.vue'),
 				meta: { title: 'Sekretariat' },
-			},
-
-			{
-				path: 'settings',
-				children: [
-					{
-						path: 'app',
-						component: () =>
-							import('src/pages/settings/IndexSetting.vue'),
-					},
-					{
-						path: 'users',
-						component: () =>
-							import('src/pages/users/UsersPage.vue'),
-					},
-					{
-						path: 'users/:id',
-						component: () =>
-							import('src/pages/users/UsersDetail.vue'),
-					},
-				],
 			},
 		],
 	},

@@ -13,7 +13,6 @@
 		-->
 
 		<q-tabs
-			v-model="tab"
 			no-caps
 			outside-arrows
 			mobile-arrows
@@ -49,7 +48,7 @@
 		</q-tabs>
 		<q-card-section class="q-pa-sm">
 			<!-- swipe tak jalan -->
-			<!-- <suspense>
+			<suspense>
 				<template #default>
 					<router-view />
 				</template>
@@ -60,8 +59,8 @@
 						class="flex q-mx-auto"
 					/>
 				</template>
-			</suspense> -->
-			<q-tab-panels v-model="tab" animated="" swipeable="" infinite="">
+			</suspense>
+			<!-- <q-tab-panels v-model="tab" animated="" swipeable="" infinite="">
 				<q-tab-panel class="no-padding" name="wali">
 					<suspense>
 						<template #default>
@@ -132,7 +131,7 @@
 						</template>
 					</suspense>
 				</q-tab-panel>
-			</q-tab-panels>
+			</q-tab-panels> -->
 		</q-card-section>
 	</q-card>
 </template>

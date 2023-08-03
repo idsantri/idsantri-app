@@ -87,30 +87,29 @@ const identity = ref({});
 const dataAyah = ref({});
 const dataIbu = ref({});
 const santri = ref({});
-onMounted(async () => {
-	await fetchData();
-	// identity
-	identity.value = {
-		ID: ortu.id,
-		'Jumlah Anak': ortu.jumlah_anak,
-	};
-	// ayah
-	dataAyah.value = {
-		Ayah: ortu.ayah?.toUpperCase(),
-		NIK: ortu.a_nik,
-		Hidup: ortu.a_hidup ? 'Ya' : 'Tidak',
-	};
-	// ibu
-	dataIbu.value = {
-		Ibu: ortu.ibu?.toUpperCase(),
-		NIK: ortu.i_nik,
-		Hidup: ortu.i_hidup ? 'Ya' : 'Tidak',
-	};
+await fetchData();
+// identity
+identity.value = {
+	ID: ortu.id,
+	'Jumlah Anak': ortu.jumlah_anak,
+};
+// ayah
+dataAyah.value = {
+	Ayah: ortu.ayah?.toUpperCase(),
+	NIK: ortu.a_nik,
+	Hidup: ortu.a_hidup ? 'Ya' : 'Tidak',
+};
+// ibu
+dataIbu.value = {
+	Ibu: ortu.ibu?.toUpperCase(),
+	NIK: ortu.i_nik,
+	Hidup: ortu.i_hidup ? 'Ya' : 'Tidak',
+};
 
-	// santri
-	santri.value = ortu.santri;
-	ortuStore().setOrtu(ortu);
-});
+// santri
+santri.value = ortu.santri;
+ortuStore().setOrtu(ortu);
+onMounted(async () => {});
 /**
  * send to modal edit
  */
