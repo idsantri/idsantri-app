@@ -11,8 +11,9 @@
 				<q-route-tab name="ortu" label="Ortu" to="ortu" exact />
 			</q-tabs>
 		</q-toolbar>
-		<!-- <router-view /> -->
-		<q-tab-panels
+
+		<router-view class="q-mt-sm" />
+		<!-- <q-tab-panels
 			animated
 			v-model="tab"
 			class="bg-teal-1 rounded-borders q-card--bordered q-pa-sm"
@@ -28,7 +29,7 @@
 			<q-tab-panel name="ortu" class="no-padding">
 				<ortu-search />
 			</q-tab-panel>
-		</q-tab-panels>
+		</q-tab-panels> -->
 	</div>
 </template>
 

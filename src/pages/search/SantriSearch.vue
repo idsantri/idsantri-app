@@ -1,56 +1,41 @@
 <template>
-	<suspense>
-		<template #default>
-			<q-card style="width: 100%">
-				<q-card-section
-					class="bg-teal-8 text-teal-1 q-pa-sm flex items-center"
-				>
-					<h2 class="text-subtitle1 no-margin text-teal-11">
-						Cari Santri
-					</h2>
-					<q-space />
-					<q-btn
-						label="Tambah"
-						color="teal-12"
-						class="text-teal-10"
-						icon="add"
-						no-caps=""
-						dense=""
-						@click="addNew"
-					/>
-				</q-card-section>
-				<q-card-section>
-					<data-table
-						class="display table nowrap dt"
-						:options="options"
-						style="overflow: hidden"
-					/>
-				</q-card-section>
-				<q-card-actions class="bg-teal-7">
-					<div class="text-body2 text-teal-11 text-italic">
-						Cari berdsarkan ID, Nama Santri, NIK, atau alamat
-					</div>
-					<q-space />
-					<q-btn
-						label="Tutup"
-						color="teal-1"
-						class="text-teal-10"
-						no-caps=""
-						v-close-popup
-						id="btn-close-santri-search"
-						v-show="searchSantri"
-					/>
-				</q-card-actions>
-			</q-card>
-		</template>
-		<template #fallback>
-			<q-spinner-cube
+	<q-card style="width: 100%">
+		<q-card-section class="bg-teal-8 text-teal-1 q-pa-sm flex items-center">
+			<h2 class="text-subtitle1 no-margin text-teal-11">Cari Santri</h2>
+			<q-space />
+			<q-btn
+				label="Tambah"
 				color="teal-12"
-				size="14em"
-				class="absolute-center"
+				class="text-teal-10"
+				icon="add"
+				no-caps=""
+				dense=""
+				@click="addNew"
 			/>
-		</template>
-	</suspense>
+		</q-card-section>
+		<q-card-section>
+			<data-table
+				class="display table nowrap dt"
+				:options="options"
+				style="overflow: hidden"
+			/>
+		</q-card-section>
+		<q-card-actions class="bg-teal-7">
+			<div class="text-body2 text-teal-11 text-italic">
+				Cari berdsarkan ID, Nama Santri, NIK, atau alamat
+			</div>
+			<q-space />
+			<q-btn
+				label="Tutup"
+				color="teal-1"
+				class="text-teal-10"
+				no-caps=""
+				v-close-popup
+				id="btn-close-santri-search"
+				v-show="searchSantri"
+			/>
+		</q-card-actions>
+	</q-card>
 </template>
 
 <script setup>

@@ -14,6 +14,7 @@
 			class="bg-teal-7 text-teal-11 shadow-2"
 			dense=""
 			indicator-color="teal-13"
+			align="left"
 		>
 			<q-route-tab
 				name="wali"
