@@ -15,8 +15,8 @@ async function fetchLists(request) {
 	}
 }
 
-async function fetchListKey(request) {
-	const { key, loading, lists, ascending } = request;
+async function fetchListKey({ key, loading, lists, ascending }) {
+	// const { key, loading, lists, ascending } = request;
 	loading.value[key] = true;
 	let keyReplace = key.replace(/-/g, '_');
 	try {

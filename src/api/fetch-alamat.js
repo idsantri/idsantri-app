@@ -1,8 +1,11 @@
 import { apiTokened } from 'src/api';
 import { watch } from 'vue';
 
-async function fetchAlamat(request, components) {
-	const { lists, loading, provinsi, kabupaten, kecamatan } = components;
+async function fetchAlamat(
+	request,
+	{ lists, loading, provinsi, kabupaten, kecamatan }
+) {
+	// const { lists, loading, provinsi, kabupaten, kecamatan } = components;
 	let url = '';
 
 	if (request == 'provinsi') {
@@ -64,8 +67,8 @@ function filterKotaLahir(val, update, options, list) {
 	});
 }
 
-async function watchAlamat(components) {
-	const { provinsi, kabupaten, kecamatan, desa, lists } = components;
+async function watchAlamat({ provinsi, kabupaten, kecamatan, desa, lists }) {
+	// const { provinsi, kabupaten, kecamatan, desa, lists } = components;
 	watch(
 		[provinsi, kabupaten, kecamatan],
 		async (
