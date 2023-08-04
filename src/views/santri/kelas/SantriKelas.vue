@@ -12,7 +12,7 @@
 	</div>
 </template>
 <script setup>
-import { apiTokened } from 'src/config/api.js';
+import { apiTokened } from 'src/api';
 import { ref, onMounted } from 'vue';
 import TemplateArray from 'src/components/TemplateArray.vue';
 import { formatDateShort } from 'src/utils/format-date.js';
@@ -69,3 +69,4 @@ const handleEdit = ({ id }) => {
 	crudShow.value = true;
 };
 </script>
+src/api/api.js

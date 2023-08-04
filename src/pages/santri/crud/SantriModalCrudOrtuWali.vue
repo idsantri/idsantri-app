@@ -132,12 +132,12 @@
 	/>
 </template>
 <script setup>
-import { apiTokened } from 'src/config/api';
+import { apiTokened } from 'src/api';
 import santriState from 'src/stores/santri-store';
 import { notifyError } from 'src/utils/notify';
 import { toArray } from 'src/utils/array-object';
 import { onMounted, reactive, ref, toRefs, watch } from 'vue';
-import { fetchLists } from 'src/utils/fetch-list';
+import { fetchLists } from 'src/api/fetch-list';
 import dialogStore from 'src/stores/dialog-store';
 
 const props = defineProps({
@@ -196,3 +196,4 @@ watch([ortu_id, wali_id], ([newOrtu, newWali], [oldOrtu, oldWali]) => {
 	width: 100px;
 }
 </style>
+src/api/fetch-list src/api/api

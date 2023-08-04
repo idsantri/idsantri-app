@@ -48,7 +48,7 @@
 </template>
 <script setup>
 import BannerTitle from 'src/components/BannerTitle.vue';
-import { apiTokened } from 'src/config/api';
+import { apiTokened } from 'src/api';
 import { notifyError } from 'src/utils/notify';
 import { toArray } from 'src/utils/array-object';
 import { reactive } from 'vue';
@@ -64,4 +64,4 @@ try {
 	});
 }
 </script>
-src/utils/array-object
+src/utils/array-object src/api/api

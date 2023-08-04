@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { api, apiTokened } from '../../config/api';
+import { api, apiTokened } from 'src/api';
 import { useRouter } from 'vue-router';
 import { onUpdated, ref } from 'vue';
 import { toArray } from 'src/utils/array-object';
@@ -133,3 +133,4 @@ onUpdated(() => {
 </script>
 
 <style scoped lang="scss"></style>
+../../api/api

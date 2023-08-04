@@ -120,15 +120,15 @@
 	/>
 </template>
 <script setup>
-import ortuState from "src/stores/ortu-store.js";
-import { m2h, bacaHijri } from "src/utils/hijri";
-import { isDate, formatDateFull } from "src/utils/format-date";
-import { onMounted, ref, toRefs } from "vue";
-import { fetchKotaLahir, filterKotaLahir } from "src/utils/fetch-alamat";
-import { fetchLists } from "src/utils/fetch-list";
+import ortuState from 'src/stores/ortu-store.js';
+import { m2h, bacaHijri } from 'src/utils/hijri';
+import { isDate, formatDateFull } from 'src/utils/format-date';
+import { onMounted, ref, toRefs } from 'vue';
+import { fetchKotaLahir, filterKotaLahir } from 'src/api/fetch-alamat';
+import { fetchLists } from 'src/api/fetch-list';
 
 const props = defineProps({
-	title: { type: String, default: "" },
+	title: { type: String, default: '' },
 });
 
 const { ortu } = ortuState();
@@ -155,8 +155,9 @@ const lists = ref([]);
 const loading = ref([]);
 onMounted(async () => {
 	await fetchKotaLahir(listKotaLahir, loadingKotaLahir);
-	await fetchLists({ loading, lists, key: "pendidikan-akhir-formal" });
-	await fetchLists({ loading, lists, key: "pendidikan-akhir-diniyah" });
-	await fetchLists({ loading, lists, key: "pekerjaan" });
+	await fetchLists({ loading, lists, key: 'pendidikan-akhir-formal' });
+	await fetchLists({ loading, lists, key: 'pendidikan-akhir-diniyah' });
+	await fetchLists({ loading, lists, key: 'pekerjaan' });
 });
 </script>
+src/api/fetch-alamat src/api/fetch-list

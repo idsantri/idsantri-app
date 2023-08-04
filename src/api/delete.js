@@ -1,5 +1,5 @@
 import { Dialog } from 'quasar';
-import { apiTokened } from 'src/config/api';
+import { apiTokened } from 'src/api';
 import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyError, notifySuccess } from 'src/utils/notify';

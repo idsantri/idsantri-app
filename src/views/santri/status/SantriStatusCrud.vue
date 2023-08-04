@@ -64,13 +64,13 @@
 	</q-card>
 </template>
 <script setup>
-import { apiTokened } from 'src/config/api';
+import { apiTokened } from 'src/api';
 import { toArray } from 'src/utils/array-object';
 import {
 	forceRerender,
 	rerenderSantriRelations,
 } from 'src/utils/buttons-click';
-import { fetchLists } from 'src/utils/fetch-list';
+import { fetchLists } from 'src/api/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
 import { deleteById } from 'src/api/delete';
@@ -122,3 +122,4 @@ const deleteData = async (id) => {
 };
 </script>
 <style></style>
+src/api/fetch-list src/api/api

@@ -2,7 +2,7 @@
 <script setup>
 import { toArray } from 'src/utils/array-object';
 import { notifyError } from '../../utils/notify';
-import { apiTokened } from '../../config/api';
+import { apiTokened } from 'src/api';
 import { reactive } from 'vue';
 const santri = reactive({});
 (async () => {
@@ -16,3 +16,4 @@ const santri = reactive({});
 	}
 })();
 </script>
+../../api/api

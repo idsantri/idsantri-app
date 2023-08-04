@@ -4,7 +4,7 @@
 	</div>
 </template>
 <script setup>
-import { apiTokened } from 'src/config/api.js';
+import { apiTokened } from 'src/api';
 import { ref, onMounted } from 'vue';
 import TemplateArray from 'src/components/TemplateArray.vue';
 import { getObjectById } from 'src/utils/array-object';
@@ -54,3 +54,4 @@ const handleEdit = ({ id }) => {
 	crudShow.value = true;
 };
 </script>
+src/api/api.js

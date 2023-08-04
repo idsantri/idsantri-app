@@ -57,7 +57,7 @@
 <script setup>
 import { onMounted, reactive, ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
-import { apiTokened } from 'src/config/api.js';
+import { apiTokened } from 'src/api';
 import CardColumn from '../../components/CardColumn.vue';
 import CardListSantri from 'src/components/CardListSantri.vue';
 import ortuStore from 'src/stores/ortu-store.js';
@@ -118,3 +118,4 @@ function editOrtu() {
 	crudOrtu.value = true;
 }
 </script>
+src/api/api.js

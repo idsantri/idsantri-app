@@ -101,7 +101,7 @@
 </template>
 <script setup>
 import { reactive, ref } from 'vue';
-import { apiTokened } from 'src/config/api';
+import { apiTokened } from 'src/api';
 import InputRegister from './SantriModalCrudRegister.vue';
 import InputIdentity from './SantriModalCrudIdentity.vue';
 import InputAlamat from './SantriModalCrudAlamat.vue';
@@ -220,3 +220,4 @@ const resetOrDelete = () => {
 	}
 };
 </script>
+src/api/api

@@ -79,7 +79,7 @@
 <script setup>
 import { reactive, ref, toRefs, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { apiTokened } from 'src/config/api.js';
+import { apiTokened } from 'src/api';
 import { formatDateFull } from '../../utils/format-date';
 import CardColumn from '../../components/CardColumn.vue';
 import CardImage from '../../components/CardImage.vue';
@@ -163,3 +163,4 @@ function editSantri() {
 const showUploader = ref(false);
 const handleUploader = (value) => (showUploader.value = value);
 </script>
+src/api/api.js

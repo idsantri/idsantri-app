@@ -89,7 +89,7 @@
 </template>
 
 <script setup>
-import { api } from '../../config/api';
+import { api } from 'src/api';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { toArray } from 'src/utils/array-object';
@@ -126,3 +126,4 @@ const register = async () => {
 	}
 };
 </script>
+../../api/api

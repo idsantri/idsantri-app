@@ -39,7 +39,7 @@ import DataTable from 'datatables.net-vue3';
 import DataTablesLib from 'datatables.net-dt';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { apiTokened } from '../../config/api';
+import { apiTokened } from 'src/api';
 const router = useRouter();
 
 const url = `${apiTokened.defaults.baseURL}/santri/search`;
@@ -142,3 +142,4 @@ onUnmounted(() => {
 	cursor: pointer;
 }
 </style>
+../../api/api

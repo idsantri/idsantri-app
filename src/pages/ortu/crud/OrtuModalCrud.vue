@@ -84,7 +84,7 @@
 </template>
 <script setup>
 import { reactive, ref, toRefs } from 'vue';
-import { apiTokened } from 'src/config/api';
+import { apiTokened } from 'src/api';
 import InputIdentity from './OrtuModalCrudIdentity.vue';
 import InputAyah from './OrtuModalCrudAyah.vue';
 import InputIbu from './OrtuModalCrudIbu.vue';
@@ -188,3 +188,4 @@ const resetOrDelete = () => {
 };
 </script>
 <style></style>
+src/api/api
