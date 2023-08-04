@@ -55,15 +55,15 @@
 </template>
 
 <script setup>
-import DataTable from "datatables.net-vue3";
-import DataTablesLib from "datatables.net-dt";
-import { ref, onMounted, onUnmounted, toRefs } from "vue";
-import { useRouter } from "vue-router";
-import { apiTokened } from "../../config/api";
-import { notifySuccess } from "src/utils/notify";
-import dialogStore from "src/stores/dialog-store";
-import santriStore from "src/stores/santri-store";
-import waliStore from "src/stores/wali-store";
+import DataTable from 'datatables.net-vue3';
+import DataTablesLib from 'datatables.net-dt';
+import { ref, onMounted, onUnmounted, toRefs } from 'vue';
+import { useRouter } from 'vue-router';
+import { apiTokened } from '../../config/api';
+import { notifySuccess } from 'src/utils/notify';
+import dialogStore from 'src/stores/dialog-store';
+import santriStore from 'src/stores/santri-store';
+import waliStore from 'src/stores/wali-store';
 
 const dialog = dialogStore();
 const { searchWali, crudWali, crudSantri } = toRefs(dialog);
@@ -86,88 +86,88 @@ const options = ref({
 	responsive: true,
 	ajax: {
 		url: url,
-		type: "POST",
+		type: 'POST',
 		headers: headers,
 	},
 	order: [],
 	columns: [
 		{
-			title: "ID",
-			data: "id",
+			title: 'ID',
+			data: 'id',
 			render: function (data, type, row, meta) {
 				return `<button onclick='copyId(${row.id})' class='dt-btn'>${row.id}</button>`;
 			},
 		},
 		{
-			title: "Nama",
-			data: "nama",
+			title: 'Nama',
+			data: 'nama',
 			render: function (data, type, row, meta) {
 				return `<span class="dt-link" onclick='goToWali(${row.id})'>${row.nama}</span>`;
 			},
 		},
 		{
-			title: "Alamat",
-			data: "alamat_pendek",
+			title: 'Alamat',
+			data: 'alamat_pendek',
 			render: function (data, type, row, meta) {
-				return type === "display" && data.length > 50
+				return type === 'display' && data.length > 50
 					? `<span title='${data}'>${data.substr(0, 50)}&mldr;</span>`
 					: data;
 			},
 		},
 		{
-			title: "NIK",
-			data: "nik",
+			title: 'NIK',
+			data: 'nik',
 		},
 		{
-			title: "Anak1",
+			title: 'Anak1',
 			render: function (data, type, row, meta) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri1_id
-				})'>${row.santri1_nama || "-"}</span>`;
+				})'>${row.santri1_nama || '-'}</span>`;
 			},
 		},
 		{
-			title: "Anak2",
+			title: 'Anak2',
 			render: function (data, type, row, meta) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri2_id
-				})'>${row.santri2_nama || "-"}</span>`;
+				})'>${row.santri2_nama || '-'}</span>`;
 			},
 		},
 		{
-			title: "Anak3",
+			title: 'Anak3',
 			render: function (data, type, row, meta) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri3_id
-				})'>${row.santri3_nama || "-"}</span>`;
+				})'>${row.santri3_nama || '-'}</span>`;
 			},
 		},
 		{
-			title: "Anak4",
+			title: 'Anak4',
 			render: function (data, type, row, meta) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri4_id
-				})'>${row.santri4_nama || "-"}</span>`;
+				})'>${row.santri4_nama || '-'}</span>`;
 			},
 		},
 		{
-			title: "Anak5",
+			title: 'Anak5',
 			render: function (data, type, row, meta) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri5_id
-				})'>${row.santri5_nama || "-"}</span>`;
+				})'>${row.santri5_nama || '-'}</span>`;
 			},
 		},
 	],
 	language: {
-		search: "Cari:",
+		search: 'Cari:',
 		zeroRecords:
-			"Tidak data data untuk ditampilkan. Coba kata kunci yang lain!",
-		info: "Menampilkan _START_ hingga _END_, dari total _TOTAL_ data",
+			'Tidak data data untuk ditampilkan. Coba kata kunci yang lain!',
+		info: 'Menampilkan _START_ hingga _END_, dari total _TOTAL_ data',
 		// info: 'Halaman _PAGE_ dari _PAGES_ halaman',
-		infoFiltered: "(disaring dari _MAX_ total data)",
-		paginate: { first: "↑", previous: "←", next: "→", last: "↓" },
-		lengthMenu: "_MENU_ Perhalaman",
+		infoFiltered: '(disaring dari _MAX_ total data)',
+		paginate: { first: '↑', previous: '←', next: '→', last: '↓' },
+		lengthMenu: '_MENU_ Perhalaman',
 	},
 	autoWidth: false,
 	// dom: 'bftip',
@@ -195,12 +195,12 @@ onMounted(() => {
 	};
 });
 
-onUnmounted(() => {
-	delete document.goToSantri;
-	delete document.goToWali;
-	delete document.copyId;
-});
+// onUnmounted(() => {
+// 	delete document.goToSantri;
+// 	delete document.goToWali;
+// 	delete document.copyId;
+// });
 </script>
 <style lang="scss">
-@import "datatables.net-dt";
+@import 'datatables.net-dt';
 </style>

@@ -199,11 +199,11 @@ onMounted(() => {
 	};
 });
 
-onUnmounted(() => {
-	delete document.goToSantri;
-	delete document.goToOrtu;
-	delete document.copyId;
-});
+// onUnmounted(() => {
+// 	delete document.goToSantri;
+// 	delete document.goToOrtu;
+// 	delete document.copyId;
+// });
 </script>
 <style lang="scss">
 @import 'datatables.net-dt';

@@ -15,14 +15,7 @@
 					{{ constanta.APP_NAME_1 }}
 				</q-toolbar-title>
 
-				<q-btn
-					round
-					flat
-					dense
-					icon="search"
-					color="teal-1"
-					to="/search"
-				>
+				<q-btn round flat dense icon="search" color="teal-1" to="/cari">
 					<q-badge v-if="badge" floating color="teal-13" rounded />
 				</q-btn>
 

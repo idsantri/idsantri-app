@@ -53,14 +53,36 @@ const routes = [
 		component: () => import('layouts/MainLayout.vue'),
 		children: [
 			{
-				path: 'search',
-				component: () => import('src/pages/search/IndexPage.vue'),
+				path: 'cari',
+				component: () => import('src/pages/search/IndexSearch.vue'),
 				meta: { title: 'Cari' },
+				children: [
+					{
+						path: '',
+						redirect: (to) => to.fullPath + '/santri',
+					},
+					{
+						path: 'santri',
+						component: () =>
+							import('src/pages/search/SantriSearch.vue'),
+					},
+					{
+						path: 'wali',
+						component: () =>
+							import('src/pages/search/WaliSearch.vue'),
+					},
+					{
+						path: 'ortu',
+						component: () =>
+							import('src/pages/search/OrtuSearch.vue'),
+					},
+				],
 			},
 			{
 				path: 'santri',
-				component: () => import('src/pages/santri/SantriSearch.vue'),
-				meta: { title: 'Cari Santri' },
+				redirect: 'cari/santri',
+				// component: () => import('src/pages/search/SantriSearch.vue'),
+				// meta: { title: 'Cari Santri' },
 			},
 			{
 				path: 'santri/:id',
@@ -102,19 +124,21 @@ const routes = [
 				],
 			},
 			{
+				path: 'wali',
+				redirect: 'cari/wali',
+				// component: () => import('src/pages/search/WaliSearch.vue'),
+				// meta: { title: 'Cari Wali' },
+			},
+			{
 				path: 'wali/:id',
 				component: () => import('src/pages/wali/WaliDetail.vue'),
 				meta: { title: 'Detail Wali' },
 			},
 			{
-				path: 'wali',
-				component: () => import('src/pages/wali/WaliSearch.vue'),
-				meta: { title: 'Cari Wali' },
-			},
-			{
 				path: 'ortu',
-				component: () => import('src/pages/ortu/OrtuSearch.vue'),
-				meta: { title: 'Cari Orang Tua' },
+				redirect: 'cari/ortu',
+				// component: () => import('src/pages/search/OrtuSearch.vue'),
+				// meta: { title: 'Cari Orang Tua' },
 			},
 			{
 				path: 'ortu/:id',
