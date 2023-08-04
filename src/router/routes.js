@@ -91,35 +91,42 @@ const routes = [
 				children: [
 					{
 						path: '',
-						redirect: (to) => to.fullPath + '/status',
+						redirect: (to) => to.fullPath + '/kelas',
 					},
 					{
 						path: 'status',
 						component: () =>
-							import('src/views/santri-status/SantriStatus.vue'),
+							import('src/views/santri/status/SantriStatus.vue'),
 					},
 
 					{
 						path: 'kelas',
 						component: () =>
-							import('src/views/santri-kelas/SantriKelas.vue'),
+							import('src/views/santri/kelas/SantriKelas.vue'),
 					},
 					{
 						path: 'domisili',
 						component: () =>
 							import(
-								'src/views/santri-domisili/SantriDomisili.vue'
+								'src/views/santri/domisili/SantriDomisili.vue'
 							),
 					},
 					{
 						path: 'wali',
 						component: () =>
-							import('src/views/santri-wali/SantriWali.vue'),
+							import('src/views/santri/wali/SantriWali.vue'),
 					},
 					{
 						path: 'ortu',
 						component: () =>
-							import('src/views/santri-ortu/SantriOrtu.vue'),
+							import('src/views/santri/ortu/SantriOrtu.vue'),
+					},
+					{
+						path: 'iuran-total',
+						component: () =>
+							import(
+								'src/views/santri/iuran-total/SantriIuranTotal.vue'
+							),
 					},
 				],
 			},
