@@ -27,5 +27,9 @@ jobs:
                   server: demangan.net
                   username: ${{ secrets.ftp_username }}
                   password: ${{ secrets.ftp_password }}
-                  #   server-dir: ./public_html/
+                  server-dir: ./stage/
                   local-dir: ./dist/pwa/
+
+            - name: Move "./stage/" to "/"
+              run: |
+                  mv /stage/* /
