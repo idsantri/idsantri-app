@@ -1,0 +1,31 @@
+on:
+    push:
+        branches:
+            - main
+name: 🚀 Deploy website on push
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Setup Nodejs
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 18
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build PWA
+              run: npx quasar build -m pwa
+
+            - name: Deploy to Shared Hosting
+              uses: SamKirkland/FTP-Deploy-Action@v4
+              with:
+                  server: demangan.net
+                  username: ${{ secrets.ftp_username }}
+                  password: ${{ secrets.ftp_password }}
+                  server-dir: public_html
+                  local-dir: dist/pwa
