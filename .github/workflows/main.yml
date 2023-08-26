@@ -27,14 +27,15 @@ jobs:
                   server: demangan.net
                   username: ${{ secrets.ftp_username }}
                   password: ${{ secrets.ftp_password }}
-                  server-dir: ./stage/
+                  #   server-dir: ./stage/
                   local-dir: ./dist/pwa/
             # - name: Move "./stage/" to "/"
             #   run: |
             #       mv /stage/* /
-            - name: Move files
-              run: |
-                  php -r "foreach(glob('/stage/*') as \$file) { $newPath = '../' . basename($file); rename($file, $newPath); }"
+            # - name: Move files
+            #   run: |
+            #       php -r "foreach(glob('/stage/*') as \$file) { rename(\$file, basename(\$file)); }"
+            #   php -r "foreach(glob('/stage/*') as \$file) { $newPath = '../' . basename($file); rename($file, $newPath); }"
 
     # move-files:
     #     runs-on: ubuntu-latest
