@@ -24,7 +24,7 @@ jobs:
             - name: Deploy to Shared Hosting
               uses: SamKirkland/FTP-Deploy-Action@v4.3.4
               with:
-                  server: ftp://154.41.240.94:21
+                  server: demangan.net
                   username: ${{ secrets.ftp_username }}
                   password: ${{ secrets.ftp_password }}
                   server-dir: public_html/
