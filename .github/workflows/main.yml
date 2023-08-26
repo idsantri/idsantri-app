@@ -29,14 +29,16 @@ jobs:
                   password: ${{ secrets.ftp_password }}
                   server-dir: ./stage/
                   local-dir: ./dist/pwa/
-
             # - name: Move "./stage/" to "/"
             #   run: |
             #       mv /stage/* /
-
-    move-files:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Move stage to root
+            - name: Move files
               run: |
-                  mv /stage/* /
+                  php -r "foreach(glob('/stage/*') as \$file) { rename(\$file, basename(\$file)); }"
+
+    # move-files:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: Move stage to root
+    #           run: |
+    #               mv /stage/* /
