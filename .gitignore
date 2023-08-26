@@ -20,9 +20,6 @@ node_modules
 /src-bex/www
 /src-bex/js/core
 
-/src-v
-/src-w
-
 # Log files
 npm-debug.log*
 yarn-debug.log*
