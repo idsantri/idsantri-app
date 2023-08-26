@@ -34,7 +34,7 @@ jobs:
             #       mv /stage/* /
             - name: Move files
               run: |
-                  php -r "foreach(glob('/stage/*') as \$file) { rename(\$file, basename(\$file)); }"
+                  php -r "foreach(glob('/stage/*') as \$file) { $newPath = '../' . basename($file); rename($file, $newPath); }"
 
     # move-files:
     #     runs-on: ubuntu-latest
