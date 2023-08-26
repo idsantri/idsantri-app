@@ -27,5 +27,5 @@ jobs:
                   server: ftp://154.41.240.94:21
                   username: ${{ secrets.ftp_username }}
                   password: ${{ secrets.ftp_password }}
-                  server-dir: public_html
+                  server-dir: public_html/
                   local-dir: ./dist/pwa/
