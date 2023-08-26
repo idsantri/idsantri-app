@@ -11,7 +11,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Setup Nodejs
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   node-version: 18
 
@@ -24,8 +24,8 @@ jobs:
             - name: Deploy to Shared Hosting
               uses: SamKirkland/FTP-Deploy-Action@v4.3.4
               with:
-                  server: ftp://154.41.240.94
+                  server: ftp://154.41.240.94:21
                   username: ${{ secrets.ftp_username }}
                   password: ${{ secrets.ftp_password }}
-                  server-dir: public_html/
-                  local-dir: ./dist/pwa/
+                  server-dir: public_html
+                  local-dir: ./dist/pwa
