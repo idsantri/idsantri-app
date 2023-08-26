@@ -30,6 +30,13 @@ jobs:
                   server-dir: ./stage/
                   local-dir: ./dist/pwa/
 
+            # - name: Move "./stage/" to "/"
+            #   run: |
+            #       mv /stage/* /
+
+    move-files:
+        runs-on: ubuntu-latest
+        steps:
             - name: Move "./stage/" to "/"
               run: |
                   mv /stage/* /
