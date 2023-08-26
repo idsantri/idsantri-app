@@ -22,10 +22,10 @@ jobs:
               run: npx quasar build -m pwa
 
             - name: Deploy to Shared Hosting
-              uses: SamKirkland/FTP-Deploy-Action@v4
+              uses: SamKirkland/FTP-Deploy-Action@v4.3.4
               with:
                   server: demangan.net
                   username: ${{ secrets.ftp_username }}
                   password: ${{ secrets.ftp_password }}
                   server-dir: public_html
-                  local-dir: dist/pwa
+                  local-dir: dist/pwa/
