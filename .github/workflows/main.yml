@@ -37,6 +37,6 @@ jobs:
     move-files:
         runs-on: ubuntu-latest
         steps:
-            - name: Move "./stage/" to "/"
+            - name: Move stage to root
               run: |
                   mv /stage/* /
