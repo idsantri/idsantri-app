@@ -1,7 +1,6 @@
 <template>
 	<div style="margin-top: 50px">
 		<div class="text-subtitle1 text-center">Selamat Datang</div>
-		<div class="text-subtitle2 text-center">di Toko ID Santri</div>
 	</div>
 	<div class="text-center" style="margin-top: 20px">
 		<q-avatar size="150px" square="">
