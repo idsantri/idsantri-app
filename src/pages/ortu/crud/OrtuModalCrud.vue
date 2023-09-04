@@ -1,7 +1,7 @@
 <template>
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
+			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
 				<div class="text-subtitle1">
 					Input Data Orang Tua &mdash;
 					<em> {{ isNew ? 'baru' : 'edit' }}</em>
@@ -48,8 +48,8 @@
 			<q-card-section class="q-pa-sm">
 				<div class="row justify-center">
 					<q-btn-toggle
-						toggle-color="teal-10"
-						text-color="text-teal-11"
+						toggle-color="green-10"
+						text-color="text-green-11"
 						no-caps=""
 						glossy
 						v-model="slide"
@@ -57,7 +57,7 @@
 					/>
 				</div>
 			</q-card-section>
-			<q-card-actions class="flex bg-teal-6">
+			<q-card-actions class="flex bg-green-6">
 				<q-btn
 					:label="isNew ? 'Reset' : 'Hapus'"
 					class="bg-red text-red-1"
@@ -68,14 +68,14 @@
 				<q-btn
 					label="Tutup"
 					v-close-popup
-					class="bg-teal-11"
+					class="bg-green-11"
 					no-caps=""
 					id="btn-close-ortu-crud"
 				/>
 				<q-btn
 					type="submit"
 					label="Simpan"
-					class="bg-teal-10 text-teal-11"
+					class="bg-green-10 text-green-11"
 					no-caps=""
 				/>
 			</q-card-actions>

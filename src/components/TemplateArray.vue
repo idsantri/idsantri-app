@@ -41,7 +41,7 @@
 			icon="add"
 			round=""
 			dense=""
-			color="teal-14"
+			color="green-14"
 			glossy=""
 			class="absolute-bottom-right q-ma-sm"
 			@click="$emit('add')"

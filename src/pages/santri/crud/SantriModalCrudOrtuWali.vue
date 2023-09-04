@@ -16,7 +16,7 @@
 			<q-btn
 				dense
 				flat
-				color="teal-10"
+				color="green-10"
 				icon="content_paste"
 				@click="pasteOrtu()"
 				label="Tempel"
@@ -29,7 +29,7 @@
 				no-caps=""
 				outline=""
 				icon="search"
-				class="slot-after text-teal-10"
+				class="slot-after text-green-10"
 				@click="searchOrtu = true"
 			/>
 		</template>
@@ -47,7 +47,7 @@
 	>
 		<template v-slot:after>
 			<q-btn
-				class="slot-after text-teal-10"
+				class="slot-after text-green-10"
 				label="Cek"
 				no-caps=""
 				outline=""
@@ -78,7 +78,7 @@
 			<q-btn
 				dense
 				flat
-				color="teal-10"
+				color="green-10"
 				icon="content_paste"
 				label="Tempel"
 				no-caps=""
@@ -87,7 +87,7 @@
 		</template>
 		<template v-slot:after>
 			<q-btn
-				class="slot-after text-teal-10"
+				class="slot-after text-green-10"
 				no-caps=""
 				outline=""
 				icon="search"
@@ -109,7 +109,7 @@
 	>
 		<template v-slot:after>
 			<q-btn
-				class="slot-after text-teal-10"
+				class="slot-after text-green-10"
 				no-caps=""
 				outline=""
 				label="Cek"

@@ -1,14 +1,16 @@
 <template>
 	<q-card style="width: 100%">
-		<q-card-section class="bg-teal-8 text-teal-1 q-pa-sm flex items-center">
-			<h2 class="text-subtitle1 no-margin text-teal-11">
+		<q-card-section
+			class="bg-green-8 text-green-1 q-pa-sm flex items-center"
+		>
+			<h2 class="text-subtitle1 no-margin text-green-11">
 				Cari Orang Tua
 			</h2>
 			<q-space />
 			<q-btn
 				label="Tambah"
-				color="teal-12"
-				class="text-teal-10"
+				color="green-12"
+				class="text-green-10"
 				icon="add"
 				no-caps=""
 				dense=""
@@ -23,15 +25,15 @@
 				style="overflow: hidden"
 			/>
 		</q-card-section>
-		<q-card-actions class="bg-teal-7">
-			<div class="text-body2 text-teal-11 text-italic">
+		<q-card-actions class="bg-green-7">
+			<div class="text-body2 text-green-11 text-italic">
 				Cari berdsarkan ID, Nama Ayah/Ibu, atau NIK
 			</div>
 			<q-space />
 			<q-btn
 				label="Tutup"
-				color="teal-1"
-				class="text-teal-10"
+				color="green-1"
+				class="text-green-10"
 				no-caps=""
 				v-close-popup
 				id="btn-close-ortu-search"

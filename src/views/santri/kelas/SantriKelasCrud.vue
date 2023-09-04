@@ -1,7 +1,7 @@
 <template>
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="submit">
-			<q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
+			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
 				<div class="text-subtitle1">
 					{{ props.title }} &mdash;
 					<em>{{ isNew ? 'baru' : 'edit' }}</em>
@@ -88,7 +88,7 @@
 					autogrow=""
 				/>
 			</q-card-section>
-			<q-card-actions class="flex bg-teal-6">
+			<q-card-actions class="flex bg-green-6">
 				<q-btn
 					v-show="!props.isNew"
 					label="Hapus"
@@ -100,14 +100,14 @@
 				<q-btn
 					label="Tutup"
 					v-close-popup
-					class="bg-teal-11"
+					class="bg-green-11"
 					no-caps=""
 					id="btn-close-santri-crud"
 				/>
 				<q-btn
 					type="submit"
 					label="Simpan"
-					class="bg-teal-10 text-teal-11"
+					class="bg-green-10 text-green-11"
 					no-caps=""
 				/>
 			</q-card-actions>

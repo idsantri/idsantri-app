@@ -11,9 +11,9 @@
 			no-caps
 			outside-arrows
 			mobile-arrows
-			class="bg-teal-7 text-teal-11 shadow-2"
+			class="bg-green-7 text-green-11 shadow-2"
 			dense=""
-			indicator-color="teal-13"
+			indicator-color="green-13"
 			align="left"
 		>
 			<q-route-tab
@@ -55,7 +55,7 @@
 				</template>
 				<template #fallback>
 					<q-spinner-cube
-						color="teal-12"
+						color="green-12"
 						size="8em"
 						class="flex q-mx-auto"
 					/>

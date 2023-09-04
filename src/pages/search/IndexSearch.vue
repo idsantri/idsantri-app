@@ -1,11 +1,11 @@
 <template>
 	<div class="q-pa-sm">
-		<q-toolbar class="bg-teal-8 text-teal-11 shadow-2 rounded-borders">
+		<q-toolbar class="bg-green-8 text-green-11 shadow-2 rounded-borders">
 			<!-- <q-btn flat label="Homepage" /> -->
 			<div class="text-subtitle1">Cari &hellip;</div>
 			<q-space />
 
-			<q-tabs shrink stretch class="text-teal-11">
+			<q-tabs shrink stretch class="text-green-11">
 				<q-route-tab name="santri" label="Santri" to="santri" exact />
 				<q-route-tab name="wali" label="Wali" to="wali" exact />
 				<q-route-tab name="ortu" label="Ortu" to="ortu" exact />
@@ -16,7 +16,7 @@
 		<!-- <q-tab-panels
 			animated
 			v-model="tab"
-			class="bg-teal-1 rounded-borders q-card--bordered q-pa-sm"
+			class="bg-green-1 rounded-borders q-card--bordered q-pa-sm"
 		>
 			<q-tab-panel name="santri" class="no-padding">
 				<santri-search />

@@ -1,6 +1,6 @@
 <template>
 	<q-card class="q-ma-sm">
-		<q-card-section class="bg-teal-8 text-teal-11 q-pa-sm">
+		<q-card-section class="bg-green-8 text-green-11 q-pa-sm">
 			<div class="flex items-center">
 				<div class="text-subtitle1">Data Wali</div>
 				<q-space />
@@ -8,15 +8,15 @@
 					label="Cari"
 					@click="searchWali = true"
 					size="sm"
-					color="teal-2"
-					class="text-teal-10 q-mr-sm"
+					color="green-2"
+					class="text-green-10 q-mr-sm"
 					icon="search"
 				/>
 				<q-btn
 					no-caps
 					size="sm"
-					color="teal-2"
-					class="text-teal-10"
+					color="green-2"
+					class="text-green-10"
 					icon="edit"
 					label="Edit"
 					@click="editWali"

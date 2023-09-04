@@ -4,7 +4,7 @@
 		<q-card class="my-card q-mb-lg" flat>
 			<q-card-section class="no-padding no-margin">
 				<p
-					class="q-pa-sm no-margin text-teal-10 text-justify bg-teal-2 rounded-borders"
+					class="q-pa-sm no-margin text-green-10 text-justify bg-green-2 rounded-borders"
 				>
 					Tidak masalah. Masukkan email Anda di bawah ini dan kami
 					akan mengirimkan instruksi untuk mengatur ulang kata sandi
@@ -16,7 +16,7 @@
 			<div class="q-gutter-y-md column">
 				<q-input
 					class="no-margin no-padding"
-					bg-color="teal-1"
+					bg-color="green-1"
 					outlined
 					v-model="email"
 					required
@@ -26,18 +26,18 @@
 				/>
 				<q-btn
 					type="submit"
-					class="full-width q-pa-sm text-teal-10"
-					color="teal-3"
+					class="full-width q-pa-sm text-green-10"
+					color="green-3"
 					label="Kirim instruksi"
 				/>
 
 				<q-card class="my-card" flat>
 					<q-card-section
-						class="text-teal-10 text-center bg-teal-2 q-pa-sm"
+						class="text-green-10 text-center bg-green-2 q-pa-sm"
 					>
 						<q-btn
 							outline
-							color="teal-10"
+							color="green-10"
 							class="full-width text-weight-regular"
 							no-caps
 							to="/login"
@@ -45,7 +45,7 @@
 						/>
 						<q-btn
 							outline
-							color="teal-10"
+							color="green-10"
 							class="full-width text-weight-regular q-mt-sm"
 							no-caps
 							to="/reset-password"
@@ -58,7 +58,7 @@
 	</div>
 	<q-spinner-cube
 		v-show="showSpinner"
-		color="teal-12"
+		color="green-12"
 		size="14em"
 		class="absolute-center"
 	/>

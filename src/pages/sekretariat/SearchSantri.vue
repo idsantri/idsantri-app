@@ -1,12 +1,14 @@
 <template>
 	<q-card style="width: 100%">
-		<q-card-section class="bg-teal-8 text-teal-1 q-pa-sm flex items-center">
+		<q-card-section
+			class="bg-green-8 text-green-1 q-pa-sm flex items-center"
+		>
 			<h2 class="text-subtitle1 no-margin">Cari</h2>
 			<q-space />
 			<q-btn
 				label="Tambah"
-				color="teal-6"
-				class="text-teal-11"
+				color="green-6"
+				class="text-green-11"
 				icon="add"
 				no-caps=""
 				dense=""
@@ -24,7 +26,7 @@
 				</template>
 				<template #fallback>
 					<q-spinner-cube
-						color="teal-12"
+						color="green-12"
 						size="14em"
 						class="absolute-center"
 					/>

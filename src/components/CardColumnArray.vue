@@ -1,6 +1,6 @@
 <template>
 	<q-card>
-		<q-card-section class="bg-teal-7 text-teal-11 q-pa-sm">
+		<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
 			<div class="flex items-center">
 				<div class="text-subtitle2">{{ title }}</div>
 				<q-space />

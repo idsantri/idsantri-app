@@ -1,7 +1,7 @@
 <template>
 	<q-layout view="lHh Lpr lFf">
 		<q-header elevated>
-			<q-toolbar class="bg-teal-9">
+			<q-toolbar class="bg-green-9">
 				<q-btn
 					flat
 					dense
@@ -11,12 +11,19 @@
 					@click="toggleLeftDrawer"
 				/>
 
-				<q-toolbar-title class="text-teal-11">
+				<q-toolbar-title class="text-green-11">
 					{{ constanta.APP_NAME_1 }}
 				</q-toolbar-title>
 
-				<q-btn round flat dense icon="search" color="teal-1" to="/cari">
-					<q-badge v-if="badge" floating color="teal-13" rounded />
+				<q-btn
+					round
+					flat
+					dense
+					icon="search"
+					color="green-1"
+					to="/cari"
+				>
+					<q-badge v-if="badge" floating color="green-13" rounded />
 				</q-btn>
 
 				<q-btn-dropdown
@@ -25,7 +32,7 @@
 					dense
 					dropdown-icon="more_vert"
 					class="q-pl-md"
-					color="teal-1"
+					color="green-1"
 				>
 					<q-list>
 						<q-item
@@ -37,14 +44,14 @@
 						>
 							<q-item-section>Install</q-item-section>
 							<q-item-section avatar>
-								<q-icon color="teal" name="install_mobile" />
+								<q-icon color="green" name="install_mobile" />
 							</q-item-section>
 						</q-item>
 
 						<!-- <q-item clickable v-close-popup>
               <q-item-section>Profil</q-item-section>
               <q-item-section avatar>
-                <q-icon color="teal" name="3p" />
+                <q-icon color="green" name="3p" />
               </q-item-section>
             </q-item> -->
 
@@ -63,7 +70,7 @@
 			v-model="leftDrawerOpen"
 			show-if-above
 			bordered
-			class="bg-teal-7"
+			class="bg-green-7"
 		>
 			<suspense>
 				<template #default>
@@ -71,7 +78,7 @@
 				</template>
 				<template #fallback>
 					<div class="spinner">
-						<q-spinner-cube color="teal-8" size="8em" />
+						<q-spinner-cube color="green-8" size="8em" />
 					</div>
 				</template>
 			</suspense>
@@ -84,7 +91,7 @@
 				</template>
 				<template #fallback>
 					<div class="spinner">
-						<q-spinner-cube color="teal-8" size="8em" />
+						<q-spinner-cube color="green-8" size="8em" />
 					</div>
 				</template>
 			</suspense>
@@ -100,7 +107,7 @@
 		<!-- inject modal -->
 		<modals-main />
 
-		<q-footer bordered class="bg-teal-6 text-teal-12">
+		<q-footer bordered class="bg-green-6 text-green-12">
 			<p class="text-center no-margin q-pa-xs">
 				by idsantri {{ m2h('2007-12-10', 0) }}
 			</p>

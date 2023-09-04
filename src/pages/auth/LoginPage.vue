@@ -3,7 +3,7 @@
 		<form @submit.prevent="submitLogin">
 			<div class="q-gutter-y-md column">
 				<q-input
-					bg-color="teal-1"
+					bg-color="green-1"
 					outlined
 					v-model="login"
 					required
@@ -14,7 +14,7 @@
 				/>
 				<q-input
 					id="password"
-					bg-color="teal-1"
+					bg-color="green-1"
 					outlined
 					v-model="password"
 					type="password"
@@ -29,18 +29,18 @@
 				/>
 				<q-btn
 					type="submit"
-					class="full-width q-pa-sm text-teal-10"
-					color="teal-3"
+					class="full-width q-pa-sm text-green-10"
+					color="green-3"
 					label="Login"
 				/>
 
 				<q-card class="my-card" flat>
 					<q-card-section
-						class="text-teal-10 text-center bg-teal-2 q-pa-sm"
+						class="text-green-10 text-center bg-green-2 q-pa-sm"
 					>
 						<q-btn
 							outline
-							color="teal-10"
+							color="green-10"
 							class="full-width text-weight-regular"
 							no-caps
 							to="/register"
@@ -48,7 +48,7 @@
 						/>
 						<q-btn
 							outline
-							color="teal-10"
+							color="green-10"
 							class="full-width text-weight-regular q-mt-sm"
 							no-caps
 							to="/forgot-password"
@@ -61,7 +61,7 @@
 	</div>
 	<q-spinner-cube
 		v-show="showSpinner"
-		color="teal-12"
+		color="green-12"
 		size="14em"
 		class="absolute-center"
 	/>

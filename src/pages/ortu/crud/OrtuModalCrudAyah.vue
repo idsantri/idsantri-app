@@ -65,7 +65,7 @@
 	/>
 	<q-toggle
 		v-model="a_hidup"
-		color="teal"
+		color="green"
 		label="Hidup"
 		:true-value="1"
 		:false-value="0"

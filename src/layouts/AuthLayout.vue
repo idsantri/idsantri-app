@@ -1,5 +1,5 @@
 <template>
-	<q-card class="my-card q-pa-lg bg-teal-5 text-teal-1">
+	<q-card class="my-card q-pa-lg bg-green-5 text-green-1">
 		<q-card-section class="no-padding q-mb-md">
 			<div class="container-title">
 				<h1 class="title">{{ constanta.APP_NAME_1 }}</h1>
@@ -28,10 +28,10 @@
 </template>
 
 <script setup>
-import constanta from "src/config/constanta";
-import { ref } from "vue";
+import constanta from 'src/config/constanta';
+import { ref } from 'vue';
 
-const title = ref("Autentikasi");
+const title = ref('Autentikasi');
 const handleTitle = (value) => (title.value = value);
 
 const errors = ref([]);
