@@ -35,7 +35,7 @@ iuranArr.value = iuran_total;
 iuranMap.value = iuran_total.map((v, i) => ({
 	'Tahun Ajaran': `${v.th_ajaran_h}  |  ${v.th_ajaran_m || ''} `,
 	Kelas: `${v.kelas || ''} ${v.tingkat || ''}`,
-	'Total Pembayaran': `Rp${digitSeparator(v.total)}`,
+	Pembayaran: `Rp${digitSeparator(v.total)}`,
 }));
 onMounted(async () => {});
 

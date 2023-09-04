@@ -41,9 +41,9 @@
 			icon="add"
 			round=""
 			dense=""
-			color="green-14"
+			color="green-10"
 			glossy=""
-			class="absolute-bottom-right q-ma-sm"
+			class="absolute-bottom-right q-ma-sm text-green-11"
 			@click="$emit('add')"
 		/>
 	</div>

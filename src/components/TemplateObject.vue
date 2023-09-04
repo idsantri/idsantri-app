@@ -6,8 +6,8 @@
 		</div>
 		<q-btn
 			icon="info"
-			color="green-6"
-			class="text-green-12 absolute-bottom-right q-ma-sm"
+			color="green-8"
+			class="text-green-11 absolute-bottom-right q-ma-sm"
 			:to="props.route"
 			round
 			glossy

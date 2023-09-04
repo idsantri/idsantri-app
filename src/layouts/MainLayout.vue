@@ -109,7 +109,7 @@
 
 		<q-footer bordered class="bg-green-6 text-green-12">
 			<p class="text-center no-margin q-pa-xs">
-				by idsantri {{ m2h('2007-12-10', 0) }}
+				by idsantri {{ m2h('2023-08-01')?.substring(0, 4) }}
 			</p>
 		</q-footer>
 	</q-layout>
