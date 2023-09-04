@@ -163,6 +163,18 @@ const routes = [
 				component: () => import('src/pages/sekretariat/IndexPage.vue'),
 				meta: { title: 'Sekretariat' },
 			},
+
+			{
+				path: 'settings',
+				children: [
+					{
+						path: 'lists',
+						component: () =>
+							import('src/pages/settings/ListsPage.vue'),
+						meta: { title: 'Setting: List' },
+					},
+				],
+			},
 		],
 	},
 
