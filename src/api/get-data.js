@@ -2,10 +2,10 @@ import { apiTokened } from 'src/api';
 import { toArray } from 'src/utils/array-object';
 import { notifyError } from 'src/utils/notify';
 
-async function fetchData(url, spinner) {
+async function getData({ endPoint, spinner }) {
 	try {
 		if (spinner && typeof spinner.value === 'boolean') spinner.value = true;
-		const { data } = await apiTokened.get(`${url}`);
+		const { data } = await apiTokened.get(`${endPoint}`);
 		return data;
 	} catch (error) {
 		toArray(error.response?.data?.message).forEach((message) => {
@@ -17,4 +17,4 @@ async function fetchData(url, spinner) {
 	}
 }
 
-export default fetchData;
+export default getData;
