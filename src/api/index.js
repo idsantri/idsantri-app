@@ -1,15 +1,14 @@
 import axios from 'axios';
 import { baseUrl } from 'src/boot/axios';
 
-const baseURL = baseUrl.defaults.baseURL;
+const url = baseUrl.defaults.baseURL;
 
-const api = axios.create({ baseURL: baseURL });
-const apiTokened = axios.create({ baseURL: baseURL });
+const api = axios.create({ baseURL: url });
+const apiTokened = axios.create({ baseURL: url });
 
 const auth = JSON.parse(sessionStorage.getItem('auth'));
 const token = auth ? auth.token : 'FAIL TO GET TOKEN';
 
-const Authorization = `Bearer ${token}`;
-apiTokened.defaults.headers.common['Authorization'] = Authorization;
+apiTokened.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-export { api, apiTokened, baseURL, Authorization };
+export { api, apiTokened };

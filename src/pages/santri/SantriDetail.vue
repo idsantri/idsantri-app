@@ -67,8 +67,10 @@
 	<!-- modal -->
 	<upload-image
 		:show-uploader="showUploader"
-		:url="`${baseURL}/santri/${santriId}/images`"
-		:headers="{ Authorization: Authorization }"
+		:url="`${apiTokened.defaults.baseURL}/santri/${santriId}/images`"
+		:headers="{
+			Authorization: apiTokened.defaults.headers.common.Authorization,
+		}"
 		@update-uploader="handleUploader"
 	/>
 
@@ -77,7 +79,7 @@
 <script setup>
 import { reactive, ref, toRefs, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { baseURL, Authorization } from 'src/api';
+import { apiTokened } from 'src/api';
 import { formatDateFull } from '../../utils/format-date';
 import CardColumn from '../../components/CardColumn.vue';
 import CardImage from '../../components/CardImage.vue';

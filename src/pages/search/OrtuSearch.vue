@@ -48,7 +48,7 @@ import DataTable from 'datatables.net-vue3';
 import DataTablesLib from 'datatables.net-dt';
 import { ref, onMounted, onUnmounted, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
-import { baseURL, Authorization } from 'src/api';
+import { apiTokened } from 'src/api';
 import { notifySuccess } from 'src/utils/notify';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
@@ -65,8 +65,10 @@ const addNew = () => {
 
 const router = useRouter();
 
-const url = `${baseURL}/ortu/search`;
-const headers = { Authorization: Authorization };
+const url = `${apiTokened.defaults.baseURL}/ortu/search`;
+const headers = {
+	Authorization: apiTokened.defaults.headers.common.Authorization,
+};
 
 DataTable.use(DataTablesLib);
 const options = ref({
