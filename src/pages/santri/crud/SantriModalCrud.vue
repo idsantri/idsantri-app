@@ -110,11 +110,10 @@ import InputOrtuWali from './SantriModalCrudOrtuWali.vue';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
-import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
-import deleteById from 'src/api/delete-data';
+import deleteData from 'src/api/delete-data';
 
 const router = useRouter();
 
@@ -195,18 +194,15 @@ const resetOrDelete = async () => {
 	if (isNew) {
 		santriStore().setNull();
 	} else {
-		try {
-			const result = await deleteById({
-				endPoint: 'santri',
-				id: santri.id,
-				message: `<span style="color:'red'">Hapus santri?</span>`,
-				rerender: false,
-			});
-			if (result) {
-				router.push('/cari/santri');
-				dialogStore().toggleCrudSantri(false);
-			}
-		} catch (err) {}
+		const result = await deleteData({
+			endPoint: `santri/${santri.id}`,
+			message: `<span style="color:'red'">Hapus santri?</span>`,
+			rerender: false,
+		});
+		if (result) {
+			router.push('/cari/santri');
+			dialogStore().toggleCrudSantri(false);
+		}
 	}
 };
 </script>

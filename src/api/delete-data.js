@@ -4,8 +4,8 @@ import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 
-function deleteById({ endPoint, id, message, rerender }) {
-	return new Promise((resolve, reject) => {
+function deleteData({ endPoint, message, rerender }) {
+	return new Promise((resolve) => {
 		Dialog.create({
 			title: 'Konfirmasi',
 			message:
@@ -15,19 +15,20 @@ function deleteById({ endPoint, id, message, rerender }) {
 			html: true,
 		}).onOk(async () => {
 			try {
-				const response = await apiTokened.delete(`${endPoint}/${id}`);
+				const response = await apiTokened.delete(`${endPoint}`);
 				notifySuccess(response.data.message);
 				if (rerender) forceRerender();
 				resolve(true);
 			} catch (error) {
-				console.log(error);
-				toArray(error.response?.data?.message)?.forEach((message) => {
-					notifyError(message);
-				});
-				reject(false);
+				const message = error?.response?.data?.message;
+				if (message) {
+					toArray(message).forEach((msg) => notifyError(msg));
+				} else {
+					console.log(error);
+				}
 			}
 		});
 	});
 }
 
-export default deleteById;
+export default deleteData;
