@@ -1,4 +1,4 @@
-(globalThis["webpackChunkawet_makmur"]=globalThis["webpackChunkawet_makmur"]||[]).push([[736],{9984:e=>{e.exports=function(e,t,n){const o=void 0!==e.__vccOpts?e.__vccOpts:e,r=o[t];if(void 0===r)o[t]=n;else for(const i in n)void 0===r[i]&&(r[i]=n[i])}},4848:()=>{(function(){"use strict";
+(globalThis["webpackChunkidsantri"]=globalThis["webpackChunkidsantri"]||[]).push([[736],{9984:e=>{e.exports=function(e,t,n){const o=void 0!==e.__vccOpts?e.__vccOpts:e,r=o[t];if(void 0===r)o[t]=n;else for(const i in n)void 0===r[i]&&(r[i]=n[i])}},4848:()=>{(function(){"use strict";
 /**
    * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
    *
