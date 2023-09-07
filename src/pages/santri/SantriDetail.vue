@@ -67,10 +67,8 @@
 	<!-- modal -->
 	<upload-image
 		:show-uploader="showUploader"
-		:url="`${apiTokened.defaults.baseURL}/santri/${santriId}/images`"
-		:headers="{
-			Authorization: apiTokened.defaults.headers.common.Authorization,
-		}"
+		:url="`${baseURL}/santri/${santriId}/images`"
+		:headers="{ Authorization: Authorization }"
 		@update-uploader="handleUploader"
 	/>
 
@@ -79,43 +77,29 @@
 <script setup>
 import { reactive, ref, toRefs, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { apiTokened } from 'src/api';
+import { baseURL, Authorization } from 'src/api';
 import { formatDateFull } from '../../utils/format-date';
 import CardColumn from '../../components/CardColumn.vue';
 import CardImage from '../../components/CardImage.vue';
 import UploadImage from './SantriUploadImage.vue';
 import santriStore from 'src/stores/santri-store';
 import { bacaHijri } from 'src/utils/hijri';
-import { toArray } from 'src/utils/array-object';
-import { notifyError } from 'src/utils/notify';
 import SantriRelations from 'src/pages/santri/SantriRelations.vue';
 import dialogStore from 'src/stores/dialog-store';
+import getData from 'src/api/get-data';
 
 const santri = reactive({});
 const route = useRoute();
 const santriId = route.params.id;
-const showSpinner = ref(false);
 
 const dialog = dialogStore();
 const { searchSantri, crudSantri } = toRefs(dialog);
 
-async function fetchData() {
-	try {
-		showSpinner.value = true;
-		const { data } = await apiTokened.get(`santri/${santriId}`);
-		Object.assign(santri, data.santri);
-	} catch (error) {
-		toArray(error.response.data.message).forEach((message) => {
-			notifyError(message);
-		});
-	} finally {
-		showSpinner.value = false;
-	}
-}
-
+const data = await getData({ endPoint: `santri/${santriId}` });
+Object.assign(santri, data.santri);
 const register = ref({});
 const identity = ref({});
-await fetchData();
+
 // register
 register.value = {
 	ID: santri.id,
@@ -163,4 +147,3 @@ function editSantri() {
 const showUploader = ref(false);
 const handleUploader = (value) => (showUploader.value = value);
 </script>
-src/api/api.js

@@ -70,4 +70,3 @@ const handleEdit = ({ id }) => {
 	crudShow.value = true;
 };
 </script>
-src/api/api.js

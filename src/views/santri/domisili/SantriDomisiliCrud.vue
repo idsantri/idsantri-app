@@ -74,7 +74,7 @@ import {
 import { fetchLists } from 'src/api/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
-import { deleteById } from 'src/api/delete-data';
+import deleteById from 'src/api/delete-data';
 const props = defineProps({
 	data: { type: Object, required: true },
 	isNew: { type: Boolean, default: true },

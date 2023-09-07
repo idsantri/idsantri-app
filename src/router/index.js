@@ -9,7 +9,6 @@ import routes from './routes';
 import { nextTick } from 'vue';
 import authStore from '../stores/auth-store';
 import constanta from 'src/config/constanta';
-
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;

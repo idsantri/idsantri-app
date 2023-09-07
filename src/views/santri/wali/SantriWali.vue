@@ -29,4 +29,3 @@ wali.value = {
 };
 onMounted(async () => {});
 </script>
-src/api/api.js

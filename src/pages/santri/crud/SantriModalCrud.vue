@@ -114,6 +114,7 @@ import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
+import deleteById from 'src/api/delete-data';
 
 const router = useRouter();
 
@@ -190,34 +191,22 @@ const toggleOptions = [
 	},
 ];
 
-const $q = useQuasar();
-
-const deleteData = async (id) => {
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: `<span style="color:'red'">Hapus santri?</span>`,
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(async () => {
-		try {
-			const response = await apiTokened.delete(`santri/${id}`);
-			notifySuccess(response.data.message);
-			router.go(-1);
-		} catch (error) {
-			toArray(error.response.data.message).forEach((message) => {
-				notifyError(message);
-			});
-		}
-	});
-};
-
-const resetOrDelete = () => {
+const resetOrDelete = async () => {
 	if (isNew) {
 		santriStore().setNull();
 	} else {
-		deleteData(santri.id);
+		try {
+			const result = await deleteById({
+				endPoint: 'santri',
+				id: santri.id,
+				message: `<span style="color:'red'">Hapus santri?</span>`,
+				rerender: false,
+			});
+			if (result) {
+				router.push('/cari/santri');
+				dialogStore().toggleCrudSantri(false);
+			}
+		} catch (err) {}
 	}
 };
 </script>
-src/api/api
