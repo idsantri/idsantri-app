@@ -8,9 +8,12 @@ async function getData({ endPoint, spinner }) {
 		const { data } = await apiTokened.get(`${endPoint}`);
 		return data;
 	} catch (error) {
-		toArray(error.response?.data?.message).forEach((message) => {
-			notifyError(message);
-		});
+		const message = error?.response?.data?.message;
+		if (message) {
+			toArray(message).forEach((msg) => notifyError(msg));
+		} else {
+			console.log(error);
+		}
 	} finally {
 		if (spinner && typeof spinner.value === 'boolean')
 			spinner.value = false;

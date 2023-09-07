@@ -114,8 +114,7 @@ const submit = async () => {
 
 const deleteData = async (id) => {
 	const data = {
-		endPoint: 'status',
-		id: id,
+		endPoint: `status/${id}`,
 		rerender: true,
 	};
 	await deleteById(data);
