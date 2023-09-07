@@ -92,10 +92,10 @@ import waliStore from 'src/stores/wali-store';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { forceRerender } from 'src/utils/buttons-click';
 import { toArray } from 'src/utils/array-object';
-import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
+import deleteData from 'src/api/delete-data';
 
 const { wali } = reactive(waliStore());
 const { isNew } = reactive(waliStore());
@@ -156,36 +156,20 @@ const toggleOptions = [
 	},
 ];
 
-const $q = useQuasar();
 const router = useRouter();
-
-const deleteData = async (id) => {
-	$q.dialog({
-		title: 'Konfirmasi',
-		message: `<span style="color:'red'">Hapus Wali?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>`,
-		cancel: true,
-		persistent: false,
-		html: true,
-	}).onOk(async () => {
-		try {
-			const response = await apiTokened.delete(`wali/${id}`);
-			notifySuccess(response.data.message);
-			router.go(-1);
-		} catch (error) {
-			toArray(error.response.data.message).forEach((message) => {
-				notifyError(message);
-			});
-		}
-	});
-};
-
-const resetOrDelete = () => {
+const resetOrDelete = async () => {
 	if (isNew) {
 		waliStore().setNull();
 	} else {
-		deleteData(wali.id);
+		const result = await deleteData({
+			endPoint: `wali/${wali.id}`,
+			message: `<span style="color:'red'">Hapus Wali?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>`,
+			rerender: false,
+		});
+		if (result) {
+			router.push('/cari/wali');
+			dialogStore().toggleCrudWali(false);
+		}
 	}
 };
 </script>
-<style></style>
-src/api/api
