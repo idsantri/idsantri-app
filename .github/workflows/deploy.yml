@@ -2,6 +2,7 @@ on:
     push:
         branches:
             - main
+
 name: 🚀 Deploy website on push
 jobs:
     build:
@@ -21,8 +22,17 @@ jobs:
             - name: Build PWA
               run: npx quasar build -m pwa
 
-            - name: Deploy to GitHub Pages
-              uses: JamesIves/github-pages-deploy-action@v4
+            - name: Deploy to Shared Hosting
+              uses: SamKirkland/FTP-Deploy-Action@v4.3.4
               with:
-                  folder: dist/pwa
-                  clean: true
+                  server: demangan.net
+                  username: ${{ secrets.ftp_username }}
+                  password: ${{ secrets.ftp_password }}
+                  server-dir: ./dev/
+                  local-dir: ./dist/pwa/
+
+            # - name: Deploy to GitHub Pages
+            #   uses: JamesIves/github-pages-deploy-action@v4
+            #   with:
+            #       folder: dist/pwa
+            #       clean: true
