@@ -9,7 +9,7 @@ import { ref, onMounted } from 'vue';
 import TemplateArray from 'src/components/TemplateArray.vue';
 import { getObjectById } from 'src/utils/array-object';
 import santriStore from 'src/stores/santri-store';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { digitSeparator } from 'src/utils/format-number';
 
 const { santri } = santriStore();
@@ -39,18 +39,13 @@ iuranMap.value = iuran_total.map((v, i) => ({
 }));
 onMounted(async () => {});
 
+const router = useRouter();
 const handleAdd = () => {
-	iuranProps.value = {
-		santri_id: iuranArr.value[0]?.santri_id || santri.id,
-		nama: iuranArr.value[0]?.nama || santri.nama,
-	};
-	isNew.value = true;
-	crudShow.value = true;
+	router.push(`/santri/${santri.id}/iuran`);
 };
 
-const handleEdit = ({ id }) => {
-	iuranProps.value = getObjectById(iuranArr, id);
-	isNew.value = false;
-	crudShow.value = true;
+const handleEdit = (tahun) => {
+	const th = tahun['Tahun Ajaran'].substring(0, 9);
+	router.push(`/santri/${santri.id}/iuran/${th}`);
 };
 </script>

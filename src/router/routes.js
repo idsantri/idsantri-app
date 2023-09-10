@@ -128,6 +128,21 @@ const routes = [
 								'src/views/santri/iuran-total/SantriIuranTotal.vue'
 							),
 					},
+					{
+						path: 'iuran',
+						meta: { title: 'Detail Santri — Iuran' },
+						component: () =>
+							import('src/pages/santri/iuran/SantriIuran.vue'),
+						children: [
+							{
+								path: ':th_ajaran_h',
+								component: () =>
+									import(
+										'src/pages/santri/iuran/SantriIuranTh.vue'
+									),
+							},
+						],
+					},
 				],
 			},
 			{
