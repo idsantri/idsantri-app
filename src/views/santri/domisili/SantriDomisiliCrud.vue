@@ -120,5 +120,3 @@ const deleteData = async (id) => {
 	await deleteById(data);
 };
 </script>
-<style></style>
-src/api/fetch-list src/api/api src/api/delete-data

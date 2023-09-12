@@ -1,7 +1,6 @@
 import { apiTokened } from 'src/api';
 
-async function fetchLists(request) {
-	const { loading, lists, key } = request;
+async function fetchLists({ loading, lists, key }) {
 	const url = `lists/${key}`;
 	// console.log("url", url);
 	loading.value[key] = true;
@@ -15,7 +14,23 @@ async function fetchLists(request) {
 	}
 }
 
-async function fetchListKey({ key, loading, lists, ascending }) {
+async function fetchListKey({ key, loading, lists }) {
+	loading.value[key] = true;
+	let keyReplace = key.replace(/-/g, '_');
+	try {
+		const { data } = await apiTokened.get(`lists/${key}`);
+		const listData = data[keyReplace];
+		lists.value[key] = listData;
+	} catch (error) {
+		console.log(`Not Found list: ${key} `, error);
+	} finally {
+		loading.value[key] = false;
+	}
+}
+
+// TODO:
+// perlu diperbaiki
+async function fetchListAscKey({ key, loading, lists, ascending }) {
 	// const { key, loading, lists, ascending } = request;
 	loading.value[key] = true;
 	let keyReplace = key.replace(/-/g, '_');
@@ -43,4 +58,4 @@ async function fetchListKey({ key, loading, lists, ascending }) {
 		loading.value[key] = false;
 	}
 }
-export { fetchLists, fetchListKey };
+export { fetchLists, fetchListKey, fetchListAscKey };

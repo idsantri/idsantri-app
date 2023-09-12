@@ -60,7 +60,7 @@ import santriState from 'src/stores/santri-store';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
 import { onMounted, ref, toRefs, watch } from 'vue';
-import { fetchListKey } from 'src/api/fetch-list';
+import { fetchListAscKey } from 'src/api/fetch-list';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -73,7 +73,7 @@ const loading = ref([]);
 const lists = ref([]);
 
 onMounted(async () => {
-	await fetchListKey({
+	await fetchListAscKey({
 		key: 'tahun-ajaran',
 		loading,
 		lists,
@@ -89,4 +89,3 @@ watch(tgl_daftar_h, (newValue, oldValue) => {
 	}
 });
 </script>
-src/api/fetch-list

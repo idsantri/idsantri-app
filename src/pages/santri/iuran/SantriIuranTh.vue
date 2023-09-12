@@ -1,7 +1,7 @@
 <template>
 	<div v-if="data.length > 0">
 		<q-list bordered separator>
-			<q-item class="q-pa-sm">
+			<q-item class="q-pa-sm bg-green-11">
 				<q-item-section>
 					<q-item-label overline>TOTAL PEMBAYARAN</q-item-label>
 					<q-item-label class="text-body1"
@@ -75,5 +75,4 @@ if (th.value?.length == 9 && santriId.value) {
 		return sum + item.sub_total;
 	}, 0);
 }
-console.log(data);
 </script>

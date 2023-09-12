@@ -123,4 +123,3 @@ onMounted(async () => {
 	await fetchKotaLahir(listKotaLahir, loadingKotaLahir);
 });
 </script>
-src/api/fetch-alamat

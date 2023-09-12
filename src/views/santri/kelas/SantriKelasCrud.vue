@@ -118,11 +118,8 @@
 <script setup>
 import { apiTokened } from 'src/api';
 import { toArray } from 'src/utils/array-object';
-import {
-	forceRerender,
-	rerenderSantriRelations,
-} from 'src/utils/buttons-click';
-import { fetchListKey, fetchLists } from 'src/api/fetch-list';
+import { rerenderSantriRelations } from 'src/utils/buttons-click';
+import { fetchListAscKey, fetchLists } from 'src/api/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
 import deleteById from 'src/api/delete-data';
@@ -140,13 +137,13 @@ const loading = ref([]);
 onMounted(async () => {
 	input.value = props.data;
 
-	await fetchListKey({
+	await fetchListAscKey({
 		key: 'tahun-ajaran',
 		loading,
 		lists,
 		ascending: false,
 	});
-	await fetchListKey({
+	await fetchListAscKey({
 		key: 'tingkat',
 		loading,
 		lists,
