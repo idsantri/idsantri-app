@@ -1,8 +1,13 @@
 const forceRerender = () => {
 	document.getElementById('btn-force-rerender').click();
 };
+
 const rerenderSantriRelations = () => {
 	document.getElementById('btn-rerender-santri-relations').click();
+};
+
+const rerenderSantriIuran = () => {
+	document.getElementById('btn-rerender-santri-iuran').click();
 };
 
 const closeSantriSearch = () => {
@@ -38,4 +43,5 @@ export {
 	closeWaliCrud,
 	closeWaliSearch,
 	rerenderSantriRelations,
+	rerenderSantriIuran,
 };
