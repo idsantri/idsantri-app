@@ -3,6 +3,7 @@
 		<q-list bordered separator>
 			<q-item class="q-pa-sm bg-green-11">
 				<q-item-section>
+					<q-item-label caption>Th Ajaran: {{ th }}</q-item-label>
 					<q-item-label overline>TOTAL PEMBAYARAN</q-item-label>
 					<q-item-label class="text-body1"
 						>Rp{{ digitSeparator(total) }}</q-item-label

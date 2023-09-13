@@ -28,7 +28,7 @@
 				</div>
 			</q-card-section>
 
-			<q-card-section class="q-pa-sm">
+			<q-card-section class="no-padding">
 				<div class="row">
 					<div class="col bg-green-1" style="max-width: 90px">
 						<q-tabs vertical dense="" align="left" no-caps>
