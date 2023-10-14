@@ -71,7 +71,7 @@
 					outlined
 					label="Quantity"
 					v-model="input.qty"
-					hint="untuk pecahan awali/gunakan titik: .25 atau 0.25, .5 atau 0.5, …"
+					hint="Untuk pecahan: awali/gunakan titik (.25 atau 0.25, .5 atau 0.5, …)"
 				/>
 				<q-input
 					disable=""

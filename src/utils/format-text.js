@@ -46,6 +46,25 @@ function kebabToTitleCase(text) {
 		.map((w) => w[0].toUpperCase() + w.substring(1).toLowerCase())
 		.join(' ');
 }
+function snakeToTitleCase(text) {
+	return text
+		.split('_')
+		.map((w) => w[0].toUpperCase() + w.substring(1).toLowerCase())
+		.join(' ');
+}
+
+function snakeToKebabCase(text) {
+	return text
+		.split('_')
+		.map((w) => w[0].toLowerCase() + w.substring(1).toLowerCase())
+		.join('-');
+}
+function kebabToSnakeCase(text) {
+	return text
+		.split('-')
+		.map((w) => w[0].toLowerCase() + w.substring(1).toLowerCase())
+		.join('_');
+}
 
 export {
 	formatAlamatLengkap,
@@ -53,4 +72,7 @@ export {
 	slugify,
 	titleCase,
 	kebabToTitleCase,
+	snakeToTitleCase,
+	snakeToKebabCase,
+	kebabToSnakeCase,
 };
