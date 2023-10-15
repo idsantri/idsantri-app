@@ -14,6 +14,8 @@
 				/>
 			</q-card-section>
 		</q-card>
+
+		<RouterView />
 		<q-card class="q-mt-sm" v-if="listModel">
 			<q-card-section
 				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
@@ -89,11 +91,14 @@ import { snakeToKebabCase, snakeToTitleCase } from 'src/utils/format-text';
 import deleteData from 'src/api/api-delete';
 import updateData from 'src/api/api-update';
 import postData from 'src/api/api-post';
+import { useRouter } from 'vue-router';
+import listData from './list-data';
 
 const listModel = ref('');
 const listGet = ref([]);
 const spinner = ref(false);
 const newList = ref({});
+const router = useRouter();
 
 async function fetchData() {
 	const selected = listData.find(({ value }) => value == listModel.value);
@@ -105,41 +110,15 @@ async function fetchData() {
 }
 
 watch(listModel, async (newList, oldList) => {
-	if (newList != oldList) await fetchData();
+	if (newList != oldList) {
+		router.push(`${snakeToKebabCase(listModel.value)}`);
+	}
+	// if (newList != oldList) await fetchData();
 });
 
 async function reload() {
 	await fetchData();
 }
-
-const listData = [
-	{ value: 'domisili', label: 'Domisili', mode: '1' },
-	{ value: 'hubungan_wali', label: 'Hubungan Wali', mode: '1' },
-	{ value: 'iuran', label: 'Iuran', mode: '1' },
-	// { value: 'izin-keperluan', label: '', mode: '1' },
-	// { value: 'jabatan', label: '', mode: '1' },
-	// { value: 'kelas', label: '', mode: '1' },
-	// { value: 'keterangan-domisili', label: '', mode: '1' },
-	// { value: 'keterangan-iuran', label: '', mode: '1' },
-	// { value: 'keterangan-izin', label: '', mode: '1' },
-	// { value: 'keterangan-kelas', label: '', mode: '1' },
-	// { value: 'keterangan-status', label: '', mode: '1' },
-	// { value: 'metode-pembayaran', label: '', mode: '1' },
-	// { value: 'nilai-ahwal-item', label: '', mode: '1' },
-	// { value: 'nilai-ahwal-text', label: '', mode: '1' },
-	// { value: 'pekerjaan', label: '', mode: '1' },
-	// { value: 'pendidikan-akhir-diniyah', label: '', mode: '1' },
-	// { value: 'pendidikan-akhir-formal', label: '', mode: '1' },
-	// { value: 'pulangan', label: '', mode: '1' },
-	// { value: 'satuan', label: '', mode: '1' },
-	// { value: 'siklus', label: '', mode: '1' },
-	// { value: 'status', label: '', mode: '1' },
-	{ value: 'tahun_ajaran', label: 'Tahun Ajaran', mode: '2' },
-	// { value: 'takzir-santri', label: '', mode: '1' },
-	// { value: 'tatib-murid', label: '', mode: '1' },
-	// { value: 'tatib-santri', label: '', mode: '1' },
-	// { value: 'tingkat', label: '', mode: '1' },
-];
 
 async function updateList(list) {
 	const { key, val0, val1, val2, id } = list;
