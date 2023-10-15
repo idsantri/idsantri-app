@@ -122,7 +122,7 @@ import { rerenderSantriRelations } from 'src/utils/buttons-click';
 import { fetchListAscKey, fetchLists } from 'src/api/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
-import deleteById from 'src/api/delete-data';
+import deleteById from 'src/api/api-delete';
 
 const props = defineProps({
 	data: { type: Object, required: true },

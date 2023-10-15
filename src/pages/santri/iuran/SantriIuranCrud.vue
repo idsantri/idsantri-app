@@ -137,7 +137,7 @@
 </template>
 <script setup>
 import { apiTokened } from 'src/api';
-import deleteData from 'src/api/delete-data';
+import deleteData from 'src/api/api-delete';
 import { fetchListAscKey, fetchListKey, fetchLists } from 'src/api/fetch-list';
 import { toArray } from 'src/utils/array-object';
 import { rerenderSantriIuran } from 'src/utils/buttons-click';

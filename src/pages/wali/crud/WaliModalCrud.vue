@@ -95,7 +95,7 @@ import { toArray } from 'src/utils/array-object';
 import { useRouter } from 'vue-router';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
-import deleteData from 'src/api/delete-data';
+import deleteData from 'src/api/api-delete';
 
 const { wali } = reactive(waliStore());
 const { isNew } = reactive(waliStore());

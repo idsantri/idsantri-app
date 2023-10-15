@@ -74,7 +74,7 @@ import {
 import { fetchLists } from 'src/api/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
-import deleteById from 'src/api/delete-data';
+import deleteById from 'src/api/api-delete';
 const props = defineProps({
 	data: { type: Object, required: true },
 	isNew: { type: Boolean, default: true },
@@ -120,3 +120,4 @@ const deleteData = async (id) => {
 	await deleteById(data);
 };
 </script>
+src/api/api-delete

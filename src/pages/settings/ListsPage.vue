@@ -56,6 +56,7 @@
 						class="q-mt-sm"
 						outlined
 						:label="`Masukkan data baru`"
+						v-model="newList.val0"
 					>
 						<template v-slot:after>
 							<q-btn-group push>
@@ -85,12 +86,14 @@
 import { ref, watch } from 'vue';
 import getData from 'src/api/get-data.js';
 import { snakeToKebabCase, snakeToTitleCase } from 'src/utils/format-text';
-import deleteData from 'src/api/delete-data';
-import updateData from 'src/api/update-data';
+import deleteData from 'src/api/api-delete';
+import updateData from 'src/api/api-update';
+import postData from 'src/api/api-post';
 
 const listModel = ref('');
 const listGet = ref([]);
 const spinner = ref(false);
+const newList = ref({});
 
 async function fetchData() {
 	const selected = listData.find(({ value }) => value == listModel.value);
@@ -150,7 +153,20 @@ async function deleteList(list) {
 	if (del) reload();
 }
 
-function saveList() {
-	console.log('save');
+async function saveList() {
+	const { val0, val1, val2 } = newList.value;
+	const data = {
+		key: snakeToKebabCase(listModel.value),
+		val0,
+		val1: val1 || null,
+		val2: val2 || null,
+	};
+	// console.log(data);
+
+	const post = await postData({ endPoint: `lists`, data });
+	if (post) {
+		newList.value = {};
+		reload();
+	}
 }
 </script>
