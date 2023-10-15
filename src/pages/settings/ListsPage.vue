@@ -134,7 +134,7 @@ const listData = [
 	// { value: 'satuan', label: '', mode: '1' },
 	// { value: 'siklus', label: '', mode: '1' },
 	// { value: 'status', label: '', mode: '1' },
-	// { value: 'tahun-ajaran', label: '', mode: '1' },
+	{ value: 'tahun_ajaran', label: 'Tahun Ajaran', mode: '2' },
 	// { value: 'takzir-santri', label: '', mode: '1' },
 	// { value: 'tatib-murid', label: '', mode: '1' },
 	// { value: 'tatib-santri', label: '', mode: '1' },
