@@ -39,7 +39,7 @@
 										color="positive"
 										glossy
 										icon="save"
-										@click="saveList(list)"
+										@click="updateList(list)"
 									/>
 									<q-btn
 										color="negative"
@@ -59,7 +59,12 @@
 					>
 						<template v-slot:after>
 							<q-btn-group push>
-								<q-btn color="positive" glossy icon="save" />
+								<q-btn
+									color="positive"
+									glossy
+									icon="save"
+									@click="saveList"
+								/>
 								<q-btn
 									color="grey"
 									glossy
@@ -74,12 +79,14 @@
 		</q-card>
 	</div>
 
-	<pre>{{ listGet }}</pre>
+	<!-- <pre>{{ listGet }}</pre> -->
 </template>
 <script setup>
 import { ref, watch } from 'vue';
 import getData from 'src/api/get-data.js';
 import { snakeToKebabCase, snakeToTitleCase } from 'src/utils/format-text';
+import deleteData from 'src/api/delete-data';
+import updateData from 'src/api/update-data';
 
 const listModel = ref('');
 const listGet = ref([]);
@@ -131,10 +138,19 @@ const listData = [
 	// { value: 'tingkat', label: '', mode: '1' },
 ];
 
-function saveList(i) {
-	console.log(i);
+async function updateList(list) {
+	const { key, val0, val1, val2, id } = list;
+	const data = { key, val0, val1, val2 };
+	const upd = await updateData({ endPoint: `lists/${id}`, data });
+	if (upd) reload();
 }
-function deleteList(i) {
-	console.log(i);
+
+async function deleteList(list) {
+	const del = await deleteData({ endPoint: `lists/${list.id}` });
+	if (del) reload();
+}
+
+function saveList() {
+	console.log('save');
 }
 </script>
