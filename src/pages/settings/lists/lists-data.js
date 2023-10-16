@@ -33,5 +33,6 @@ const listData = [
 	// { url: 'tatib-murid', label: '', mode: '1' },
 	// { url: 'tatib-santri', label: '', mode: '1' },
 	{ url: 'tingkat', label: 'Tingkat', mode: '1' },
+	{ url: 'test', label: 'Test', mode: '1' },
 ];
 export default listData;

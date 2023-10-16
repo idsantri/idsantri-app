@@ -1,50 +1,53 @@
 <template lang="">
-	<div v-if="!props.data.length">
-		<p class="q-my-lg text-negative text-weight-light text-h6 text-center">
-			Tidak ada data untuk ditampilkan!
-		</p>
-	</div>
-	<div v-else class="q-gutter-sm">
+	<q-list>
 		<div v-for="list in props.data" :key="list.id">
-			<q-input dense outlined v-model="list.val0">
-				<template v-slot:after>
-					<q-btn-group push>
-						<q-btn
-							color="positive"
-							glossy
-							icon="save"
-							@click="$emit('updateList', list)"
-						/>
-						<q-btn
-							color="negative"
-							glossy
-							icon="delete"
-							@click="$emit('deleteList', list)"
-						/>
-					</q-btn-group>
-				</template>
-			</q-input>
+			<q-form @submit.prevent="$emit('updateList', list)">
+				<q-item class="no-padding">
+					<q-item-section>
+						<q-input dense outlined v-model="list.val0" required>
+						</q-input>
+					</q-item-section>
+					<q-item-section side class="no-padding q-ml-sm">
+						<q-btn-group push>
+							<q-btn
+								color="positive"
+								glossy
+								icon="save"
+								type="submit"
+							/>
+							<q-btn
+								color="negative"
+								glossy
+								icon="delete"
+								@click="$emit('deleteList', list)"
+							/>
+						</q-btn-group>
+					</q-item-section>
+				</q-item>
+			</q-form>
 		</div>
-		<q-input
-			dense
-			class="q-mt-sm"
-			outlined
-			:label="`Masukkan data baru`"
-			v-model="newList.val0"
-		>
-			<template v-slot:after>
-				<q-btn-group push>
-					<q-btn
-						color="positive"
-						glossy
-						icon="save"
-						@click="$emit('addList', newList)"
-					/>
-					<q-btn color="grey" glossy icon="delete" disable />
-				</q-btn-group>
-			</template>
-		</q-input>
-	</div>
+		<div>
+			<q-form @submit.prevent="$emit('addList', newList)">
+				<q-item class="no-padding">
+					<q-item-section>
+						<q-input dense outlined v-model="newList.val0" required>
+						</q-input>
+					</q-item-section>
+					<q-item-section side class="no-padding q-ml-sm">
+						<q-btn-group push>
+							<q-btn
+								color="positive"
+								glossy
+								icon="save"
+								type="submit"
+							/>
+							<q-btn color="grey" glossy icon="delete" disable />
+						</q-btn-group>
+					</q-item-section>
+				</q-item>
+			</q-form>
+		</div>
+	</q-list>
 	<!-- <pre>{{ props.data }}</pre> -->
 </template>
 <script setup>

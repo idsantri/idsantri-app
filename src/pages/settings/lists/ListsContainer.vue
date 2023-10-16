@@ -3,16 +3,30 @@
 		<q-spinner-cube color="green-12" size="8em" class="flex q-mx-auto" />
 	</div>
 	<div v-else>
-		<div v-if="selected.mode == 1">
-			<ListsMode1
-				:data="listGet"
-				@update-list="handleUpdate"
-				@delete-list="handleDelete"
-				@add-list="handleAdd"
-			/>
+		<div v-if="isError">
+			<p
+				class="q-my-lg text-negative text-weight-light text-h6 text-center"
+			>
+				Terjadi kelasahan!
+			</p>
 		</div>
-		<div v-if="selected.mode == 2">
-			<ListsMode2 />
+		<div v-else>
+			<div v-if="selected.mode == 1">
+				<ListsMode1
+					:data="listGet"
+					@update-list="handleUpdate"
+					@delete-list="handleDelete"
+					@add-list="handleAdd"
+				/>
+			</div>
+			<div v-if="selected.mode == 2">
+				<ListsMode2
+					:data="listGet"
+					@update-list="handleUpdate"
+					@delete-list="handleDelete"
+					@add-list="handleAdd"
+				/>
+			</div>
 		</div>
 	</div>
 
@@ -37,11 +51,14 @@ const listKey = route.params.listKey;
 const selected = listData.find(({ url }) => url == listKey);
 const spinner = ref(false);
 const listGet = ref([]);
+const isError = ref(false);
 async function fetchData() {
 	const data = await getData({
 		endPoint: `lists/${selected.url}`,
-		spinner: spinner,
+		spinner,
+		isError,
 	});
+	// console.log('e', err.value);
 	const response = kebabToSnakeCase(selected.url);
 	// console.log('r', response);
 	listGet.value = data[response];
