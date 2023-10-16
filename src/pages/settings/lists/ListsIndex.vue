@@ -36,6 +36,7 @@
 	</div>
 
 	<!-- <pre>list model:{{ listModel }}</pre> -->
+	<!-- <pre>list data:{{ listData }}</pre> -->
 </template>
 <script setup>
 import { ref } from 'vue';
