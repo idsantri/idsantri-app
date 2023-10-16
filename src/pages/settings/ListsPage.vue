@@ -75,6 +75,8 @@
 							</q-btn-group>
 						</template>
 					</q-input>
+
+					<!-- <div>mode2</div> -->
 				</div>
 			</q-card-section>
 		</q-card>
@@ -89,6 +91,7 @@ import { snakeToKebabCase, snakeToTitleCase } from 'src/utils/format-text';
 import deleteData from 'src/api/api-delete';
 import updateData from 'src/api/api-update';
 import postData from 'src/api/api-post';
+import listData from './lists-data';
 
 const listModel = ref('');
 const listGet = ref([]);
@@ -111,35 +114,6 @@ watch(listModel, async (newList, oldList) => {
 async function reload() {
 	await fetchData();
 }
-
-const listData = [
-	{ value: 'domisili', label: 'Domisili', mode: '1' },
-	{ value: 'hubungan_wali', label: 'Hubungan Wali', mode: '1' },
-	{ value: 'iuran', label: 'Iuran', mode: '1' },
-	// { value: 'izin-keperluan', label: '', mode: '1' },
-	// { value: 'jabatan', label: '', mode: '1' },
-	// { value: 'kelas', label: '', mode: '1' },
-	// { value: 'keterangan-domisili', label: '', mode: '1' },
-	// { value: 'keterangan-iuran', label: '', mode: '1' },
-	// { value: 'keterangan-izin', label: '', mode: '1' },
-	// { value: 'keterangan-kelas', label: '', mode: '1' },
-	// { value: 'keterangan-status', label: '', mode: '1' },
-	// { value: 'metode-pembayaran', label: '', mode: '1' },
-	// { value: 'nilai-ahwal-item', label: '', mode: '1' },
-	// { value: 'nilai-ahwal-text', label: '', mode: '1' },
-	// { value: 'pekerjaan', label: '', mode: '1' },
-	// { value: 'pendidikan-akhir-diniyah', label: '', mode: '1' },
-	// { value: 'pendidikan-akhir-formal', label: '', mode: '1' },
-	// { value: 'pulangan', label: '', mode: '1' },
-	// { value: 'satuan', label: '', mode: '1' },
-	// { value: 'siklus', label: '', mode: '1' },
-	// { value: 'status', label: '', mode: '1' },
-	{ value: 'tahun_ajaran', label: 'Tahun Ajaran', mode: '2' },
-	// { value: 'takzir-santri', label: '', mode: '1' },
-	// { value: 'tatib-murid', label: '', mode: '1' },
-	// { value: 'tatib-santri', label: '', mode: '1' },
-	// { value: 'tingkat', label: '', mode: '1' },
-];
 
 async function updateList(list) {
 	const { key, val0, val1, val2, id } = list;
