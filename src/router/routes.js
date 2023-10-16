@@ -185,14 +185,14 @@ const routes = [
 					{
 						path: 'lists',
 						component: () =>
-							import('src/pages/settings/ListsIndex.vue'),
+							import('src/pages/settings/lists/ListsIndex.vue'),
 						meta: { title: 'Setting: List' },
 						children: [
 							{
 								path: ':listKey',
 								component: () =>
 									import(
-										'src/pages/settings/ListsContainer.vue'
+										'src/pages/settings/lists/ListsContainer.vue'
 									),
 							},
 						],
