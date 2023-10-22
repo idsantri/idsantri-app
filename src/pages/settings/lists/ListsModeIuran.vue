@@ -13,18 +13,18 @@
 							required
 							label="Iuran"
 						/>
-						<q-input
+
+						<currency-input
 							dense
 							outlined
 							v-model="list.val1"
 							required
 							label="Nominal"
-							type="Number"
 						/>
 						<q-input
 							dense
 							outlined
-							v-model="list.val2"
+							v-model="list.note"
 							type="textarea"
 							autogrow
 							label="Keterangan"
@@ -61,18 +61,17 @@
 							required
 							label="Iuran"
 						/>
-						<q-input
+						<currency-input
 							dense
 							outlined
 							v-model="newList.val1"
 							required
 							label="Nominal"
-							type="Number"
 						/>
 						<q-input
 							dense
 							outlined
-							v-model="newList.val2"
+							v-model="newList.note"
 							type="textarea"
 							autogrow
 							label="Keterangan"
@@ -95,19 +94,14 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { digitSeparator } from 'src/utils/format-number';
+import CurrencyInput from 'src/components/CurrencyInput.vue';
 
-const newList = ref({});
 const props = defineProps({
 	data: {
 		type: Array,
 		required: true,
 	},
 });
-
-/**
- * TODO:
- * validasi input
- */
+const newList = ref({});
 </script>
 <style lang=""></style>

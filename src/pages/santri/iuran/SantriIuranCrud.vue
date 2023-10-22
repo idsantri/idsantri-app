@@ -58,12 +58,14 @@
 					option-label="val0"
 					@update:model-value="(val) => getVal1(val)"
 				/>
-				<q-input
+
+				<currency-input
 					dense
 					class="q-mt-sm"
 					outlined
-					label="Nominal"
 					v-model="input.nominal"
+					required
+					label="Nominal"
 				/>
 				<q-input
 					dense
@@ -144,6 +146,7 @@ import { rerenderSantriIuran } from 'src/utils/buttons-click';
 import { digitSeparator } from 'src/utils/format-number';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref, watch } from 'vue';
+import CurrencyInput from 'src/components/CurrencyInput.vue';
 
 const props = defineProps({
 	dataSantri: { type: Object, required: true },

@@ -80,11 +80,11 @@ onMounted(async () => {
 
 async function handleUpdate(list) {
 	// console.log(list);
-	const { key, val0, val1, val2, id } = list;
+	const { key, val0, val1, val2, note, id } = list;
 	if (!val0) {
 		return notifyError('List tidak boleh kosong!');
 	}
-	const data = { key, val0, val1, val2 };
+	const data = { key, val0, val1, val2, note };
 	const upd = await updateData({ endPoint: `lists/${id}`, data });
 	if (upd) await fetchData();
 }
@@ -97,7 +97,7 @@ async function handleDelete(list) {
 async function handleAdd(list) {
 	// console.log(list);
 	// console.log(selected);
-	const { val0, val1, val2 } = list;
+	const { val0, val1, val2, note } = list;
 	if (!val0) {
 		return notifyError('List tidak boleh kosong!');
 	}
@@ -106,6 +106,7 @@ async function handleAdd(list) {
 		val0,
 		val1: val1 || null,
 		val2: val2 || null,
+		note: note || null,
 	};
 	// console.log(data);
 

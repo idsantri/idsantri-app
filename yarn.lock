@@ -9178,6 +9178,11 @@ vary@^1, vary@~1.1.2:
   resolved "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
+vue-currency-input@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/vue-currency-input/-/vue-currency-input-3.0.5.tgz#292cd735740fce1264c1dde47966385da0e2df07"
+  integrity sha512-HG1hKvAvUDt/mklm+2nEEOuvMNxXVd+O2v2PPOia0iNAs4a7B0fWEsHSoca60Ah9EA4nR0Do5UQUkR5Wqhcb/g==
+
 vue-demi@*:
   version "0.13.11"
   resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.13.11.tgz"
