@@ -197,6 +197,12 @@ const routes = [
 							},
 						],
 					},
+					{
+						path: 'users',
+						component: () =>
+							import('src/pages/settings/users/UserPage.vue'),
+						meta: { title: 'Setting: User' },
+					},
 				],
 			},
 		],
