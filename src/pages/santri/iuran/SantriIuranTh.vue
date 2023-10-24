@@ -64,7 +64,7 @@
 	</q-dialog>
 </template>
 <script setup>
-import getData from 'src/api/get-data';
+import getData from 'src/api/api-get';
 import { formatDateShort } from 'src/utils/format-date';
 import { digitSeparator } from 'src/utils/format-number';
 import { reactive, ref } from 'vue';

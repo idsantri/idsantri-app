@@ -93,7 +93,7 @@ import santriStore from 'src/stores/santri-store';
 import { bacaHijri } from 'src/utils/hijri';
 import SantriRelations from 'src/pages/santri/SantriRelations.vue';
 import dialogStore from 'src/stores/dialog-store';
-import getData from 'src/api/get-data';
+import getData from 'src/api/api-get';
 import SantriIuran from 'src/pages/santri/iuran/SantriIuran.vue';
 
 const path = ref(useRoute().fullPath);

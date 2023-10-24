@@ -69,7 +69,7 @@
 	</div>
 </template>
 <script setup>
-import getData from 'src/api/get-data';
+import getData from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import SantriIuranTh from 'src/pages/santri/iuran/SantriIuranTh.vue';
 import SantriIuranCrud from 'src/pages/santri/iuran/SantriIuranCrud.vue';

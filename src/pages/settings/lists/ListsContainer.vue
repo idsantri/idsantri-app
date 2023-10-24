@@ -49,7 +49,7 @@ import { kebabToSnakeCase } from 'src/utils/format-text';
 import ListsModeCommon from 'src/pages/settings/lists/ListsModeCommon.vue';
 import ListsModeTahun from 'src/pages/settings/lists/ListsModeTahun.vue';
 import ListsModeIuran from './ListsModeIuran.vue';
-import getData from 'src/api/get-data.js';
+import getData from 'src/api/api-get.js';
 import updateData from 'src/api/api-update';
 import deleteData from 'src/api/api-delete';
 import postData from 'src/api/api-post';
@@ -116,4 +116,3 @@ async function handleAdd(list) {
 	}
 }
 </script>
-<style lang=""></style>
