@@ -103,6 +103,7 @@ const submitLogin = async () => {
 		notifySuccess(response.data.message);
 		router.push('/');
 	} catch (error) {
+		// console.log('e', error);
 		emit('errors', toArray(error.response.data.message));
 	} finally {
 		showSpinner.value = false;
@@ -133,4 +134,3 @@ onUpdated(() => {
 </script>
 
 <style scoped lang="scss"></style>
-../../api/api
