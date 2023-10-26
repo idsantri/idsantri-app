@@ -4,6 +4,7 @@ import { notifyError } from 'src/utils/notify';
 
 const url = baseUrl.defaults.baseURL;
 const api = axios.create({ baseURL: url });
+
 // Tambahkan interceptor untuk menangani kesalahan
 api.interceptors.response.use(
 	(response) => response,
