@@ -28,8 +28,12 @@
 
 		<q-dialog v-model="showUserModal">
 			<q-card style="width: 700px; max-width: 90vw">
-				<q-card-section class="bg-green-8 text-green-11 q-pa-sm">
+				<q-card-section
+					class="bg-green-8 text-green-11 q-pa-sm row items-center"
+				>
 					<div class="text-subtitle1">Data User</div>
+					<q-space />
+					<q-btn icon="close" flat round dense v-close-popup />
 				</q-card-section>
 				<div v-if="spinner">
 					<q-spinner-cube
@@ -94,6 +98,7 @@
 								:key="role"
 							>
 								<q-toggle
+									style="min-width: 150px"
 									:label="role"
 									:model-value="value"
 									@click="setRole(user.id, role, !value)"
@@ -101,7 +106,6 @@
 							</div>
 						</div>
 					</q-card-section>
-					<!-- <pre>{{ user }}</pre> -->
 
 					<q-card-actions class="bg-green-7 q-pa-sm">
 						<q-btn
@@ -109,6 +113,13 @@
 							color="negative"
 							no-caps=""
 							@click="deleteUser"
+						/>
+						<q-space />
+						<q-btn
+							label="Tutup"
+							no-caps=""
+							color="green-10"
+							v-close-popup
 						/>
 					</q-card-actions>
 				</div>
@@ -120,9 +131,8 @@
 <script setup>
 import deleteData from 'src/api/api-delete';
 import getData from 'src/api/api-get';
-import postData from 'src/api/api-post';
 import updateData from 'src/api/api-update';
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const showUserModal = ref(false);
 const filter = ref('');
@@ -130,6 +140,7 @@ const spinner = ref(false);
 const loading = ref(false);
 const users = ref([]);
 const user = ref({});
+
 const columns = [
 	{
 		label: 'Nama',
@@ -176,7 +187,6 @@ const columns = [
 		// sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
 	},
 ];
-
 async function getUsers() {
 	const data = await getData({
 		endPoint: `users`,
@@ -212,7 +222,7 @@ async function confirmUser(val) {
 
 	if (!result) return (user.value.isConfirmed = !user.value.isConfirmed);
 
-	await getUser(id);
+	// await getUser(id);
 	await getUsers();
 }
 
@@ -222,10 +232,12 @@ async function deleteUser() {
 }
 
 async function setRole(id, role, value) {
+	user.value.roles[role] = value;
 	const data = { role, value };
 	const update = await updateData({ endPoint: `users/${id}/roles`, data });
-	if (!update) return;
-	await getUser(id);
+	if (!update) return (user.value.roles[role] = !value);
+
+	// await getUser(id);
 	await getUsers();
 }
 </script>
