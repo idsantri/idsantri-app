@@ -14,7 +14,7 @@
 	},
 	"dependencies": {
 		"@quasar/cli": "^2.3.0",
-		"@quasar/extras": "^1.0.0",
+		"@quasar/extras": "^1.16.7",
 		"@quasar/icongenie": "^3.1.1",
 		"axios": "^1.2.1",
 		"core-js": "^3.6.5",
@@ -23,15 +23,15 @@
 		"html2pdf.js": "^0.10.1",
 		"pinia": "^2.0.11",
 		"pinia-plugin-persistedstate": "^3.1.0",
-		"quasar": "^2.6.0",
+		"quasar": "^2.13.0",
 		"vue": "^3.2.47",
 		"vue-currency-input": "^3.0.5",
 		"vue-image-crop-upload": "^3.0.3",
-		"vue-router": "^4.1.6"
+		"vue-router": "^4.2.5"
 	},
 	"devDependencies": {
 		"@babel/eslint-parser": "^7.13.14",
-		"@quasar/app-webpack": "^3.0.0",
+		"@quasar/app-webpack": "^3.11.3",
 		"eslint": "^8.10.0",
 		"eslint-config-prettier": "^8.1.0",
 		"eslint-plugin-vue": "^9.0.0",

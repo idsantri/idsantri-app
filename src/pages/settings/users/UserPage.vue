@@ -35,94 +35,86 @@
 					<q-space />
 					<q-btn icon="close" flat round dense v-close-popup />
 				</q-card-section>
-				<div v-if="spinner">
-					<q-spinner-cube
-						color="green-12"
-						size="8em"
-						class="flex q-mx-auto q-my-xl"
+
+				<q-card-section class="q-gutter-sm">
+					<q-input
+						standout
+						v-model="user.name"
+						label="Nama"
+						readonly=""
 					/>
-				</div>
-				<div v-else>
-					<q-card-section class="q-gutter-sm">
-						<q-input
-							standout
-							v-model="user.name"
-							label="Nama"
-							readonly=""
-						/>
-						<q-input
-							standout
-							v-model="user.username"
-							label="Username"
-							readonly=""
-						/>
-						<q-input
-							standout
-							v-model="user.email"
-							label="Email"
-							readonly=""
-						/>
-						<div class="row">
-							<div class="col-md-6 col-sm-12">
-								<q-toggle
-									:model-value="
-										user.email_verified_at ? true : false
-									"
-									label="Verifikasi"
-									disable=""
-								/>
-								<div class="q-pl-md text-caption">
-									Verifikasi akun hanya bisa dilakukan oleh
-									user yang bersangkutan.
-								</div>
-							</div>
-							<div class="col-md-6 col-sm-12">
-								<q-toggle
-									v-model="user.isConfirmed"
-									label="Konfirmasi"
-									@click="confirmUser(user.isConfirmed)"
-								/>
-								<div class="q-pl-md text-caption">
-									Konfimasi bahwa Anda mengenal user ini.
-								</div>
+					<q-input
+						standout
+						v-model="user.username"
+						label="Username"
+						readonly=""
+					/>
+					<q-input
+						standout
+						v-model="user.email"
+						label="Email"
+						readonly=""
+					/>
+					<div class="row">
+						<div class="col-md-6 col-sm-12">
+							<q-toggle
+								:model-value="
+									user.email_verified_at ? true : false
+								"
+								label="Verifikasi"
+								disable=""
+							/>
+							<div class="q-pl-md text-caption">
+								Verifikasi akun hanya bisa dilakukan oleh user
+								yang bersangkutan.
 							</div>
 						</div>
-					</q-card-section>
-
-					<!-- roles -->
-					<q-card-section>
-						<div class="row">
-							<div
-								class="col-md-6 col-sm-12"
-								v-for="(value, role) in user.roles"
-								:key="role"
-							>
-								<q-toggle
-									style="min-width: 150px"
-									:label="role"
-									:model-value="value"
-									@click="setRole(user.id, role, !value)"
-								/>
+						<div class="col-md-6 col-sm-12">
+							<q-toggle
+								v-model="user.isConfirmed"
+								label="Konfirmasi"
+								@click="confirmUser(user.isConfirmed)"
+							/>
+							<div class="q-pl-md text-caption">
+								Konfimasi bahwa Anda mengenal user ini.
 							</div>
 						</div>
-					</q-card-section>
+					</div>
+				</q-card-section>
 
-					<q-card-actions class="bg-green-7 q-pa-sm">
-						<q-btn
-							label="Hapus"
-							color="negative"
-							no-caps=""
-							@click="deleteUser"
-						/>
-						<q-space />
-						<q-btn
-							label="Tutup"
-							no-caps=""
-							color="green-10"
-							v-close-popup
-						/>
-					</q-card-actions>
-				</div>
+				<!-- roles -->
+				<q-card-section>
+					<div class="row">
+						<div
+							class="col-md-6 col-sm-12"
+							v-for="(value, role) in user.roles"
+							:key="role"
+						>
+							<q-toggle
+								style="min-width: 150px"
+								:label="role"
+								:model-value="value"
+								@click="setRole(user.id, role, !value)"
+							/>
+						</div>
+					</div>
+				</q-card-section>
+
+				<q-card-actions class="bg-green-7 q-pa-sm">
+					<q-btn
+						label="Hapus"
+						color="negative"
+						no-caps=""
+						@click="deleteUser"
+					/>
+					<q-space />
+					<q-btn
+						label="Tutup"
+						no-caps=""
+						color="green-10"
+						v-close-popup
+					/>
+				</q-card-actions>
 			</q-card>
 		</q-dialog>
 	</div>
@@ -136,7 +128,6 @@ import { onMounted, ref } from 'vue';
 
 const showUserModal = ref(false);
 const filter = ref('');
-const spinner = ref(false);
 const loading = ref(false);
 const users = ref([]);
 const user = ref({});
@@ -166,7 +157,13 @@ const columns = [
 	{
 		label: 'Group',
 		align: 'left',
-		field: (row) => row.roles.join('; '),
+		field: (row) => {
+			const roles = [];
+			for (const [key, value] of Object.entries(row.roles)) {
+				if (value == true) roles.push(key);
+			}
+			return roles.join(', ');
+		},
 		// sortable: true,
 		// sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
 	},
@@ -187,6 +184,7 @@ const columns = [
 		// sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
 	},
 ];
+
 async function getUsers() {
 	const data = await getData({
 		endPoint: `users`,
@@ -195,20 +193,14 @@ async function getUsers() {
 	users.value = data.users;
 }
 
-async function getUser(id) {
-	const response = await getData({ endPoint: `users/${id}`, spinner });
-	user.value = response.user;
-	user.value.isConfirmed = response.user.confirmed_at ? true : false;
-}
-
 onMounted(async () => {
 	await getUsers();
 });
 
-async function rowClick(evt, row, index) {
+function rowClick(evt, row, index) {
 	showUserModal.value = true;
-	const id = row.id;
-	await getUser(id);
+	user.value = row;
+	user.value.isConfirmed = row.confirmed_at ? true : false;
 }
 
 async function confirmUser(val) {
@@ -222,7 +214,6 @@ async function confirmUser(val) {
 
 	if (!result) return (user.value.isConfirmed = !user.value.isConfirmed);
 
-	// await getUser(id);
 	await getUsers();
 }
 
@@ -237,7 +228,6 @@ async function setRole(id, role, value) {
 	const update = await updateData({ endPoint: `users/${id}/roles`, data });
 	if (!update) return (user.value.roles[role] = !value);
 
-	// await getUser(id);
 	await getUsers();
 }
 </script>
