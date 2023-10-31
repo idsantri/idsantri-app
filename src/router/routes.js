@@ -178,6 +178,11 @@ const routes = [
 				component: () => import('src/pages/sekretariat/IndexPage.vue'),
 				meta: { title: 'Sekretariat' },
 			},
+			{
+				path: 'madrasah',
+				component: () => import('src/pages/madrasah/IndexPage.vue'),
+				meta: { title: 'Madrasah' },
+			},
 
 			{
 				path: 'settings',
