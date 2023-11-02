@@ -42,23 +42,23 @@
 					dense
 					:hint="
 						!isNaN(input.tingkat_id)
-							? lists['tingkat']?.find(
+							? lists['tingkat-pendidikan']?.find(
 									(item) => item.val0 == input.tingkat_id
 							  )?.val1
 							: 'Jenjang Pendidikan'
 					"
 					class="q-mt-sm"
 					outlined
-					label="Tingkat"
+					label="Tingkat Pendidikan"
 					v-model="input.tingkat_id"
-					:options="lists['tingkat']"
+					:options="lists['tingkat-pendidikan']"
 					option-value="val0"
 					option-label="val1"
 					emit-value
 					map-options
 					:rules="[(val) => !!val || 'Harus diisi!']"
 					error-color="negative"
-					:loading="loading['tingkat']"
+					:loading="loading['tingkat-pendidikan']"
 				/>
 				<q-select
 					dense
@@ -144,7 +144,7 @@ onMounted(async () => {
 		ascending: false,
 	});
 	await fetchListAscKey({
-		key: 'tingkat',
+		key: 'tingkat-pendidikan',
 		loading,
 		lists,
 		ascending: true,

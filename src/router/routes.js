@@ -96,36 +96,44 @@ const routes = [
 					{
 						path: 'status',
 						component: () =>
-							import('src/views/santri/status/SantriStatus.vue'),
+							import(
+								'src/pages/santri/relations/status/SantriStatus.vue'
+							),
 					},
 
 					{
 						path: 'kelas',
 						component: () =>
-							import('src/views/santri/kelas/SantriKelas.vue'),
+							import(
+								'src/pages/santri/relations/kelas/SantriKelas.vue'
+							),
 					},
 					{
 						path: 'domisili',
 						component: () =>
 							import(
-								'src/views/santri/domisili/SantriDomisili.vue'
+								'src/pages/santri/relations/domisili/SantriDomisili.vue'
 							),
 					},
 					{
 						path: 'wali',
 						component: () =>
-							import('src/views/santri/wali/SantriWali.vue'),
+							import(
+								'src/pages/santri/relations/wali/SantriWali.vue'
+							),
 					},
 					{
 						path: 'ortu',
 						component: () =>
-							import('src/views/santri/ortu/SantriOrtu.vue'),
+							import(
+								'src/pages/santri/relations/ortu/SantriOrtu.vue'
+							),
 					},
 					{
 						path: 'iuran-total',
 						component: () =>
 							import(
-								'src/views/santri/iuran-total/SantriIuranTotal.vue'
+								'src/pages/santri/relations/iuran-total/SantriIuranTotal.vue'
 							),
 					},
 					{

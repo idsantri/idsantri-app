@@ -22,7 +22,6 @@ import SantriKelasCrud from './SantriKelasCrud.vue';
 import santriStore from 'src/stores/santri-store';
 import { useRoute } from 'vue-router';
 
-const { santri } = santriStore();
 const route = useRoute();
 const santriId = route.params.id;
 
@@ -40,7 +39,7 @@ async function fetchByIdSantri(id) {
 	}
 }
 
-const { kelas } = await fetchByIdSantri(santriId);
+const { kelas, santri } = await fetchByIdSantri(santriId);
 kelasArr.value = kelas;
 kelasMap.value = kelas
 	.map((v, i) => ({
@@ -52,12 +51,15 @@ kelasMap.value = kelas
 		id: v.id,
 	}))
 	.reverse();
+
+// console.log('map', kelasMap.value);
+
 onMounted(async () => {});
 
 const handleAdd = () => {
 	kelasProps.value = {
-		santri_id: kelasArr.value[0]?.santri_id || santri.id,
-		nama: kelasArr.value[0]?.nama || santri.nama,
+		santri_id: santri.id,
+		nama: santri.nama,
 	};
 	isNew.value = true;
 	crudShow.value = true;
@@ -65,6 +67,8 @@ const handleAdd = () => {
 
 const handleEdit = ({ id }) => {
 	kelasProps.value = getObjectById(kelasArr, id);
+	kelasProps.value.santri_id = santri.id;
+	kelasProps.value.nama = santri.nama;
 	isNew.value = false;
 	crudShow.value = true;
 };

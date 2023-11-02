@@ -11,16 +11,16 @@
 			</p>
 		</div>
 		<div v-else>
-			<div v-if="selected.mode == 'common'">
-				<ListsModeCommon
+			<div v-if="selected.mode == 'one'">
+				<ListsModeOne
 					:data="listGet"
 					@update-list="handleUpdate"
 					@delete-list="handleDelete"
 					@add-list="handleAdd"
 				/>
 			</div>
-			<div v-if="selected.mode == 'tahun'">
-				<ListsModeTahun
+			<div v-if="selected.mode == 'two'">
+				<ListsModeTwo
 					:data="listGet"
 					@update-list="handleUpdate"
 					@delete-list="handleDelete"
@@ -46,9 +46,11 @@ import { useRoute } from 'vue-router';
 import listData from './lists-data';
 import { onMounted, ref } from 'vue';
 import { kebabToSnakeCase } from 'src/utils/format-text';
-import ListsModeCommon from 'src/pages/settings/lists/ListsModeCommon.vue';
-import ListsModeTahun from 'src/pages/settings/lists/ListsModeTahun.vue';
-import ListsModeIuran from './ListsModeIuran.vue';
+
+import ListsModeOne from 'src/pages/settings/lists/ListsModeOne.vue';
+import ListsModeTwo from 'src/pages/settings/lists/ListsModeTwo.vue';
+import ListsModeIuran from 'src/pages/settings/lists/ListsModeIuran.vue';
+
 import getData from 'src/api/api-get.js';
 import updateData from 'src/api/api-update';
 import deleteData from 'src/api/api-delete';
