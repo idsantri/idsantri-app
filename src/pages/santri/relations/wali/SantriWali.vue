@@ -1,31 +1,33 @@
 <template>
-	<template-object :data="wali" :route="'/wali/' + result.id" />
+	<template-object
+		:data="dataObj"
+		:spinner="spinner"
+		:route="'/wali/' + dataObj['ID Wali']"
+	/>
 </template>
+
 <script setup>
 import { ref, onMounted } from 'vue';
-import { apiTokened } from 'src/api';
-import TemplateObject from 'src/components/TemplateObject.vue';
+import TemplateObject from 'src/pages/santri/relations/TemplateObject.vue';
 import { useRoute } from 'vue-router';
+import getData from 'src/api/api-get';
 
 const route = useRoute();
 const santriId = route.params.id;
+const spinner = ref(false);
+const dataObj = ref({});
 
-const result = ref({});
-async function fetchData() {
-	try {
-		const { data } = await apiTokened.get(`santri/${santriId}/wali`);
-		result.value = data.wali;
-	} catch (error) {
-		console.log(error);
-	}
-}
-const wali = ref({});
-await fetchData();
-wali.value = {
-	'ID Wali': result.value.id,
-	Nama: `${result.value.nama} (${result.value?.sex?.toUpperCase()})`,
-	Status: result.value.wali_status,
-	Telepon: result.value.telepon || '-',
-};
-onMounted(async () => {});
+onMounted(async () => {
+	const { wali } = await getData({
+		endPoint: `santri/${santriId}/wali`,
+		spinner,
+	});
+
+	dataObj.value = {
+		'ID Wali': wali.id,
+		Nama: `${wali.nama} (${wali?.sex?.toUpperCase()})`,
+		Status: wali.wali_status,
+		Telepon: wali.telepon || '-',
+	};
+});
 </script>

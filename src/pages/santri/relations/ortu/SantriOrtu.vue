@@ -1,34 +1,35 @@
 <template>
-	<template-object :data="ortu" :route="'/ortu/' + result.id" />
+	<template-object
+		:data="dataObj"
+		:route="'/ortu/' + dataObj['ID Ortu']"
+		:spinner="spinner"
+	/>
 </template>
+
 <script setup>
 import { ref, onMounted } from 'vue';
-import { apiTokened } from 'src/api';
-import TemplateObject from 'src/components/TemplateObject.vue';
+import TemplateObject from 'src/pages/santri/relations/TemplateObject.vue';
 import { useRoute } from 'vue-router';
+import getData from 'src/api/api-get';
 
 const route = useRoute();
 const santriId = route.params.id;
+const spinner = ref(false);
+const dataObj = ref({});
 
-const result = ref({});
-async function fetchData() {
-	try {
-		const { data } = await apiTokened.get(`santri/${santriId}/ortu`);
-		result.value = data.ortu;
-	} catch (error) {
-		console.log(error);
-	}
-}
+onMounted(async () => {
+	const { ortu } = await getData({
+		endPoint: `santri/${santriId}/ortu`,
+		spinner,
+	});
 
-const ortu = ref({});
-await fetchData();
-ortu.value = {
-	'ID Ortu': result.value.id,
-	Ayah: result.value.ayah,
-	Ibu: result.value.ibu,
-	'Anak ke': `${result.value.anak_ke || '?'} dari ${
-		result.value.jumlah_anak || '?'
-	}  bersaudara`,
-};
-onMounted(async () => {});
+	dataObj.value = {
+		'ID Ortu': ortu.id,
+		Ayah: ortu.ayah,
+		Ibu: ortu.ibu,
+		'Anak ke': `${ortu.anak_ke || '?'} dari ${
+			ortu.jumlah_anak || '?'
+		}  bersaudara`,
+	};
+});
 </script>

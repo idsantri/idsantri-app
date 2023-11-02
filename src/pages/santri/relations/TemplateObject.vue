@@ -1,5 +1,8 @@
 <template>
-	<div style="min-height: 50px">
+	<div v-if="props.spinner">
+		<q-spinner-cube color="green-12" size="8em" class="flex q-mx-auto" />
+	</div>
+	<div v-else style="min-height: 50px">
 		<div class="row" v-for="(value, key) in props.data" :key="key">
 			<div class="col-4 text-caption">{{ key }}</div>
 			<div class="col">{{ value }}</div>
@@ -19,5 +22,6 @@
 const props = defineProps({
 	data: null,
 	route: null,
+	spinner: Boolean,
 });
 </script>

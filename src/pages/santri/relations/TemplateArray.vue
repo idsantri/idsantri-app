@@ -40,7 +40,7 @@
 			</div>
 		</div>
 		<q-btn
-			style="opacity: 0.9"
+			style="opacity: 0.8"
 			icon="add"
 			round=""
 			dense=""
