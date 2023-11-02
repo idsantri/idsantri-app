@@ -49,6 +49,7 @@
 		</q-tabs>
 		<q-card-section class="q-pa-sm">
 			<!-- swipe tak jalan -->
+			<!-- <router-view /> -->
 			<suspense>
 				<template #default>
 					<router-view />

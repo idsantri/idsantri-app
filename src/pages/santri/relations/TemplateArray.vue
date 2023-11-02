@@ -1,5 +1,8 @@
 <template>
-	<div>
+	<div v-if="props.spinner">
+		<q-spinner-cube color="green-12" size="8em" class="flex q-mx-auto" />
+	</div>
+	<div v-else>
 		<q-list v-if="data.length" separator="">
 			<q-item
 				v-for="item in data"
@@ -47,8 +50,8 @@
 			@click="$emit('add')"
 		/>
 	</div>
-	<!-- <pre>{{ props.data }}</pre> -->
+	<!-- <pre>{{ props.spinner }}</pre> -->
 </template>
 <script setup>
-const props = defineProps(['data']);
+const props = defineProps(['data', 'spinner']);
 </script>

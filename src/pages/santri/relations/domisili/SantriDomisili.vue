@@ -1,14 +1,15 @@
 <template>
 	<div>
 		<template-array
-			:data="domisiliMap"
+			:data="dataMap"
+			:spinner="spinner"
 			@add="handleAdd"
 			@edit="handleEdit"
 		/>
 
 		<q-dialog v-model="crudShow">
 			<santri-domisili-crud
-				:data="domisiliProps"
+				:data="dataObj"
 				:is-new="isNew"
 				title="Input Domisili"
 			/>
@@ -16,56 +17,58 @@
 	</div>
 </template>
 <script setup>
-import { apiTokened } from 'src/api';
 import { ref, onMounted } from 'vue';
-import TemplateArray from 'src/components/TemplateArray.vue';
+import TemplateArray from 'src/pages/santri/relations/TemplateArray.vue';
 import { formatDateShort } from 'src/utils/format-date.js';
 import { m2hFormat } from 'src/utils/hijri.js';
 import { getObjectById } from 'src/utils/array-object';
 import SantriDomisiliCrud from './SantriDomisiliCrud.vue';
-import santriStore from 'src/stores/santri-store';
 import { useRoute } from 'vue-router';
+import getData from 'src/api/api-get';
 
-const { santri } = santriStore();
+const spinner = ref(false);
+const crudShow = ref(false);
+const dataObj = ref({});
+const dataMap = ref([]);
+const dataArr = ref([]);
+const isNew = ref(false);
+const santri = ref({});
 
 const route = useRoute();
 const santriId = route.params.id;
 
-const crudShow = ref(false);
-const domisiliProps = ref({});
-const domisiliMap = ref([]);
-const domisiliArr = ref([]);
-const isNew = ref(false);
-async function fetchByIdSantri(id) {
-	try {
-		const { data } = await apiTokened.get(`santri/${id}/domisili`);
-		return data;
-	} catch (error) {
-		console.log(error);
-	}
-}
+onMounted(async () => {
+	const data = await getData({
+		endPoint: `santri/${santriId}/domisili`,
+		spinner,
+	});
+	dataArr.value = data.domisili;
+	dataMap.value = data.domisili.map((v, i) => ({
+		Tanggal:
+			formatDateShort(v.created_at) + ' | ' + m2hFormat(v.created_at),
+		Domisili: v.domisili,
+		Keterangan: v.keterangan || '-',
+		id: v.id,
+	}));
 
-const { domisili } = await fetchByIdSantri(santriId);
-domisiliArr.value = domisili;
-domisiliMap.value = domisili.map((v, i) => ({
-	Tanggal: formatDateShort(v.created_at) + ' | ' + m2hFormat(v.created_at),
-	Domisili: v.domisili,
-	Keterangan: v.keterangan || '-',
-	id: v.id,
-}));
-onMounted(async () => {});
+	santri.value = data.santri;
+});
 
 const handleAdd = () => {
-	domisiliProps.value = {
-		santri_id: domisiliArr.value[0]?.santri_id || santri.id,
-		nama: domisiliArr.value[0]?.nama || santri.nama,
+	dataObj.value = {
+		santri_id: santri.value.id,
+		nama: santri.value.nama,
 	};
+
 	isNew.value = true;
 	crudShow.value = true;
 };
 
 const handleEdit = ({ id }) => {
-	domisiliProps.value = getObjectById(domisiliArr, id);
+	dataObj.value = getObjectById(dataArr, id);
+	dataObj.value.santri_id = santri.value.id;
+	dataObj.value.nama = santri.value.nama;
+
 	isNew.value = false;
 	crudShow.value = true;
 };

@@ -1,14 +1,15 @@
 <template>
 	<div>
 		<template-array
-			:data="statusMap"
+			:data="dataMap"
+			:spinner="spinner"
 			@add="handleAdd"
 			@edit="handleEdit"
-			:key="keyStatus"
 		/>
+
 		<q-dialog v-model="crudShow">
 			<santri-status-crud
-				:data="statusProps"
+				:data="dataObj"
 				:is-new="isNew"
 				title="Input Status"
 			/>
@@ -16,57 +17,58 @@
 	</div>
 </template>
 <script setup>
-import { apiTokened } from 'src/api';
 import { ref, onMounted } from 'vue';
-import TemplateArray from 'src/components/TemplateArray.vue';
+import TemplateArray from 'src/pages/santri/relations/TemplateArray.vue';
 import { formatDateShort } from 'src/utils/format-date.js';
 import { m2hFormat } from 'src/utils/hijri.js';
 import { getObjectById } from 'src/utils/array-object';
 import SantriStatusCrud from './SantriStatusCrud.vue';
-import santriStore from 'src/stores/santri-store';
 import { useRoute } from 'vue-router';
+import getData from 'src/api/api-get';
 
-const { santri } = santriStore();
-const keyStatus = ref(0);
+const spinner = ref(false);
+const crudShow = ref(false);
+const dataObj = ref({});
+const dataMap = ref([]);
+const dataArr = ref([]);
+const isNew = ref(false);
+const santri = ref({});
 
 const route = useRoute();
 const santriId = route.params.id;
 
-const crudShow = ref(false);
-const statusProps = ref({});
-const statusMap = ref([]);
-const statusArr = ref([]);
-const isNew = ref(false);
-async function fetchByIdSantri(id) {
-	try {
-		const { data } = await apiTokened.get(`santri/${id}/status`);
-		return data;
-	} catch (error) {
-		console.log(error);
-	}
-}
+onMounted(async () => {
+	const data = await getData({
+		endPoint: `santri/${santriId}/status`,
+		spinner,
+	});
+	dataArr.value = data.status;
+	dataMap.value = data.status.map((v, i) => ({
+		Tanggal:
+			formatDateShort(v.created_at) + ' | ' + m2hFormat(v.created_at),
+		Status: v.status,
+		Keterangan: v.keterangan || '-',
+		id: v.id,
+	}));
 
-const { status } = await fetchByIdSantri(santriId);
-statusArr.value = status;
-statusMap.value = status.map((v, i) => ({
-	Tanggal: formatDateShort(v.created_at) + ' | ' + m2hFormat(v.created_at),
-	Status: v.status,
-	Keterangan: v.keterangan || '-',
-	id: v.id,
-}));
-onMounted(async () => {});
+	santri.value = data.santri;
+});
 
 const handleAdd = () => {
-	statusProps.value = {
-		santri_id: statusArr.value[0]?.santri_id || santri.id,
-		nama: statusArr.value[0]?.nama || santri.nama,
+	dataObj.value = {
+		santri_id: santri.value.id,
+		nama: santri.value.nama,
 	};
+
 	isNew.value = true;
 	crudShow.value = true;
 };
 
 const handleEdit = ({ id }) => {
-	statusProps.value = getObjectById(statusArr, id);
+	dataObj.value = getObjectById(dataArr, id);
+	dataObj.value.santri_id = santri.value.id;
+	dataObj.value.nama = santri.value.nama;
+
 	isNew.value = false;
 	crudShow.value = true;
 };
