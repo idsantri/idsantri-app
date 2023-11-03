@@ -11,7 +11,6 @@
 					:options="lists['th_ajaran_h']"
 					behavior="menu"
 					:loading="loading['th_ajaran_h']"
-					@update:model-value="(v) => routerPush(v)"
 				/>
 				<q-select
 					class="col-12 col-md-4 q-pa-sm"
@@ -22,7 +21,7 @@
 					:options="lists['tingkat_id']"
 					behavior="menu"
 					:loading="loading['tingkat_id']"
-					@update:model-value="(v) => routerPush(v)"
+					clearable=""
 				/>
 				<q-select
 					class="col-12 col-md-4 q-pa-sm"
@@ -33,9 +32,10 @@
 					:options="lists['kelas']"
 					behavior="menu"
 					:loading="loading['kelas']"
-					@update:model-value="(v) => routerPush(v)"
+					clearable=""
 				/>
 			</q-card-section>
+			<!-- <pre>tingkat id: {{ lists['tingkat_id'] }}</pre> -->
 		</q-card>
 		<q-card class="q-mt-sm">
 			<q-card-section
@@ -46,40 +46,29 @@
 				<q-btn flat="" icon="cached" @click="keyReload++" />
 			</q-card-section>
 			<q-card-section class="q-pa-sm" :key="keyReload">
-				<router-view :key="$route.fullPath">
-					murid: {{ murid }} params: {{ params }}
-				</router-view>
+				<!-- murid
+				<pre>
+					{{ murid }}
+				</pre
+				> -->
+				<q-table :rows="murid" flat="" />
 			</q-card-section>
 		</q-card>
 	</div>
-
-	<pre>th:{{ thAjaranH }}</pre>
-	<pre>tk:{{ tingkatId }}</pre>
-	<pre>kl:{{ kelas }}</pre>
 </template>
 <script setup>
 import { apiTokened } from 'src/api';
 import getData from 'src/api/api-get';
-import { onMounted, ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { onMounted, ref, watch, watchEffect } from 'vue';
 
 const keyReload = ref(0);
-const router = useRouter();
-const route = useRoute();
-
-const params = {
-	thAjaranH: route.params.thAjaranH,
-	tingkatId: route.params.tingkatId,
-	kelas: route.params.kelas,
-};
-const murid = ref([]);
 
 const loading = ref([]);
 const lists = ref([]);
 const thAjaranH = ref('');
 const tingkatId = ref('');
 const kelas = ref('');
-
+const murid = ref([]);
 async function fetchListsArray({ loading, lists, key, url }) {
 	loading.value[key] = true;
 	try {
@@ -91,7 +80,6 @@ async function fetchListsArray({ loading, lists, key, url }) {
 		loading.value[key] = false;
 	}
 }
-
 onMounted(async () => {
 	await fetchListsArray({
 		url: `murid/lists-kelas`,
@@ -99,18 +87,7 @@ onMounted(async () => {
 		key: 'th_ajaran_h',
 		loading,
 	});
-	// console.log('lg', listGet.value);
 });
-
-function routerPush() {
-	// let url = `/madrasah/${thAjaranH.value}/${tingkatId.value}/${kelas.value}`;
-	let url = `/madrasah`;
-	if (thAjaranH.value) url += '/' + thAjaranH.value;
-	if (tingkatId.value) url += '/' + tingkatId.value;
-	if (kelas.value) url += '/' + kelas.value;
-	console.log(url);
-	// return router.push(url);
-}
 
 watch(
 	[thAjaranH, tingkatId, kelas],
@@ -130,8 +107,6 @@ watch(
 				key: 'tingkat_id',
 				loading,
 			});
-
-			murid.value = ['get tahun ' + newThAjaranH];
 		}
 		if (newTingkatId != oldTingkatId) {
 			kelas.value = null;
@@ -143,13 +118,26 @@ watch(
 				key: 'kelas',
 				loading,
 			});
-
-			murid.value = ['get tingkat ' + newTingkatId];
 		}
 
 		if (newKelas != oldKelas) {
-			murid.value = ['get kelas ' + newKelas];
 		}
 	}
 );
+
+watchEffect(async () => {
+	if (thAjaranH.value && tingkatId.value && kelas.value) {
+		const data = await getData({
+			endPoint: `murid/${thAjaranH.value}/${tingkatId.value}/${kelas.value}`,
+		});
+		murid.value = data.murid;
+	} else if (thAjaranH.value && tingkatId.value) {
+		const data = await getData({
+			endPoint: `murid/${thAjaranH.value}/${tingkatId.value}`,
+		});
+		murid.value = data.murid;
+	} else {
+		murid.value = [];
+	}
+});
 </script>
