@@ -188,8 +188,22 @@ const routes = [
 			},
 			{
 				path: 'madrasah',
-				component: () => import('src/pages/madrasah/IndexPage.vue'),
 				meta: { title: 'Madrasah' },
+				redirect: (to) => 'madrasah/murid',
+				children: [
+					{
+						path: 'murid',
+						component: () =>
+							import('src/pages/madrasah/IndexPage.vue'),
+						children: [
+							{
+								path: ':thAjaranH?/:tingkatId?/:kelas?',
+								component: () =>
+									import('src/pages/madrasah/IndexPage.vue'),
+							},
+						],
+					},
+				],
 			},
 
 			{
