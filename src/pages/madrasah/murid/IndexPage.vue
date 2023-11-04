@@ -11,6 +11,7 @@
 					:options="lists['th_ajaran_h']"
 					behavior="menu"
 					:loading="loading['th_ajaran_h']"
+					@update:model-value="() => updateModel('tahun')"
 				/>
 				<q-select
 					class="col-12 col-md-4 q-pa-sm"
@@ -22,6 +23,7 @@
 					behavior="menu"
 					:loading="loading['tingkat_id']"
 					clearable=""
+					@update:model-value="() => updateModel('tingkat')"
 				/>
 				<q-select
 					class="col-12 col-md-4 q-pa-sm"
@@ -53,7 +55,7 @@
 </template>
 <script setup>
 import { apiTokened } from 'src/api';
-import { onMounted, ref, watch, watchEffect } from 'vue';
+import { onMounted, ref, watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const keyReload = ref(0);
@@ -71,6 +73,16 @@ const lists = ref([]);
 const thAjaranH = ref(params.thAjaranH);
 const tingkatId = ref(params.tingkatId);
 const kelas = ref(params.kelas);
+
+function updateModel(params) {
+	if (params == 'tahun') {
+		tingkatId.value = null;
+		kelas.value = null;
+	}
+	if (params == 'tingkat') {
+		kelas.value = null;
+	}
+}
 
 async function fetchListsArray({ loading, lists, key, url }) {
 	loading.value[key] = true;
@@ -91,14 +103,33 @@ onMounted(async () => {
 		key: 'th_ajaran_h',
 		loading,
 	});
+	if (thAjaranH.value) {
+		await fetchListsArray({
+			url: `murid/lists-kelas/${thAjaranH.value}`,
+			lists,
+			key: 'tingkat_id',
+			loading,
+		});
+	}
+	if (thAjaranH.value && tingkatId.value) {
+		await fetchListsArray({
+			url: `murid/lists-kelas/${thAjaranH.value}/${tingkatId.value}`,
+			lists,
+			key: 'kelas',
+			loading,
+		});
+	}
 });
 
 function routerPush() {
-	let url = `/madrasah/murid`;
-	if (thAjaranH.value) url += '/' + thAjaranH.value;
-	if (tingkatId.value) url += '/' + tingkatId.value;
-	if (kelas.value) url += '/' + kelas.value;
-	return router.push(url);
+	const to = route.fullPath;
+	if (to.search('madrasah/murid') == true) {
+		let url = `/madrasah/murid`;
+		if (thAjaranH.value) url += '/' + thAjaranH.value;
+		if (tingkatId.value) url += '/' + tingkatId.value;
+		if (kelas.value) url += '/' + kelas.value;
+		return router.push(url);
+	}
 }
 
 watchEffect(async () => {
