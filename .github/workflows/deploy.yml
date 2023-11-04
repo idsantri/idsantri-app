@@ -28,6 +28,7 @@ jobs:
                   server: demangan.net
                   username: ${{ secrets.ftp_username }}
                   password: ${{ secrets.ftp_password }}
+                  port: 65002
                   server-dir: ./dev/
                   local-dir: ./dist/pwa/
 
