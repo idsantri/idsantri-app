@@ -134,27 +134,31 @@ const user = ref({});
 
 const columns = [
 	{
+		name: 'name',
 		label: 'Nama',
 		align: 'left',
 		field: 'name',
-		// sortable: true,
+		sortable: true,
 		// sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
 	},
 	{
+		name: 'username',
 		label: 'Username',
 		align: 'left',
 		field: 'username',
-		// sortable: true,
+		sortable: true,
 		// sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
 	},
 	{
+		name: 'email',
 		label: 'Email',
 		align: 'left',
 		field: 'email',
-		// sortable: true,
+		sortable: true,
 		// sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
 	},
 	{
+		name: 'group',
 		label: 'Group',
 		align: 'left',
 		field: (row) => {
@@ -164,23 +168,25 @@ const columns = [
 			}
 			return roles.join(', ');
 		},
-		// sortable: true,
+		sortable: true,
 		// sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
 	},
 	{
+		name: 'confirmed_at',
 		label: 'Konfirmasi',
 		align: 'left',
 		field: 'confirmed_at',
 		format: (val) => `${val ? 'Ya' : 'Tidak'}`,
-		// sortable: true,
+		sortable: true,
 		// sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
 	},
 	{
+		name: 'verified',
 		label: 'Verikasi',
 		align: 'left',
 		field: 'email_verified_at',
 		format: (val) => `${val ? 'Ya' : 'Tidak'}`,
-		// sortable: true,
+		sortable: true,
 		// sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
 	},
 ];

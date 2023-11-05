@@ -200,7 +200,7 @@ const routes = [
 								path: ':thAjaranH?/:tingkatId?/:kelas?',
 								component: () =>
 									import(
-										'src/pages/madrasah/murid/ContainerPage.vue'
+										'src/pages/madrasah/murid/ContentTable.vue'
 									),
 							},
 						],

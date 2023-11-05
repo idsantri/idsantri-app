@@ -80,7 +80,7 @@ const options = ref({
 			title: 'ID',
 			data: 'id',
 			render: function (data, type, row, meta) {
-				return `<button onclick='copyId(${row.id})' class='dt-btn'>${row.id}</button>`;
+				return `<button onclick='copyId(${row.id})' class='dt-btn-flat' title='Klik/Tap untuk menyalin ID'>${row.id}</button>`;
 			},
 		},
 		{
@@ -165,4 +165,3 @@ onMounted(() => {
 <style lang="scss">
 @import 'datatables.net-dt';
 </style>
-../../api/api

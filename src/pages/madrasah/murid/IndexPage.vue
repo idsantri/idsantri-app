@@ -43,7 +43,10 @@
 			<q-card-section
 				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
 			>
-				Data Murid
+				Data Murid{{
+					thAjaranH ? ' ➡️ Tahun Ajaran: ' + thAjaranH : ''
+				}}
+				{{ tingkatId ? ' ➡️ Tingkat: ' + tingkatId : '' }}
 				<q-space />
 				<q-btn flat="" icon="cached" @click="keyReload++" />
 			</q-card-section>
