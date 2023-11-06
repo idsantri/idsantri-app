@@ -209,6 +209,22 @@ const routes = [
 						path: 'kelas/:id',
 						component: () =>
 							import('src/pages/madrasah/kelas/KelasIndex.vue'),
+						children: [
+							{
+								path: 'riwayat',
+								component: () =>
+									import(
+										'src/pages/madrasah/kelas/KelasRiwayat.vue'
+									),
+							},
+							{
+								path: 'nilai',
+								component: () =>
+									import(
+										'src/pages/madrasah/kelas/KelasNilai.vue'
+									),
+							},
+						],
 					},
 				],
 			},

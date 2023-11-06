@@ -89,7 +89,7 @@ const params = {
 };
 
 function rowClick(row) {
-	router.push(`/madrasah/kelas/${row.id}`);
+	router.push(`/madrasah/kelas/${row.id}/riwayat`);
 }
 
 onMounted(async () => {
