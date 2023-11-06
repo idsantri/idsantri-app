@@ -205,6 +205,11 @@ const routes = [
 							},
 						],
 					},
+					{
+						path: 'kelas/:id',
+						component: () =>
+							import('src/pages/madrasah/kelas/KelasIndex.vue'),
+					},
 				],
 			},
 

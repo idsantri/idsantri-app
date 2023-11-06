@@ -24,29 +24,18 @@
 			</q-input>
 		</template>
 		<template v-slot:body="props">
-			<q-tr :props="props">
-				<q-td
-					key="id"
-					:props="props"
-					@click="clickKelas(props.row.id)"
-					class="dt-link"
-				>
+			<q-tr
+				:props="props"
+				@click="rowClick(props.row)"
+				style="cursor: pointer"
+			>
+				<q-td key="id" :props="props">
 					{{ props.row.id }}
 				</q-td>
-				<q-td
-					key="id"
-					:props="props"
-					@click="clickMurid(props.row.id)"
-					class="dt-link"
-				>
+				<q-td key="id" :props="props">
 					{{ props.row.santri_id }}
 				</q-td>
-				<q-td
-					key="nama"
-					:props="props"
-					@click="clickMurid(props.row.santri_id)"
-					class="dt-link"
-				>
+				<q-td key="nama" :props="props">
 					{{ props.row.nama }} ({{ props.row.sex }})
 				</q-td>
 				<q-td
@@ -71,21 +60,11 @@
 							: ''
 					}}
 				</q-td>
-				<q-td
-					key="wali"
-					:props="props"
-					@click="clickWali(props.row.wali_id)"
-					class="dt-link"
-				>
+				<q-td key="wali" :props="props">
 					{{ props.row.wali_nama }} ({{ props.row.wali_status }};
 					{{ props.row.wali_sex }})
 				</q-td>
-				<q-td
-					key="ortu"
-					:props="props"
-					@click="clickOrtu(props.row.ortu_id)"
-					class="dt-link"
-				>
+				<q-td key="ortu" :props="props">
 					{{ props.row.ayah }} | {{ props.row.ibu }}
 				</q-td>
 			</q-tr>
@@ -95,7 +74,7 @@
 </template>
 <script setup>
 import getData from 'src/api/api-get';
-import { onMounted, ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const spinner = ref(false);
@@ -109,20 +88,8 @@ const params = {
 	kelas: route.params.kelas,
 };
 
-function clickKelas(id) {
-	console.log(id);
-}
-
-function clickMurid(id) {
-	router.push(`/santri/${id}`);
-}
-
-function clickOrtu(id) {
-	router.push(`/ortu/${id}`);
-}
-
-function clickWali(id) {
-	router.push(`/wali/${id}`);
+function rowClick(row) {
+	router.push(`/madrasah/kelas/${row.id}`);
 }
 
 onMounted(async () => {
@@ -169,13 +136,21 @@ const columns = [
 		label: 'Alamat',
 		align: 'left',
 		field: 'alamat_pendek',
+		// field: (row) =>
+		// 	`${
+		// 		row.alamat_pendek.length > 20
+		// 			? row.alamat_pendek.substr(0, 20) + '&mldr;'
+		// 			: row.alamat_pendek
+		// 	}`,
 		sortable: true,
+		classes: 'alamat',
 	},
 	{
 		name: 'pendidikan',
 		label: 'Kelas - Tingkat - Absen',
 		align: 'left',
-		field: (row) => `${row.kelas} - ${row.tingkat_id} - ${row.no_absen}`,
+		field: (row) => `${row.kelas} ${row.tingkat_id}
+			${row.no_absen ? ' (' + String('0' + row.no_absen).slice(-2) + ')' : ''}`,
 		sortable: true,
 	},
 	{
