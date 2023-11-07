@@ -130,6 +130,8 @@ const props = defineProps({
 	title: { type: String, default: () => 'Input' },
 });
 
+const emit = defineEmits(['successSubmit', 'successDelete']);
+
 // eslint-disable-next-line vue/no-setup-props-destructure
 const input = ref({});
 const lists = ref([]);
@@ -169,7 +171,8 @@ const submit = async () => {
 		if (props.isNew) response = await apiTokened.post(`kelas`, data);
 		else response = await apiTokened.put(`kelas/${data.id}`, data);
 		notifySuccess(response.data.message);
-		rerenderSantriRelations();
+		// rerenderSantriRelations();
+		emit('successSubmit');
 	} catch (error) {
 		toArray(error.response.data.message).forEach((message) => {
 			notifyError(message);
@@ -180,8 +183,8 @@ const submit = async () => {
 const deleteData = async (id) => {
 	const data = {
 		endPoint: `kelas/${id}`,
-		rerender: true,
 	};
-	await deleteById(data);
+	const deleted = await deleteById(data);
+	if (deleted) emit('successDelete');
 };
 </script>

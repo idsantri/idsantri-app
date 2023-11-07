@@ -9,9 +9,17 @@
 			<div class="row" style="max-width: 1200px">
 				<div class="col-12 col-md-6 q-pa-sm">
 					<q-card>
+						<!-- santri -->
 						<q-card-section class="q-pa-sm">
 							<q-toolbar class="bg-green-1">
 								<q-toolbar-title>Identitas</q-toolbar-title>
+								<q-btn
+									round
+									dense
+									flat
+									icon="sync"
+									@click="fetchData"
+								/>
 							</q-toolbar>
 							<div v-if="spinner" class="q-pa-md">
 								<q-spinner-cube
@@ -108,6 +116,8 @@
 							</q-list>
 						</q-card-section>
 						<q-separator />
+
+						<!-- kelas -->
 						<q-card-section class="q-pa-sm">
 							<q-toolbar class="bg-green-1">
 								<q-toolbar-title>Kelas</q-toolbar-title>
@@ -144,7 +154,9 @@
 						</q-card-section>
 					</q-card>
 				</div>
-				<div class="col-12 col-md-6 q-pa-sm">
+
+				<!-- router view -->
+				<div class="col-12 col-md-6 q-pa-sm" :key="keyRoute">
 					<q-card>
 						<q-card-section class="q-pa-sm">
 							<q-tabs
@@ -176,8 +188,10 @@
 	<q-dialog v-model="crudShow">
 		<santri-kelas-crud
 			:data="dataObj"
-			:is-new="isNew"
+			:is-new="false"
 			title="Input Kelas"
+			@success-submit="Submited"
+			@success-delete="$router.go(-1)"
 		/>
 	</q-dialog>
 </template>
@@ -187,6 +201,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import SantriKelasCrud from 'src/pages/santri/relations/kelas/SantriKelasCrud.vue';
 
+const keyRoute = ref(0);
 const route = useRoute();
 const id = route.params.id;
 const kelas = ref({});
@@ -194,12 +209,22 @@ const kelasObj = ref({});
 const santri = ref({});
 const spinner = ref(false);
 const crudShow = ref(false);
+const dataObj = ref({});
+
+function Submited() {
+	crudShow.value = false;
+	fetchData();
+	keyRoute.value++;
+}
 
 function editKelas(id) {
+	dataObj.value = kelas.value;
+	dataObj.value.santri_id = santri.value.id;
+	dataObj.value.nama = santri.value.nama;
 	crudShow.value = true;
 }
 
-onMounted(async () => {
+async function fetchData() {
 	const data = await getData({
 		endPoint: `kelas/${id}`,
 		spinner: spinner,
@@ -216,6 +241,9 @@ onMounted(async () => {
 		Aktif: kelas.value.aktif ? 'Ya' : 'Tidak',
 		Keterangan: kelas.value.keterangan || '-',
 	};
+}
+onMounted(async () => {
+	await fetchData();
 });
 </script>
 <style lang=""></style>

@@ -57,23 +57,58 @@
 			color="green-10"
 			glossy=""
 			class="absolute-bottom-right q-ma-sm text-green-11"
+			@click="addData"
 		/>
 	</div>
+
+	<q-dialog v-model="crudShow">
+		<santri-kelas-crud
+			:data="dataObj"
+			:is-new="true"
+			title="Input Kelas"
+			@success-submit="Submited"
+			@success-delete="$router.go(-1)"
+		/>
+	</q-dialog>
 </template>
 <script setup>
+import SantriKelasCrud from 'src/pages/santri/relations/kelas/SantriKelasCrud.vue';
 import getData from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+
+const crudShow = ref(false);
 const route = useRoute();
 const id = route.params.id;
 const spinner = ref(false);
+const dataObj = ref({});
 const kelas = ref([]);
-onMounted(async () => {
+const santri = ref({});
+
+function addData() {
+	dataObj.value = {
+		nama: santri.value.nama,
+		santri_id: santri.value.id,
+	};
+	crudShow.value = true;
+}
+
+function Submited() {
+	crudShow.value = false;
+	fetchData();
+}
+
+async function fetchData() {
 	const data = await getData({
 		endPoint: `kelas/${id}/riwayat`,
 		spinner,
 	});
 	kelas.value = data.kelas;
+	santri.value = data.santri;
+}
+
+onMounted(async () => {
+	await fetchData();
 });
 </script>
 <style lang=""></style>

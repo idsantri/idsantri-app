@@ -12,6 +12,8 @@
 				:data="dataObj"
 				:is-new="isNew"
 				title="Input Kelas"
+				@success-submit="rerenderSantriRelations()"
+				@success-delete="rerenderSantriRelations()"
 			/>
 		</q-dialog>
 	</div>
@@ -23,6 +25,7 @@ import { getObjectById } from 'src/utils/array-object';
 import SantriKelasCrud from './SantriKelasCrud.vue';
 import { useRoute } from 'vue-router';
 import getData from 'src/api/api-get';
+import { rerenderSantriRelations } from 'src/utils/buttons-click';
 
 const spinner = ref(false);
 const crudShow = ref(false);
