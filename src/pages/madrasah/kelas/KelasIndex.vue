@@ -190,7 +190,7 @@
 			:data="dataObj"
 			:is-new="false"
 			title="Input Kelas"
-			@success-submit="Submited"
+			@success-submit="Submitted"
 			@success-delete="$router.go(-1)"
 		/>
 	</q-dialog>
@@ -211,7 +211,7 @@ const spinner = ref(false);
 const crudShow = ref(false);
 const dataObj = ref({});
 
-function Submited() {
+function Submitted() {
 	crudShow.value = false;
 	fetchData();
 	keyRoute.value++;

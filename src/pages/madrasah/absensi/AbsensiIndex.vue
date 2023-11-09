@@ -1,9 +1,9 @@
 <template>
 	<div class="q-ma-sm">
 		<q-card>
-			<q-card-section class="no-padding row" style="max-width: 800px">
+			<q-card-section class="no-padding row" style="max-width: 1000px">
 				<q-select
-					class="col-12 col-md-4 q-pa-sm"
+					class="col-12 col-md-3 q-pa-sm"
 					dense
 					outlined
 					label="Tahun Ajaran"
@@ -14,7 +14,7 @@
 					@update:model-value="() => updateModel('tahun')"
 				/>
 				<q-select
-					class="col-12 col-md-4 q-pa-sm"
+					class="col-12 col-md-3 q-pa-sm"
 					dense
 					outlined
 					label="Tingkat Pendidikan"
@@ -26,7 +26,7 @@
 					@update:model-value="() => updateModel('tingkat')"
 				/>
 				<q-select
-					class="col-12 col-md-4 q-pa-sm"
+					class="col-12 col-md-3 q-pa-sm"
 					dense
 					outlined
 					label="Kelas"
@@ -36,6 +36,21 @@
 					:loading="loading['kelas']"
 					clearable=""
 				/>
+				<q-select
+					class="col-12 col-md-3 q-pa-sm"
+					dense
+					outlined
+					label="Bulan (Ujian)"
+					v-model="tbu"
+					:options="lists['lists_tbu']"
+					option-value="tbu"
+					option-label="bulan_ujian"
+					emit-value
+					map-options
+					behavior="menu"
+					:loading="tbu['lists_tbu']"
+					clearable=""
+				/>
 			</q-card-section>
 			<!-- <pre>tingkat id: {{ lists['tingkat_id'] }}</pre> -->
 		</q-card>
@@ -43,7 +58,7 @@
 			<q-card-section
 				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
 			>
-				Data Murid &nbsp;
+				Data Absensi &nbsp;
 				<span
 					v-html="
 						thAjaranH
@@ -65,6 +80,12 @@
 				<span
 					v-html="
 						kelas ? ` ➡️ Kelas: <strong>` + kelas + `</strong>` : ''
+					"
+				></span
+				>&nbsp;
+				<span
+					v-html="
+						tbu ? ` ➡️ Absen: <strong>` + tbu + `</strong>` : ''
 					"
 				></span>
 
@@ -90,21 +111,29 @@ const params = {
 	thAjaranH: route.params.thAjaranH,
 	tingkatId: route.params.tingkatId,
 	kelas: route.params.kelas,
+	tbu: route.params.tbu,
 };
 
 const loading = ref([]);
 const lists = ref([]);
+
 const thAjaranH = ref(params.thAjaranH);
 const tingkatId = ref(params.tingkatId);
 const kelas = ref(params.kelas);
+const tbu = ref(params.tbu);
 
 function updateModel(params) {
 	if (params == 'tahun') {
 		tingkatId.value = null;
 		kelas.value = null;
+		tbu.value = null;
 	}
 	if (params == 'tingkat') {
 		kelas.value = null;
+		tbu.value = null;
+	}
+	if (params == 'kelas') {
+		tbu.value = null;
 	}
 }
 
@@ -131,15 +160,26 @@ onMounted(async () => {
 			loading,
 		});
 	}
+
+	if (thAjaranH.value && tingkatId.value && kelas.value) {
+		await fetchListsArray({
+			url: `absensi-kelas/lists/${thAjaranH.value}`,
+			lists,
+			key: 'lists_tbu',
+			loading,
+		});
+	}
+	// console.log(loading.value);
 });
 
 function routerPush() {
 	const to = route.fullPath;
-	if (to.search('madrasah/murid') == true) {
-		let url = `/madrasah/murid`;
+	if (to.search('madrasah/absensi') == true) {
+		let url = `/madrasah/absensi`;
 		if (thAjaranH.value) url += '/' + thAjaranH.value;
 		if (tingkatId.value) url += '/' + tingkatId.value;
 		if (kelas.value) url += '/' + kelas.value;
+		if (tbu.value) url += '/' + tbu.value;
 		return router.push(url);
 	}
 }
@@ -148,16 +188,20 @@ watchEffect(async () => {
 	if (!thAjaranH.value) {
 		tingkatId.value = '';
 		kelas.value = '';
+		tbu.value = '';
 		lists.value['tingkat_id'] = [];
 		lists.value['kelas'] = [];
+		lists.value['lists_tbu'] = [];
 		routerPush();
 		return;
 	}
 	if (thAjaranH.value && !tingkatId.value) {
 		tingkatId.value = '';
 		kelas.value = '';
+		tbu.value = '';
 		lists.value['tingkat_id'] = [];
 		lists.value['kelas'] = [];
+		lists.value['lists_tbu'] = [];
 		await fetchListsArray({
 			url: `murid/lists-kelas/${thAjaranH.value}`,
 			lists,
@@ -171,6 +215,8 @@ watchEffect(async () => {
 	if (thAjaranH.value && tingkatId.value && !kelas.value) {
 		lists.value['kelas'] = [];
 		kelas.value = '';
+		lists.value['lists_tbu'] = [];
+		tbu.value = '';
 		await fetchListsArray({
 			url: `murid/lists-kelas/${thAjaranH.value}/${tingkatId.value}`,
 			lists,
@@ -181,7 +227,20 @@ watchEffect(async () => {
 		return;
 	}
 
-	if (thAjaranH.value && tingkatId.value && kelas.value) {
+	if (thAjaranH.value && tingkatId.value && kelas.value && !tbu.value) {
+		lists.value['lists_tbu'] = [];
+		tbu.value = '';
+		await fetchListsArray({
+			url: `absensi-kelas/lists/${thAjaranH.value}`,
+			lists,
+			key: 'lists_tbu',
+			loading,
+		});
+
+		routerPush();
+		return;
+	}
+	if (thAjaranH.value && tingkatId.value && kelas.value && tbu.value) {
 		routerPush();
 		return;
 	}

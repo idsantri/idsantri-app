@@ -58,4 +58,16 @@ async function fetchListAscKey({ key, loading, lists, ascending }) {
 		loading.value[key] = false;
 	}
 }
-export { fetchLists, fetchListKey, fetchListAscKey };
+
+async function fetchListsArray({ loading, lists, key, url }) {
+	loading.value[key] = true;
+	try {
+		const { data } = await apiTokened.get(url);
+		lists.value[key] = data[key];
+	} catch (error) {
+		console.log(`Not Found list: ${key}`, error);
+	} finally {
+		loading.value[key] = false;
+	}
+}
+export { fetchLists, fetchListKey, fetchListAscKey, fetchListsArray };

@@ -226,6 +226,22 @@ const routes = [
 							},
 						],
 					},
+					{
+						path: 'absensi',
+						component: () =>
+							import(
+								'src/pages/madrasah/absensi/AbsensiIndex.vue'
+							),
+						children: [
+							{
+								path: ':thAjaranH?/:tingkatId?/:kelas?/:tbu?',
+								component: () =>
+									import(
+										'src/pages/madrasah/absensi/AbsensiTable.vue'
+									),
+							},
+						],
+					},
 				],
 			},
 

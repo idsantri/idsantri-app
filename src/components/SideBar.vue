@@ -45,13 +45,23 @@
 			expand-icon-class="text-green-1"
 		>
 			<!-- APP -->
-			<q-item clickable v-ripple to="/madrasah">
+			<q-item clickable v-ripple to="/madrasah/murid">
 				<q-item-section avatar>
 					<q-icon color="green-1" name="home" />
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>Beranda</q-item-label>
 					<q-item-label caption>Beranda Madrasah</q-item-label>
+				</q-item-section>
+			</q-item>
+
+			<q-item clickable v-ripple to="/madrasah/absensi">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="home" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Absensi</q-item-label>
+					<q-item-label caption>Absensi Kelas</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>
