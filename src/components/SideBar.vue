@@ -57,11 +57,11 @@
 
 			<q-item clickable v-ripple to="/madrasah/absensi">
 				<q-item-section avatar>
-					<q-icon color="green-1" name="home" />
+					<q-icon color="green-1" name="format_list_bulleted" />
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>Absensi</q-item-label>
-					<q-item-label caption>Absensi Kelas</q-item-label>
+					<q-item-label caption>Absensi Sekolah</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>

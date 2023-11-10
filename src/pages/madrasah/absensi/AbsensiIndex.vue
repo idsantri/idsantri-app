@@ -163,7 +163,7 @@ onMounted(async () => {
 
 	if (thAjaranH.value && tingkatId.value && kelas.value) {
 		await fetchListsArray({
-			url: `absensi-kelas/lists/${thAjaranH.value}`,
+			url: `absensi/lists/${thAjaranH.value}`,
 			lists,
 			key: 'lists_tbu',
 			loading,
@@ -231,7 +231,7 @@ watchEffect(async () => {
 		lists.value['lists_tbu'] = [];
 		tbu.value = '';
 		await fetchListsArray({
-			url: `absensi-kelas/lists/${thAjaranH.value}`,
+			url: `absensi/lists/${thAjaranH.value}`,
 			lists,
 			key: 'lists_tbu',
 			loading,

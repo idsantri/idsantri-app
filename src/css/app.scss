@@ -165,3 +165,9 @@ body {
 		right: 5px !important;
 	}
 }
+
+tr td > .q-field--outlined .q-field__control {
+	padding-left: 4px;
+	padding-right: 4px;
+	text-align: center;
+}
