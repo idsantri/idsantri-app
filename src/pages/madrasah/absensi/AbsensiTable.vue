@@ -52,7 +52,19 @@
 				<th class="bg-green-2">T</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody v-if="spinner">
+			<tr>
+				<td colspan="100">
+					<q-spinner-cube
+						color="green-12"
+						size="8em"
+						class="flex q-ma-lg q-mx-auto"
+					/>
+				</td>
+			</tr>
+		</tbody>
+
+		<tbody v-else>
 			<tr v-for="(abs, index) in absensi" :key="index">
 				<td class="text-center">
 					{{
@@ -356,6 +368,8 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import postData from 'src/api/api-post.js';
+import updateData from 'src/api/api-update';
+import getData from 'src/api/api-get';
 const spinner = ref(false);
 const route = useRoute();
 const router = useRouter();
@@ -368,12 +382,25 @@ const params = {
 	tbu: route.params.tbu,
 };
 
-function submitAbsensi() {
-	console.log(absensi.value);
+async function submitAbsensi() {
+	const data = JSON.parse(JSON.stringify(absensi.value));
+	const update = await updateData({
+		endPoint: 'absensi',
+		data: data,
+		// rerender: false,
+		// confirm: true,
+		message: `<span style="color:'red'">Kirim data absensi?</span>`,
+		responseData: true,
+		loading: spinner,
+	});
+	// console.log(update);
+	absensi.value = update.absensi;
+	// if (update) await getAbsensi();
 }
 
 const absensi = ref([]);
-onMounted(async () => {
+
+async function getAbsensi() {
 	if (params.thAjaranH && params.tingkatId && params.kelas && params.tbu) {
 		const post = await postData({
 			endPoint: 'absensi',
@@ -388,6 +415,9 @@ onMounted(async () => {
 		});
 		absensi.value = post.absensi;
 	}
+}
+onMounted(async () => {
+	await getAbsensi();
 });
 </script>
 
