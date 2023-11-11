@@ -52,14 +52,28 @@
 				<th class="bg-green-2">T</th>
 			</tr>
 		</thead>
+		<tbody
+			v-if="
+				!params.thAjaranH ||
+				!params.tingkatId ||
+				!params.kelas ||
+				!params.tbu
+			"
+		>
+			<tr>
+				<td colspan="50">
+					<div
+						class="text-center text-negative text-body1 text-italic bg-red-1 q-pa-md"
+					>
+						Tentukan filter!
+					</div>
+				</td>
+			</tr>
+		</tbody>
 		<tbody v-if="spinner">
 			<tr>
-				<td colspan="100">
-					<q-spinner-cube
-						color="green-12"
-						size="8em"
-						class="flex q-ma-lg q-mx-auto"
-					/>
+				<td colspan="50">
+					<q-skeleton height="50px" />
 				</td>
 			</tr>
 		</tbody>
@@ -359,9 +373,6 @@
 		<q-space />
 		<q-btn no-caps @click="submitAbsensi" label="Kirim" color="green-10" />
 	</div>
-	<!-- <pre>{{ params }}</pre> -->
-	<!-- <pre>{{ spinner }}</pre> -->
-	<!-- <pre>{{ absensi }}</pre> -->
 </template>
 
 <script setup>
@@ -387,15 +398,14 @@ async function submitAbsensi() {
 	const update = await updateData({
 		endPoint: 'absensi',
 		data: data,
-		// rerender: false,
-		// confirm: true,
+		confirm: true,
 		message: `<span style="color:'red'">Kirim data absensi?</span>`,
-		responseData: true,
 		loading: spinner,
 	});
-	// console.log(update);
-	absensi.value = update.absensi;
-	// if (update) await getAbsensi();
+
+	if (update) {
+		absensi.value = update.absensi;
+	}
 }
 
 const absensi = ref([]);

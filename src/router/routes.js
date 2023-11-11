@@ -234,11 +234,20 @@ const routes = [
 							),
 						children: [
 							{
-								path: ':thAjaranH?/:tingkatId?/:kelas?/:tbu?',
+								path: 'input/:thAjaranH?/:tingkatId?/:kelas?/:tbu?',
 								component: () =>
 									import(
-										'src/pages/madrasah/absensi/AbsensiTable.vue'
+										'src/pages/madrasah/absensi/AbsensiInput.vue'
 									),
+								name: 'Absensi: Input Data',
+							},
+							{
+								path: 'rekap-ujian/:thAjaranH?/:tingkatId?/:kelas?',
+								component: () =>
+									import(
+										'src/pages/madrasah/absensi/AbsensiRekapUjian.vue'
+									),
+								name: 'Absensi: Rekap Ujian',
 							},
 						],
 					},

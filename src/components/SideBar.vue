@@ -55,7 +55,7 @@
 				</q-item-section>
 			</q-item>
 
-			<q-item clickable v-ripple to="/madrasah/absensi">
+			<q-item clickable v-ripple to="/madrasah/absensi/input">
 				<q-item-section avatar>
 					<q-icon color="green-1" name="format_list_bulleted" />
 				</q-item-section>

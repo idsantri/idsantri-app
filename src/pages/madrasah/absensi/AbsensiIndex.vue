@@ -50,6 +50,7 @@
 					behavior="menu"
 					:loading="tbu['lists_tbu']"
 					clearable=""
+					:disable="disSelect"
 				/>
 			</q-card-section>
 			<!-- <pre>tingkat id: {{ lists['tingkat_id'] }}</pre> -->
@@ -58,7 +59,7 @@
 			<q-card-section
 				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
 			>
-				Data Absensi &nbsp;
+				{{ $route.name }} &nbsp;
 				<span
 					v-html="
 						thAjaranH
@@ -84,12 +85,18 @@
 				></span
 				>&nbsp;
 				<span
-					v-html="
-						tbu ? ` ➡️ Absen: <strong>` + tbu + `</strong>` : ''
-					"
+					v-html="tbu ? ` ➡️ Key: <strong>` + tbu + `</strong>` : ''"
 				></span>
 
 				<q-space />
+				<q-btn
+					:label="rekapRoute ? 'Input' : 'Rekap'"
+					no-caps=""
+					dense=""
+					class="q-px-md text-green-10"
+					color="green-2"
+					@click="routeSwitch"
+				/>
 				<q-btn flat="" icon="cached" @click="keyReload++" />
 			</q-card-section>
 			<q-card-section class="q-pa-sm" :key="keyReload">
@@ -106,7 +113,6 @@ import { fetchListsArray } from 'src/api/fetch-list';
 const keyReload = ref(0);
 const router = useRouter();
 const route = useRoute();
-
 const params = {
 	thAjaranH: route.params.thAjaranH,
 	tingkatId: route.params.tingkatId,
@@ -116,11 +122,12 @@ const params = {
 
 const loading = ref([]);
 const lists = ref([]);
-
 const thAjaranH = ref(params.thAjaranH);
 const tingkatId = ref(params.tingkatId);
 const kelas = ref(params.kelas);
 const tbu = ref(params.tbu);
+const rekapRoute = ref(route.fullPath.search('rekap-ujian') > 0 ? true : false);
+const disSelect = ref(false);
 
 function updateModel(params) {
 	if (params == 'tahun') {
@@ -138,6 +145,10 @@ function updateModel(params) {
 }
 
 onMounted(async () => {
+	route.path.search('absensi/input') > 0
+		? (disSelect.value = false)
+		: (disSelect.value = true);
+
 	await fetchListsArray({
 		url: `murid/lists-kelas`,
 		lists,
@@ -169,20 +180,7 @@ onMounted(async () => {
 			loading,
 		});
 	}
-	// console.log(loading.value);
 });
-
-function routerPush() {
-	const to = route.fullPath;
-	if (to.search('madrasah/absensi') == true) {
-		let url = `/madrasah/absensi`;
-		if (thAjaranH.value) url += '/' + thAjaranH.value;
-		if (tingkatId.value) url += '/' + tingkatId.value;
-		if (kelas.value) url += '/' + kelas.value;
-		if (tbu.value) url += '/' + tbu.value;
-		return router.push(url);
-	}
-}
 
 watchEffect(async () => {
 	if (!thAjaranH.value) {
@@ -195,6 +193,7 @@ watchEffect(async () => {
 		routerPush();
 		return;
 	}
+
 	if (thAjaranH.value && !tingkatId.value) {
 		tingkatId.value = '';
 		kelas.value = '';
@@ -240,9 +239,45 @@ watchEffect(async () => {
 		routerPush();
 		return;
 	}
+
 	if (thAjaranH.value && tingkatId.value && kelas.value && tbu.value) {
 		routerPush();
 		return;
 	}
 });
+
+function routeParams(withTbu) {
+	let url = '';
+	if (thAjaranH.value) url += '/' + thAjaranH.value;
+	if (tingkatId.value) url += '/' + tingkatId.value;
+	if (kelas.value) url += '/' + kelas.value;
+	if (withTbu) {
+		if (tbu.value) url += '/' + tbu.value;
+	}
+	return url;
+}
+
+function routeSwitch() {
+	const { path } = route;
+	if (path.search('absensi/input') > 0) {
+		return router.push(
+			`/madrasah/absensi/rekap-ujian${routeParams(false)}`
+		);
+	}
+	if (path.search('absensi/rekap-ujian') > 0) {
+		return router.push(`/madrasah/absensi/input${routeParams(true)}`);
+	}
+}
+
+function routerPush() {
+	const { path } = route;
+	if (path.search('absensi/input') > 0) {
+		return router.push(`/madrasah/absensi/input${routeParams(true)}`);
+	}
+	if (path.search('absensi/rekap-ujian') > 0) {
+		return router.push(
+			`/madrasah/absensi/rekap-ujian${routeParams(false)}`
+		);
+	}
+}
 </script>
