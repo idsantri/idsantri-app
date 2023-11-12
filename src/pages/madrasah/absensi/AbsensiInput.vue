@@ -94,6 +94,7 @@
 						dense
 						no-caps
 						class="text-green-10 bg-green-11 q-px-sm"
+						style="min-width: 50px"
 						@click="
 							$router.push(
 								`/madrasah/kelas/${abs.kelas_id}/riwayat`
@@ -377,15 +378,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import postData from 'src/api/api-post.js';
 import updateData from 'src/api/api-update';
-import getData from 'src/api/api-get';
 const spinner = ref(false);
 const route = useRoute();
-const router = useRouter();
-const murid = ref([]);
-const filter = ref('');
 const params = {
 	thAjaranH: route.params.thAjaranH,
 	tingkatId: route.params.tingkatId,

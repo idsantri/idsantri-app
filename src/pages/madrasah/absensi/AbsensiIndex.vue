@@ -98,6 +98,29 @@
 					@click="routeSwitch"
 				/>
 				<q-btn flat="" icon="cached" @click="keyReload++" />
+				<q-btn-dropdown
+					flat
+					round
+					dense
+					dropdown-icon="more_vert"
+					class="q-pl-md"
+					color="green-1"
+				>
+					<q-list>
+						<q-item clickable v-close-popup>
+							<q-item-section>Cetak</q-item-section>
+							<q-item-section avatar>
+								<q-icon color="green" name="install_mobile" />
+							</q-item-section>
+						</q-item>
+						<q-item clickable v-close-popup>
+							<q-item-section>Pengaturan</q-item-section>
+							<q-item-section avatar>
+								<q-icon color="red" name="logout" />
+							</q-item-section>
+						</q-item>
+					</q-list>
+				</q-btn-dropdown>
 			</q-card-section>
 			<q-card-section class="q-pa-sm" :key="keyReload">
 				<router-view :key="$route.fullPath" />
