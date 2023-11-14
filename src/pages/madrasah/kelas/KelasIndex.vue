@@ -227,7 +227,7 @@ function editKelas(id) {
 async function fetchData() {
 	const data = await getData({
 		endPoint: `kelas/${id}`,
-		spinner: spinner,
+		loading: spinner,
 	});
 	kelas.value = data.kelas;
 	santri.value = data.santri;

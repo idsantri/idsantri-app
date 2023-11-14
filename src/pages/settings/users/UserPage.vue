@@ -194,7 +194,7 @@ const columns = [
 async function getUsers() {
 	const data = await getData({
 		endPoint: `users`,
-		spinner: loading,
+		loading: loading,
 	});
 	users.value = data.users;
 }

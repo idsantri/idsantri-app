@@ -234,7 +234,7 @@ const routes = [
 							),
 						children: [
 							{
-								path: 'input/:thAjaranH?/:tingkatId?/:kelas?/:tbu?',
+								path: 'input/:thAjaranH?/:tingkatId?/:kelas?/:bulanUjian?',
 								component: () =>
 									import(
 										'src/pages/madrasah/absensi/AbsensiInput.vue'

@@ -41,14 +41,14 @@
 					dense
 					outlined
 					label="Bulan (Ujian)"
-					v-model="tbu"
-					:options="lists['lists_tbu']"
-					option-value="tbu"
+					v-model="bulanUjian"
+					:options="lists['bulan_ujian']"
+					option-value="bu"
 					option-label="bulan_ujian"
 					emit-value
 					map-options
 					behavior="menu"
-					:loading="tbu['lists_tbu']"
+					:loading="bulanUjian['bulan_ujian']"
 					clearable=""
 					:disable="disSelect"
 				/>
@@ -85,7 +85,11 @@
 				></span
 				>&nbsp;
 				<span
-					v-html="tbu ? ` ➡️ Key: <strong>` + tbu + `</strong>` : ''"
+					v-html="
+						bulanUjian
+							? ` ➡️ Key: <strong>` + bulanUjian + `</strong>`
+							: ''
+					"
 				></span>
 
 				<q-space />
@@ -123,7 +127,10 @@
 				</q-btn-dropdown>
 			</q-card-section>
 			<q-card-section class="q-pa-sm" :key="keyReload">
-				<router-view :key="$route.fullPath" />
+				<router-view
+					:key="$route.fullPath"
+					@success-delete="bulanUjian = ''"
+				/>
 			</q-card-section>
 		</q-card>
 	</div>
@@ -140,7 +147,7 @@ const params = {
 	thAjaranH: route.params.thAjaranH,
 	tingkatId: route.params.tingkatId,
 	kelas: route.params.kelas,
-	tbu: route.params.tbu,
+	bulanUjian: route.params.bulanUjian,
 };
 
 const loading = ref([]);
@@ -148,22 +155,26 @@ const lists = ref([]);
 const thAjaranH = ref(params.thAjaranH);
 const tingkatId = ref(params.tingkatId);
 const kelas = ref(params.kelas);
-const tbu = ref(params.tbu);
+const bulanUjian = ref(params.bulanUjian);
 const rekapRoute = ref(route.fullPath.search('rekap-ujian') > 0 ? true : false);
 const disSelect = ref(false);
+
+function onDelete() {
+	bulanUjian.value = '';
+}
 
 function updateModel(params) {
 	if (params == 'tahun') {
 		tingkatId.value = null;
 		kelas.value = null;
-		tbu.value = null;
+		bulanUjian.value = null;
 	}
 	if (params == 'tingkat') {
 		kelas.value = null;
-		tbu.value = null;
+		bulanUjian.value = null;
 	}
 	if (params == 'kelas') {
-		tbu.value = null;
+		bulanUjian.value = null;
 	}
 }
 
@@ -197,9 +208,9 @@ onMounted(async () => {
 
 	if (thAjaranH.value && tingkatId.value && kelas.value) {
 		await fetchListsArray({
-			url: `absensi/lists/${thAjaranH.value}`,
+			url: `bulan-ujian`,
 			lists,
-			key: 'lists_tbu',
+			key: 'bulan_ujian',
 			loading,
 		});
 	}
@@ -209,10 +220,10 @@ watchEffect(async () => {
 	if (!thAjaranH.value) {
 		tingkatId.value = '';
 		kelas.value = '';
-		tbu.value = '';
+		bulanUjian.value = '';
 		lists.value['tingkat_id'] = [];
 		lists.value['kelas'] = [];
-		lists.value['lists_tbu'] = [];
+		lists.value['bulan_ujian'] = [];
 		routerPush();
 		return;
 	}
@@ -220,10 +231,10 @@ watchEffect(async () => {
 	if (thAjaranH.value && !tingkatId.value) {
 		tingkatId.value = '';
 		kelas.value = '';
-		tbu.value = '';
+		bulanUjian.value = '';
 		lists.value['tingkat_id'] = [];
 		lists.value['kelas'] = [];
-		lists.value['lists_tbu'] = [];
+		lists.value['bulan_ujian'] = [];
 		await fetchListsArray({
 			url: `murid/lists-kelas/${thAjaranH.value}`,
 			lists,
@@ -237,8 +248,8 @@ watchEffect(async () => {
 	if (thAjaranH.value && tingkatId.value && !kelas.value) {
 		lists.value['kelas'] = [];
 		kelas.value = '';
-		lists.value['lists_tbu'] = [];
-		tbu.value = '';
+		lists.value['bulan_ujian'] = [];
+		bulanUjian.value = '';
 		await fetchListsArray({
 			url: `murid/lists-kelas/${thAjaranH.value}/${tingkatId.value}`,
 			lists,
@@ -249,13 +260,18 @@ watchEffect(async () => {
 		return;
 	}
 
-	if (thAjaranH.value && tingkatId.value && kelas.value && !tbu.value) {
-		lists.value['lists_tbu'] = [];
-		tbu.value = '';
+	if (
+		thAjaranH.value &&
+		tingkatId.value &&
+		kelas.value &&
+		!bulanUjian.value
+	) {
+		lists.value['bulan_ujian'] = [];
+		bulanUjian.value = '';
 		await fetchListsArray({
-			url: `absensi/lists/${thAjaranH.value}`,
+			url: `bulan-ujian`,
 			lists,
-			key: 'lists_tbu',
+			key: 'bulan_ujian',
 			loading,
 		});
 
@@ -263,19 +279,19 @@ watchEffect(async () => {
 		return;
 	}
 
-	if (thAjaranH.value && tingkatId.value && kelas.value && tbu.value) {
+	if (thAjaranH.value && tingkatId.value && kelas.value && bulanUjian.value) {
 		routerPush();
 		return;
 	}
 });
 
-function routeParams(withTbu) {
+function routeParams(withBulanUjian) {
 	let url = '';
 	if (thAjaranH.value) url += '/' + thAjaranH.value;
 	if (tingkatId.value) url += '/' + tingkatId.value;
 	if (kelas.value) url += '/' + kelas.value;
-	if (withTbu) {
-		if (tbu.value) url += '/' + tbu.value;
+	if (withBulanUjian) {
+		if (bulanUjian.value) url += '/' + bulanUjian.value;
 	}
 	return url;
 }

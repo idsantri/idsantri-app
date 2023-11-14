@@ -101,7 +101,7 @@ function Submited() {
 async function fetchData() {
 	const data = await getData({
 		endPoint: `kelas/${id}/riwayat`,
-		spinner,
+		loading: spinner,
 	});
 	kelas.value = data.kelas;
 	santri.value = data.santri;

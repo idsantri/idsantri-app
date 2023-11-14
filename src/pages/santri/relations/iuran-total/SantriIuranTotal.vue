@@ -29,7 +29,7 @@ const santriId = route.params.id;
 onMounted(async () => {
 	const data = await getData({
 		endPoint: `santri/${santriId}/iuran-total`,
-		spinner,
+		loading: spinner,
 	});
 
 	dataArr.value = data.iuran_total;

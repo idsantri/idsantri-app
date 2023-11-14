@@ -40,7 +40,7 @@ const santriId = route.params.id;
 onMounted(async () => {
 	const data = await getData({
 		endPoint: `santri/${santriId}/domisili`,
-		spinner,
+		loading: spinner,
 	});
 	dataArr.value = data.domisili;
 	dataMap.value = data.domisili.map((v, i) => ({

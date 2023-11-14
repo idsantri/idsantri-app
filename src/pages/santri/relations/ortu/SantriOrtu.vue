@@ -20,7 +20,7 @@ const dataObj = ref({});
 onMounted(async () => {
 	const { ortu } = await getData({
 		endPoint: `santri/${santriId}/ortu`,
-		spinner,
+		loading: spinner,
 	});
 
 	dataObj.value = {

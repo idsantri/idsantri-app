@@ -4,7 +4,14 @@ import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 
-function deleteData({ endPoint, message, rerender }) {
+function deleteData({
+	endPoint,
+	message,
+	rerender,
+	params,
+	loading,
+	notify = true,
+}) {
 	return new Promise((resolve) => {
 		Dialog.create({
 			title: 'Konfirmasi',
@@ -15,8 +22,10 @@ function deleteData({ endPoint, message, rerender }) {
 			html: true,
 		}).onOk(async () => {
 			try {
-				const response = await apiTokened.delete(`${endPoint}`);
-				notifySuccess(response.data.message);
+				if (loading && typeof loading.value === 'boolean')
+					loading.value = true;
+				const response = await apiTokened.delete(endPoint, { params });
+				if (notify) notifySuccess(response.data.message);
 				if (rerender) forceRerender();
 				resolve(true);
 			} catch (error) {
@@ -26,6 +35,9 @@ function deleteData({ endPoint, message, rerender }) {
 				} else {
 					console.log(error);
 				}
+			} finally {
+				if (loading && typeof loading.value === 'boolean')
+					loading.value = false;
 			}
 		});
 	});

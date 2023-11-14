@@ -57,7 +57,7 @@
 				!params.thAjaranH ||
 				!params.tingkatId ||
 				!params.kelas ||
-				!params.tbu
+				!params.bulanUjian
 			"
 		>
 			<tr>
@@ -367,11 +367,19 @@
 	</q-markup-table>
 	<q-separator />
 	<q-separator class="q-mt-xs" />
-	<div class="flex q-mt-sm">
-		<div class="text-caption text-italic q-pa-sm">
+	<div
+		class="full-width row no-wrap justify-between items-center content-center q-mt-sm"
+	>
+		<q-btn
+			no-caps
+			label="Hapus"
+			color="negative"
+			:disable="absensi.length > 0 ? false : true"
+			@click="deleteAbsensi"
+		/>
+		<div class="text-caption text-italic text-center q-pa-sm">
 			S=Sakit; I=Izin; A=Alpa; T=Terlambat
 		</div>
-		<q-space />
 		<q-btn no-caps @click="submitAbsensi" label="Kirim" color="green-10" />
 	</div>
 </template>
@@ -381,14 +389,38 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import postData from 'src/api/api-post.js';
 import updateData from 'src/api/api-update';
+import deleteData from 'src/api/api-delete';
+
+const emit = defineEmits(['successDelete']);
 const spinner = ref(false);
 const route = useRoute();
+const absensi = ref([]);
 const params = {
 	thAjaranH: route.params.thAjaranH,
 	tingkatId: route.params.tingkatId,
 	kelas: route.params.kelas,
-	tbu: route.params.tbu,
+	bulanUjian: route.params.bulanUjian,
 };
+
+async function deleteAbsensi() {
+	const kelas_id = absensi.value.map((abs) => abs.kelas_id);
+	const bulan_ujian = params.bulanUjian;
+	const deleted = await deleteData({
+		endPoint: 'absensi',
+		message: `<span style="color:'red'">Hapus data absensi untuk kelas ini?</span>`,
+		params: {
+			bulan_ujian,
+			kelas_id,
+		},
+		loading: spinner,
+	});
+
+	if (deleted) {
+		spinner.value = true;
+		absensi.value = [];
+		return emit('successDelete');
+	}
+}
 
 async function submitAbsensi() {
 	const data = JSON.parse(JSON.stringify(absensi.value));
@@ -396,7 +428,7 @@ async function submitAbsensi() {
 		endPoint: 'absensi',
 		data: data,
 		confirm: true,
-		message: `<span style="color:'red'">Kirim data absensi?</span>`,
+		message: `<span style="color:'blue'">Kirim data absensi?</span>`,
 		loading: spinner,
 	});
 
@@ -405,17 +437,20 @@ async function submitAbsensi() {
 	}
 }
 
-const absensi = ref([]);
-
 async function getAbsensi() {
-	if (params.thAjaranH && params.tingkatId && params.kelas && params.tbu) {
+	if (
+		params.thAjaranH &&
+		params.tingkatId &&
+		params.kelas &&
+		params.bulanUjian
+	) {
 		const post = await postData({
 			endPoint: 'absensi',
 			data: {
 				th_ajaran_h: params.thAjaranH,
 				tingkat_id: params.tingkatId,
 				kelas: params.kelas,
-				tbu: params.tbu,
+				bulan_ujian: params.bulanUjian,
 			},
 			needNotify: false,
 			loading: spinner,

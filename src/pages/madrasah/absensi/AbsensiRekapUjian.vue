@@ -171,7 +171,7 @@ async function getAbsensi() {
 	if (params.thAjaranH && params.tingkatId && params.kelas) {
 		const data = await getData({
 			endPoint: `absensi/rekap-ujian/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`,
-			spinner: spinner,
+			loading: spinner,
 		});
 		absensi.value = data.absensi;
 	}

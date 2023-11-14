@@ -1,11 +1,12 @@
 import { apiTokened } from 'src/api';
 import { toArray } from 'src/utils/array-object';
-import { notifyError } from 'src/utils/notify';
+import { notifyError, notifySuccess } from 'src/utils/notify';
 
-async function getData({ endPoint, spinner, isError }) {
+async function getData({ endPoint, loading, isError, params, notify = false }) {
 	try {
-		if (spinner && typeof spinner.value === 'boolean') spinner.value = true;
-		const { data } = await apiTokened.get(`${endPoint}`);
+		if (loading && typeof loading.value === 'boolean') loading.value = true;
+		const { data } = await apiTokened.get(endPoint, { params });
+		if (notify) notifySuccess(data.message);
 		return data;
 	} catch (error) {
 		if (isError && typeof isError.value === 'boolean') isError.value = true;
@@ -16,8 +17,8 @@ async function getData({ endPoint, spinner, isError }) {
 			console.log(error);
 		}
 	} finally {
-		if (spinner && typeof spinner.value === 'boolean')
-			spinner.value = false;
+		if (loading && typeof loading.value === 'boolean')
+			loading.value = false;
 	}
 }
 

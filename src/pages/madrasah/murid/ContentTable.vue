@@ -74,7 +74,7 @@
 </template>
 <script setup>
 import getData from 'src/api/api-get';
-import { onMounted, onUpdated, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const spinner = ref(false);
@@ -101,7 +101,7 @@ onMounted(async () => {
 	} else if (params.thAjaranH && params.tingkatId) {
 		const data = await getData({
 			endPoint: `murid/${params.thAjaranH}/${params.tingkatId}`,
-			spinner,
+			loading: spinner,
 		});
 		murid.value = data.murid;
 	} else {

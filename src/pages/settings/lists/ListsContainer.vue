@@ -66,7 +66,7 @@ const isError = ref(false);
 async function fetchData() {
 	const data = await getData({
 		endPoint: `lists/${selected.url}`,
-		spinner,
+		loading: spinner,
 		isError,
 	});
 	// console.log('e', err.value);
