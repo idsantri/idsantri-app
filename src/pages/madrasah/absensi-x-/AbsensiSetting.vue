@@ -1,0 +1,231 @@
+<template>
+	<div class="q-ma-sm" style="max-width: 600px">
+		<q-card>
+			<q-card-section class="q-pa-sm">
+				<q-select
+					dense
+					outlined
+					label="Pilih Tingkat Pendidikan"
+					v-model="modelTingkatId"
+					:options="listsTingkatId"
+					emit-value
+					map-options
+					option-label="val1"
+					behavior="menu"
+					@update:model-value="(v) => fetchSetting(v.val0)"
+					:loading="loading"
+				/>
+			</q-card-section>
+		</q-card>
+		<q-card class="q-mt-sm">
+			<q-card-section
+				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm"
+			>
+				Tingkat Pendidikan: {{ modelTingkatId.val1 }}
+			</q-card-section>
+			<q-card-section class="q-pa-sm">
+				<div v-if="modelTingkatId">
+					<div v-if="spinner" class="q-pa-md">
+						<q-spinner-cube
+							color="green-12"
+							size="8em"
+							class="flex q-mx-auto"
+						/>
+					</div>
+					<div v-else>
+						<div v-for="item in bulanUjian" :key="item.id">
+							<!-- <pre>{{ item }}</pre> -->
+							<q-form>
+								<q-item class="no-padding">
+									<q-item-section>
+										<div class="row">
+											<q-input
+												label="Ujian Ke-?"
+												class="col-3 q-pr-sm"
+												dense
+												outlined
+												v-model="item.ujian"
+												required
+												mask="#"
+											/>
+
+											<q-input
+												label="Bulan"
+												class="col-3 q-pr-sm"
+												dense
+												outlined
+												v-model="item.bulan"
+												required
+												mask="##"
+											/>
+											<q-input
+												class="col-6"
+												dense
+												outlined
+												:model-value="
+													listsBulanHijri.find(
+														(b) =>
+															Number(b.val2) ==
+															Number(item.bulan)
+													)?.val1 || ''
+												"
+												readonly=""
+											/>
+										</div>
+									</q-item-section>
+									<q-item-section
+										side
+										class="no-padding q-ml-sm"
+									>
+										<q-btn-group push>
+											<q-btn
+												color="positive"
+												glossy
+												icon="save"
+												type="submit"
+											/>
+											<q-btn
+												color="negative"
+												glossy
+												icon="delete"
+												@click="deleteSetting(item.id)"
+											/>
+										</q-btn-group>
+									</q-item-section>
+								</q-item>
+							</q-form>
+						</div>
+						<q-form @submit.prevent="addSetting">
+							<q-item class="no-padding">
+								<q-item-section>
+									<div class="row">
+										<q-input
+											label="Ujian Ke-?"
+											class="col-3 q-pr-sm"
+											dense
+											outlined
+											required
+											mask="#"
+											v-model="newSetting.ujian"
+										/>
+
+										<q-input
+											label="Bulan"
+											class="col-3 q-pr-sm"
+											dense
+											outlined
+											required
+											mask="##"
+											v-model="newSetting.bulan"
+										/>
+										<q-input
+											class="col-6"
+											dense
+											outlined
+											readonly=""
+											:model-value="
+												listsBulanHijri.find(
+													(b) =>
+														Number(b.val2) ==
+														Number(newSetting.bulan)
+												)?.val1 || ''
+											"
+										/>
+									</div>
+								</q-item-section>
+								<q-item-section side class="no-padding q-ml-sm">
+									<q-btn-group push>
+										<q-btn
+											color="positive"
+											glossy
+											icon="save"
+											type="submit"
+										/>
+										<q-btn
+											color="negative"
+											glossy
+											icon="delete"
+											disable=""
+										/>
+									</q-btn-group>
+								</q-item-section>
+							</q-item>
+						</q-form>
+					</div>
+					<!-- {{ newSetting }} -->
+				</div>
+				<div v-else class="q-my-md text-center">
+					Silakan pilih list tingkat pendidikan!
+				</div>
+			</q-card-section>
+		</q-card>
+	</div>
+
+	<!-- <pre>list model:{{ listModel }}</pre> -->
+	<!-- <pre>list data:{{ listData }}</pre> -->
+</template>
+<script setup>
+import deleteData from 'src/api/api-delete';
+import getData from 'src/api/api-get';
+import postData from 'src/api/api-post';
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+const router = useRouter();
+const route = useRoute();
+const modelTingkatId = ref('');
+const listsTingkatId = ref([]);
+const listsBulanHijri = ref([{}]);
+const bulanUjian = ref([{}]);
+const loading = ref(false);
+const spinner = ref(false);
+const newSetting = ref({});
+
+async function addSetting() {
+	newSetting.value.tingkat_id = modelTingkatId.value.val0;
+	const post = await postData({
+		endPoint: 'absensi-settings',
+		data: newSetting.value,
+	});
+	if (post) {
+		newSetting.value = {};
+		return fetchSetting(modelTingkatId.value.val0);
+	}
+}
+async function deleteSetting(id) {
+	const deleted = await deleteData({
+		endPoint: `absensi-settings/${id}`,
+		loading: spinner,
+	});
+	if (deleted) return fetchSetting(modelTingkatId.value.val0);
+}
+
+async function fetchTingkat() {
+	const data = await getData({
+		endPoint: 'lists/tingkat-pendidikan',
+		loading,
+	});
+	listsTingkatId.value = data.tingkat_pendidikan;
+}
+
+async function fetchHijri() {
+	const data = await getData({
+		endPoint: 'lists/bulan-hijri',
+		loading,
+	});
+	listsBulanHijri.value = data.bulan_hijri;
+}
+
+async function fetchSetting(tingkatId) {
+	const data = await getData({
+		endPoint: `absensi-settings?tingkat_id=${tingkatId}`,
+		loading: spinner,
+	});
+	bulanUjian.value = data.bulan_ujian;
+}
+
+onMounted(async () => {
+	await fetchTingkat();
+	await fetchHijri();
+});
+</script>

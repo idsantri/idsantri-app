@@ -239,7 +239,7 @@ const routes = [
 									import(
 										'src/pages/madrasah/absensi/AbsensiInput.vue'
 									),
-								name: 'Absensi: Input Data',
+								name: 'Input Data',
 							},
 							{
 								path: 'rekap-ujian/:thAjaranH?/:tingkatId?/:kelas?',
@@ -247,7 +247,23 @@ const routes = [
 									import(
 										'src/pages/madrasah/absensi/AbsensiRekapUjian.vue'
 									),
-								name: 'Absensi: Rekap Ujian',
+								name: 'Rekap Ujian',
+							},
+							{
+								path: 'print',
+								component: () =>
+									import(
+										'src/pages/madrasah/absensi/AbsensiPrint.vue'
+									),
+								name: 'Print',
+							},
+							{
+								path: 'setting',
+								component: () =>
+									import(
+										'src/pages/madrasah/absensi/AbsensiSetting.vue'
+									),
+								name: 'Pengaturan',
 							},
 						],
 					},
