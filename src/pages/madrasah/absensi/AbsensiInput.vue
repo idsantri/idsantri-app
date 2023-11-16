@@ -410,7 +410,7 @@
 			</q-markup-table>
 		</q-card-section>
 		<q-card-section
-			class="bg-green-6 text-green-11 text-subtitle1 q-pa-sm flex flex-center justify-between"
+			class="bg-green-6 text-green-11 text-subtitle1 q-pa-sm full-width row no-wrap justify-between items-center content-center"
 		>
 			<q-btn
 				dense

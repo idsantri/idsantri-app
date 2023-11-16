@@ -18,6 +18,7 @@ const notifyWarning = (message) => {
 	Notify.create({
 		type: 'warning',
 		message: message,
+		html: true,
 	});
 };
 

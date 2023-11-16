@@ -58,6 +58,7 @@
 </template>
 <script setup>
 import { fetchListsArray } from 'src/api/fetch-list';
+import { notifyWarning } from 'src/utils/notify';
 import { onMounted, ref, watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -136,6 +137,12 @@ onMounted(async () => {
 			key: 'bulan_ujian',
 			loading,
 		});
+
+		if (!lists.value['bulan_ujian'].length) {
+			notifyWarning(
+				'Jadwal ujian untuk jenjang ini belum diatur.<br>Silakan masuk ke menu pengaturan (kanan atas)!'
+			);
+		}
 	}
 });
 
