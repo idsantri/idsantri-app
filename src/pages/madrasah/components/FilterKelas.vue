@@ -190,7 +190,6 @@ function sendEmit() {
 		bu: bu().bu || '',
 		bulanUjian: bu().bulan_ujian || '',
 	};
-	console.log(data);
 
 	emit('dataFilter', data);
 }
