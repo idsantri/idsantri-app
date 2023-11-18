@@ -192,6 +192,11 @@ const routes = [
 				redirect: (to) => '/madrasah/murid',
 				children: [
 					{
+						path: 'test/:thAjaranH?/:tingkatId?/:kelas?/:bulanUjian?',
+						component: () =>
+							import('src/pages/madrasah/TestPage.vue'),
+					},
+					{
 						path: 'murid',
 						component: () =>
 							import('src/pages/madrasah/murid/IndexPage.vue'),
