@@ -192,11 +192,6 @@ const routes = [
 				redirect: (to) => '/madrasah/murid',
 				children: [
 					{
-						path: 'test/:thAjaranH?/:tingkatId?/:kelas?/:bulanUjian?',
-						component: () =>
-							import('src/pages/madrasah/TestPage.vue'),
-					},
-					{
 						path: 'murid',
 						component: () =>
 							import('src/pages/madrasah/murid/IndexPage.vue'),
@@ -255,7 +250,7 @@ const routes = [
 								name: 'Rekap Ujian',
 							},
 							{
-								path: 'print',
+								path: 'print/:thAjaranH?/:tingkatId?/:kelas?',
 								component: () =>
 									import(
 										'src/pages/madrasah/absensi/AbsensiPrint.vue'

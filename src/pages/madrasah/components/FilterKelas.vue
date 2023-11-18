@@ -1,5 +1,8 @@
 <template lang="">
 	<q-card>
+		<q-card-section class="q-px-sm q-py-sm bg-green-11">
+			<div class="text-subtitle2">&nbsp;Filter Data Murid</div>
+		</q-card-section>
 		<q-card-section class="no-padding">
 			<div class="row" style="max-width: 1000px; width: 100%">
 				<q-select
@@ -37,10 +40,13 @@
 					outlined
 					label="Kelas"
 					v-model="kelas"
-					:options="lists['kelas']"
+					:options="lists['kelas_detail']"
+					option-value="kelas"
+					option-label="kelas"
+					emit-value
+					map-options
 					behavior="menu"
-					:loading="loading['kelas']"
-					clearable=""
+					:loading="loading['kelas_detail']"
 				/>
 				<q-select
 					v-if="props.showBulanUjian"
@@ -99,6 +105,7 @@ onMounted(async () => {
 		key: 'th_ajaran',
 		loading,
 	});
+	sendEmit();
 
 	// get tingkat
 	if (params.thAjaranH) {
@@ -109,16 +116,18 @@ onMounted(async () => {
 			loading,
 		});
 	}
+	sendEmit();
 
 	// get kelas
 	if (params.thAjaranH && params.tingkatId) {
 		await fetchListsArray({
 			url: `murid/lists-kelas/${params.thAjaranH}/${params.tingkatId}`,
 			lists,
-			key: 'kelas',
+			key: 'kelas_detail',
 			loading,
 		});
 	}
+	sendEmit();
 
 	// get bulan ujian
 	if (
@@ -140,39 +149,48 @@ onMounted(async () => {
 			);
 		}
 	}
-
 	sendEmit();
 });
 
 function sendEmit() {
 	const th = () =>
-		thAjaranH.value
+		thAjaranH.value && lists.value.th_ajaran
 			? lists.value.th_ajaran.find(
 					({ th_ajaran_h }) => th_ajaran_h === thAjaranH.value
 			  )
 			: {};
 
 	const tk = () =>
-		tingkatId.value
+		tingkatId.value && lists.value.tingkat
 			? lists.value.tingkat.find(
 					({ tingkat_id }) => tingkat_id === tingkatId.value
 			  )
 			: {};
 
+	const k = kelas.value;
+	const kl = () =>
+		k && lists.value.kelas_detail
+			? lists.value.kelas_detail.find(({ kelas }) => kelas === k)
+			: {};
+
 	const bu = () =>
-		bulanUjian.value
+		bulanUjian.value && lists.value.bulan_ujian
 			? lists.value.bulan_ujian.find(({ bu }) => bu === bulanUjian.value)
 			: {};
 
 	const data = {
 		thAjaranH: th().th_ajaran_h || '',
 		thAjaranM: th().th_ajaran_m || '',
+		thAjaranJumlahMurid: th().jumlah_murid || '',
 		tingkat: tk().tingkat || '',
 		tingkatId: tk().tingkat_id || '',
-		kelas: kelas.value || '',
+		tingkatJumlahMurid: tk().jumlah_murid || '',
+		kelas: kl().kelas || '',
+		kelasJumlahMurid: kl().jumlah_murid || '',
 		bu: bu().bu || '',
 		bulanUjian: bu().bulan_ujian || '',
 	};
+	console.log(data);
 
 	emit('dataFilter', data);
 }

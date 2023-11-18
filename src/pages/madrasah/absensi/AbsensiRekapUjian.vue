@@ -1,32 +1,43 @@
 <template lang="">
-	<header-select :disable-bulan-ujian="true" />
+	<filter-kelas
+		:showBulanUjian="false"
+		start-url="/madrasah/absensi/rekap-ujian"
+		@dataFilter="dataEmit"
+	/>
 	<q-card class="q-mt-sm">
 		<q-card-section class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm">
 			<!-- {{ params }} -->
 			<span
 				v-html="
-					params.thAjaranH
-						? `Tahun Ajaran: <strong>` +
-						  params.thAjaranH +
+					dataFilter.thAjaranH
+						? `➡️ Tahun Ajaran: <strong>` +
+						  dataFilter.thAjaranH +
 						  `</strong>`
 						: ''
 				"
 			></span
-			>&nbsp;
+			>&nbsp;&nbsp;
 			<span
 				v-html="
-					params.tingkatId
+					dataFilter.tingkat
 						? ` ➡️ Tingkat: <strong>` +
-						  params.tingkatId +
+						  dataFilter.tingkat +
 						  `</strong>`
 						: ''
 				"
 			></span
-			>&nbsp;
+			>&nbsp;&nbsp;
 			<span
 				v-html="
-					params.kelas
-						? ` ➡️ Kelas: <strong>` + params.kelas + `</strong>`
+					dataFilter.kelas
+						? ` ➡️ Kelas: <strong>` + dataFilter.kelas + `</strong>`
+						: ''
+				"
+			></span
+			>&nbsp;<span
+				v-html="
+					dataFilter.kelasJumlahMurid
+						? `(${dataFilter.kelasJumlahMurid} murid)`
 						: ''
 				"
 			></span>
@@ -194,17 +205,22 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import getData from 'src/api/api-get';
-import HeaderSelect from './components/HeaderSelect.vue';
+import FilterKelas from 'src/pages/madrasah/components/FilterKelas.vue';
 
 const spinner = ref(false);
 const route = useRoute();
 
+const absensi = ref([]);
 const params = {
 	thAjaranH: route.params.thAjaranH,
 	tingkatId: route.params.tingkatId,
 	kelas: route.params.kelas,
 };
-const absensi = ref([]);
+
+const dataFilter = ref({});
+function dataEmit(val) {
+	dataFilter.value = val;
+}
 
 async function getAbsensi() {
 	if (params.thAjaranH && params.tingkatId && params.kelas) {

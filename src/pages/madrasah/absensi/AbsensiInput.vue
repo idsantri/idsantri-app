@@ -1,41 +1,52 @@
 <template lang="">
-	<header-select :disable-bulan-ujian="false" />
+	<filter-kelas
+		:showBulanUjian="true"
+		start-url="/madrasah/absensi/input"
+		@dataFilter="dataEmit"
+	/>
 	<q-card class="q-mt-sm">
 		<q-card-section class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm">
 			<!-- {{ params }} -->
 			<span
 				v-html="
-					params.thAjaranH
-						? `Tahun Ajaran: <strong>` +
-						  params.thAjaranH +
+					dataFilter.thAjaranH
+						? `➡️ Tahun Ajaran: <strong>` +
+						  dataFilter.thAjaranH +
 						  `</strong>`
 						: ''
 				"
 			></span
-			>&nbsp;
+			>&nbsp;&nbsp;
 			<span
 				v-html="
-					params.tingkatId
+					dataFilter.tingkat
 						? ` ➡️ Tingkat: <strong>` +
-						  params.tingkatId +
+						  dataFilter.tingkat +
 						  `</strong>`
 						: ''
 				"
 			></span
-			>&nbsp;
+			>&nbsp;&nbsp;
 			<span
 				v-html="
-					params.kelas
-						? ` ➡️ Kelas: <strong>` + params.kelas + `</strong>`
+					dataFilter.kelas
+						? ` ➡️ Kelas: <strong>` + dataFilter.kelas + `</strong>`
 						: ''
 				"
 			></span
-			>&nbsp;
+			>&nbsp;<span
+				v-html="
+					dataFilter.kelasJumlahMurid
+						? `(${dataFilter.kelasJumlahMurid} murid)`
+						: ''
+				"
+			></span>
+			&nbsp;&nbsp;
 			<span
 				v-html="
-					params.bulanUjian
+					dataFilter.bulanUjian
 						? ` ➡️ Bulan-Ujian: <strong>` +
-						  params.bulanUjian +
+						  dataFilter.bulanUjian +
 						  `</strong>`
 						: ''
 				"
@@ -441,7 +452,7 @@ import { useRoute } from 'vue-router';
 import postData from 'src/api/api-post.js';
 import updateData from 'src/api/api-update';
 import deleteData from 'src/api/api-delete';
-import HeaderSelect from './components/HeaderSelect.vue';
+import FilterKelas from 'src/pages/madrasah/components/FilterKelas.vue';
 
 const spinner = ref(false);
 const route = useRoute();
@@ -454,6 +465,10 @@ const params = {
 	bulanUjian: route.params.bulanUjian,
 };
 
+const dataFilter = ref({});
+function dataEmit(val) {
+	dataFilter.value = val;
+}
 async function deleteAbsensi() {
 	const kelas_id = absensi.value.map((abs) => abs.kelas_id);
 	const bulan_ujian = params.bulanUjian;

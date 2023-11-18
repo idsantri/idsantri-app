@@ -9,7 +9,11 @@
 		no-data-label="Silakan tentukan Tahun ajaran dan tingkat pendidikan!"
 		no-results-label="Tidak ditemukan kata kunci yang sesuai dengan pencarian Anda!"
 		row-key="name"
+		flat
 	>
+		<template v-slot:top-left>
+			<div class="text-h6 text-green-10">Data Murid</div>
+		</template>
 		<template v-slot:top-right>
 			<q-input
 				borderless
