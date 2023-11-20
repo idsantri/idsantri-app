@@ -9,45 +9,9 @@
 			<q-card-section
 				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
 			>
-				<span
-					v-html="
-						dataFilter.thAjaranH
-							? `➡️ Tahun Ajaran: <strong>` +
-							  dataFilter.thAjaranH +
-							  `</strong>`
-							: ''
-					"
-				></span
-				>&nbsp;&nbsp;
-				<span
-					v-html="
-						dataFilter.tingkat
-							? ` ➡️ Tingkat: <strong>` +
-							  dataFilter.tingkat +
-							  `</strong>`
-							: ''
-					"
-				></span
-				>&nbsp;&nbsp;
-				<span
-					v-html="
-						dataFilter.kelas
-							? ` ➡️ Kelas: <strong>` +
-							  dataFilter.kelas +
-							  `</strong>`
-							: ''
-					"
-				></span
-				>&nbsp;<span
-					v-html="
-						dataFilter.kelasJumlahMurid
-							? `(${dataFilter.kelasJumlahMurid} murid)`
-							: ''
-					"
-				></span>
-
+				<span v-html="dataFilter.display || ''"></span>
 				<q-space />
-				<q-btn flat="" icon="cached" @click="keyReload++" />
+				<q-btn flat="" dense="" icon="cached" @click="keyReload++" />
 			</q-card-section>
 			<q-card-section class="q-pa-sm" :key="keyReload">
 				<router-view :key="$route.fullPath" />

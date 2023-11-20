@@ -5,52 +5,12 @@
 		@dataFilter="dataEmit"
 	/>
 	<q-card class="q-mt-sm">
-		<q-card-section class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm">
-			<!-- {{ params }} -->
-			<span
-				v-html="
-					dataFilter.thAjaranH
-						? `➡️ Tahun Ajaran: <strong>` +
-						  dataFilter.thAjaranH +
-						  `</strong>`
-						: ''
-				"
-			></span
-			>&nbsp;&nbsp;
-			<span
-				v-html="
-					dataFilter.tingkat
-						? ` ➡️ Tingkat: <strong>` +
-						  dataFilter.tingkat +
-						  `</strong>`
-						: ''
-				"
-			></span
-			>&nbsp;&nbsp;
-			<span
-				v-html="
-					dataFilter.kelas
-						? ` ➡️ Kelas: <strong>` + dataFilter.kelas + `</strong>`
-						: ''
-				"
-			></span
-			>&nbsp;<span
-				v-html="
-					dataFilter.kelasJumlahMurid
-						? `(${dataFilter.kelasJumlahMurid} murid)`
-						: ''
-				"
-			></span>
-			&nbsp;&nbsp;
-			<span
-				v-html="
-					dataFilter.bulanUjian
-						? ` ➡️ Bulan-Ujian: <strong>` +
-						  dataFilter.bulanUjian +
-						  `</strong>`
-						: ''
-				"
-			></span>
+		<q-card-section
+			class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
+		>
+			<span v-html="dataFilter.display || ''"></span>
+			<q-space />
+			<q-btn flat="" dense icon="cached" disable />
 		</q-card-section>
 		<q-card-section class="no-padding">
 			<q-markup-table flat>
@@ -448,7 +408,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import postData from 'src/api/api-post.js';
 import updateData from 'src/api/api-update';
 import deleteData from 'src/api/api-delete';
@@ -456,6 +416,7 @@ import FilterKelas from 'src/pages/madrasah/components/FilterKelas.vue';
 
 const spinner = ref(false);
 const route = useRoute();
+const router = useRouter();
 
 const absensi = ref([]);
 const params = {
@@ -485,7 +446,7 @@ async function deleteAbsensi() {
 	if (deleted) {
 		absensi.value = [];
 		const url = `/madrasah/absensi/input/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`;
-		window.location.href = url;
+		router.push(url);
 	}
 }
 

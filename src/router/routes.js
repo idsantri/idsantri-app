@@ -267,6 +267,32 @@ const routes = [
 							},
 						],
 					},
+					{
+						path: 'penomoran',
+						component: () =>
+							import(
+								'src/pages/madrasah/penomoran/IndexPenomoran.vue'
+							),
+						redirect: (to) => '/madrasah/penomoran/no-absen',
+						children: [
+							{
+								path: 'no-absen/:thAjaranH?/:tingkatId?/:kelas?',
+								component: () =>
+									import(
+										'src/pages/madrasah/penomoran/NomorAbsen.vue'
+									),
+								name: 'No Absen',
+							},
+							{
+								path: 'id-murid',
+								component: () =>
+									import(
+										'src/pages/madrasah/penomoran/IDMurid.vue'
+									),
+								name: 'ID Murid',
+							},
+						],
+					},
 				],
 			},
 

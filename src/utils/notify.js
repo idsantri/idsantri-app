@@ -1,4 +1,5 @@
 import { Notify } from 'quasar';
+import { Dialog } from 'quasar';
 
 const notifySuccess = (message) => {
 	Notify.create({
@@ -38,7 +39,26 @@ const notifyAlert = (message, delay = 10) => {
 		});
 	});
 };
-
+async function notifyConfirm(message, persistent) {
+	return new Promise((resolve) => {
+		Dialog.create({
+			title: 'Konfirmasi',
+			message: message,
+			cancel: true,
+			persistent: persistent,
+			html: true,
+		})
+			.onOk(async () => {
+				resolve(true);
+			})
+			.onCancel(() => {
+				resolve(false);
+			})
+			.onDismiss(() => {
+				resolve(false);
+			});
+	});
+}
 const notifyWarningExpired = () => {
 	notifyWarning('Sesi telah berakhir.');
 	notifyWarning('Anda perlu keluar lalu masuk lagi!');
@@ -48,5 +68,6 @@ export {
 	notifyError,
 	notifyWarning,
 	notifyAlert,
+	notifyConfirm,
 	notifyWarningExpired,
 };

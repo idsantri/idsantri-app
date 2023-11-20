@@ -33,10 +33,10 @@
 								v-close-popup
 								@click="$router.push(`/madrasah/absensi/input`)"
 							>
-								<q-item-section>Input</q-item-section>
 								<q-item-section avatar>
 									<q-icon color="green" name="edit_square" />
 								</q-item-section>
+								<q-item-section>Input</q-item-section>
 							</q-item>
 
 							<!-- rekap ujian -->
@@ -52,10 +52,27 @@
 									)
 								"
 							>
-								<q-item-section>Rekap</q-item-section>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
 								</q-item-section>
+								<q-item-section>Rekap</q-item-section>
+							</q-item>
+
+							<!-- nomor absen -->
+							<q-item
+								clickable
+								v-close-popup
+								@click="
+									$router.push(`/madrasah/penomoran/no-absen`)
+								"
+							>
+								<q-item-section avatar>
+									<q-icon
+										color="green"
+										name="format_list_numbered"
+									/>
+								</q-item-section>
+								<q-item-section>Atur no. absen</q-item-section>
 							</q-item>
 
 							<!-- setting -->
@@ -67,10 +84,12 @@
 									$router.push(`/madrasah/absensi/setting`)
 								"
 							>
-								<q-item-section>Pengaturan</q-item-section>
 								<q-item-section avatar>
 									<q-icon color="green" name="settings" />
 								</q-item-section>
+								<q-item-section
+									>Pengaturan Absensi</q-item-section
+								>
 							</q-item>
 						</q-list>
 					</q-btn-dropdown>

@@ -26,7 +26,7 @@
 			<!-- APP -->
 			<q-item clickable v-ripple to="/sekretariat">
 				<q-item-section avatar>
-					<q-icon color="green-1" name="home" />
+					<q-icon color="green-1" name="home_work" />
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>Beranda</q-item-label>
@@ -47,21 +47,32 @@
 			<!-- APP -->
 			<q-item clickable v-ripple to="/madrasah/murid">
 				<q-item-section avatar>
-					<q-icon color="green-1" name="home" />
+					<q-icon color="green-1" name="school" />
 				</q-item-section>
 				<q-item-section>
-					<q-item-label>Beranda</q-item-label>
-					<q-item-label caption>Beranda Madrasah</q-item-label>
+					<q-item-label>Murid</q-item-label>
+					<q-item-label caption>Data Murid</q-item-label>
 				</q-item-section>
 			</q-item>
 
 			<q-item clickable v-ripple to="/madrasah/absensi/input">
 				<q-item-section avatar>
-					<q-icon color="green-1" name="format_list_bulleted" />
+					<q-icon color="green-1" name="checklist" />
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>Absensi</q-item-label>
 					<q-item-label caption>Absensi Sekolah</q-item-label>
+				</q-item-section>
+			</q-item>
+			<q-item clickable v-ripple to="/madrasah/penomoran">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="format_list_numbered" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Penomoran</q-item-label>
+					<q-item-label caption
+						>Tetapkan No Absen, ID Murid, dll…</q-item-label
+					>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>

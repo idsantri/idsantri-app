@@ -47,6 +47,7 @@
 					map-options
 					behavior="menu"
 					:loading="loading['kelas_detail']"
+					clearable=""
 				/>
 				<q-select
 					v-if="props.showBulanUjian"
@@ -167,16 +168,35 @@ function sendEmit() {
 			  )
 			: {};
 
-	const k = kelas.value;
 	const kl = () =>
-		k && lists.value.kelas_detail
-			? lists.value.kelas_detail.find(({ kelas }) => kelas === k)
+		kelas.value && lists.value.kelas_detail
+			? lists.value.kelas_detail.find(({ kelas: k }) => k === kelas.value)
 			: {};
 
 	const bu = () =>
 		bulanUjian.value && lists.value.bulan_ujian
 			? lists.value.bulan_ujian.find(({ bu }) => bu === bulanUjian.value)
 			: {};
+
+	const display = () => {
+		let text = '';
+		if (th().th_ajaran_h)
+			text +=
+				'➡️ Tahun Ajaran: <strong>' + th().th_ajaran_h + '</strong>';
+		if (tk().tingkat)
+			text += ' ➡️ Tingkat: <strong>' + tk().tingkat + '</strong>';
+		if (kl().kelas)
+			text += ' ➡️ Kelas: <strong>' + kl().kelas + '</strong>';
+		if (kl().jumlah_murid) text += ' (' + kl().jumlah_murid + ' murid)';
+		if (bu().bulan_ujian)
+			text +=
+				' ➡️ Bulan-Ujian: <strong>' + bu().bulan_ujian + '</strong>';
+
+		return (
+			text ||
+			'<div class="text-green-13 text-italic">Tentukan filter!</div>'
+		);
+	};
 
 	const data = {
 		thAjaranH: th().th_ajaran_h || '',
@@ -189,6 +209,7 @@ function sendEmit() {
 		kelasJumlahMurid: kl().jumlah_murid || '',
 		bu: bu().bu || '',
 		bulanUjian: bu().bulan_ujian || '',
+		display: display(),
 	};
 
 	emit('dataFilter', data);

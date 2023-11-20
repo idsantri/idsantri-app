@@ -5,42 +5,12 @@
 		@dataFilter="dataEmit"
 	/>
 	<q-card class="q-mt-sm">
-		<q-card-section class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm">
-			<!-- {{ params }} -->
-			<span
-				v-html="
-					dataFilter.thAjaranH
-						? `➡️ Tahun Ajaran: <strong>` +
-						  dataFilter.thAjaranH +
-						  `</strong>`
-						: ''
-				"
-			></span
-			>&nbsp;&nbsp;
-			<span
-				v-html="
-					dataFilter.tingkat
-						? ` ➡️ Tingkat: <strong>` +
-						  dataFilter.tingkat +
-						  `</strong>`
-						: ''
-				"
-			></span
-			>&nbsp;&nbsp;
-			<span
-				v-html="
-					dataFilter.kelas
-						? ` ➡️ Kelas: <strong>` + dataFilter.kelas + `</strong>`
-						: ''
-				"
-			></span
-			>&nbsp;<span
-				v-html="
-					dataFilter.kelasJumlahMurid
-						? `(${dataFilter.kelasJumlahMurid} murid)`
-						: ''
-				"
-			></span>
+		<q-card-section
+			class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
+		>
+			<span v-html="dataFilter.display || ''"></span>
+			<q-space />
+			<q-btn flat="" dense icon="cached" disable />
 		</q-card-section>
 		<q-card-section class="no-padding">
 			<q-markup-table flat>

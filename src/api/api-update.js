@@ -1,35 +1,19 @@
-import { Dialog } from 'quasar';
 import { apiTokened } from 'src/api';
 import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
-import { notifyError, notifySuccess } from 'src/utils/notify';
+import { notifyError, notifySuccess, notifyConfirm } from 'src/utils/notify';
 
-async function confirmationDialog(message) {
-	return new Promise((resolve) => {
-		Dialog.create({
-			title: 'Konfirmasi',
-			message:
-				message || `<span style="color:'red'">Update data ini?</span>`,
-			cancel: true,
-			persistent: false,
-			html: true,
-		})
-			.onOk(async () => {
-				resolve(true);
-			})
-			.onCancel(() => {
-				resolve(false);
-			})
-			.onDismiss(() => {
-				resolve(false);
-			});
-	});
-}
-
-async function update({ endPoint, data, rerender, loading, notify }) {
+async function updateApi({
+	endPoint,
+	data,
+	rerender,
+	loading,
+	notify,
+	params,
+}) {
 	try {
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
-		const response = await apiTokened.put(endPoint, data);
+		const response = await apiTokened.put(endPoint, data, { params });
 		if (notify) notifySuccess(response.data.message);
 		if (rerender) forceRerender();
 		return response.data;
@@ -50,19 +34,27 @@ async function update({ endPoint, data, rerender, loading, notify }) {
 async function updateData({
 	endPoint,
 	data,
-	confirm,
-	message,
+	confirm = true,
+	message = `<span style="color:'red'">Update data ini?</span>`,
 	rerender,
 	loading,
 	notify = true,
+	params,
 }) {
 	if (confirm) {
-		const dialog = await confirmationDialog(message);
+		const dialog = await notifyConfirm(message, true);
 		return dialog
-			? await update({ endPoint, data, rerender, loading, notify })
+			? await updateApi({
+					endPoint,
+					data,
+					rerender,
+					loading,
+					notify,
+					params,
+			  })
 			: false;
 	} else {
-		return update({ endPoint, data, rerender, loading, notify });
+		return updateApi({ endPoint, data, rerender, loading, notify, params });
 	}
 }
 
