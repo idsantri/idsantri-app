@@ -1,7 +1,7 @@
 <template lang="">
 	<q-card>
 		<q-card-section class="q-px-sm q-py-sm bg-green-11">
-			<div class="text-subtitle2">&nbsp;Filter Data Murid</div>
+			<div class="text-subtitle2">&nbsp;Filter Data</div>
 		</q-card-section>
 		<q-card-section class="no-padding">
 			<div class="row" style="max-width: 1000px; width: 100%">
@@ -35,6 +35,7 @@
 					clearable=""
 				/>
 				<q-select
+					v-if="props.showKelas"
 					class="col-12 col-md-3 q-pa-sm"
 					dense
 					outlined
@@ -78,6 +79,10 @@ import { useRoute, useRouter } from 'vue-router';
 const props = defineProps({
 	showBulanUjian: Boolean,
 	startUrl: String,
+	showKelas: {
+		type: Boolean,
+		default: true,
+	},
 });
 const emit = defineEmits(['dataFilter']);
 

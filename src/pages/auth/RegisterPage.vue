@@ -126,4 +126,3 @@ const register = async () => {
 	}
 };
 </script>
-../../api/api

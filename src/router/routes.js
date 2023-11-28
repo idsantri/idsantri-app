@@ -263,37 +263,65 @@ const routes = [
 									import(
 										'src/pages/madrasah/absensi/AbsensiSetting.vue'
 									),
-								name: 'Pengaturan',
+								name: 'Pengaturan Jadwal Ujian',
+							},
+							{
+								path: 'penomoran/:thAjaranH?/:tingkatId?/:kelas?',
+								component: () =>
+									import(
+										'src/pages/madrasah/absensi/AbsensiPenomoran.vue'
+									),
+								name: 'Atur Nomor Absen',
 							},
 						],
 					},
 					{
-						path: 'penomoran',
+						path: 'tingkat',
 						component: () =>
 							import(
-								'src/pages/madrasah/penomoran/IndexPenomoran.vue'
+								'src/pages/madrasah/tingkat/IndexTingkat.vue'
 							),
-						redirect: (to) => '/madrasah/penomoran/no-absen',
+						redirect: (to) => '/madrasah/tingkat/id-murid',
 						children: [
-							{
-								path: 'no-absen/:thAjaranH?/:tingkatId?/:kelas?',
-								component: () =>
-									import(
-										'src/pages/madrasah/penomoran/NomorAbsen.vue'
-									),
-								name: 'No Absen',
-							},
 							{
 								path: 'id-murid',
 								component: () =>
 									import(
-										'src/pages/madrasah/penomoran/IDMurid.vue'
+										'src/pages/madrasah/tingkat/IDMurid.vue'
 									),
 								name: 'ID Murid',
 							},
 						],
 					},
+					{
+						path: 'aparatur',
+						component: () =>
+							import(
+								'src/pages/madrasah/aparatur/AparaturIndex.vue'
+							),
+						children: [
+							{
+								path: ':thAjaranH/:tingkatId?',
+								component: () =>
+									import(
+										'src/pages/madrasah/aparatur/AparaturContent.vue'
+									),
+							},
+						],
+					},
 				],
+			},
+			{
+				path: 'personalia',
+				component: () =>
+					import('src/pages/personalia/PersonaliaTable.vue'),
+				meta: { title: 'Pesonalia' },
+			},
+			{
+				path: 'personalia/:id',
+				component: () =>
+					import('src/pages/personalia/PersonaliaDetail.vue'),
+				meta: { title: 'Pesonalia Detail' },
 			},
 
 			{

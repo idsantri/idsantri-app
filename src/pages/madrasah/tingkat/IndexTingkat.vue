@@ -8,21 +8,12 @@
 					</q-toolbar-title>
 
 					<q-btn
-						v-if="showButton(`madrasah/penomoran/no-absen`)"
-						dense
-						class="q-px-md q-mr-sm text-green-10"
-						label="No Absen"
-						no-caps=""
-						@click="$router.push(`/madrasah/penomoran/no-absen`)"
-						color="green-2"
-					/>
-					<q-btn
-						v-if="showButton(`madrasah/penomoran/id-murid`)"
+						v-if="showButton(`madrasah/tingkat/id-murid`)"
 						dense
 						class="q-px-md q-mr-sm text-green-10"
 						label="ID Murid"
 						no-caps=""
-						@click="$router.push(`/madrasah/penomoran/id-murid`)"
+						@click="$router.push(`/madrasah/tingkat/id-murid`)"
 						color="green-2"
 					/>
 				</q-toolbar>

@@ -64,15 +64,24 @@
 					<q-item-label caption>Absensi Sekolah</q-item-label>
 				</q-item-section>
 			</q-item>
-			<q-item clickable v-ripple to="/madrasah/penomoran">
+			<q-item clickable v-ripple to="/madrasah/tingkat">
 				<q-item-section avatar>
-					<q-icon color="green-1" name="format_list_numbered" />
+					<q-icon color="green-1" name="history_edu" />
 				</q-item-section>
 				<q-item-section>
-					<q-item-label>Penomoran</q-item-label>
+					<q-item-label>Tingkat Pendidikan</q-item-label>
 					<q-item-label caption
-						>Tetapkan No Absen, ID Murid, dll…</q-item-label
+						>Data Murid Pertingkat Pendidikan</q-item-label
 					>
+				</q-item-section>
+			</q-item>
+			<q-item clickable v-ripple to="/madrasah/aparatur">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="contact_emergency" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Aparatur Madrasah</q-item-label>
+					<q-item-label caption>Data Aparatur Madrasah</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>

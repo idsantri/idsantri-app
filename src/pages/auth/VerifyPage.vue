@@ -41,6 +41,7 @@ async function makeRequest() {
 		showSpinner.value = false;
 	}
 }
+
 onMounted(async () => {
 	await makeRequest();
 });

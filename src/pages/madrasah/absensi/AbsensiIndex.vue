@@ -60,10 +60,11 @@
 
 							<!-- nomor absen -->
 							<q-item
+								v-if="showButton(`madrasah/absensi/penomoran`)"
 								clickable
 								v-close-popup
 								@click="
-									$router.push(`/madrasah/penomoran/no-absen`)
+									$router.push(`/madrasah/absensi/penomoran`)
 								"
 							>
 								<q-item-section avatar>
@@ -72,7 +73,9 @@
 										name="format_list_numbered"
 									/>
 								</q-item-section>
-								<q-item-section>Atur no. absen</q-item-section>
+								<q-item-section
+									>Atur Nomor Absen</q-item-section
+								>
 							</q-item>
 
 							<!-- setting -->

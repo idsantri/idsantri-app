@@ -9,6 +9,7 @@
 					icon="menu"
 					aria-label="Menu"
 					@click="toggleLeftDrawer"
+					class="text-green-11"
 				/>
 
 				<q-toolbar-title class="text-green-11">
@@ -22,6 +23,7 @@
 					icon="search"
 					color="green-1"
 					to="/cari"
+					class="text-green-11"
 				>
 					<q-badge v-if="badge" floating color="green-13" rounded />
 				</q-btn>
@@ -32,7 +34,7 @@
 					dense
 					dropdown-icon="more_vert"
 					class="q-pl-md"
-					color="green-1"
+					color="green-11"
 				>
 					<q-list>
 						<q-item

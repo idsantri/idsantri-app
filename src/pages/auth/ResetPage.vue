@@ -121,4 +121,3 @@ const reset = async () => {
 	}
 };
 </script>
-../../api/api

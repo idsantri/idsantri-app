@@ -6,11 +6,11 @@
 	/>
 	<q-card class="q-mt-sm">
 		<q-card-section
-			class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
+			class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm flex"
 		>
-			<span v-html="dataFilter.display || ''"></span>
-			<q-space />
-			<q-btn flat="" dense icon="cached" disable />
+			<span v-html="dataFilter.display || 'Tentukan filter!'"></span>
+			<!-- <q-space />
+			<q-btn flat="" dense icon="cached" disable /> -->
 		</q-card-section>
 		<q-card-section class="no-padding">
 			<q-markup-table flat>

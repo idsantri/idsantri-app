@@ -1,16 +1,16 @@
 <template lang="">
 	<filter-kelas
 		:showBulanUjian="false"
-		start-url="/madrasah/penomoran/no-absen"
+		start-url="/madrasah/absensi/penomoran"
 		@dataFilter="dataEmit"
 	/>
 	<q-card class="q-mt-sm">
 		<q-card-section
-			class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
+			class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm flex"
 		>
-			<span v-html="dataFilter.display || ''"></span>
-			<q-space />
-			<q-btn flat="" dense icon="cached" disable />
+			<span v-html="dataFilter.display || 'Tentukan filter!'"></span>
+			<!-- <q-space />
+			<q-btn flat="" dense icon="cached" disable /> -->
 		</q-card-section>
 		<q-card-section class="no-padding">
 			<q-table
@@ -18,7 +18,7 @@
 				:columns="columns"
 				:loading="loading"
 				:rows-per-page-options="[0]"
-				class="dt"
+				class="dt q-pa-sm"
 				no-data-label="Silakan tentukan Tahun ajaran, tingkat pendidikan, dan kelas!"
 				row-key="name"
 				flat
@@ -43,7 +43,21 @@
 				<template v-slot:body="props">
 					<q-tr :props="props">
 						<q-td key="id" :props="props" class="kelas-id">
-							{{ props.row.id }}
+							<q-btn
+								flat
+								dense
+								no-caps
+								class="text-green-10 bg-green-11 q-px-sm"
+								style="min-width: 50px"
+								@click="
+									$router.push(
+										`/madrasah/kelas/${props.row.id}/riwayat`
+									)
+								"
+								><small> {{ props.row.id }}</small></q-btn
+							>
+
+							<!-- {{ props.row.id }} -->
 						</q-td>
 						<q-td key="santri_id" :props="props">
 							{{ props.row.santri_id }}
@@ -216,4 +230,8 @@ const columns = [
 	},
 ];
 </script>
-<style lang=""></style>
+<style lang="scss" scoped>
+.q-table__top {
+	padding: 0;
+}
+</style>
