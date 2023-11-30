@@ -72,7 +72,7 @@
 	<!-- modal -->
 	<upload-image
 		:show-uploader="showUploader"
-		:url="`${apiTokened.defaults.baseURL}/santri/${santriId}/images`"
+		:url="`${apiTokened.defaults.baseURL}/images/santri/${santriId}`"
 		:headers="{
 			Authorization: apiTokened.defaults.headers.common.Authorization,
 		}"
@@ -88,7 +88,7 @@ import { apiTokened } from 'src/api';
 import { formatDateFull } from '../../utils/format-date';
 import CardColumn from '../../components/CardColumn.vue';
 import CardImage from '../../components/CardImage.vue';
-import UploadImage from './SantriUploadImage.vue';
+import UploadImage from 'src/components/ImageUploader.vue';
 import santriStore from 'src/stores/santri-store';
 import { bacaHijri } from 'src/utils/hijri';
 import SantriRelations from 'src/pages/santri/SantriRelations.vue';

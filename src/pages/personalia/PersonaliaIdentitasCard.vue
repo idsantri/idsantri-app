@@ -27,7 +27,7 @@
 			<div v-else class="row">
 				<div class="col-4 q-pr-sm">
 					<q-img
-						src="/user-default.png"
+						:src="personalia?.image || '/user-default.png'"
 						:ratio="3 / 4"
 						alt="personalia"
 					/>
@@ -64,13 +64,24 @@
 			@success-delete="handleEmit"
 		/>
 	</q-dialog>
+	<!-- modal -->
+	<upload-image
+		:show-uploader="showUploader"
+		:url="`${apiTokened.defaults.baseURL}/images/personalia/${route.params.id}`"
+		:headers="{
+			Authorization: apiTokened.defaults.headers.common.Authorization,
+		}"
+		@update-uploader="handleUploader"
+	/>
 </template>
 <script setup>
+import { apiTokened } from 'src/api';
 import getData from 'src/api/api-get';
 import { formatDateFull } from 'src/utils/format-date';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import PersonaliaModal from 'src/pages/personalia/PersonaliaIdentitasModal.vue';
+import UploadImage from 'src/components/ImageUploader.vue';
 
 const route = useRoute();
 const personalia = ref({});
@@ -113,5 +124,9 @@ onMounted(async () => {
 		await loadData();
 	}
 });
+
+// uploader
+const showUploader = ref(false);
+const handleUploader = (value) => (showUploader.value = value);
 </script>
 <style lang=""></style>
