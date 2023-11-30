@@ -314,7 +314,7 @@ const routes = [
 			{
 				path: 'personalia',
 				component: () =>
-					import('src/pages/personalia/PersonaliaTable.vue'),
+					import('src/pages/personalia/PersonaliaIndexTable.vue'),
 				meta: { title: 'Pesonalia' },
 			},
 			{

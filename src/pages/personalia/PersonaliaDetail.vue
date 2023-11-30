@@ -1,15 +1,15 @@
 <template lang="">
 	<div class="row" style="max-width: 1200px">
 		<div class="col-12 col-md-6 q-pt-sm">
-			<PersonaliaCardIdentitas />
+			<PersonaliaIdentitasCard />
 		</div>
 		<div class="col-12 col-md-6 q-pt-sm">
-			<PersonaliaCardJabatan />
+			<PersonaliaMadrasahCard />
 		</div>
 	</div>
 </template>
 <script setup>
-import PersonaliaCardIdentitas from 'src/pages/personalia/PersonaliaCardIdentitas.vue';
-import PersonaliaCardJabatan from 'src/pages/personalia/PersonaliaCardJabatan.vue';
+import PersonaliaIdentitasCard from 'src/pages/personalia/PersonaliaIdentitasCard.vue';
+import PersonaliaMadrasahCard from 'src/pages/personalia/PersonaliaMadrasahCard.vue';
 </script>
 <style lang=""></style>

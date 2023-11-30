@@ -3,6 +3,7 @@ const data = [
 	{ url: 'hubungan-wali', label: 'Hubungan Wali', mode: 'one' },
 	// { url: 'izin-keperluan', label: '', mode: 'one' },
 	{ url: 'jabatan', label: 'Jabatan', mode: 'one' },
+	{ url: 'jabatan-madrasah', label: 'Jabatan Madrasiyah', mode: 'one' },
 	{ url: 'kelas', label: 'Kelas', mode: 'one' },
 	{
 		url: 'keterangan-domisili',

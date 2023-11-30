@@ -134,4 +134,3 @@ const componentsAlamat = {
 };
 watchAlamat(componentsAlamat);
 </script>
-src/api/fetch-alamat src/api/api

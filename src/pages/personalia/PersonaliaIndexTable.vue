@@ -13,6 +13,7 @@
 					no-caps=""
 					icon="add"
 					color="green-2"
+					@click="crudShow = true"
 				/>
 			</q-toolbar>
 		</q-card-section>
@@ -47,15 +48,31 @@
 			</q-table>
 		</q-card-section>
 	</q-card>
-
+	<q-dialog persistent="" v-model="crudShow">
+		<PersonaliaModal
+			:is-new="true"
+			:data-personalia="{}"
+			@success-submit="handleEmit"
+		/>
+	</q-dialog>
 	<!-- <pre>{{ personalia }}</pre> -->
 </template>
 <script setup>
+import PersonaliaModal from 'src/pages/personalia/PersonaliaIdentitasModal.vue';
 import getData from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
 const loading = ref(false);
 const personalia = ref([]);
 const filter = ref('');
+const crudShow = ref(false);
+const router = useRouter();
+
+function handleEmit(val) {
+	crudShow.value = false;
+	router.push(`/personalia/${val.id}`);
+}
 
 onMounted(async () => {
 	const data = await getData({ endPoint: 'personalia', loading });
@@ -75,6 +92,13 @@ const columns = [
 		label: 'Alamat',
 		align: 'left',
 		field: 'alamat_pendek',
+		sortable: true,
+	},
+	{
+		name: 'kontak',
+		label: 'Kontak',
+		align: 'left',
+		field: (row) => `${row.telepon || '-'}; ${row.email || '-'}`,
 		sortable: true,
 	},
 ];

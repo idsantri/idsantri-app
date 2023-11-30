@@ -1,18 +1,38 @@
 <template lang="">
-	<q-table :rows="personalia"></q-table>
+	<q-table
+		flat
+		:rows="personalia"
+		:columns="columns"
+		:filter="filter"
+		@row-click="
+			(evt, row, index) =>
+				$router.push(`/personalia/${row.personalia_id}`)
+		"
+	>
+		<template v-slot:top-left>
+			<div class="text-h6 text-green-10">Data Aparatur Madrasah</div>
+		</template>
+		<template v-slot:top-right>
+			<q-input
+				borderless
+				dense
+				debounce="300"
+				v-model="filter"
+				placeholder="Cari"
+			>
+				<template v-slot:append>
+					<q-icon name="search" />
+				</template>
+			</q-input>
+		</template>
+	</q-table>
 
-	<pre>
-
+	<!-- <pre>
 {{ personalia }}
-
-	</pre
-	>
+</pre>
 	<pre>
-
 {{ params }}
-
-	</pre
-	>
+</pre> -->
 </template>
 <script setup>
 import getData from 'src/api/api-get';
@@ -44,5 +64,51 @@ onMounted(async () => {
 		personalia.value = [];
 	}
 });
+
+const columns = [
+	{
+		name: 'nama',
+		label: 'Nama',
+		align: 'left',
+		field: (row) => `${row.nama} (${row.sex})`,
+		sortable: true,
+	},
+	{
+		name: 'alamat',
+		label: 'Alamat',
+		align: 'left',
+		field: 'alamat_pendek',
+		sortable: true,
+		classes: 'alamat',
+	},
+	{
+		name: 'jabatan',
+		label: 'Jabatan',
+		align: 'left',
+		field: 'jabatan',
+		sortable: true,
+	},
+	{
+		name: 'tingkat',
+		label: 'Tingkat',
+		align: 'left',
+		field: 'tingkat',
+		sortable: true,
+	},
+	{
+		name: 'kelas',
+		label: 'Kelas',
+		align: 'left',
+		field: 'kelas',
+		sortable: true,
+	},
+	{
+		name: 'ruang',
+		label: 'Ruang',
+		align: 'left',
+		field: 'ruang',
+		sortable: true,
+	},
+];
 </script>
 <style lang=""></style>

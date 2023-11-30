@@ -12,6 +12,7 @@
 					no-caps=""
 					icon="edit"
 					color="green-2"
+					@click="crudShow = true"
 				/>
 			</q-toolbar>
 		</q-card-section>
@@ -55,43 +56,61 @@
 			<!-- <pre>{{ personalia }}</pre> -->
 		</q-card-section>
 	</q-card>
+	<q-dialog persistent="" v-model="crudShow">
+		<PersonaliaModal
+			:is-new="false"
+			:data-personalia="personalia"
+			@success-submit="handleEmit"
+			@success-delete="handleEmit"
+		/>
+	</q-dialog>
 </template>
 <script setup>
 import getData from 'src/api/api-get';
 import { formatDateFull } from 'src/utils/format-date';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import PersonaliaModal from 'src/pages/personalia/PersonaliaIdentitasModal.vue';
 
 const route = useRoute();
 const personalia = ref({});
 const personaliaObj = ref({});
 const loading = ref(false);
+const crudShow = ref(false);
+async function handleEmit(val) {
+	crudShow.value = false;
+	await loadData();
+}
+
+async function loadData() {
+	const data = await getData({
+		endPoint: `personalia/${route.params.id}`,
+		loading,
+	});
+	personalia.value = data.personalia;
+
+	personaliaObj.value = {
+		Nama: `${personalia.value.nama?.toUpperCase()} (${personalia.value.sex?.toUpperCase()})`,
+		Alamat: `${personalia.value.jl || ' '} RT ${String(
+			personalia.value.rt || 0
+		).padStart(3, 0)} RW ${String(personalia.value.rw || 0).padStart(
+			3,
+			'0'
+		)} ${personalia.value.desa || ' '} ${
+			personalia.value.kecamatan || ' '
+		} ${personalia.value.kabupaten || ' '} ${
+			personalia.value.provinsi || ' '
+		} ${personalia.value.kode_pos || ' '}`.replace(/\s\s+/g, ' '),
+		Kelahiran: `${personalia.value.tmp_lahir || '-'}, ${formatDateFull(
+			personalia.value.tgl_lahir
+		)}`,
+		Telepon: personalia.value.telepon || '-',
+		Email: personalia.value.email || '-',
+	};
+}
 onMounted(async () => {
 	if (route.params.id) {
-		const data = await getData({
-			endPoint: `personalia/${route.params.id}`,
-			loading,
-		});
-		personalia.value = data.personalia;
-
-		personaliaObj.value = {
-			Nama: `${personalia.value.nama?.toUpperCase()} (${personalia.value.sex?.toUpperCase()})`,
-			Alamat: `${personalia.value.jl || ' '} RT ${String(
-				personalia.value.rt || 0
-			).padStart(3, 0)} RW ${String(personalia.value.rw || 0).padStart(
-				3,
-				'0'
-			)} ${personalia.value.desa || ' '} ${
-				personalia.value.kecamatan || ' '
-			} ${personalia.value.kabupaten || ' '} ${
-				personalia.value.provinsi || ' '
-			} ${personalia.value.kode_pos || ' '}`.replace(/\s\s+/g, ' '),
-			Kelahiran: `${personalia.value.tmp_lahir || '-'}, ${formatDateFull(
-				personalia.value.tgl_lahir
-			)}`,
-			Telepon: personalia.value.telepon || '-',
-			Email: personalia.value.email || '-',
-		};
+		await loadData();
 	}
 });
 </script>
