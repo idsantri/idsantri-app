@@ -2,13 +2,24 @@
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<div class="text-subtitle1">
+				<toolbar-form @emit-button="handleEmitToolbar">
 					Input Data Wali &mdash;
 					<em> {{ isNew ? 'baru' : 'edit' }}</em>
-				</div>
+				</toolbar-form>
 			</q-card-section>
 			<q-card-section class="no-padding">
+				<div v-if="loadingCrud" style="height: 70vh">
+					<q-dialog v-model="loadingCrud" persistent="">
+						<q-spinner-cube
+							color="green-12"
+							size="8em"
+							class="flex q-ma-lg q-mx-auto"
+						/>
+					</q-dialog>
+				</div>
+
 				<q-carousel
+					v-else
 					v-model="slide"
 					transition-prev="slide-right"
 					transition-next="slide-left"
@@ -32,7 +43,11 @@
 						:name="carousel.alamat.button"
 						class="no-wrap flex-center"
 					>
-						<input-alamat :title="carousel.alamat.title" />
+						<carousel-alamat
+							@emit-input="(val) => Object.assign(wali, val)"
+							:alamat="wali"
+						/>
+						<!-- <input-alamat :title="carousel.alamat.title" /> -->
 					</q-carousel-slide>
 
 					<!-- pendidikan -->
@@ -84,45 +99,78 @@
 </template>
 <script setup>
 import { reactive, ref, toRefs } from 'vue';
-import { apiTokened } from 'src/api';
 import InputIdentity from './WaliModalCrudIdentity.vue';
-import InputAlamat from './WaliModalCrudAlamat.vue';
 import InputOthers from './WaliModalCrudOthers.vue';
 import waliStore from 'src/stores/wali-store';
-import { notifyError, notifySuccess } from 'src/utils/notify';
-import { forceRerender } from 'src/utils/buttons-click';
-import { toArray } from 'src/utils/array-object';
 import { useRouter } from 'vue-router';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
 import deleteData from 'src/api/api-delete';
+import CarouselAlamat from 'src/components/CarouselAlamat.vue';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import postData from 'src/api/api-post';
+import updateData from 'src/api/api-update';
 
+const router = useRouter();
 const { wali } = reactive(waliStore());
 const { isNew } = reactive(waliStore());
 const { santri } = santriStore();
 const { wali_id } = toRefs(santri);
+const loadingCrud = ref(false);
+
+function handleEmitToolbar() {
+	dialogStore().toggleCrudSantri(false);
+	dialogStore().toggleSearchSantri(false);
+
+	dialogStore().toggleCrudWali(false);
+	dialogStore().toggleSearchWali(false);
+
+	dialogStore().toggleCrudOrtu(false);
+	dialogStore().toggleSearchOrtu(false);
+}
 
 const onSubmit = async () => {
 	const data = JSON.parse(JSON.stringify(wali));
-	try {
-		let response = null;
-		if (isNew) response = await apiTokened.post(`wali`, data);
-		else response = await apiTokened.put(`wali/${wali.id}`, data);
-
-		// console.log("response", response);
-		notifySuccess(response.data.message);
+	let response = null;
+	if (isNew) {
+		response = await postData({
+			endPoint: 'wali',
+			data,
+			loading: loadingCrud,
+		});
+	} else {
+		response = await updateData({
+			endPoint: `wali/${wali.id}`,
+			data,
+			confirm: true,
+			notify: true,
+			loading: loadingCrud,
+			rerender: true,
+		});
+	}
+	if (response) {
+		if (isNew) {
+			wali_id.value = response.wali.id;
+		}
 		dialogStore().toggleCrudWali(false);
 		dialogStore().toggleSearchWali(false);
-		if (isNew) {
-			wali_id.value = response.data.wali.id;
-		} else {
-			forceRerender();
-		}
-	} catch (error) {
-		// console.log("error", error);
-		toArray(error.response.data.message).forEach((message) => {
-			notifyError(message);
+	}
+};
+
+const resetOrDelete = async () => {
+	if (isNew) {
+		waliStore().setNull();
+	} else {
+		const result = await deleteData({
+			endPoint: `wali/${wali.id}`,
+			message: `<span style="color:'red'">Hapus Wali?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>`,
+			rerender: false,
+			loading: loadingCrud,
 		});
+		if (result) {
+			router.push('/cari/wali');
+			dialogStore().toggleCrudWali(false);
+		}
 	}
 };
 
@@ -155,21 +203,4 @@ const toggleOptions = [
 		value: carousel.others.button,
 	},
 ];
-
-const router = useRouter();
-const resetOrDelete = async () => {
-	if (isNew) {
-		waliStore().setNull();
-	} else {
-		const result = await deleteData({
-			endPoint: `wali/${wali.id}`,
-			message: `<span style="color:'red'">Hapus Wali?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>`,
-			rerender: false,
-		});
-		if (result) {
-			router.push('/cari/wali');
-			dialogStore().toggleCrudWali(false);
-		}
-	}
-};
 </script>

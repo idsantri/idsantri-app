@@ -2,13 +2,23 @@
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<div class="text-subtitle1">
+				<toolbar-form @emit-button="handleEmitToolbar">
 					Input Data Santri &mdash;
 					<em> {{ isNew ? 'baru' : 'edit' }}</em>
-				</div>
+				</toolbar-form>
 			</q-card-section>
 			<q-card-section class="no-padding">
+				<div v-if="loadingCrud" style="height: 70vh">
+					<q-dialog v-model="loadingCrud" persistent="">
+						<q-spinner-cube
+							color="green-12"
+							size="8em"
+							class="flex q-ma-lg q-mx-auto"
+						/>
+					</q-dialog>
+				</div>
 				<q-carousel
+					v-else
 					v-model="slide"
 					transition-prev="slide-right"
 					transition-next="slide-left"
@@ -40,7 +50,11 @@
 						:name="carousel.alamat.button"
 						class="no-wrap flex-center"
 					>
-						<input-alamat :title="carousel.alamat.title" />
+						<carousel-alamat
+							@emit-input="(val) => Object.assign(santri, val)"
+							:alamat="santri"
+						/>
+						<!-- <input-alamat :title="carousel.alamat.title" /> -->
 					</q-carousel-slide>
 
 					<!-- pendidikan -->
@@ -101,46 +115,76 @@
 </template>
 <script setup>
 import { reactive, ref } from 'vue';
-import { apiTokened } from 'src/api';
 import InputRegister from './SantriModalCrudRegister.vue';
 import InputIdentity from './SantriModalCrudIdentity.vue';
-import InputAlamat from './SantriModalCrudAlamat.vue';
 import InputPendidikanAkhir from './SantriModalCrudPendidikanAkhir.vue';
 import InputOrtuWali from './SantriModalCrudOrtuWali.vue';
-import { notifyError, notifySuccess } from 'src/utils/notify';
-import { toArray } from 'src/utils/array-object';
-import { forceRerender } from 'src/utils/buttons-click';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
 import deleteData from 'src/api/api-delete';
+import CarouselAlamat from 'src/components/CarouselAlamat.vue';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import postData from 'src/api/api-post';
+import updateData from 'src/api/api-update';
 
 const router = useRouter();
-
+const route = useRoute();
 const { santri } = reactive(santriStore());
 const { isNew } = reactive(santriStore());
+const loadingCrud = ref(false);
 
+function handleEmitToolbar() {
+	dialogStore().toggleCrudSantri(false);
+	dialogStore().toggleSearchSantri(false);
+
+	dialogStore().toggleCrudWali(false);
+	dialogStore().toggleSearchWali(false);
+
+	dialogStore().toggleCrudOrtu(false);
+	dialogStore().toggleSearchOrtu(false);
+}
 const onSubmit = async () => {
 	const data = JSON.parse(JSON.stringify(santri));
-	try {
-		let response = null;
-		if (isNew) response = await apiTokened.post(`santri`, data);
-		else response = await apiTokened.put(`santri/${santri.id}`, data);
-
-		// console.log("data", data);
-		notifySuccess(response.data.message);
+	let response = null;
+	if (isNew) {
+		response = await postData({
+			endPoint: 'santri',
+			data,
+			loading: loadingCrud,
+		});
+	} else {
+		const rerender = route.params.id == santri.id ? true : false;
+		response = await updateData({
+			endPoint: `santri/${route.params.id}`,
+			data,
+			confirm: true,
+			notify: true,
+			loading: loadingCrud,
+			rerender,
+		});
+	}
+	if (response) {
 		dialogStore().toggleCrudSantri(false);
 		dialogStore().toggleSearchSantri(false);
-		if (isNew) {
-			router.push(`/santri/${response.data.santri.id}`);
-		} else {
-			forceRerender();
-		}
-	} catch (error) {
-		// console.log("error", error);
-		toArray(error.response.data.message).forEach((message) => {
-			notifyError(message);
+		router.push(`/santri/${response.santri.id}`);
+	}
+};
+
+const resetOrDelete = async () => {
+	if (isNew) {
+		santriStore().setNull();
+	} else {
+		const result = await deleteData({
+			endPoint: `santri/${santri.id}`,
+			message: `<span style="color:'red'">Hapus santri?</span>`,
+			rerender: false,
+			loading: loadingCrud,
 		});
+		if (result) {
+			router.push('/cari/santri');
+			dialogStore().toggleCrudSantri(false);
+		}
 	}
 };
 
@@ -189,20 +233,4 @@ const toggleOptions = [
 		value: carousel.ortu_wali.button,
 	},
 ];
-
-const resetOrDelete = async () => {
-	if (isNew) {
-		santriStore().setNull();
-	} else {
-		const result = await deleteData({
-			endPoint: `santri/${santri.id}`,
-			message: `<span style="color:'red'">Hapus santri?</span>`,
-			rerender: false,
-		});
-		if (result) {
-			router.push('/cari/santri');
-			dialogStore().toggleCrudSantri(false);
-		}
-	}
-};
 </script>

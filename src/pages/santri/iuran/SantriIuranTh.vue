@@ -16,7 +16,7 @@
 						>{{ item.iuran }}
 						<q-space />
 
-						<span>{{ formatDateShort(item.created_at) }}</span>
+						<span>{{ formatDateShort(item.date_m) }}</span>
 					</q-item-label>
 
 					<q-item-label

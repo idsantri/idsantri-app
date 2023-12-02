@@ -44,8 +44,7 @@ onMounted(async () => {
 	});
 	dataArr.value = data.status;
 	dataMap.value = data.status.map((v, i) => ({
-		Tanggal:
-			formatDateShort(v.created_at) + ' | ' + m2hFormat(v.created_at),
+		Tanggal: formatDateShort(v.date_m) + ' | ' + m2hFormat(v.date_m),
 		Status: v.status,
 		Keterangan: v.keterangan || '-',
 		id: v.id,

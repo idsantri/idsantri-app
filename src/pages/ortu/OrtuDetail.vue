@@ -28,16 +28,19 @@
 				<div class="col-12 col-md-6 q-pa-sm">
 					<card-column
 						:data="identity"
+						:loading="loading"
 						title="Identitas"
 						class="q-mb-sm"
 					/>
 					<card-column
 						:data="dataAyah"
+						:loading="loading"
 						title="Data Ayah"
 						class="q-mb-sm"
 					/>
 					<card-column
 						:data="dataIbu"
+						:loading="loading"
 						title="Data Ibu"
 						class="q-mb-sm"
 					/>
@@ -45,6 +48,7 @@
 				<div class="col-12 col-md-6 q-pa-sm">
 					<card-list-santri
 						:data="santri"
+						:loading="loading"
 						title="Data Santri (Anak)"
 						class="q-mb-sm"
 					/>
@@ -57,13 +61,11 @@
 <script setup>
 import { onMounted, reactive, ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
-import { apiTokened } from 'src/api';
 import CardColumn from '../../components/CardColumn.vue';
 import CardListSantri from 'src/components/CardListSantri.vue';
 import ortuStore from 'src/stores/ortu-store.js';
-import { toArray } from 'src/utils/array-object';
-import { notifyError } from 'src/utils/notify';
 import dialogStore from 'src/stores/dialog-store';
+import getData from 'src/api/api-get';
 
 const ortu = reactive({});
 const route = useRoute();
@@ -71,45 +73,39 @@ const ortuId = route.params.id;
 
 const dialog = dialogStore();
 const { searchOrtu, crudOrtu } = toRefs(dialog);
-
-async function fetchData() {
-	try {
-		const { data } = await apiTokened.get(`ortu/${ortuId}`);
-		Object.assign(ortu, data.ortu);
-	} catch (error) {
-		toArray(error.response.data.message).forEach((message) => {
-			notifyError(message);
-		});
-	}
-}
-
 const identity = ref({});
 const dataAyah = ref({});
 const dataIbu = ref({});
 const santri = ref({});
-await fetchData();
-// identity
-identity.value = {
-	ID: ortu.id,
-	'Jumlah Anak': ortu.jumlah_anak,
-};
-// ayah
-dataAyah.value = {
-	Ayah: ortu.ayah?.toUpperCase(),
-	NIK: ortu.a_nik,
-	Hidup: ortu.a_hidup ? 'Ya' : 'Tidak',
-};
-// ibu
-dataIbu.value = {
-	Ibu: ortu.ibu?.toUpperCase(),
-	NIK: ortu.i_nik,
-	Hidup: ortu.i_hidup ? 'Ya' : 'Tidak',
-};
+const loading = ref(false);
 
-// santri
-santri.value = ortu.santri;
-ortuStore().setOrtu(ortu);
-onMounted(async () => {});
+onMounted(async () => {
+	const data = await getData({ endPoint: `ortu/${ortuId}`, loading });
+	Object.assign(ortu, data.ortu);
+
+	// identity
+	identity.value = {
+		ID: ortu.id,
+		'Jumlah Anak': ortu.jumlah_anak,
+	};
+	// ayah
+	dataAyah.value = {
+		Ayah: ortu.ayah?.toUpperCase(),
+		NIK: ortu.a_nik,
+		Hidup: ortu.a_hidup ? 'Ya' : 'Tidak',
+	};
+	// ibu
+	dataIbu.value = {
+		Ibu: ortu.ibu?.toUpperCase(),
+		NIK: ortu.i_nik,
+		Hidup: ortu.i_hidup ? 'Ya' : 'Tidak',
+	};
+
+	// santri
+	santri.value = ortu.santri;
+	ortuStore().setOrtu(ortu);
+});
+
 /**
  * send to modal edit
  */
@@ -118,4 +114,3 @@ function editOrtu() {
 	crudOrtu.value = true;
 }
 </script>
-src/api/api.js

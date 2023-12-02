@@ -67,30 +67,32 @@
 	<!-- modal -->
 	<upload-image
 		:show-uploader="showUploader"
-		:url="`${apiTokened.defaults.baseURL}/images/personalia/${route.params.id}`"
-		:headers="{
-			Authorization: apiTokened.defaults.headers.common.Authorization,
-		}"
+		:url="`/images/personalia/${route.params.id}`"
 		@update-uploader="handleUploader"
 	/>
 </template>
 <script setup>
-import { apiTokened } from 'src/api';
 import getData from 'src/api/api-get';
 import { formatDateFull } from 'src/utils/format-date';
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import PersonaliaModal from 'src/pages/personalia/PersonaliaIdentitasModal.vue';
 import UploadImage from 'src/components/ImageUploader.vue';
 
 const route = useRoute();
+const router = useRouter();
 const personalia = ref({});
 const personaliaObj = ref({});
 const loading = ref(false);
 const crudShow = ref(false);
+
 async function handleEmit(val) {
 	crudShow.value = false;
-	await loadData();
+	if (val.id == route.params.id) {
+		await loadData();
+	} else {
+		router.push(`/personalia/${val.id}`);
+	}
 }
 
 async function loadData() {

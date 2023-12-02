@@ -30,14 +30,16 @@
 					<card-column
 						class="q-mb-sm"
 						:data="register"
+						:loading="loading"
 						title="Registrasi"
 					/>
 
 					<!-- identitas -->
 					<card-image
 						class="q-mb-sm"
-						:data="identity"
 						title="Identitas"
+						:data="identity"
+						:loading="loading"
 						:image="santri?.image || '/user-default.png'"
 					>
 						<template #button>
@@ -72,10 +74,7 @@
 	<!-- modal -->
 	<upload-image
 		:show-uploader="showUploader"
-		:url="`${apiTokened.defaults.baseURL}/images/santri/${santriId}`"
-		:headers="{
-			Authorization: apiTokened.defaults.headers.common.Authorization,
-		}"
+		:url="`/images/santri/${santriId}`"
 		@update-uploader="handleUploader"
 	/>
 
@@ -84,7 +83,6 @@
 <script setup>
 import { reactive, ref, toRefs, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { apiTokened } from 'src/api';
 import { formatDateFull } from '../../utils/format-date';
 import CardColumn from '../../components/CardColumn.vue';
 import CardImage from '../../components/CardImage.vue';
@@ -110,45 +108,47 @@ const santriId = route.params.id;
 const dialog = dialogStore();
 const { searchSantri, crudSantri } = toRefs(dialog);
 
-const data = await getData({ endPoint: `santri/${santriId}` });
-Object.assign(santri, data.santri);
 const register = ref({});
 const identity = ref({});
+const loading = ref(false);
+onMounted(async () => {
+	const data = await getData({ endPoint: `santri/${santriId}`, loading });
+	Object.assign(santri, data.santri);
 
-// register
-register.value = {
-	ID: santri.id,
-	'Tanggal Daftar':
-		formatDateFull(santri.tgl_daftar_m) +
-		' | ' +
-		bacaHijri(santri.tgl_daftar_h),
-	'Tahun Ajaran': `${santri.th_ajaran_h || '-'} | ${
-		santri.th_ajaran_m || '-'
-	}`,
-};
+	// register
+	register.value = {
+		ID: santri.id,
+		'Tanggal Daftar':
+			formatDateFull(santri.tgl_daftar_m) +
+			' | ' +
+			bacaHijri(santri.tgl_daftar_h),
+		'Tahun Ajaran': `${santri.th_ajaran_h || '-'} | ${
+			santri.th_ajaran_m || '-'
+		}`,
+	};
 
-// identity
-identity.value = {
-	Nama: `${santri.nama?.toUpperCase()} (${santri.sex?.toUpperCase()})`,
-	Alamat: `${santri.jl || ' '} RT ${String(santri.rt || 0).padStart(
-		3,
-		0
-	)} RW ${String(santri.rw || 0).padStart(3, '0')} ${santri.desa || ' '} ${
-		santri.kecamatan || ' '
-	} ${santri.kabupaten || ' '} ${santri.provinsi || ' '} ${
-		santri.kode_pos || ' '
-	}`.replace(/\s\s+/g, ' '),
-	Kelahiran: `${santri.tmp_lahir || '-'}, ${formatDateFull(
-		santri.tgl_lahir
-	)}`,
-	'Data Akhir': santri?.data_akhir?.data_akhir || '-',
-};
+	// identity
+	identity.value = {
+		Nama: `${santri.nama?.toUpperCase()} (${santri.sex?.toUpperCase()})`,
+		Alamat: `${santri.jl || ' '} RT ${String(santri.rt || 0).padStart(
+			3,
+			0
+		)} RW ${String(santri.rw || 0).padStart(3, '0')} ${
+			santri.desa || ' '
+		} ${santri.kecamatan || ' '} ${santri.kabupaten || ' '} ${
+			santri.provinsi || ' '
+		} ${santri.kode_pos || ' '}`.replace(/\s\s+/g, ' '),
+		Kelahiran: `${santri.tmp_lahir || '-'}, ${formatDateFull(
+			santri.tgl_lahir
+		)}`,
+		'Data Akhir': santri?.data_akhir?.data_akhir || '-',
+	};
 
-santriStore().setSantri(santri);
-santriStore().setOrtu(santri?.ortu);
-santriStore().setWali(santri?.wali);
-santriStore().setDataAkhir(santri?.data_akhir);
-onMounted(async () => {});
+	santriStore().setSantri(santri);
+	santriStore().setOrtu(santri?.ortu);
+	santriStore().setWali(santri?.wali);
+	santriStore().setDataAkhir(santri?.data_akhir);
+});
 
 /**
  * send to modal edit

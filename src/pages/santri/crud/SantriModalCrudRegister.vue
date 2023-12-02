@@ -32,7 +32,7 @@
 		v-model="tgl_daftar_h"
 		mask="####-##-##"
 	/>
-	<q-select
+	<!-- <q-select
 		dense
 		:hint="
 			th_ajaran_h?.length == 9
@@ -53,7 +53,7 @@
 		:rules="[(val) => !!val || 'Harus diisi!']"
 		error-color="negative"
 		:loading="loading['tahun-ajaran']"
-	/>
+	/> -->
 </template>
 <script setup>
 import santriState from 'src/stores/santri-store';

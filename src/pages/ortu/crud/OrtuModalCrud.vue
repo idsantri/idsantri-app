@@ -2,13 +2,23 @@
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<div class="text-subtitle1">
+				<toolbar-form @emit-button="handleEmitToolbar">
 					Input Data Orang Tua &mdash;
 					<em> {{ isNew ? 'baru' : 'edit' }}</em>
-				</div>
+				</toolbar-form>
 			</q-card-section>
 			<q-card-section class="no-padding">
+				<div v-if="loadingCrud" style="height: 70vh">
+					<q-dialog v-model="loadingCrud" persistent="">
+						<q-spinner-cube
+							color="green-12"
+							size="8em"
+							class="flex q-ma-lg q-mx-auto"
+						/>
+					</q-dialog>
+				</div>
 				<q-carousel
+					v-else
 					v-model="slide"
 					transition-prev="slide-right"
 					transition-next="slide-left"
@@ -84,45 +94,78 @@
 </template>
 <script setup>
 import { reactive, ref, toRefs } from 'vue';
-import { apiTokened } from 'src/api';
 import InputIdentity from './OrtuModalCrudIdentity.vue';
 import InputAyah from './OrtuModalCrudAyah.vue';
 import InputIbu from './OrtuModalCrudIbu.vue';
 import ortuStore from 'src/stores/ortu-store.js';
-import { notifyError, notifySuccess } from 'src/utils/notify';
-import { forceRerender } from 'src/utils/buttons-click';
-import { toArray } from 'src/utils/array-object';
 import { useRouter } from 'vue-router';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
 import deleteData from 'src/api/api-delete';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import updateData from 'src/api/api-update';
+import postData from 'src/api/api-post';
 
+const router = useRouter();
 const { ortu } = reactive(ortuStore());
 const { isNew } = reactive(ortuStore());
 const { santri } = santriStore();
 const { ortu_id } = toRefs(santri);
+const loadingCrud = ref(false);
+
+function handleEmitToolbar() {
+	dialogStore().toggleCrudSantri(false);
+	dialogStore().toggleSearchSantri(false);
+
+	dialogStore().toggleCrudWali(false);
+	dialogStore().toggleSearchWali(false);
+
+	dialogStore().toggleCrudOrtu(false);
+	dialogStore().toggleSearchOrtu(false);
+}
 
 const onSubmit = async () => {
 	const data = JSON.parse(JSON.stringify(ortu));
-	try {
-		let response = null;
-		if (isNew) response = await apiTokened.post(`ortu`, data);
-		else response = await apiTokened.put(`ortu/${ortu.id}`, data);
-
-		// console.log("response", response);
-		notifySuccess(response.data.message);
+	let response = null;
+	if (isNew) {
+		response = await postData({
+			endPoint: 'ortu',
+			data,
+			loading: loadingCrud,
+		});
+	} else {
+		response = await updateData({
+			endPoint: `ortu/${ortu.id}`,
+			data,
+			confirm: true,
+			notify: true,
+			loading: loadingCrud,
+			rerender: true,
+		});
+	}
+	if (response) {
+		if (isNew) {
+			ortu_id.value = response.ortu.id;
+		}
 		dialogStore().toggleCrudOrtu(false);
 		dialogStore().toggleSearchOrtu(false);
-		if (isNew) {
-			ortu_id.value = response.data.ortu.id;
-		} else {
-			forceRerender();
-		}
-	} catch (error) {
-		// console.log("error", error);
-		toArray(error.response.data.message).forEach((message) => {
-			notifyError(message);
+	}
+};
+
+const resetOrDelete = async () => {
+	if (isNew) {
+		ortuStore().setNull();
+	} else {
+		const result = await deleteData({
+			endPoint: `ortu/${ortu.id}`,
+			message: `<span style="color:'red'">Hapus Orang Tua?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>`,
+			rerender: false,
+			loading: loadingCrud,
 		});
+		if (result) {
+			router.push('/cari/ortu');
+			dialogStore().toggleCrudOrtu(false);
+		}
 	}
 };
 
@@ -155,21 +198,4 @@ const toggleOptions = [
 		value: carousel.ibu.button,
 	},
 ];
-
-const router = useRouter();
-const resetOrDelete = async () => {
-	if (isNew) {
-		ortuStore().setNull();
-	} else {
-		const result = await deleteData({
-			endPoint: `ortu/${ortu.id}`,
-			message: `<span style="color:'red'">Hapus Orang Tua?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>`,
-			rerender: false,
-		});
-		if (result) {
-			router.push('/cari/ortu');
-			dialogStore().toggleCrudOrtu(false);
-		}
-	}
-};
 </script>

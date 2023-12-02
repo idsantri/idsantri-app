@@ -28,6 +28,7 @@
 				<div class="col-12 col-md-6 q-pa-sm">
 					<card-column
 						:data="identity"
+						:loading="loading"
 						title="Identitas"
 						class="q-mb-sm"
 					/>
@@ -35,6 +36,7 @@
 				<div class="col-12 col-md-6 q-pa-sm">
 					<card-list-santri
 						:data="santri"
+						:loading="loading"
 						title="Data Santri (Anak)"
 						class="q-mb-sm"
 					/>
@@ -47,15 +49,13 @@
 <script setup>
 import { onMounted, reactive, ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
-import { apiTokened } from 'src/api';
 import { formatDateFull } from '../../utils/format-date';
 import CardColumn from '../../components/CardColumn.vue';
 import CardListSantri from 'src/components/CardListSantri.vue';
 import waliStore from 'src/stores/wali-store';
 import { formatAlamatLengkap } from 'src/utils/format-text';
-import { toArray } from 'src/utils/array-object';
-import { notifyError } from 'src/utils/notify';
 import dialogStore from 'src/stores/dialog-store';
+import getData from 'src/api/api-get';
 
 const wali = reactive({});
 const route = useRoute();
@@ -63,45 +63,41 @@ const waliId = route.params.id;
 
 const dialog = dialogStore();
 const { searchWali, crudWali } = toRefs(dialog);
-
-async function fetchData() {
-	try {
-		const { data } = await apiTokened.get(`wali/${waliId}`);
-		Object.assign(wali, data.wali);
-	} catch (error) {
-		toArray(error.response.data.message).forEach((message) => {
-			notifyError(message);
-		});
-	}
-}
-
 const identity = ref({});
 const santri = ref([]);
-await fetchData();
-// identity
-identity.value = {
-	ID: wali.id,
-	Nama: `${wali.nama.toUpperCase()} (${wali.sex.toUpperCase()})`,
-	NIK: wali.nik || '-',
-	Alamat: formatAlamatLengkap(
-		wali.jl,
-		wali.rt,
-		wali.rw,
-		wali.desa,
-		wali.kecamatan,
-		wali.kabupaten,
-		wali.provinsi,
-		wali.kode_pos
-	),
-	Kelahiran: `${wali.tmp_lahir || '-'}, ${formatDateFull(wali.tgl_lahir)}`,
-	Pekerjaan: wali.pekerjaan || '-',
-	Kontak: (wali.telepon || '-') + '; ' + (wali.email || '-'),
-};
+const loading = ref(false);
 
-// santri
-santri.value = wali.santri;
-waliStore().setWali(wali);
-onMounted(async () => {});
+onMounted(async () => {
+	// await fetchData();
+	const data = await getData({ endPoint: `wali/${waliId}`, loading });
+	Object.assign(wali, data.wali);
+
+	// identity
+	identity.value = {
+		ID: wali.id,
+		Nama: `${wali.nama.toUpperCase()} (${wali.sex.toUpperCase()})`,
+		NIK: wali.nik || '-',
+		Alamat: formatAlamatLengkap(
+			wali.jl,
+			wali.rt,
+			wali.rw,
+			wali.desa,
+			wali.kecamatan,
+			wali.kabupaten,
+			wali.provinsi,
+			wali.kode_pos
+		),
+		Kelahiran: `${wali.tmp_lahir || '-'}, ${formatDateFull(
+			wali.tgl_lahir
+		)}`,
+		Pekerjaan: wali.pekerjaan || '-',
+		Kontak: (wali.telepon || '-') + '; ' + (wali.email || '-'),
+	};
+
+	// santri
+	santri.value = wali.santri;
+	waliStore().setWali(wali);
+});
 
 /**
  * send to modal edit
@@ -111,4 +107,3 @@ function editWali() {
 	crudWali.value = true;
 }
 </script>
-src/api/api.js

@@ -10,9 +10,11 @@
 		v-model="internalShowUploader"
 		:width="450"
 		:height="600"
-		:url="props.url"
+		:url="apiTokened.defaults.baseURL + props.url"
 		:params="paramsImage"
-		:headers="props.headers"
+		:headers="{
+			Authorization: apiTokened.defaults.headers.common.Authorization,
+		}"
 		withCredentials
 		img-format="png"
 	></my-upload>
@@ -22,6 +24,7 @@ import myUpload from 'vue-image-crop-upload';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifySuccess } from 'src/utils/notify';
 import { onUpdated, ref, watch } from 'vue';
+import { apiTokened } from 'src/api';
 
 /**
  * communicate parents children

@@ -44,8 +44,7 @@ onMounted(async () => {
 	});
 	dataArr.value = data.domisili;
 	dataMap.value = data.domisili.map((v, i) => ({
-		Tanggal:
-			formatDateShort(v.created_at) + ' | ' + m2hFormat(v.created_at),
+		Tanggal: formatDateShort(v.date_m) + ' | ' + m2hFormat(v.date_m),
 		Domisili: v.domisili,
 		Keterangan: v.keterangan || '-',
 		id: v.id,

@@ -8,13 +8,14 @@
 				</toolbar-form>
 			</q-card-section>
 			<q-card-section class="no-padding">
-				<div v-if="loadingCrud">
-					<q-spinner-cube
-						color="green-12"
-						size="8em"
-						class="flex q-ma-lg q-mx-auto"
-						style="height: 65vh"
-					/>
+				<div v-if="loadingCrud" style="height: 70vh">
+					<q-dialog v-model="loadingCrud" persistent="">
+						<q-spinner-cube
+							color="green-12"
+							size="8em"
+							class="flex q-ma-lg q-mx-auto"
+						/>
+					</q-dialog>
 				</div>
 
 				<q-carousel
@@ -52,7 +53,6 @@
 								(val) => !val || !isNaN(val) || 'Hanya angka!',
 							]"
 							error-color="negative"
-							:disable="!$props.isNew"
 						/>
 						<q-input
 							dense
@@ -319,27 +319,6 @@ const onSubmit = async () => {
 	if (response) {
 		emit('successSubmit', response?.personalia);
 	}
-
-	// try {
-	// 	let response = null;
-	// 	if (isNew) response = await apiTokened.post(`santri`, data);
-	// 	else response = await apiTokened.put(`santri/${santri.id}`, data);
-
-	// 	// console.log("data", data);
-	// 	notifySuccess(response.data.message);
-	// 	dialogStore().toggleCrudSantri(false);
-	// 	dialogStore().toggleSearchSantri(false);
-	// 	if (isNew) {
-	// 		router.push(`/santri/${response.data.santri.id}`);
-	// 	} else {
-	// 		forceRerender();
-	// 	}
-	// } catch (error) {
-	// 	// console.log("error", error);
-	// 	toArray(error.response.data.message).forEach((message) => {
-	// 		notifyError(message);
-	// 	});
-	// }
 };
 
 const handleDelete = async () => {

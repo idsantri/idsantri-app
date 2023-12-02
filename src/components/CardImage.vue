@@ -7,7 +7,14 @@
 			</div>
 		</q-card-section>
 		<q-card-section class="q-pa-sm">
-			<div class="row">
+			<div v-if="loading">
+				<q-spinner-cube
+					color="green-12"
+					size="8em"
+					class="flex q-ma-lg q-mx-auto"
+				/>
+			</div>
+			<div v-else class="row">
 				<div class="col-4 q-pr-sm">
 					<q-img :src="image" :ratio="3 / 4" alt="santri" />
 					<slot name="button" />
@@ -27,5 +34,6 @@ const props = defineProps({
 	title: String,
 	data: Object,
 	image: String,
+	loading: Boolean,
 });
 </script>

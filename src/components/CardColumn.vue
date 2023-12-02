@@ -8,9 +8,18 @@
 			</div>
 		</q-card-section>
 		<q-card-section class="q-pa-sm">
-			<div class="row" v-for="(value, key) in props.data" :key="key">
-				<div class="col-4 text-caption">{{ key }}</div>
-				<div class="col">{{ value }}</div>
+			<div v-if="loading">
+				<q-spinner-cube
+					color="green-12"
+					size="8em"
+					class="flex q-ma-lg q-mx-auto"
+				/>
+			</div>
+			<div v-else>
+				<div class="row" v-for="(value, key) in props.data" :key="key">
+					<div class="col-4 text-caption">{{ key }}</div>
+					<div class="col">{{ value }}</div>
+				</div>
 			</div>
 		</q-card-section>
 	</q-card>
@@ -19,5 +28,6 @@
 const props = defineProps({
 	title: String,
 	data: Object,
+	loading: Boolean,
 });
 </script>
