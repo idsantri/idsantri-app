@@ -409,9 +409,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import postData from 'src/api/api-post.js';
 import updateData from 'src/api/api-update';
 import deleteData from 'src/api/api-delete';
+import getData from 'src/api/api-get';
 import FilterKelas from 'src/pages/madrasah/components/FilterKelas.vue';
 
 const spinner = ref(false);
@@ -472,9 +472,9 @@ async function fetchAbsensi() {
 		params.kelas &&
 		params.bulanUjian
 	) {
-		const post = await postData({
+		const post = await getData({
 			endPoint: 'absensi',
-			data: {
+			params: {
 				th_ajaran_h: params.thAjaranH,
 				tingkat_id: params.tingkatId,
 				kelas: params.kelas,
