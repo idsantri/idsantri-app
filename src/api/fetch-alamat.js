@@ -39,34 +39,6 @@ async function fetchAlamat(
 	}
 }
 
-async function fetchKotaLahir(list, loading) {
-	loading.value = true;
-	try {
-		const response = await apiTokened.get(`alamat/lists-kabupaten-kota`);
-		list.value = response.data.lists_kabupaten_kota;
-	} catch (error) {
-		console.log('Not Found list kota lahir', error);
-	} finally {
-		loading.value = false;
-	}
-}
-
-function filterKotaLahir(val, update, options, list) {
-	if (val === '') {
-		update(() => {
-			options.value = list.value;
-		});
-		return;
-	}
-
-	update(() => {
-		const needle = val.toLowerCase();
-		options.value = list.value.filter(
-			(v) => v.toLowerCase().indexOf(needle) > -1
-		);
-	});
-}
-
 async function watchAlamat({ provinsi, kabupaten, kecamatan, desa, lists }) {
 	// const { provinsi, kabupaten, kecamatan, desa, lists } = components;
 	watch(
@@ -106,4 +78,4 @@ async function watchAlamat({ provinsi, kabupaten, kecamatan, desa, lists }) {
 	);
 }
 
-export { fetchAlamat, filterKotaLahir, fetchKotaLahir, watchAlamat };
+export { fetchAlamat, watchAlamat };

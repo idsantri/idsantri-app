@@ -32,9 +32,8 @@ const data = [
 	{ url: 'satuan', label: 'Satuan', mode: 'one' },
 	{ url: 'siklus', label: 'Siklus', mode: 'one' },
 	{ url: 'status', label: 'Status', mode: 'one' },
-	// { url: 'takzir-santri', label: 'Takzir Santri', mode: 'one' },
-	// { url: 'tatib-murid', label: '', mode: 'one' },
-	// { url: 'tatib-santri', label: '', mode: 'one' },
+	{ url: 'sifat-izin', label: 'Sifat Izin', mode: 'one' },
+	{ url: 'keperluan-izin', label: 'Keperluan Izin', mode: 'one' },
 
 	{ url: 'tingkat-pendidikan', label: 'Tingkat Pendidikan', mode: 'two' },
 	{ url: 'tahun-ajaran', label: 'Tahun Ajaran', mode: 'two' },

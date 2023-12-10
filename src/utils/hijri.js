@@ -226,4 +226,12 @@ function m2hBacaHijri(input) {
 	const hijri = m2h(input);
 	return bacaHijri(hijri);
 }
-export { m2h, bacaHijri, m2hFormat, m2hBacaHijri };
+/**
+ * @param {number} textHijri
+ * @returns  yyyy-mm-dd
+ */
+function formatHijri(textHijri) {
+	if (!textHijri || textHijri.length != 8) return '';
+	else return textHijri.replace(/(.{4})(.{2})(.{2})/, '$1-$2-$3') || '';
+}
+export { m2h, bacaHijri, m2hFormat, m2hBacaHijri, formatHijri };

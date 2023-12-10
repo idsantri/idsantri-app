@@ -2,10 +2,10 @@
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="submit">
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<div class="text-subtitle1">
+				<toolbar-form @emit-button="handleEmitToolbar">
 					{{ props.title }} &mdash;
 					<em>{{ isNew ? 'baru' : 'edit' }}</em>
-				</div>
+				</toolbar-form>
 			</q-card-section>
 			<q-card-section>
 				<q-input
@@ -74,6 +74,7 @@ import { fetchLists } from 'src/api/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
 import deleteById from 'src/api/api-delete';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },

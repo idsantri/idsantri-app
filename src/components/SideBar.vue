@@ -33,6 +33,15 @@
 					<q-item-label caption>Beranda sekretariat</q-item-label>
 				</q-item-section>
 			</q-item>
+			<q-item clickable v-ripple @click="addNew">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="add" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Tambah</q-item-label>
+					<q-item-label caption>Santri Baru</q-item-label>
+				</q-item-section>
+			</q-item>
 		</q-expansion-item>
 
 		<!-- MADRASARAH -->
@@ -40,7 +49,7 @@
 		<q-expansion-item
 			expand-separator
 			label="Madrasah"
-			caption="Kemuridan"
+			caption="Kemuridan dan Keguruan"
 			header-class="text-body1 text-green-1"
 			expand-icon-class="text-green-1"
 		>
@@ -86,6 +95,38 @@
 			</q-item>
 		</q-expansion-item>
 
+		<!-- KEAMANAN -->
+		<q-separator dark />
+		<q-expansion-item
+			expand-separator
+			label="Keamanan"
+			caption="Perizinan dan Pelanggaran"
+			header-class="text-body1 text-green-1"
+			expand-icon-class="text-green-1"
+		>
+			<q-item clickable v-ripple to="/keamanan/izin-pesantren">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="transfer_within_a_station" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Perizinan</q-item-label>
+					<q-item-label caption
+						>Data Perizinan Pesantren</q-item-label
+					>
+				</q-item-section>
+			</q-item>
+
+			<q-item clickable v-ripple to="/keamanan/indisipliner">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="directions_run" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Pelanggaran</q-item-label>
+					<q-item-label caption>Data Pelanggaran</q-item-label>
+				</q-item-section>
+			</q-item>
+		</q-expansion-item>
+
 		<!-- SETTING -->
 		<q-separator dark />
 		<q-expansion-item
@@ -120,4 +161,16 @@
 	</q-list>
 </template>
 
-<script setup></script>
+<script setup>
+import dialogStore from 'src/stores/dialog-store';
+import santriStore from 'src/stores/santri-store';
+import { toRefs } from 'vue';
+
+const dialog = dialogStore();
+const { searchSantri, crudSantri } = toRefs(dialog);
+
+const addNew = () => {
+	santriStore().$reset();
+	crudSantri.value = true;
+};
+</script>

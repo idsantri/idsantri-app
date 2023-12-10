@@ -40,22 +40,9 @@
 		]"
 		error-color="negative"
 	/>
-	<q-select
-		dense
-		hint="Kota kelahiran"
-		class="q-mt-sm"
-		outlined
-		label="Tempat Lahir"
-		v-model="tmp_lahir"
-		:options="optionsKotaLahir"
-		emit-value
-		map-options
-		error-color="negative"
-		@filter="filterTempatLahir"
-		:loading="loadingKotaLahir"
-		use-input
-		new-value-mode="add"
-		clearable=""
+	<input-select-kota-lahir
+		@emit-input="(val) => Object.assign(wali, val)"
+		:data="wali"
 	/>
 
 	<q-input
@@ -86,29 +73,16 @@
 	/>
 </template>
 <script setup>
-import { apiTokened } from 'src/api';
 import waliState from 'src/stores/wali-store';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
-import { onMounted, ref, toRefs } from 'vue';
-import { fetchKotaLahir, filterKotaLahir } from 'src/api/fetch-alamat';
+import { toRefs } from 'vue';
+import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
+
 const props = defineProps({
 	title: { type: String, default: '' },
 });
 
 const { wali } = waliState();
 const { id, nama, tgl_lahir, tmp_lahir, nik, sex } = toRefs(wali);
-
-const loadingKotaLahir = ref(false);
-const listKotaLahir = ref([]);
-const optionsKotaLahir = ref(listKotaLahir);
-
-const filterTempatLahir = (val, update) => {
-	filterKotaLahir(val, update, optionsKotaLahir, listKotaLahir);
-};
-
-onMounted(async () => {
-	await fetchKotaLahir(listKotaLahir, loadingKotaLahir);
-});
 </script>
-src/api/fetch-alamat src/api/api

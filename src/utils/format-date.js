@@ -1,6 +1,69 @@
-function isDate(dateStr) {
-	return dateStr != null && !isNaN(new Date(dateStr).getDate());
+function isDate(dateStr, splitter = '-') {
+	if (!dateStr) {
+		return false;
+	}
+
+	const dateTimeParts = dateStr.split(' ');
+
+	// Bagian tanggal
+	const dateParts = dateTimeParts[0].split(splitter);
+	if (dateParts.length !== 3) {
+		return false;
+	}
+
+	const [year, month, day] = dateParts.map(Number);
+
+	// Cek apakah year, month, dan day adalah angka yang valid
+	if (isNaN(year) || isNaN(month) || isNaN(day)) {
+		return false;
+	}
+
+	// Pastikan panjang month dan day adalah dua digit
+	if (month < 1 || month > 12 || day < 1 || day > 31) {
+		return false;
+	}
+
+	// Cek apakah tanggal yang valid berdasarkan bulan
+	const daysInMonth = new Date(year, month, 0).getDate();
+	if (day > daysInMonth) {
+		return false;
+	}
+
+	// Jika ada bagian waktu, cek apakah valid
+	if (dateTimeParts.length === 2) {
+		const timeParts = dateTimeParts[1].split(':');
+		if (timeParts.length !== 3) {
+			return false;
+		}
+
+		const [hour, minute, second] = timeParts.map(Number);
+
+		// Cek apakah hour, minute, dan second adalah angka yang valid
+		if (isNaN(hour) || isNaN(minute) || isNaN(second)) {
+			return false;
+		}
+
+		// Pastikan panjang hour, minute, dan second adalah dua digit
+		if (
+			hour < 0 ||
+			hour > 23 ||
+			minute < 0 ||
+			minute > 59 ||
+			second < 0 ||
+			second > 59
+		) {
+			return false;
+		}
+	}
+
+	return true;
 }
+
+// function isDate(dateStr) {
+// 	return (
+// 		dateStr != null && dateStr != 0 && !isNaN(new Date(dateStr).getDate())
+// 	);
+// }
 
 function formatDateSql(inputDate) {
 	if (!isDate(inputDate)) return;
@@ -11,7 +74,19 @@ function formatDateSql(inputDate) {
 	const day = String(date.getDate()).padStart(2, '0');
 	return `${year}-${month}-${day} `;
 }
+function formatDateTimeHtmlToSql(inputHtmlDateTime) {
+	if (!inputHtmlDateTime) return null;
+	const inputDate = new Date(inputHtmlDateTime);
+	const year = inputDate.getFullYear();
+	const month = (inputDate.getMonth() + 1).toString().padStart(2, '0');
+	const day = inputDate.getDate().toString().padStart(2, '0');
+	const hours = inputDate.getHours().toString().padStart(2, '0');
+	const minutes = inputDate.getMinutes().toString().padStart(2, '0');
+	const seconds = inputDate.getSeconds().toString().padStart(2, '0') || '00';
 
+	const sqlDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+	return sqlDateTime;
+}
 function hari(inputDay) {
 	let day = '';
 	const caseDay = parseInt(inputDay);
@@ -126,4 +201,5 @@ export {
 	formatDateShort,
 	formatDateFull,
 	formatDateFullDay,
+	formatDateTimeHtmlToSql,
 };

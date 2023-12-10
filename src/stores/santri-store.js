@@ -6,7 +6,6 @@ export default defineStore('santri', {
 				id: null,
 				tgl_daftar_m: null,
 				tgl_daftar_h: null,
-				th_ajaran_h: null,
 				nama: null,
 				nisn: null,
 				nkk: null,

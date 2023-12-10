@@ -2,10 +2,10 @@
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="submit">
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<div class="text-subtitle1">
+				<toolbar-form @emit-button="handleEmitToolbar">
 					{{ props.title }} &mdash;
 					<em>{{ isNew ? 'baru' : 'edit' }}</em>
-				</div>
+				</toolbar-form>
 			</q-card-section>
 			<q-card-section>
 				<q-input
@@ -147,6 +147,7 @@ import { digitSeparator } from 'src/utils/format-number';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref, watch } from 'vue';
 import CurrencyInput from 'src/components/CurrencyInput.vue';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
 
 const props = defineProps({
 	dataSantri: { type: Object, required: true },

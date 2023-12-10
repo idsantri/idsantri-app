@@ -30,22 +30,9 @@
 		]"
 		error-color="negative"
 	/>
-	<q-select
-		dense
-		hint="Kota kelahiran"
-		class="q-mt-sm"
-		outlined
-		label="Tempat Lahir"
-		v-model="i_tmp_lahir"
-		:options="optionsKotaLahir"
-		emit-value
-		map-options
-		error-color="negative"
-		@filter="filterTempatLahir"
-		:loading="loadingKotaLahir"
-		use-input
-		new-value-mode="add"
-		clearable=""
+	<input-select-kota-lahir
+		@emit-input="(val) => Object.assign(input, val)"
+		:data="input"
 	/>
 
 	<q-input
@@ -124,8 +111,8 @@ import ortuState from 'src/stores/ortu-store.js';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
 import { onMounted, ref, toRefs } from 'vue';
-import { fetchKotaLahir, filterKotaLahir } from 'src/api/fetch-alamat';
 import { fetchLists } from 'src/api/fetch-list';
+import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -143,21 +130,16 @@ const {
 	i_pekerjaan,
 } = toRefs(ortu);
 
-const loadingKotaLahir = ref(false);
-const listKotaLahir = ref([]);
-const optionsKotaLahir = ref(listKotaLahir);
-
-const filterTempatLahir = (val, update) => {
-	filterKotaLahir(val, update, optionsKotaLahir, listKotaLahir);
-};
+const input = ref({
+	tmp_lahir: i_tmp_lahir,
+});
 
 const lists = ref([]);
 const loading = ref([]);
+
 onMounted(async () => {
-	await fetchKotaLahir(listKotaLahir, loadingKotaLahir);
 	await fetchLists({ loading, lists, key: 'pendidikan-akhir-formal' });
 	await fetchLists({ loading, lists, key: 'pendidikan-akhir-diniyah' });
 	await fetchLists({ loading, lists, key: 'pekerjaan' });
 });
 </script>
-src/api/fetch-alamat src/api/fetch-list

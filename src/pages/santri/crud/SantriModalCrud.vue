@@ -52,7 +52,7 @@
 					>
 						<carousel-alamat
 							@emit-input="(val) => Object.assign(santri, val)"
-							:alamat="santri"
+							:data="santri"
 						/>
 						<!-- <input-alamat :title="carousel.alamat.title" /> -->
 					</q-carousel-slide>

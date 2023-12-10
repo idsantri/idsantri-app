@@ -52,22 +52,9 @@
 		]"
 		error-color="negative"
 	/>
-	<q-select
-		dense
-		hint="Kota kelahiran"
-		class="q-mt-sm"
-		outlined
-		label="Tempat Lahir"
-		v-model="tmp_lahir"
-		:options="optionsKotaLahir"
-		emit-value
-		map-options
-		error-color="negative"
-		@filter="filterTempatLahir"
-		:loading="loadingKotaLahir"
-		use-input
-		new-value-mode="add"
-		clearable=""
+	<input-select-kota-lahir
+		@emit-input="(val) => Object.assign(santri, val)"
+		:data="santri"
 	/>
 
 	<q-input
@@ -101,8 +88,8 @@
 import santriState from 'src/stores/santri-store';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
-import { onMounted, ref, toRefs } from 'vue';
-import { filterKotaLahir, fetchKotaLahir } from 'src/api/fetch-alamat';
+import { toRefs } from 'vue';
+import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -110,16 +97,4 @@ const props = defineProps({
 
 const { santri } = santriState();
 const { nama, nisn, nkk, nik, tmp_lahir, tgl_lahir, sex } = toRefs(santri);
-
-const loadingKotaLahir = ref(false);
-const listKotaLahir = ref([]);
-const optionsKotaLahir = ref(listKotaLahir);
-
-const filterTempatLahir = (val, update) => {
-	filterKotaLahir(val, update, optionsKotaLahir, listKotaLahir);
-};
-
-onMounted(async () => {
-	await fetchKotaLahir(listKotaLahir, loadingKotaLahir);
-});
 </script>

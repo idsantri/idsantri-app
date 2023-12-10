@@ -85,22 +85,9 @@
 							]"
 							error-color="negative"
 						/>
-						<q-select
-							dense
-							hint="Kota kelahiran"
-							class="q-mt-sm"
-							outlined
-							label="Tempat Lahir"
-							v-model="input.tmp_lahir"
-							:options="optionsKotaLahir"
-							emit-value
-							map-options
-							error-color="negative"
-							@filter="filterTempatLahir"
-							:loading="loadingKotaLahir"
-							use-input
-							new-value-mode="add"
-							clearable=""
+						<input-select-kota-lahir
+							@emit-input="(val) => Object.assign(input, val)"
+							:data="input"
 						/>
 
 						<q-input
@@ -147,7 +134,7 @@
 					>
 						<carousel-alamat
 							@emit-input="(val) => Object.assign(input, val)"
-							:alamat="input"
+							:data="input"
 						/>
 					</q-carousel-slide>
 
@@ -261,11 +248,11 @@ import { formatDateFull, isDate } from 'src/utils/format-date';
 import { bacaHijri, m2h } from 'src/utils/hijri';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
-import { fetchKotaLahir, filterKotaLahir } from 'src/api/fetch-alamat';
 import { fetchLists } from 'src/api/fetch-list';
 import deleteData from 'src/api/api-delete';
 import updateData from 'src/api/api-update';
 import postData from 'src/api/api-post';
+import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
 
 const props = defineProps({
 	dataPersonalia: Object,
@@ -275,22 +262,13 @@ const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const router = useRouter();
 const route = useRoute();
-const input = ref({});
+const input = ref(props.dataPersonalia);
 
-const loadingKotaLahir = ref(false);
-const listKotaLahir = ref([]);
-const optionsKotaLahir = ref(listKotaLahir);
-
-const filterTempatLahir = (val, update) => {
-	filterKotaLahir(val, update, optionsKotaLahir, listKotaLahir);
-};
 const lists = ref([]);
 const loading = ref([]);
 const loadingCrud = ref(false);
 
 onMounted(async () => {
-	Object.assign(input.value, props.dataPersonalia);
-	await fetchKotaLahir(listKotaLahir, loadingKotaLahir);
 	await fetchLists({ loading, lists, key: 'pendidikan-akhir-formal' });
 	await fetchLists({ loading, lists, key: 'pendidikan-akhir-diniyah' });
 });

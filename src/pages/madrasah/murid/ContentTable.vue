@@ -3,7 +3,7 @@
 		:rows="murid"
 		:columns="columns"
 		:loading="spinner"
-		:rows-per-page-options="[10, 25, 50, 100, 0]"
+		:rows-per-page-options="[10, 25, 50, 75, 100, 0]"
 		class="dt"
 		:filter="filter"
 		no-data-label="Silakan tentukan Tahun ajaran dan tingkat pendidikan!"

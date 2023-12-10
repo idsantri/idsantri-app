@@ -113,7 +113,7 @@ import { apiTokened } from 'src/api';
 import { onMounted, ref, watch, watchEffect } from 'vue';
 
 const props = defineProps({
-	alamat: { type: Object },
+	data: { type: Object },
 });
 const emit = defineEmits(['emitInput']);
 
@@ -154,7 +154,7 @@ async function fetchAlamat(request) {
 }
 
 onMounted(async () => {
-	Object.assign(input.value, props.alamat);
+	Object.assign(input.value, props.data);
 
 	await fetchAlamat('provinsi');
 	if (input.value.provinsi) {

@@ -312,6 +312,36 @@ const routes = [
 				],
 			},
 			{
+				path: 'keamanan',
+				meta: { title: 'Keamanan' },
+				redirect: (to) => '/keamanan/izin-pesantren',
+				children: [
+					{
+						// /:id -> matches only numbers
+						path: 'izin-pesantren/:id(\\d+)',
+						component: () =>
+							import(
+								'src/pages/keamanan/perizinan/IzinDetail.vue'
+							),
+					},
+					{
+						path: 'izin-pesantren/:startDate?/:endDate?',
+						component: () =>
+							import(
+								'src/pages/keamanan/perizinan/IndexPage.vue'
+							),
+					},
+					{
+						path: 'indisipliner',
+						component: () =>
+							import(
+								'src/pages/keamanan/indisipliner/IndexPage.vue'
+							),
+					},
+				],
+			},
+
+			{
 				path: 'personalia',
 				component: () =>
 					import('src/pages/personalia/PersonaliaIndexTable.vue'),
