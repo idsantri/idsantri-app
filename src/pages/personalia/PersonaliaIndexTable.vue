@@ -59,7 +59,7 @@
 </template>
 <script setup>
 import PersonaliaModal from 'src/pages/personalia/PersonaliaIdentitasModal.vue';
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -75,7 +75,7 @@ function handleEmit(val) {
 }
 
 onMounted(async () => {
-	const data = await getData({ endPoint: 'personalia', loading });
+	const data = await apiGet({ endPoint: 'personalia', loading });
 	personalia.value = data.personalia;
 });
 

@@ -13,7 +13,7 @@ import { ref, onMounted } from 'vue';
 import TemplateArray from 'src/pages/santri/relations/TemplateArray.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { digitSeparator } from 'src/utils/format-number';
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 
 const spinner = ref(false);
 const crudShow = ref(false);
@@ -27,7 +27,7 @@ const route = useRoute();
 const santriId = route.params.id;
 
 onMounted(async () => {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: `santri/${santriId}/iuran-total`,
 		loading: spinner,
 	});

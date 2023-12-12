@@ -22,7 +22,7 @@
 	<!-- <pre>{{ izin }}	</pre> -->
 </template>
 <script setup>
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import TemplateArray from 'src/pages/santri/relations/TemplateArray.vue';
@@ -42,7 +42,7 @@ const crudShow = ref(false);
 const kelas = ref({});
 
 async function loadData() {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: `izin-madrasah/kelas/${params.id}`,
 		loading,
 	});

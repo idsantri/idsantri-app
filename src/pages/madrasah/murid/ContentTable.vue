@@ -77,7 +77,7 @@
 	<!-- <pre>{{ murid }}</pre> -->
 </template>
 <script setup>
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -98,12 +98,12 @@ function rowClick(row) {
 
 onMounted(async () => {
 	if (params.thAjaranH && params.tingkatId && params.kelas) {
-		const data = await getData({
+		const data = await apiGet({
 			endPoint: `murid/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`,
 		});
 		murid.value = data.murid;
 	} else if (params.thAjaranH && params.tingkatId) {
-		const data = await getData({
+		const data = await apiGet({
 			endPoint: `murid/${params.thAjaranH}/${params.tingkatId}`,
 			loading: spinner,
 		});

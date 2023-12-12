@@ -35,7 +35,7 @@
 </pre> -->
 </template>
 <script setup>
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -52,7 +52,7 @@ const personalia = ref([]);
 
 onMounted(async () => {
 	if (params.thAjaranH && params.tingkatId) {
-		const data = await getData({
+		const data = await apiGet({
 			endPoint: `personalia-madrasah`,
 			params: {
 				th_ajaran_h: params.thAjaranH,

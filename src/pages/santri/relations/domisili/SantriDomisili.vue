@@ -24,7 +24,7 @@ import { m2hFormat } from 'src/utils/hijri.js';
 import { getObjectById } from 'src/utils/array-object';
 import SantriDomisiliCrud from './SantriDomisiliCrud.vue';
 import { useRoute } from 'vue-router';
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 
 const spinner = ref(false);
 const crudShow = ref(false);
@@ -38,7 +38,7 @@ const route = useRoute();
 const santriId = route.params.id;
 
 onMounted(async () => {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: `santri/${santriId}/domisili`,
 		loading: spinner,
 	});

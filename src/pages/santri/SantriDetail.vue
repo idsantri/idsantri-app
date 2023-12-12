@@ -91,7 +91,7 @@ import santriStore from 'src/stores/santri-store';
 import { bacaHijri } from 'src/utils/hijri';
 import SantriRelations from 'src/pages/santri/SantriRelations.vue';
 import dialogStore from 'src/stores/dialog-store';
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import SantriIuran from 'src/pages/santri/iuran/SantriIuran.vue';
 
 const path = ref(useRoute().fullPath);
@@ -112,7 +112,7 @@ const register = ref({});
 const identity = ref({});
 const loading = ref(false);
 onMounted(async () => {
-	const data = await getData({ endPoint: `santri/${santriId}`, loading });
+	const data = await apiGet({ endPoint: `santri/${santriId}`, loading });
 	Object.assign(santri, data.santri);
 
 	// register

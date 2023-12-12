@@ -3,7 +3,7 @@ import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 
-async function postData({
+async function apiPost({
 	endPoint,
 	data,
 	rerender,
@@ -23,12 +23,13 @@ async function postData({
 		if (message) {
 			toArray(message).forEach((msg) => notifyError(msg));
 		} else {
-			console.log(error);
+			console.log(`Error during post ${endPoint}`, error);
 		}
+		return false;
 	} finally {
 		if (loading && typeof loading.value === 'boolean')
 			loading.value = false;
 	}
 }
 
-export default postData;
+export default apiPost;

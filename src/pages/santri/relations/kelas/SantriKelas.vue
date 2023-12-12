@@ -24,7 +24,7 @@ import TemplateArray from 'src/pages/santri/relations/TemplateArray.vue';
 import { getObjectById } from 'src/utils/array-object';
 import SantriKelasCrud from './SantriKelasCrud.vue';
 import { useRoute } from 'vue-router';
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { rerenderSantriRelations } from 'src/utils/buttons-click';
 
 const spinner = ref(false);
@@ -39,7 +39,7 @@ const route = useRoute();
 const santriId = route.params.id;
 
 onMounted(async () => {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: `santri/${santriId}/kelas`,
 		loading: spinner,
 	});

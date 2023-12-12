@@ -3,7 +3,7 @@ import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyError, notifySuccess, notifyConfirm } from 'src/utils/notify';
 
-async function updateApi({
+async function updateData({
 	endPoint,
 	data,
 	rerender,
@@ -31,7 +31,7 @@ async function updateApi({
 	}
 }
 
-async function updateData({
+async function apiUpdate({
 	endPoint,
 	data,
 	confirm = true,
@@ -44,7 +44,7 @@ async function updateData({
 	if (confirm) {
 		const dialog = await notifyConfirm(message, true);
 		return dialog
-			? await updateApi({
+			? await updateData({
 					endPoint,
 					data,
 					rerender,
@@ -54,8 +54,15 @@ async function updateData({
 			  })
 			: false;
 	} else {
-		return updateApi({ endPoint, data, rerender, loading, notify, params });
+		return updateData({
+			endPoint,
+			data,
+			rerender,
+			loading,
+			notify,
+			params,
+		});
 	}
 }
 
-export default updateData;
+export default apiUpdate;

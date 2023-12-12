@@ -69,7 +69,7 @@
 	</div>
 </template>
 <script setup>
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import SantriIuranTh from 'src/pages/santri/iuran/SantriIuranTh.vue';
 import SantriIuranCrud from 'src/pages/santri/iuran/SantriIuranCrud.vue';
@@ -85,7 +85,7 @@ const dataIuran = ref([]);
 const dataSantri = ref({});
 onMounted(async () => {
 	if (props.santriId) {
-		const { iuran_total, santri } = await getData({
+		const { iuran_total, santri } = await apiGet({
 			endPoint: `santri/${props.santriId}/iuran-total`,
 		});
 		// console.log('i', iuran_total);

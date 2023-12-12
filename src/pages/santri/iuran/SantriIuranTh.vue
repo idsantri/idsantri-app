@@ -64,7 +64,7 @@
 	</q-dialog>
 </template>
 <script setup>
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { formatDateShort } from 'src/utils/format-date';
 import { digitSeparator } from 'src/utils/format-number';
 import { reactive, ref } from 'vue';
@@ -80,7 +80,7 @@ const data = reactive([]);
 const dataSantri = reactive({});
 const total = ref();
 if (th.value?.length == 9 && santriId.value) {
-	const { iuran, santri } = await getData({
+	const { iuran, santri } = await apiGet({
 		endPoint: `santri/${santriId.value}/iuran/${th.value}`,
 	});
 	Object.assign(data, iuran);

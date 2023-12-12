@@ -189,7 +189,7 @@
 	<!-- <pre>{{ izin }}</pre> -->
 </template>
 <script setup>
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { formatDateFull, isDate } from 'src/utils/format-date';
 import { bacaHijri, m2h, m2hBacaHijri } from 'src/utils/hijri';
 import { onMounted, ref, watch } from 'vue';
@@ -204,7 +204,7 @@ const crudShow = ref(false);
 const showKembali = ref(false);
 
 async function loadData() {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: `izin-pesantren/${route.params.id}`,
 		loading,
 	});

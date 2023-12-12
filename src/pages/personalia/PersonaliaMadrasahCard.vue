@@ -72,7 +72,7 @@
 	</q-dialog>
 </template>
 <script setup>
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import ModalPersonaliaMadrasah from 'src/pages/personalia/PersonaliaMadrasahModal.vue';
@@ -92,7 +92,7 @@ async function handleEmit() {
 }
 async function loadData() {
 	if (route.params.id) {
-		const data = await getData({
+		const data = await apiGet({
 			endPoint: `personalia/${route.params.id}/madrasah`,
 			loading,
 		});

@@ -55,7 +55,7 @@ import CardListSantri from 'src/components/CardListSantri.vue';
 import waliStore from 'src/stores/wali-store';
 import { formatAlamatLengkap } from 'src/utils/format-text';
 import dialogStore from 'src/stores/dialog-store';
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 
 const wali = reactive({});
 const route = useRoute();
@@ -69,7 +69,7 @@ const loading = ref(false);
 
 onMounted(async () => {
 	// await fetchData();
-	const data = await getData({ endPoint: `wali/${waliId}`, loading });
+	const data = await apiGet({ endPoint: `wali/${waliId}`, loading });
 	Object.assign(wali, data.wali);
 
 	// identity

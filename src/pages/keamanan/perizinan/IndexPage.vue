@@ -63,7 +63,7 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import FilterTanggal from 'src/components/FilterTanggal';
 import { useRoute } from 'vue-router';
 import { isDate } from 'src/utils/format-date';
@@ -89,7 +89,7 @@ function dataEmit(val) {
 
 onMounted(async () => {
 	if (isDate(startDate.value) && isDate(endDate.value)) {
-		const data = await getData({
+		const data = await apiGet({
 			endPoint: 'izin-pesantren',
 			loading,
 			params: { start_date: startDate.value, end_date: endDate.value },

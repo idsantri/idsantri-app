@@ -2,7 +2,7 @@
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="submit">
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form @emit-button="handleEmitToolbar">
+				<toolbar-form @emit-button="null">
 					{{ props.title }} &mdash;
 					<em>{{ isNew ? 'baru' : 'edit' }}</em>
 				</toolbar-form>
@@ -139,7 +139,7 @@
 </template>
 <script setup>
 import { apiTokened } from 'src/api';
-import deleteData from 'src/api/api-delete';
+import apiDelete from 'src/api/api-delete';
 import { fetchListAscKey, fetchListKey, fetchLists } from 'src/api/fetch-list';
 import { toArray } from 'src/utils/array-object';
 import { rerenderSantriIuran } from 'src/utils/buttons-click';
@@ -230,7 +230,7 @@ const submit = async () => {
 const del = async (id) => {
 	// console.log(id);
 	// return;
-	const result = await deleteData({
+	const result = await apiDelete({
 		endPoint: `iuran/${id}`,
 		rerender: false,
 	});

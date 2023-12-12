@@ -2,7 +2,7 @@
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form>
+				<toolbar-form @emit-button="null">
 					Input Data Personalia &mdash;
 					<em> {{ $props.isNew ? 'baru' : 'edit' }}</em>
 				</toolbar-form>
@@ -249,9 +249,9 @@ import { bacaHijri, m2h } from 'src/utils/hijri';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
 import { fetchLists } from 'src/api/fetch-list';
-import deleteData from 'src/api/api-delete';
-import updateData from 'src/api/api-update';
-import postData from 'src/api/api-post';
+import apiDelete from 'src/api/api-delete';
+import apiUpdate from 'src/api/api-update';
+import apiPost from 'src/api/api-post';
 import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
 
 const props = defineProps({
@@ -279,13 +279,13 @@ const onSubmit = async () => {
 	delete data.aktif;
 	let response = null;
 	if (props.isNew) {
-		response = await postData({
+		response = await apiPost({
 			endPoint: 'personalia',
 			data,
 			loading: loadingCrud,
 		});
 	} else {
-		response = await updateData({
+		response = await apiUpdate({
 			endPoint: `personalia/${route.params.id}`,
 			data,
 			confirm: true,
@@ -300,7 +300,7 @@ const onSubmit = async () => {
 };
 
 const handleDelete = async () => {
-	const result = await deleteData({
+	const result = await apiDelete({
 		endPoint: `personalia/${route.params.id}`,
 		loading: loadingCrud,
 		rerender: false,

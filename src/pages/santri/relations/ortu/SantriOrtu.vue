@@ -10,7 +10,7 @@
 import { ref, onMounted } from 'vue';
 import TemplateObject from 'src/pages/santri/relations/TemplateObject.vue';
 import { useRoute } from 'vue-router';
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 
 const route = useRoute();
 const santriId = route.params.id;
@@ -18,7 +18,7 @@ const spinner = ref(false);
 const dataObj = ref({});
 
 onMounted(async () => {
-	const { ortu } = await getData({
+	const { ortu } = await apiGet({
 		endPoint: `santri/${santriId}/ortu`,
 		loading: spinner,
 	});

@@ -85,7 +85,7 @@
 	</q-card>
 </template>
 <script setup>
-import updateData from 'src/api/api-update';
+import apiUpdate from 'src/api/api-update';
 import {
 	formatDateFull,
 	isDate,
@@ -103,7 +103,7 @@ const input = ref({});
 const loading = ref(false);
 
 async function setBack() {
-	const updated = await updateData({
+	const updated = await apiUpdate({
 		endPoint: `izin-pesantren/${input.value.id}/set-kembali`,
 		loading,
 		data: {
@@ -117,7 +117,7 @@ async function setBack() {
 }
 
 async function setNotBack() {
-	const updated = await updateData({
+	const updated = await apiUpdate({
 		endPoint: `izin-pesantren/${input.value.id}/set-kembali`,
 		loading,
 		data: {

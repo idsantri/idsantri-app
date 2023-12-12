@@ -73,7 +73,7 @@
 </template>
 <script setup>
 import SantriKelasCrud from 'src/pages/santri/relations/kelas/SantriKelasCrud.vue';
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -99,7 +99,7 @@ function Submited() {
 }
 
 async function fetchData() {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: `kelas/${id}/riwayat`,
 		loading: spinner,
 	});

@@ -414,9 +414,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import updateData from 'src/api/api-update';
-import deleteData from 'src/api/api-delete';
-import getData from 'src/api/api-get';
+import apiUpdate from 'src/api/api-update';
+import apiDelete from 'src/api/api-delete';
+import apiGet from 'src/api/api-get';
 import FilterKelas from 'src/pages/madrasah/components/FilterKelas.vue';
 import { kebabToSnakeCase, kebabToTitleCase } from 'src/utils/format-text';
 
@@ -440,7 +440,7 @@ function dataEmit(val) {
 async function deleteAbsensi() {
 	const kelas_id = absensi.value.map((abs) => abs.kelas_id);
 	const bulan_ujian = params.bulanUjian;
-	const deleted = await deleteData({
+	const deleted = await apiDelete({
 		endPoint: params.absensi,
 		message: `<span style="color:'red'">Hapus data absensi untuk kelas ini?</span>`,
 		params: {
@@ -459,7 +459,7 @@ async function deleteAbsensi() {
 
 async function submitAbsensi() {
 	const data = JSON.parse(JSON.stringify(absensi.value));
-	const update = await updateData({
+	const update = await apiUpdate({
 		endPoint: params.absensi,
 		data: data,
 		confirm: true,
@@ -480,7 +480,7 @@ async function fetchAbsensi() {
 		params.kelas &&
 		params.bulanUjian
 	) {
-		const data = await getData({
+		const data = await apiGet({
 			endPoint: params.absensi,
 			params: {
 				th_ajaran_h: params.thAjaranH,

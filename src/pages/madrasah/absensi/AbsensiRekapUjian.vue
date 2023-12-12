@@ -179,7 +179,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import FilterKelas from 'src/pages/madrasah/components/FilterKelas.vue';
 import { kebabToSnakeCase, kebabToTitleCase } from 'src/utils/format-text';
 
@@ -201,7 +201,7 @@ function dataEmit(val) {
 
 async function getAbsensi() {
 	if (params.thAjaranH && params.tingkatId && params.kelas) {
-		const data = await getData({
+		const data = await apiGet({
 			endPoint: `${params.absensi}/rekap-ujian/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`,
 			loading: spinner,
 		});

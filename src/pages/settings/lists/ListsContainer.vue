@@ -3,38 +3,29 @@
 		<q-spinner-cube color="green-12" size="8em" class="flex q-mx-auto" />
 	</div>
 	<div v-else>
-		<div v-if="isError">
-			<p
-				class="q-my-lg text-negative text-weight-light text-h6 text-center"
-			>
-				Terjadi kelasahan!
-			</p>
+		<div v-if="selected.mode == 'one'">
+			<ListsModeOne
+				:data="listGet"
+				@update-list="handleUpdate"
+				@delete-list="handleDelete"
+				@add-list="handleAdd"
+			/>
 		</div>
-		<div v-else>
-			<div v-if="selected.mode == 'one'">
-				<ListsModeOne
-					:data="listGet"
-					@update-list="handleUpdate"
-					@delete-list="handleDelete"
-					@add-list="handleAdd"
-				/>
-			</div>
-			<div v-if="selected.mode == 'two'">
-				<ListsModeTwo
-					:data="listGet"
-					@update-list="handleUpdate"
-					@delete-list="handleDelete"
-					@add-list="handleAdd"
-				/>
-			</div>
-			<div v-if="selected.mode == 'iuran'">
-				<ListsModeIuran
-					:data="listGet"
-					@update-list="handleUpdate"
-					@delete-list="handleDelete"
-					@add-list="handleAdd"
-				/>
-			</div>
+		<div v-if="selected.mode == 'two'">
+			<ListsModeTwo
+				:data="listGet"
+				@update-list="handleUpdate"
+				@delete-list="handleDelete"
+				@add-list="handleAdd"
+			/>
+		</div>
+		<div v-if="selected.mode == 'iuran'">
+			<ListsModeIuran
+				:data="listGet"
+				@update-list="handleUpdate"
+				@delete-list="handleDelete"
+				@add-list="handleAdd"
+			/>
 		</div>
 	</div>
 
@@ -51,10 +42,10 @@ import ListsModeOne from 'src/pages/settings/lists/ListsModeOne.vue';
 import ListsModeTwo from 'src/pages/settings/lists/ListsModeTwo.vue';
 import ListsModeIuran from 'src/pages/settings/lists/ListsModeIuran.vue';
 
-import getData from 'src/api/api-get.js';
-import updateData from 'src/api/api-update';
-import deleteData from 'src/api/api-delete';
-import postData from 'src/api/api-post';
+import apiGet from 'src/api/api-get.js';
+import apiUpdate from 'src/api/api-update';
+import apiDelete from 'src/api/api-delete';
+import apiPost from 'src/api/api-post';
 import { notifyError } from 'src/utils/notify';
 
 const route = useRoute();
@@ -62,12 +53,10 @@ const listKey = route.params.listKey;
 const selected = listData.find(({ url }) => url == listKey);
 const spinner = ref(false);
 const listGet = ref([]);
-const isError = ref(false);
 async function fetchData() {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: `lists/${selected.url}`,
 		loading: spinner,
-		isError,
 	});
 	// console.log('e', err.value);
 	const response = kebabToSnakeCase(selected.url);
@@ -87,12 +76,12 @@ async function handleUpdate(list) {
 		return notifyError('List tidak boleh kosong!');
 	}
 	const data = { key, val0, val1, val2, note };
-	const upd = await updateData({ endPoint: `lists/${id}`, data });
+	const upd = await apiUpdate({ endPoint: `lists/${id}`, data });
 	if (upd) await fetchData();
 }
 
 async function handleDelete(list) {
-	const del = await deleteData({ endPoint: `lists/${list.id}` });
+	const del = await apiDelete({ endPoint: `lists/${list.id}` });
 	if (del) fetchData();
 }
 
@@ -112,7 +101,7 @@ async function handleAdd(list) {
 	};
 	// console.log(data);
 
-	const post = await postData({ endPoint: `lists`, data });
+	const post = await apiPost({ endPoint: `lists`, data });
 	if (post) {
 		await fetchData();
 	}

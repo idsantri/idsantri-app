@@ -72,7 +72,7 @@
 	/>
 </template>
 <script setup>
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { formatDateFull } from 'src/utils/format-date';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -96,7 +96,7 @@ async function handleEmit(val) {
 }
 
 async function loadData() {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: `personalia/${route.params.id}`,
 		loading,
 	});

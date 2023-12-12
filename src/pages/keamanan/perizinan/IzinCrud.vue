@@ -2,7 +2,7 @@
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form>
+				<toolbar-form @emit-button="null">
 					Input Izin Santri &mdash;
 					<em> {{ $props.isNew ? 'baru' : 'edit' }}</em>
 				</toolbar-form>
@@ -157,17 +157,17 @@
 	</q-card>
 </template>
 <script setup>
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 import { onMounted, ref, watch } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
 import { fetchLists } from 'src/api/fetch-list';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
-import postData from 'src/api/api-post';
+import apiPost from 'src/api/api-post';
+import apiUpdate from 'src/api/api-update';
+import apiDelete from 'src/api/api-delete';
 import { useRouter } from 'vue-router';
-import updateData from 'src/api/api-update';
-import deleteData from 'src/api/api-delete';
 
 const props = defineProps({
 	isNew: Boolean,
@@ -194,13 +194,13 @@ async function onSubmit() {
 	// return;
 	let response = null;
 	if (props.isNew) {
-		response = await postData({
+		response = await apiPost({
 			endPoint: 'izin-pesantren',
 			data,
 			loading: loadingCrud,
 		});
 	} else {
-		response = await updateData({
+		response = await apiUpdate({
 			endPoint: `izin-pesantren/${input.value.id}`,
 			data,
 			confirm: true,
@@ -215,7 +215,7 @@ async function onSubmit() {
 }
 
 const handleDelete = async () => {
-	const result = await deleteData({
+	const result = await apiDelete({
 		endPoint: `izin-pesantren/${input.value.id}`,
 		loading: loadingCrud,
 		rerender: false,

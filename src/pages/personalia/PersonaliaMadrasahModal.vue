@@ -2,7 +2,7 @@
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="submit">
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form>
+				<toolbar-form @emit-button="null">
 					Jabatan Madrasiyah &mdash;
 					<em>{{ isNew ? 'baru' : 'edit' }}</em>
 				</toolbar-form>
@@ -145,9 +145,9 @@
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import { fetchListAscKey, fetchLists } from 'src/api/fetch-list';
 import { onMounted, ref } from 'vue';
-import deleteById from 'src/api/api-delete';
-import postData from 'src/api/api-post';
-import updateData from 'src/api/api-update';
+import apiDelete from 'src/api/api-delete';
+import apiPost from 'src/api/api-post';
+import apiUpdate from 'src/api/api-update';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -199,13 +199,13 @@ const submit = async () => {
 
 	let response = null;
 	if (props.isNew) {
-		response = await postData({
+		response = await apiPost({
 			endPoint: `personalia-madrasah`,
 			data,
 			loading: loadingCrud,
 		});
 	} else {
-		response = await updateData({
+		response = await apiUpdate({
 			endPoint: `personalia-madrasah/${data.id}`,
 			data,
 			confirm: true,
@@ -216,7 +216,7 @@ const submit = async () => {
 };
 
 const deleteData = async (id) => {
-	const deleted = await deleteById({
+	const deleted = await apiDelete({
 		endPoint: `personalia-madrasah/${id}`,
 		loading: loadingCrud,
 	});

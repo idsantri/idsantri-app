@@ -146,19 +146,17 @@
 	</q-card>
 </template>
 <script setup>
-import { apiTokened } from 'src/api';
 import { toArray } from 'src/utils/array-object';
 import { rerenderSantriRelations } from 'src/utils/buttons-click';
 import { fetchLists } from 'src/api/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref, watch } from 'vue';
-import deleteById from 'src/api/api-delete';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import { bacaHijri, m2h } from 'src/utils/hijri';
 import { formatDateFull, isDate } from 'src/utils/format-date';
-import updateData from 'src/api/api-update';
-import postData from 'src/api/api-post';
-import deleteData from 'src/api/api-delete';
+import apiUpdate from 'src/api/api-update';
+import apiPost from 'src/api/api-post';
+import apiDelete from 'src/api/api-delete';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -196,13 +194,13 @@ const onSubmit = async () => {
 	if (props.isNew) {
 		// console.log(data);
 		// return;
-		response = await postData({
+		response = await apiPost({
 			endPoint: 'izin-madrasah',
 			data,
 			loading: loadingCrud,
 		});
 	} else {
-		response = await updateData({
+		response = await apiUpdate({
 			endPoint: `izin-madrasah/${input.value.id}`,
 			data,
 			confirm: true,
@@ -217,7 +215,7 @@ const onSubmit = async () => {
 };
 
 const handleDelete = async () => {
-	const result = await deleteData({
+	const result = await apiDelete({
 		endPoint: `izin-madrasah/${input.value.id}`,
 		loading: loadingCrud,
 		rerender: false,

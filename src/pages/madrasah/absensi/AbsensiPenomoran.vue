@@ -109,8 +109,8 @@
 	</q-card>
 </template>
 <script setup>
-import getData from 'src/api/api-get';
-import updateData from 'src/api/api-update';
+import apiGet from 'src/api/api-get';
+import apiUpdate from 'src/api/api-update';
 import FilterKelas from 'src/pages/madrasah/components/FilterKelas.vue';
 import { notifyConfirm, notifyWarning, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
@@ -158,7 +158,7 @@ async function updateNoAbsen() {
 		};
 	});
 
-	const updated = await updateData({
+	const updated = await apiUpdate({
 		endPoint: 'kelas/no-absen',
 		data: absen,
 		loading,
@@ -171,7 +171,7 @@ async function updateNoAbsen() {
 
 onMounted(async () => {
 	if (params.thAjaranH && params.tingkatId && params.kelas) {
-		const data = await getData({
+		const data = await apiGet({
 			endPoint: `murid/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`,
 			loading,
 		});

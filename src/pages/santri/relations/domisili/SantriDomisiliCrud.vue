@@ -2,7 +2,7 @@
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="submit">
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form @emit-button="handleEmitToolbar">
+				<toolbar-form @emit-button="null">
 					{{ props.title }} &mdash;
 					<em>{{ isNew ? 'baru' : 'edit' }}</em>
 				</toolbar-form>
@@ -70,7 +70,7 @@ import { rerenderSantriRelations } from 'src/utils/buttons-click';
 import { fetchLists } from 'src/api/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
-import deleteById from 'src/api/api-delete';
+import apiDelete from 'src/api/api-delete';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -114,6 +114,6 @@ const deleteData = async (id) => {
 		endPoint: `domisili/${id}`,
 		rerender: true,
 	};
-	await deleteById(data);
+	await apiDelete(data);
 };
 </script>

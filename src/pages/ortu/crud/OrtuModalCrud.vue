@@ -101,10 +101,10 @@ import ortuStore from 'src/stores/ortu-store.js';
 import { useRouter } from 'vue-router';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
-import deleteData from 'src/api/api-delete';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import updateData from 'src/api/api-update';
-import postData from 'src/api/api-post';
+import apiUpdate from 'src/api/api-update';
+import apiDelete from 'src/api/api-delete';
+import apiPost from 'src/api/api-post';
 
 const router = useRouter();
 const { ortu } = reactive(ortuStore());
@@ -128,13 +128,13 @@ const onSubmit = async () => {
 	const data = JSON.parse(JSON.stringify(ortu));
 	let response = null;
 	if (isNew) {
-		response = await postData({
+		response = await apiPost({
 			endPoint: 'ortu',
 			data,
 			loading: loadingCrud,
 		});
 	} else {
-		response = await updateData({
+		response = await apiUpdate({
 			endPoint: `ortu/${ortu.id}`,
 			data,
 			confirm: true,
@@ -156,7 +156,7 @@ const resetOrDelete = async () => {
 	if (isNew) {
 		ortuStore().setNull();
 	} else {
-		const result = await deleteData({
+		const result = await apiDelete({
 			endPoint: `ortu/${ortu.id}`,
 			message: `<span style="color:'red'">Hapus Orang Tua?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>`,
 			rerender: false,

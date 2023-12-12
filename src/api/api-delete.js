@@ -3,7 +3,7 @@ import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyError, notifySuccess, notifyConfirm } from 'src/utils/notify';
 
-async function deleteApi({ endPoint, loading, notify, rerender, params }) {
+async function deleteData({ endPoint, loading, notify, rerender, params }) {
 	try {
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
 		const response = await apiTokened.delete(endPoint, { params });
@@ -15,7 +15,7 @@ async function deleteApi({ endPoint, loading, notify, rerender, params }) {
 		if (message) {
 			toArray(message).forEach((msg) => notifyError(msg));
 		} else {
-			console.log(error);
+			console.log(`Error during delete ${endPoint}`, error);
 		}
 		return false;
 	} finally {
@@ -24,7 +24,7 @@ async function deleteApi({ endPoint, loading, notify, rerender, params }) {
 	}
 }
 
-async function deleteData({
+async function apiDelete({
 	endPoint,
 	message = `<span style="color:'red'">Hapus data ini?</span>`,
 	rerender,
@@ -34,8 +34,8 @@ async function deleteData({
 }) {
 	const dialog = await notifyConfirm(message, true);
 	return dialog
-		? await deleteApi({ endPoint, loading, notify, rerender, params })
+		? await deleteData({ endPoint, loading, notify, rerender, params })
 		: false;
 }
 
-export default deleteData;
+export default apiDelete;

@@ -121,9 +121,9 @@
 	<!-- <pre>{{ users }}</pre> -->
 </template>
 <script setup>
-import deleteData from 'src/api/api-delete';
-import getData from 'src/api/api-get';
-import updateData from 'src/api/api-update';
+import apiDelete from 'src/api/api-delete';
+import apiGet from 'src/api/api-get';
+import apiUpdate from 'src/api/api-update';
 import { onMounted, ref } from 'vue';
 
 const showUserModal = ref(false);
@@ -192,7 +192,7 @@ const columns = [
 ];
 
 async function getUsers() {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: `users`,
 		loading: loading,
 	});
@@ -213,7 +213,7 @@ async function confirmUser(val) {
 	const data = { confirm: val };
 	const id = user.value.id;
 
-	const result = await updateData({
+	const result = await apiUpdate({
 		endPoint: `users/${id}/confirm`,
 		data,
 	});
@@ -225,13 +225,13 @@ async function confirmUser(val) {
 
 async function deleteUser() {
 	const id = user.value.id;
-	await deleteData({ endPoint: `users/${id}`, rerender: true });
+	await apiDelete({ endPoint: `users/${id}`, rerender: true });
 }
 
 async function setRole(id, role, value) {
 	user.value.roles[role] = value;
 	const data = { role, value };
-	const update = await updateData({ endPoint: `users/${id}/roles`, data });
+	const update = await apiUpdate({ endPoint: `users/${id}/roles`, data });
 	if (!update) return (user.value.roles[role] = !value);
 
 	await getUsers();

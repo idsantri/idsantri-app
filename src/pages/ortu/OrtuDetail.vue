@@ -65,7 +65,7 @@ import CardColumn from '../../components/CardColumn.vue';
 import CardListSantri from 'src/components/CardListSantri.vue';
 import ortuStore from 'src/stores/ortu-store.js';
 import dialogStore from 'src/stores/dialog-store';
-import getData from 'src/api/api-get';
+import apiGet from 'src/api/api-get';
 
 const ortu = reactive({});
 const route = useRoute();
@@ -80,7 +80,7 @@ const santri = ref({});
 const loading = ref(false);
 
 onMounted(async () => {
-	const data = await getData({ endPoint: `ortu/${ortuId}`, loading });
+	const data = await apiGet({ endPoint: `ortu/${ortuId}`, loading });
 	Object.assign(ortu, data.ortu);
 
 	// identity

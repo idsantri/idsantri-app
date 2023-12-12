@@ -205,10 +205,10 @@
 	<!-- <pre>list data:{{ listData }}</pre> -->
 </template>
 <script setup>
-import deleteData from 'src/api/api-delete';
-import getData from 'src/api/api-get';
-import postData from 'src/api/api-post';
-import updateData from 'src/api/api-update';
+import apiDelete from 'src/api/api-delete';
+import apiGet from 'src/api/api-get';
+import apiPost from 'src/api/api-post';
+import apiUpdate from 'src/api/api-update';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -224,7 +224,7 @@ const newSetting = ref({});
 
 async function addSetting() {
 	newSetting.value.tingkat_id = modelTingkatId.value.val0;
-	const post = await postData({
+	const post = await apiPost({
 		endPoint: 'absensi-settings',
 		data: newSetting.value,
 	});
@@ -234,14 +234,14 @@ async function addSetting() {
 	}
 }
 async function deleteSetting(id) {
-	const deleted = await deleteData({
+	const deleted = await apiDelete({
 		endPoint: `absensi-settings/${id}`,
 		loading: spinner,
 	});
 	if (deleted) return fetchSetting(modelTingkatId.value.val0);
 }
 async function submitUpdate(val) {
-	await updateData({
+	await apiUpdate({
 		endPoint: `absensi-settings/${val.id}`,
 		data: {
 			bulan: val.bulan,
@@ -254,7 +254,7 @@ async function submitUpdate(val) {
 	await fetchSetting(val.tingkat_id);
 }
 async function fetchTingkat() {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: 'lists/tingkat-pendidikan',
 		loading,
 	});
@@ -262,7 +262,7 @@ async function fetchTingkat() {
 }
 
 async function fetchHijri() {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: 'lists/bulan-hijri',
 		loading,
 	});
@@ -270,7 +270,7 @@ async function fetchHijri() {
 }
 
 async function fetchSetting(tingkatId) {
-	const data = await getData({
+	const data = await apiGet({
 		endPoint: `absensi-settings?tingkat_id=${tingkatId}`,
 		loading: spinner,
 	});

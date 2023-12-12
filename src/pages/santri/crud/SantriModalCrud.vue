@@ -122,11 +122,11 @@ import InputOrtuWali from './SantriModalCrudOrtuWali.vue';
 import { useRoute, useRouter } from 'vue-router';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
-import deleteData from 'src/api/api-delete';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import postData from 'src/api/api-post';
-import updateData from 'src/api/api-update';
+import apiDelete from 'src/api/api-delete';
+import apiPost from 'src/api/api-post';
+import apiUpdate from 'src/api/api-update';
 
 const router = useRouter();
 const route = useRoute();
@@ -148,14 +148,14 @@ const onSubmit = async () => {
 	const data = JSON.parse(JSON.stringify(santri));
 	let response = null;
 	if (isNew) {
-		response = await postData({
+		response = await apiPost({
 			endPoint: 'santri',
 			data,
 			loading: loadingCrud,
 		});
 	} else {
 		const rerender = route.params.id == santri.id ? true : false;
-		response = await updateData({
+		response = await apiUpdate({
 			endPoint: `santri/${route.params.id}`,
 			data,
 			confirm: true,
@@ -175,7 +175,7 @@ const resetOrDelete = async () => {
 	if (isNew) {
 		santriStore().setNull();
 	} else {
-		const result = await deleteData({
+		const result = await apiDelete({
 			endPoint: `santri/${santri.id}`,
 			message: `<span style="color:'red'">Hapus santri?</span>`,
 			rerender: false,
