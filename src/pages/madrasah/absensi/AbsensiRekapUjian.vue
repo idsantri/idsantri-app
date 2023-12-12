@@ -1,16 +1,21 @@
 <template lang="">
 	<filter-kelas
 		:showBulanUjian="false"
-		start-url="/madrasah/absensi/rekap-ujian"
+		:start-url="`/madrasah/${params.absensi}/rekap-ujian`"
 		@dataFilter="dataEmit"
 	/>
 	<q-card class="q-mt-sm">
 		<q-card-section
-			class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm flex"
+			class="bg-green-7 text-green-1 text-subtitle1 q-px-sm q-py-xs"
 		>
-			<span v-html="dataFilter.display || 'Tentukan filter!'"></span>
-			<!-- <q-space />
-			<q-btn flat="" dense icon="cached" disable /> -->
+			<div class="text-subtitle1">
+				➡️ <strong> {{ kebabToTitleCase(params.absensi) }} </strong>
+			</div>
+		</q-card-section>
+		<q-card-section class="bg-green-3 text-green-10 text-subtitle1 q-pa-sm">
+			<div>
+				<span v-html="dataFilter.display || 'Tentukan filter!'"></span>
+			</div>
 		</q-card-section>
 		<q-card-section class="no-padding">
 			<q-markup-table flat>
@@ -176,12 +181,14 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import getData from 'src/api/api-get';
 import FilterKelas from 'src/pages/madrasah/components/FilterKelas.vue';
+import { kebabToSnakeCase, kebabToTitleCase } from 'src/utils/format-text';
 
 const spinner = ref(false);
 const route = useRoute();
 
 const absensi = ref([]);
 const params = {
+	absensi: route.params.absensi,
 	thAjaranH: route.params.thAjaranH,
 	tingkatId: route.params.tingkatId,
 	kelas: route.params.kelas,
@@ -195,10 +202,11 @@ function dataEmit(val) {
 async function getAbsensi() {
 	if (params.thAjaranH && params.tingkatId && params.kelas) {
 		const data = await getData({
-			endPoint: `absensi/rekap-ujian/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`,
+			endPoint: `${params.absensi}/rekap-ujian/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`,
 			loading: spinner,
 		});
-		absensi.value = data.absensi;
+		const abs = kebabToSnakeCase(params.absensi);
+		absensi.value = data[abs];
 	}
 }
 

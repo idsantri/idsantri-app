@@ -64,13 +64,13 @@
 				</q-item-section>
 			</q-item>
 
-			<q-item clickable v-ripple to="/madrasah/absensi/input">
+			<q-item clickable v-ripple to="/madrasah/absensi-sekolah/input">
 				<q-item-section avatar>
 					<q-icon color="green-1" name="checklist" />
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>Absensi</q-item-label>
-					<q-item-label caption>Absensi Sekolah</q-item-label>
+					<q-item-label caption>Sekolah dan Musyawarah</q-item-label>
 				</q-item-section>
 			</q-item>
 			<!-- <q-item clickable v-ripple to="/madrasah/tingkat">

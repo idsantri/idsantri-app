@@ -218,6 +218,13 @@ const routes = [
 									),
 							},
 							{
+								path: 'izin',
+								component: () =>
+									import(
+										'src/pages/madrasah/kelas/KelasIzin.vue'
+									),
+							},
+							{
 								path: 'nilai',
 								component: () =>
 									import(
@@ -227,7 +234,7 @@ const routes = [
 						],
 					},
 					{
-						path: 'absensi',
+						path: ':absensi',
 						component: () =>
 							import(
 								'src/pages/madrasah/absensi/AbsensiIndex.vue'

@@ -28,34 +28,84 @@
 						<q-list>
 							<!-- input -->
 							<q-item
-								v-if="showButton(`madrasah/absensi/input`)"
-								clickable
-								v-close-popup
-								@click="$router.push(`/madrasah/absensi/input`)"
-							>
-								<q-item-section avatar>
-									<q-icon color="green" name="edit_square" />
-								</q-item-section>
-								<q-item-section>Input</q-item-section>
-							</q-item>
-
-							<!-- rekap ujian -->
-							<q-item
 								v-if="
-									showButton(`madrasah/absensi/rekap-ujian`)
+									showButton(`madrasah/absensi-sekolah/input`)
 								"
 								clickable
 								v-close-popup
 								@click="
 									$router.push(
-										`/madrasah/absensi/rekap-ujian`
+										`/madrasah/absensi-sekolah/input`
+									)
+								"
+							>
+								<q-item-section avatar>
+									<q-icon color="green" name="edit_square" />
+								</q-item-section>
+								<q-item-section>Input Sekolah</q-item-section>
+							</q-item>
+							<q-item
+								v-if="
+									showButton(
+										`madrasah/absensi-musyawarah/input`
+									)
+								"
+								clickable
+								v-close-popup
+								@click="
+									$router.push(
+										`/madrasah/absensi-musyawarah/input`
+									)
+								"
+							>
+								<q-item-section avatar>
+									<q-icon color="green" name="edit_square" />
+								</q-item-section>
+								<q-item-section
+									>Input Musyawarah</q-item-section
+								>
+							</q-item>
+
+							<!-- rekap ujian -->
+							<q-item
+								v-if="
+									showButton(
+										`madrasah/absensi-sekolah/rekap-ujian`
+									)
+								"
+								clickable
+								v-close-popup
+								@click="
+									$router.push(
+										`/madrasah/absensi-sekolah/rekap-ujian`
 									)
 								"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
 								</q-item-section>
-								<q-item-section>Rekap</q-item-section>
+								<q-item-section>Rekap Sekolah</q-item-section>
+							</q-item>
+							<q-item
+								v-if="
+									showButton(
+										`madrasah/absensi-musyawarah/rekap-ujian`
+									)
+								"
+								clickable
+								v-close-popup
+								@click="
+									$router.push(
+										`/madrasah/absensi-musyawarah/rekap-ujian`
+									)
+								"
+							>
+								<q-item-section avatar>
+									<q-icon color="green" name="summarize" />
+								</q-item-section>
+								<q-item-section
+									>Rekap Musyawarah</q-item-section
+								>
 							</q-item>
 
 							<!-- nomor absen -->

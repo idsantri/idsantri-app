@@ -171,6 +171,11 @@
 									:to="`/madrasah/kelas/${kelas.id}/riwayat`"
 								/>
 								<q-route-tab
+									name="izin"
+									label="Izin"
+									:to="`/madrasah/kelas/${kelas.id}/izin`"
+								/>
+								<q-route-tab
 									name="nilai"
 									label="Nilai"
 									:to="`/madrasah/kelas/${kelas.id}/nilai`"

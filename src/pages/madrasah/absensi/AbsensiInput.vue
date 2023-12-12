@@ -1,16 +1,21 @@
 <template lang="">
 	<filter-kelas
 		:showBulanUjian="true"
-		start-url="/madrasah/absensi/input"
+		:start-url="`/madrasah/${params.absensi}/input`"
 		@dataFilter="dataEmit"
 	/>
 	<q-card class="q-mt-sm">
 		<q-card-section
-			class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm flex"
+			class="bg-green-7 text-green-1 text-subtitle1 q-px-sm q-py-xs"
 		>
-			<span v-html="dataFilter.display || 'Tentukan filter!'"></span>
-			<!-- <q-space />
-			<q-btn flat="" dense icon="cached" disable /> -->
+			<div class="text-subtitle1">
+				➡️ <strong> {{ kebabToTitleCase(params.absensi) }} </strong>
+			</div>
+		</q-card-section>
+		<q-card-section class="bg-green-3 text-green-10 text-subtitle1 q-pa-sm">
+			<div>
+				<span v-html="dataFilter.display || 'Tentukan filter!'"></span>
+			</div>
 		</q-card-section>
 		<q-card-section class="no-padding">
 			<q-markup-table flat>
@@ -413,6 +418,7 @@ import updateData from 'src/api/api-update';
 import deleteData from 'src/api/api-delete';
 import getData from 'src/api/api-get';
 import FilterKelas from 'src/pages/madrasah/components/FilterKelas.vue';
+import { kebabToSnakeCase, kebabToTitleCase } from 'src/utils/format-text';
 
 const spinner = ref(false);
 const route = useRoute();
@@ -420,6 +426,7 @@ const router = useRouter();
 
 const absensi = ref([]);
 const params = {
+	absensi: route.params.absensi,
 	thAjaranH: route.params.thAjaranH,
 	tingkatId: route.params.tingkatId,
 	kelas: route.params.kelas,
@@ -434,7 +441,7 @@ async function deleteAbsensi() {
 	const kelas_id = absensi.value.map((abs) => abs.kelas_id);
 	const bulan_ujian = params.bulanUjian;
 	const deleted = await deleteData({
-		endPoint: 'absensi',
+		endPoint: params.absensi,
 		message: `<span style="color:'red'">Hapus data absensi untuk kelas ini?</span>`,
 		params: {
 			bulan_ujian,
@@ -445,7 +452,7 @@ async function deleteAbsensi() {
 
 	if (deleted) {
 		absensi.value = [];
-		const url = `/madrasah/absensi/input/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`;
+		const url = `/madrasah/${params.absensi}/input/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`;
 		router.push(url);
 	}
 }
@@ -453,7 +460,7 @@ async function deleteAbsensi() {
 async function submitAbsensi() {
 	const data = JSON.parse(JSON.stringify(absensi.value));
 	const update = await updateData({
-		endPoint: 'absensi',
+		endPoint: params.absensi,
 		data: data,
 		confirm: true,
 		message: `<span style="color:'blue'">Kirim data absensi?</span>`,
@@ -461,7 +468,8 @@ async function submitAbsensi() {
 	});
 
 	if (update) {
-		absensi.value = update.absensi;
+		const abs = kebabToSnakeCase(params.absensi);
+		absensi.value = update[abs];
 	}
 }
 
@@ -472,8 +480,8 @@ async function fetchAbsensi() {
 		params.kelas &&
 		params.bulanUjian
 	) {
-		const post = await getData({
-			endPoint: 'absensi',
+		const data = await getData({
+			endPoint: params.absensi,
 			params: {
 				th_ajaran_h: params.thAjaranH,
 				tingkat_id: params.tingkatId,
@@ -483,7 +491,8 @@ async function fetchAbsensi() {
 			needNotify: false,
 			loading: spinner,
 		});
-		absensi.value = post.absensi;
+		const abs = kebabToSnakeCase(params.absensi);
+		absensi.value = data[abs];
 	}
 }
 

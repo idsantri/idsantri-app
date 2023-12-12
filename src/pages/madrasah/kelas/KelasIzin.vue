@@ -1,5 +1,5 @@
 <template lang="">
-	<h6>nilai</h6>
+	<h6>izin</h6>
 	<div>
 		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur
 		animi laboriosam, repellat quam at placeat autem eveniet iste voluptates
