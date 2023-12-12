@@ -4,12 +4,7 @@
 	</div>
 	<div v-else>
 		<q-list v-if="data.length" separator="">
-			<q-item
-				v-for="item in data"
-				:key="item.id"
-				class="q-pa-none"
-				v-ripple
-			>
+			<q-item v-for="item in data" :key="item.id" class="q-pa-none">
 				<q-item-section side="" class="q-pr-sm">
 					<q-btn
 						class="q-ma-xs"
@@ -18,6 +13,16 @@
 						icon="edit"
 						round=""
 						@click="$emit('edit', item)"
+					/>
+					<q-btn
+						v-if="btnPrint"
+						class="q-ma-xs text-green-10"
+						size="sm"
+						glossy=""
+						color="green-12"
+						icon="print"
+						round=""
+						@click="$emit('print', item)"
 					/>
 				</q-item-section>
 				<q-item-section>
@@ -53,5 +58,10 @@
 	<!-- <pre>{{ props.spinner }}</pre> -->
 </template>
 <script setup>
-const props = defineProps(['data', 'spinner']);
+// const props = defineProps(['data', 'spinner', 'btnPrint']);
+const props = defineProps({
+	data: Object,
+	spinner: Boolean,
+	btnPrint: Boolean,
+});
 </script>
