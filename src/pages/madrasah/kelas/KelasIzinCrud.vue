@@ -146,10 +146,7 @@
 	</q-card>
 </template>
 <script setup>
-import { toArray } from 'src/utils/array-object';
-import { rerenderSantriRelations } from 'src/utils/buttons-click';
 import { fetchLists } from 'src/api/fetch-list';
-import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref, watch } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import { bacaHijri, m2h } from 'src/utils/hijri';
@@ -165,7 +162,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
-const input = ref({ keperluan: 'Sakit' });
+const input = ref({ keperluan: 'Sakit', durasi: 1 });
 const lists = ref([]);
 const loading = ref([]);
 const loadingCrud = ref(false);

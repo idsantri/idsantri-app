@@ -29,13 +29,7 @@
 								/>
 							</div>
 							<q-list v-else dense>
-								<q-item
-									clickable
-									v-ripple
-									@click="
-										$router.push(`/santri/${santri.id}`)
-									"
-								>
+								<q-item>
 									<q-item-section avatar>
 										<q-avatar class="d-flex">
 											<img
@@ -45,10 +39,8 @@
 									</q-item-section>
 
 									<q-item-section>
-										<q-item-label overline class="flex">
+										<q-item-label overline>
 											Santri
-											<q-space />
-											{{ santri.id }}
 										</q-item-label>
 										<q-item-label>
 											{{ santri.nama }} ({{ santri.sex }})
@@ -61,25 +53,33 @@
 											{{ santri.data_akhir }}
 										</q-item-label>
 									</q-item-section>
+									<q-item-section avatar>
+										<q-btn
+											outline
+											color="green"
+											@click="
+												$router.push(
+													`/santri/${santri.id}`
+												)
+											"
+										>
+											<small>
+												{{ santri.id }}
+											</small>
+										</q-btn>
+									</q-item-section>
 								</q-item>
 								<q-separator inset="item" />
 
-								<q-item
-									clickable
-									v-ripple
-									@click="
-										$router.push(`/wali/${santri.wali_id}`)
-									"
-								>
+								<q-item>
 									<q-item-section top avatar>
 										<q-avatar> </q-avatar>
 									</q-item-section>
 
 									<q-item-section>
-										<q-item-label overline class="flex">
-											Wali <q-space />
-											{{ santri.wali_id }}</q-item-label
-										>
+										<q-item-label overline
+											>Wali
+										</q-item-label>
 										<q-item-label
 											>{{ santri.wali_nama }} ({{
 												santri.wali_sex
@@ -89,28 +89,51 @@
 											}})</q-item-label
 										>
 									</q-item-section>
+									<q-item-section avatar>
+										<q-btn
+											outline
+											color="green"
+											@click="
+												$router.push(
+													`/wali/${santri.wali_id}`
+												)
+											"
+										>
+											<small>
+												{{ santri.wali_id }}
+											</small>
+										</q-btn>
+									</q-item-section>
 								</q-item>
 								<q-separator inset="item" />
-								<q-item
-									clickable
-									v-ripple
-									@click="
-										$router.push(`/ortu/${santri.ortu_id}`)
-									"
-								>
+								<q-item>
 									<q-item-section top avatar>
 										<q-avatar> </q-avatar>
 									</q-item-section>
 
 									<q-item-section>
-										<q-item-label overline class="flex">
+										<q-item-label overline>
 											Orang Tua
-											<q-space />{{ santri.ortu_id }}
 										</q-item-label>
-										<q-item-label
-											>{{ santri.ayah }} |
+										<q-item-label>
+											{{ santri.ayah }} |
 											{{ santri.ibu }}
 										</q-item-label>
+									</q-item-section>
+									<q-item-section avatar>
+										<q-btn
+											outline
+											color="green"
+											@click="
+												$router.push(
+													`/ortu/${santri.ortu_id}`
+												)
+											"
+										>
+											<small>
+												{{ santri.ortu_id }}
+											</small>
+										</q-btn>
 									</q-item-section>
 								</q-item>
 							</q-list>

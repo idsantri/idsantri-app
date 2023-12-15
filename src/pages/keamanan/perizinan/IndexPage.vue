@@ -28,7 +28,7 @@
 				:loading="loading"
 				:filter="filter"
 				:rows-per-page-options="[10, 25, 50, 75, 100, 0]"
-				no-data-label="Silakan tentukan Tahun ajaran dan tingkat pendidikan!"
+				no-data-label="Silakan tentukan filter tanggal!"
 				no-results-label="Tidak ditemukan kata kunci yang sesuai dengan pencarian Anda!"
 				row-key="name"
 				flat

@@ -338,8 +338,17 @@ const routes = [
 								'src/pages/keamanan/perizinan/IndexPage.vue'
 							),
 					},
+
 					{
-						path: 'indisipliner',
+						// /:id -> matches only numbers
+						path: 'indisipliner/:id(\\d+)',
+						component: () =>
+							import(
+								'src/pages/keamanan/indisipliner/IndisiplinerDetail.vue'
+							),
+					},
+					{
+						path: 'indisipliner/:startDate?/:endDate?',
 						component: () =>
 							import(
 								'src/pages/keamanan/indisipliner/IndexPage.vue'

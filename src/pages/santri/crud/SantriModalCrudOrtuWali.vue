@@ -196,4 +196,3 @@ watch([ortu_id, wali_id], ([newOrtu, newWali], [oldOrtu, oldWali]) => {
 	width: 100px;
 }
 </style>
-src/api/fetch-list src/api/api

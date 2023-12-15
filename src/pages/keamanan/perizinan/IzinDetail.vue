@@ -231,4 +231,8 @@ function replaceDynamicText(inputString) {
 	return result;
 }
 </script>
-<style lang=""></style>
+<style scoped>
+td {
+	vertical-align: top;
+}
+</style>
