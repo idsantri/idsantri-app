@@ -29,7 +29,7 @@
 	</div>
 </template>
 <script setup>
-import FilterKelas from 'src/pages/madrasah/components/FilterKelas.vue';
+import FilterKelas from 'src/components/FilterKelas.vue';
 import { ref } from 'vue';
 
 const dataFilter = ref({});

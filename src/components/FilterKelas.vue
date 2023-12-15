@@ -71,7 +71,7 @@
 	</q-card>
 </template>
 <script setup>
-import { getListsByKey } from 'src/api/api-get-lists';
+import { getListsCustom } from 'src/api/api-get-lists';
 import { notifyWarning } from 'src/utils/notify';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -105,7 +105,7 @@ const lists = ref([]);
 
 onMounted(async () => {
 	// get tahun ajaran
-	await getListsByKey({
+	await getListsCustom({
 		url: `murid/lists-kelas`,
 		lists,
 		key: 'th_ajaran',
@@ -115,7 +115,7 @@ onMounted(async () => {
 
 	// get tingkat
 	if (params.thAjaranH) {
-		await getListsByKey({
+		await getListsCustom({
 			url: `murid/lists-kelas/${params.thAjaranH}`,
 			lists,
 			key: 'tingkat',
@@ -126,7 +126,7 @@ onMounted(async () => {
 
 	// get kelas
 	if (params.thAjaranH && params.tingkatId) {
-		await getListsByKey({
+		await getListsCustom({
 			url: `murid/lists-kelas/${params.thAjaranH}/${params.tingkatId}`,
 			lists,
 			key: 'kelas_detail',
@@ -142,7 +142,7 @@ onMounted(async () => {
 		params.kelas &&
 		props.showBulanUjian
 	) {
-		await getListsByKey({
+		await getListsCustom({
 			url: `absensi-settings?tingkat_id=${tingkatId.value}`,
 			lists,
 			key: 'bulan_ujian',

@@ -86,7 +86,7 @@ function hasObject(array) {
  * @param {*} object
  * @returns array object
  */
-async function getListsByKey({ loading, lists, key, url, sort = null }) {
+async function getListsCustom({ loading, lists, key, url, sort = null }) {
 	loading.value[key] = true;
 	try {
 		const { data } = await apiTokened.get(url);
@@ -117,4 +117,4 @@ async function getListsByKey({ loading, lists, key, url, sort = null }) {
 	}
 }
 
-export { getLists, getListsKey, getListsByKey };
+export { getLists, getListsKey, getListsCustom };
