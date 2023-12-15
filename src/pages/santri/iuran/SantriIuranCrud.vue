@@ -140,7 +140,6 @@
 <script setup>
 import { apiTokened } from 'src/api';
 import apiDelete from 'src/api/api-delete';
-import { fetchListAscKey, fetchListKey, fetchLists } from 'src/api/fetch-list';
 import { toArray } from 'src/utils/array-object';
 import { rerenderSantriIuran } from 'src/utils/buttons-click';
 import { digitSeparator } from 'src/utils/format-number';
@@ -148,6 +147,7 @@ import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref, watch } from 'vue';
 import CurrencyInput from 'src/components/CurrencyInput.vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
+import { getLists, getListsKey } from 'src/api/api-get-lists';
 
 const props = defineProps({
 	dataSantri: { type: Object, required: true },
@@ -164,21 +164,21 @@ onMounted(async () => {
 	input.value.santri_id = props.dataSantri.id;
 	if (props.dataIuran) Object.assign(input.value, props.dataIuran);
 
-	await fetchListAscKey({
+	await getListsKey({
 		key: 'tahun-ajaran',
 		loading,
 		lists,
-		ascending: false,
+		sort: false,
 	});
 
-	await fetchListKey({
+	await getListsKey({
 		key: 'iuran',
 		loading,
 		lists,
-		ascending: false,
+		sort: true,
 	});
-	await fetchLists({ key: 'keterangan-iuran', loading, lists });
-	await fetchLists({ key: 'metode-pembayaran', loading, lists });
+	await getLists({ key: 'keterangan-iuran', sort: true, loading, lists });
+	await getLists({ key: 'metode-pembayaran', sort: true, loading, lists });
 
 	// console.log('l', lists.value['iuran']);
 	// console.log(input.value);

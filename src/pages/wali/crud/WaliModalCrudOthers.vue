@@ -82,8 +82,8 @@
 </template>
 <script setup>
 import waliState from 'src/stores/wali-store';
-import { fetchLists } from 'src/api/fetch-list';
 import { onMounted, ref, toRefs } from 'vue';
+import { getLists } from 'src/api/api-get-lists';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -102,10 +102,19 @@ const lists = ref([]);
 const loading = ref([]);
 
 onMounted(async () => {
-	await fetchLists({ loading, lists, key: 'pendidikan-akhir-formal' });
-	await fetchLists({ loading, lists, key: 'pendidikan-akhir-diniyah' });
-	await fetchLists({ loading, lists, key: 'pekerjaan' });
+	await getLists({
+		loading,
+		lists,
+		sort: true,
+		key: 'pendidikan-akhir-formal',
+	});
+	await getLists({
+		loading,
+		lists,
+		sort: true,
+		key: 'pendidikan-akhir-diniyah',
+	});
+	await getLists({ loading, lists, sort: true, key: 'pekerjaan' });
 });
 </script>
 <style></style>
-src/api/fetch-list

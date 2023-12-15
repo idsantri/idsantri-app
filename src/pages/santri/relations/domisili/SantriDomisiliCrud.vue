@@ -67,11 +67,11 @@
 import { apiTokened } from 'src/api';
 import { toArray } from 'src/utils/array-object';
 import { rerenderSantriRelations } from 'src/utils/buttons-click';
-import { fetchLists } from 'src/api/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
 import apiDelete from 'src/api/api-delete';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
+import { getLists } from 'src/api/api-get-lists';
 const props = defineProps({
 	data: { type: Object, required: true },
 	isNew: { type: Boolean, default: true },
@@ -84,7 +84,7 @@ const lists = ref([]);
 const loading = ref([]);
 onMounted(async () => {
 	input.value = props.data;
-	await fetchLists({ key: 'domisili', loading, lists });
+	await getLists({ key: 'domisili', loading, lists, sort: true });
 });
 
 const submit = async () => {

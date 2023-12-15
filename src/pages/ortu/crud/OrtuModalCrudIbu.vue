@@ -111,8 +111,8 @@ import ortuState from 'src/stores/ortu-store.js';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
 import { onMounted, ref, toRefs } from 'vue';
-import { fetchLists } from 'src/api/fetch-list';
 import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
+import { getLists } from 'src/api/api-get-lists';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -138,8 +138,18 @@ const lists = ref([]);
 const loading = ref([]);
 
 onMounted(async () => {
-	await fetchLists({ loading, lists, key: 'pendidikan-akhir-formal' });
-	await fetchLists({ loading, lists, key: 'pendidikan-akhir-diniyah' });
-	await fetchLists({ loading, lists, key: 'pekerjaan' });
+	await getLists({
+		loading,
+		lists,
+		sort: true,
+		key: 'pendidikan-akhir-formal',
+	});
+	await getLists({
+		loading,
+		lists,
+		sort: true,
+		key: 'pendidikan-akhir-diniyah',
+	});
+	await getLists({ loading, lists, sort: true, key: 'pekerjaan' });
 });
 </script>

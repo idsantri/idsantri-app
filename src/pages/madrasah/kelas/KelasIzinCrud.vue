@@ -146,7 +146,6 @@
 	</q-card>
 </template>
 <script setup>
-import { fetchLists } from 'src/api/fetch-list';
 import { onMounted, ref, watch } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import { bacaHijri, m2h } from 'src/utils/hijri';
@@ -154,6 +153,7 @@ import { formatDateFull, isDate } from 'src/utils/format-date';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
 import apiDelete from 'src/api/api-delete';
+import { getLists } from 'src/api/api-get-lists';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -169,8 +169,8 @@ const loadingCrud = ref(false);
 
 onMounted(async () => {
 	Object.assign(input.value, props.data);
-	await fetchLists({ key: 'keperluan-izin', loading, lists });
-	await fetchLists({ key: 'keterangan-izin', loading, lists });
+	await getLists({ key: 'keperluan-izin', loading, lists, sort: true });
+	await getLists({ key: 'keterangan-izin', loading, lists, sort: true });
 });
 
 const onSubmit = async () => {

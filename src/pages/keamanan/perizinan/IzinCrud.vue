@@ -161,13 +161,13 @@ import apiGet from 'src/api/api-get';
 import { onMounted, ref, watch } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
-import { fetchLists } from 'src/api/fetch-list';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import { useRouter } from 'vue-router';
+import { getLists } from 'src/api/api-get-lists';
 
 const props = defineProps({
 	isNew: Boolean,
@@ -230,9 +230,9 @@ onMounted(async () => {
 	// input.value = props.data;
 	// console.log(props.data);
 	Object.assign(input.value, props.data);
-	await fetchLists({ key: 'sifat-izin', loading, lists });
-	await fetchLists({ key: 'keperluan-izin', loading, lists });
-	await fetchLists({ key: 'keterangan-izin', loading, lists });
+	await getLists({ key: 'sifat-izin', loading, lists, sort: true });
+	await getLists({ key: 'keperluan-izin', loading, lists, sort: true });
+	await getLists({ key: 'keterangan-izin', loading, lists, sort: true });
 });
 
 watch(

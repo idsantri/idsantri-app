@@ -143,11 +143,11 @@
 </template>
 <script setup>
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import { fetchListAscKey, fetchLists } from 'src/api/fetch-list';
 import { onMounted, ref } from 'vue';
 import apiDelete from 'src/api/api-delete';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
+import { getLists, getListsKey } from 'src/api/api-get-lists';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -164,24 +164,24 @@ onMounted(async () => {
 	// input.value = props.data;  // menjadi reactive
 	Object.assign(input.value, props.data);
 
-	await fetchListAscKey({
+	await getListsKey({
 		key: 'tahun-ajaran',
 		loading,
 		lists,
-		ascending: false,
+		sort: false,
 	});
-	await fetchListAscKey({
+	await getListsKey({
 		key: 'tingkat-pendidikan',
 		loading,
 		lists,
-		ascending: true,
+		sort: true,
 	});
-	await fetchLists({ key: 'kelas', loading, lists, ascending: true });
-	await fetchLists({
+	await getLists({ key: 'kelas', loading, lists, sort: true });
+	await getLists({
 		key: 'jabatan-madrasah',
 		loading,
 		lists,
-		ascending: true,
+		sort: true,
 	});
 });
 

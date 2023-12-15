@@ -30,7 +30,6 @@
 	</q-card>
 </template>
 <script setup>
-import { fetchListsArray } from 'src/api/fetch-list';
 import { formatDateFull } from 'src/utils/format-date';
 import { notifyWarning } from 'src/utils/notify';
 import { onMounted, ref, watch } from 'vue';

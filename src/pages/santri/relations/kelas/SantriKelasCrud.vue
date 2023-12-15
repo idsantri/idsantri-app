@@ -119,11 +119,11 @@
 import { apiTokened } from 'src/api';
 import { toArray } from 'src/utils/array-object';
 import { rerenderSantriRelations } from 'src/utils/buttons-click';
-import { fetchListAscKey, fetchLists } from 'src/api/fetch-list';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
 import apiDelete from 'src/api/api-delete';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
+import { getLists, getListsKey } from 'src/api/api-get-lists';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -140,19 +140,19 @@ const loading = ref([]);
 onMounted(async () => {
 	input.value = props.data;
 
-	await fetchListAscKey({
+	await getListsKey({
 		key: 'tahun-ajaran',
 		loading,
 		lists,
-		ascending: false,
+		sort: false,
 	});
-	await fetchListAscKey({
+	await getListsKey({
 		key: 'tingkat-pendidikan',
 		loading,
 		lists,
-		ascending: true,
+		sort: true,
 	});
-	await fetchLists({ key: 'kelas', loading, lists });
+	await getLists({ key: 'kelas', loading, lists, sort: true });
 });
 
 const submit = async () => {

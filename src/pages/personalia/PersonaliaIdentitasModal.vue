@@ -248,11 +248,11 @@ import { formatDateFull, isDate } from 'src/utils/format-date';
 import { bacaHijri, m2h } from 'src/utils/hijri';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
-import { fetchLists } from 'src/api/fetch-list';
 import apiDelete from 'src/api/api-delete';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
 import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
+import { getLists } from 'src/api/api-get-lists';
 
 const props = defineProps({
 	dataPersonalia: Object,
@@ -269,8 +269,18 @@ const loading = ref([]);
 const loadingCrud = ref(false);
 
 onMounted(async () => {
-	await fetchLists({ loading, lists, key: 'pendidikan-akhir-formal' });
-	await fetchLists({ loading, lists, key: 'pendidikan-akhir-diniyah' });
+	await getLists({
+		loading,
+		lists,
+		sort: true,
+		key: 'pendidikan-akhir-formal',
+	});
+	await getLists({
+		loading,
+		lists,
+		sort: true,
+		key: 'pendidikan-akhir-diniyah',
+	});
 });
 
 const onSubmit = async () => {

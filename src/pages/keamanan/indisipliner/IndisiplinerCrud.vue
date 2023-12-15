@@ -180,13 +180,13 @@
 import { onMounted, ref } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
-import { fetchListAscKey, fetchLists } from 'src/api/fetch-list';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import { useRouter } from 'vue-router';
+import { getLists, getListsKey } from 'src/api/api-get-lists';
 
 const props = defineProps({
 	isNew: Boolean,
@@ -260,18 +260,18 @@ onMounted(async () => {
 		input.value.takzir = input.value.takzir.split(',');
 	}
 
-	await fetchListAscKey({
+	await getListsKey({
 		key: 'tatib-santri',
 		loading,
 		lists,
-		ascending: true,
+		sort: true,
 	});
 	optionsTatib.value = lists.value['tatib-santri']
 		.filter((d) => d.val0.length != 1)
 		.map((d) => `[${d.val0}] ${d.val1}`);
 	// console.log(optionsTatib.value);
 
-	await fetchLists({ key: 'takzir-santri', loading, lists });
+	await getLists({ key: 'takzir-santri', loading, lists, sort: true });
 });
 
 const categoryOptions = [

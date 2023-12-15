@@ -137,8 +137,8 @@ import santriState from 'src/stores/santri-store';
 import { notifyError } from 'src/utils/notify';
 import { toArray } from 'src/utils/array-object';
 import { onMounted, reactive, ref, toRefs, watch } from 'vue';
-import { fetchLists } from 'src/api/fetch-list';
 import dialogStore from 'src/stores/dialog-store';
+import { getLists } from 'src/api/api-get-lists';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -156,7 +156,7 @@ const lists = ref([]);
 const loading = ref([]);
 
 onMounted(async () => {
-	await fetchLists({ key: 'hubungan-wali', loading, lists });
+	await getLists({ key: 'hubungan-wali', loading, lists, sort: true });
 });
 
 const check = async (param, id) => {
