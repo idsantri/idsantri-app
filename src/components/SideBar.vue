@@ -23,8 +23,7 @@
 			header-class="text-body1 text-green-1"
 			expand-icon-class="text-green-1"
 		>
-			<!-- APP -->
-			<q-item clickable v-ripple to="/sekretariat">
+			<!-- <q-item clickable v-ripple to="/sekretariat">
 				<q-item-section avatar>
 					<q-icon color="green-1" name="home_work" />
 				</q-item-section>
@@ -32,14 +31,34 @@
 					<q-item-label>Beranda</q-item-label>
 					<q-item-label caption>Beranda sekretariat</q-item-label>
 				</q-item-section>
-			</q-item>
-			<q-item clickable v-ripple @click="addNew">
+			</q-item> -->
+			<q-item clickable v-ripple @click="addNewSantri">
 				<q-item-section avatar>
 					<q-icon color="green-1" name="add" />
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>Tambah</q-item-label>
 					<q-item-label caption>Santri Baru</q-item-label>
+				</q-item-section>
+			</q-item>
+		</q-expansion-item>
+
+		<!-- BENDAHARA -->
+		<q-separator dark />
+		<q-expansion-item
+			expand-separator
+			label="Bendahara"
+			caption="Keuangan"
+			header-class="text-body1 text-green-1"
+			expand-icon-class="text-green-1"
+		>
+			<q-item clickable v-ripple to="/bendahara">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="payments" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Iuran</q-item-label>
+					<q-item-label caption>Iuran Santri dan Murid</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>
@@ -169,7 +188,7 @@ import { toRefs } from 'vue';
 const dialog = dialogStore();
 const { searchSantri, crudSantri } = toRefs(dialog);
 
-const addNew = () => {
+const addNewSantri = () => {
 	santriStore().$reset();
 	crudSantri.value = true;
 };

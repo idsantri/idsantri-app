@@ -60,12 +60,12 @@
 
 				<!-- relations -->
 				<div class="col-12 col-sm-6 col-md-4 q-pa-sm">
-					<div v-if="pathIuran()">
+					<santri-relations :santri-id="santriId" />
+					<!-- <div v-if="pathIuran()">
 						<santri-iuran :santri-id="santriId" />
 					</div>
 					<div v-else>
-						<santri-relations :santri-id="santriId" />
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</q-card-section>
@@ -92,7 +92,7 @@ import { bacaHijri } from 'src/utils/hijri';
 import SantriRelations from 'src/pages/santri/SantriRelations.vue';
 import dialogStore from 'src/stores/dialog-store';
 import apiGet from 'src/api/api-get';
-import SantriIuran from 'src/pages/santri/iuran/SantriIuran.vue';
+import SantriIuran from 'src/pages/santri/iuran-x/SantriIuran.vue';
 
 const path = ref(useRoute().fullPath);
 function pathIuran() {

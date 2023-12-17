@@ -124,7 +124,6 @@
 					v-close-popup
 					class="bg-green-11"
 					no-caps=""
-					id="btn-close-santri-crud"
 				/>
 				<q-btn
 					type="submit"

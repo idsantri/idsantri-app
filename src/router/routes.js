@@ -136,21 +136,21 @@ const routes = [
 								'src/pages/santri/relations/iuran-total/SantriIuranTotal.vue'
 							),
 					},
-					{
-						path: 'iuran',
-						meta: { title: 'Detail Santri — Iuran' },
-						component: () =>
-							import('src/pages/santri/iuran/SantriIuran.vue'),
-						children: [
-							{
-								path: ':th_ajaran_h',
-								component: () =>
-									import(
-										'src/pages/santri/iuran/SantriIuranTh.vue'
-									),
-							},
-						],
-					},
+					// {
+					// 	path: 'iuran',
+					// 	meta: { title: 'Detail Santri — Iuran' },
+					// 	component: () =>
+					// 		import('src/pages/santri/iuran/SantriIuran.vue'),
+					// 	children: [
+					// 		{
+					// 			path: ':th_ajaran_h',
+					// 			component: () =>
+					// 				import(
+					// 					'src/pages/santri/iuran/SantriIuranTh.vue'
+					// 				),
+					// 		},
+					// 	],
+					// },
 				],
 			},
 			{
@@ -318,6 +318,33 @@ const routes = [
 					},
 				],
 			},
+
+			// BENDAHARA
+			{
+				path: 'bendahara',
+				meta: { title: 'Bendahara' },
+				redirect: (to) => '/bendahara/iuran/tanggal',
+				children: [
+					// {
+					// 	path: '/bendahara/iuran/th-ajaran-h/:thAjaranH?',
+					// 	component: () =>
+					// 		import('src/pages/bendahara/iuran/IuranIndex.vue'),
+					// },
+					{
+						path: 'iuran/tanggal/:startDate?/:endDate?',
+						component: () =>
+							import('src/pages/bendahara/iuran/IuranIndex.vue'),
+					},
+					{
+						path: 'iuran/santri/:id/:thAjaranH?',
+						component: () =>
+							import(
+								'src/pages/bendahara/iuran/santri/IuranSantri.vue'
+							),
+					},
+				],
+			},
+
 			{
 				path: 'keamanan',
 				meta: { title: 'Keamanan' },

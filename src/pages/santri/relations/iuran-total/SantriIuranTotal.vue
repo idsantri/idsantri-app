@@ -44,11 +44,11 @@ onMounted(async () => {
 
 const router = useRouter();
 const handleAdd = () => {
-	router.push(`/santri/${santri.value.id}/iuran`);
+	router.push(`/bendahara/iuran/santri/${santri.value.id}`);
 };
 
 const handleEdit = (tahun) => {
 	const th = tahun['Tahun Ajaran'].substring(0, 9);
-	router.push(`/santri/${santri.value.id}/iuran/${th}`);
+	router.push(`/bendahara/iuran/santri/${santri.value.id}/${th}`);
 };
 </script>

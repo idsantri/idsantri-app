@@ -71,8 +71,8 @@
 <script setup>
 import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
-import SantriIuranTh from 'src/pages/santri/iuran/SantriIuranTh.vue';
-import SantriIuranCrud from 'src/pages/santri/iuran/SantriIuranCrud.vue';
+import SantriIuranTh from 'src/pages/santri/iuran-x/SantriIuranTh.vue';
+import SantriIuranCrud from 'src/pages/santri/iuran-x/SantriIuranCrud.vue';
 
 const crudShow = ref(false);
 const keySantriIuran = ref(0);
