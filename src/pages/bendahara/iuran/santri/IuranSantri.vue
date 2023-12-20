@@ -111,6 +111,11 @@ async function loadData() {
 	iuran.value = data.iuran;
 	tahunIuran.value = iuran.value.map((v) => v.th_ajaran_h);
 	// console.log(iuran.value[0].th_ajaran_h);
+
+	const img = await apiGet({
+		endPoint: `images/santri/${route.params.id}`,
+	});
+	santri.value.image = img.image_url;
 }
 onMounted(async () => {
 	await loadData();

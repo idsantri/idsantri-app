@@ -26,151 +26,94 @@
 			</q-toolbar>
 		</q-card-section>
 		<q-card-section class="q-pa-sm">
-			<div v-if="loading">
-				<q-spinner-cube
-					color="green-12"
-					size="8em"
-					class="flex q-ma-lg q-mx-auto"
-				/>
-			</div>
-			<div v-else class="row">
-				<div class="col-4 q-pr-sm">
-					<q-img
-						:src="izin?.image || '/user-default.png'"
-						:ratio="3 / 4"
-						alt="santri"
+			<card-head-santri :data="izin" :loading="loading" />
+			<q-card bordered flat class="q-mt-sm">
+				<q-card-section class="q-pa-sm text-subtitle1 bg-green-11 flex">
+					Data Izin
+					<q-space />
+					<q-btn
+						dense
+						label="Kembali"
+						icon="manage_history"
+						no-caps
+						class="q-px-sm bg-green-10 text-green-12"
+						@click="showKembali = true"
 					/>
-				</div>
-				<div class="col">
-					<q-card bordered flat>
-						<q-card-section
-							class="q-pa-sm text-subtitle1 bg-green-11 flex"
-						>
-							Data Santri
-							<q-space />
-							<q-btn
-								round
-								flat
-								dense
-								icon="info"
-								no-caps
-								color="green-12"
-								class="q-px-sm bg-green-8"
-								@click="
-									$router.push(`/santri/${izin.santri_id}`)
-								"
-							/>
-						</q-card-section>
+				</q-card-section>
+				<q-card-section class="q-pa-sm">
+					<table>
+						<tr>
+							<td class="text-italic">Sifat Izin:</td>
+							<td>{{ izin.sifat }}</td>
+						</tr>
+						<tr>
+							<td class="text-italic">Tanggal:</td>
+							<td>
+								{{
+									formatDateFull(izin.tgl_m) +
+									' | ' +
+									bacaHijri(izin.tgl_h)
+								}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-italic">Durasi:</td>
+							<td>
+								{{ izin.durasi + ' hari' }}
+							</td>
+						</tr>
 
-						<q-card-section class="q-pa-sm">
-							<div class="">
-								<div class="text-overline">
-									{{ izin.nama?.toUpperCase() }} ({{
-										izin.santri_id
-									}})
-								</div>
-								<div class="text-caption">
-									{{ izin.data_akhir }}
-								</div>
-								<div class="">
-									{{ izin.alamat_pendek }}
-								</div>
-							</div>
-						</q-card-section>
-					</q-card>
-					<q-card bordered flat class="q-mt-sm">
-						<q-card-section
-							class="q-pa-sm text-subtitle1 bg-green-11 flex"
-						>
-							Data Izin
-							<q-space />
-							<q-btn
-								dense
-								label="Kembali"
-								icon="manage_history"
-								no-caps
-								class="q-px-sm bg-green-10 text-green-12"
-								@click="showKembali = true"
-							/>
-						</q-card-section>
-						<q-card-section class="q-pa-sm">
-							<table>
-								<tr>
-									<td class="text-italic">Sifat Izin:</td>
-									<td>{{ izin.sifat }}</td>
-								</tr>
-								<tr>
-									<td class="text-italic">Tanggal:</td>
-									<td>
-										{{
-											formatDateFull(izin.tgl_m) +
-											' | ' +
-											bacaHijri(izin.tgl_h)
-										}}
-									</td>
-								</tr>
-								<tr>
-									<td class="text-italic">Durasi:</td>
-									<td>
-										{{ izin.durasi + ' hari' }}
-									</td>
-								</tr>
-
-								<tr>
-									<td class="text-italic">Keperluan:</td>
-									<td>
-										{{ izin.keperluan }}
-										{{
-											izin.keterangan
-												? ' (' + izin.keterangan + ')'
-												: ''
-										}}
-									</td>
-								</tr>
-								<tr>
-									<td class="text-italic">Tujuan:</td>
-									<td>
-										{{ izin.tujuan }}
-									</td>
-								</tr>
-								<tr>
-									<td class="text-italic">Catatan:</td>
-									<td>
-										{{ izin.catatan || '-' }}
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<q-separator color="green-8" />
-									</td>
-								</tr>
-								<tr>
-									<td class="text-italic">Kembali:</td>
-									<td>
-										{{
-											formatDateFull(izin.kembali_m) +
-											' | ' +
-											bacaHijri(izin.kembali_h)
-										}}
-									</td>
-								</tr>
-								<tr>
-									<td class="text-italic">Status:</td>
-									<td>
-										{{
-											izin.status
-												? replaceDynamicText(
-														izin.status
-												  )
-												: ''
-										}}
-									</td>
-								</tr>
-							</table>
-						</q-card-section>
-					</q-card>
-				</div>
-			</div>
+						<tr>
+							<td class="text-italic">Keperluan:</td>
+							<td>
+								{{ izin.keperluan }}
+								{{
+									izin.keterangan
+										? ' (' + izin.keterangan + ')'
+										: ''
+								}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-italic">Tujuan:</td>
+							<td>
+								{{ izin.tujuan }}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-italic">Catatan:</td>
+							<td>
+								{{ izin.catatan || '-' }}
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<q-separator color="green-8" />
+							</td>
+						</tr>
+						<tr>
+							<td class="text-italic">Kembali:</td>
+							<td>
+								{{
+									formatDateFull(izin.kembali_m) +
+									' | ' +
+									bacaHijri(izin.kembali_h)
+								}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-italic">Status:</td>
+							<td>
+								{{
+									izin.status
+										? replaceDynamicText(izin.status)
+										: ''
+								}}
+							</td>
+						</tr>
+					</table>
+				</q-card-section>
+			</q-card>
 		</q-card-section>
 	</q-card>
 	<q-dialog v-model="crudShow">
@@ -196,6 +139,7 @@ import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import IzinCrud from 'src/pages/keamanan/perizinan/IzinCrud.vue';
 import IzinKembali from 'src/pages/keamanan/perizinan/IzinKembali.vue';
+import CardHeadSantri from 'src/components/CardHeadSantri.vue';
 
 const route = useRoute();
 const izin = ref({});
@@ -209,6 +153,11 @@ async function loadData() {
 		loading,
 	});
 	izin.value = data.izin_pesantren;
+	// console.log(izin.value);
+	const img = await apiGet({
+		endPoint: `images/santri/${izin.value.santri_id}`,
+	});
+	izin.value.image = img.image_url;
 }
 
 async function submitSetBack() {

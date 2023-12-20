@@ -101,6 +101,12 @@ async function loadData() {
 		loading,
 	});
 	personalia.value = data.personalia;
+	// console.log(personalia.value);
+
+	const img = await apiGet({
+		endPoint: `images/personalia/${personalia.value.id}`,
+	});
+	personalia.value.image = img.image_url;
 
 	personaliaObj.value = {
 		Nama: `${personalia.value.nama?.toUpperCase()} (${personalia.value.sex?.toUpperCase()})`,

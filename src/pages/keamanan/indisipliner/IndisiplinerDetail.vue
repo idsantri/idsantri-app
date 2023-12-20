@@ -146,6 +146,10 @@ async function loadData() {
 	});
 	indisipliner.value = data.indisipliner;
 	// console.log(indisipliner.value);
+	const img = await apiGet({
+		endPoint: `images/santri/${indisipliner.value.santri_id}`,
+	});
+	indisipliner.value.image = img.image_url;
 }
 
 onMounted(async () => {

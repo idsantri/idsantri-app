@@ -12,8 +12,8 @@
 				:data="dataObj"
 				:is-new="isNew"
 				title="Input Kelas"
-				@success-submit="rerenderSantriRelations()"
-				@success-delete="rerenderSantriRelations()"
+				@success-submit="loadData"
+				@success-delete="loadData"
 			/>
 		</q-dialog>
 	</div>
@@ -25,7 +25,6 @@ import { getObjectById } from 'src/utils/array-object';
 import SantriKelasCrud from './SantriKelasCrud.vue';
 import { useRoute } from 'vue-router';
 import apiGet from 'src/api/api-get';
-import { rerenderSantriRelations } from 'src/utils/buttons-click';
 
 const spinner = ref(false);
 const crudShow = ref(false);
@@ -38,7 +37,7 @@ const santri = ref({});
 const route = useRoute();
 const santriId = route.params.id;
 
-onMounted(async () => {
+async function loadData() {
 	const data = await apiGet({
 		endPoint: `santri/${santriId}/kelas`,
 		loading: spinner,
@@ -56,6 +55,10 @@ onMounted(async () => {
 		.reverse();
 
 	santri.value = data.santri;
+}
+
+onMounted(async () => {
+	await loadData();
 });
 
 const handleAdd = () => {

@@ -33,7 +33,11 @@
 									<q-item-section avatar>
 										<q-avatar class="d-flex">
 											<img
-												src="https://cdn.quasar.dev/img/boy-avatar.png"
+												:src="
+													santri?.image ||
+													'/user-default.png'
+												"
+												:ratio="3 / 4"
 											/>
 										</q-avatar>
 									</q-item-section>
@@ -259,6 +263,7 @@ async function fetchData() {
 	});
 	kelas.value = data.kelas;
 	santri.value = data.santri;
+	// console.log(santri.value);
 
 	kelasObj.value = {
 		'Tahun Ajaran':
@@ -269,6 +274,11 @@ async function fetchData() {
 		Aktif: kelas.value.aktif ? 'Ya' : 'Tidak',
 		Keterangan: kelas.value.keterangan || '-',
 	};
+
+	const img = await apiGet({
+		endPoint: `images/santri/${santri.value.id}`,
+	});
+	santri.value.image = img.image_url;
 }
 onMounted(async () => {
 	await fetchData();

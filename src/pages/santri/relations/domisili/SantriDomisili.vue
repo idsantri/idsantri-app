@@ -12,6 +12,8 @@
 				:data="dataObj"
 				:is-new="isNew"
 				title="Input Domisili"
+				@success-submit="loadData"
+				@success-delete="loadData"
 			/>
 		</q-dialog>
 	</div>
@@ -37,7 +39,7 @@ const santri = ref({});
 const route = useRoute();
 const santriId = route.params.id;
 
-onMounted(async () => {
+async function loadData() {
 	const data = await apiGet({
 		endPoint: `santri/${santriId}/domisili`,
 		loading: spinner,
@@ -51,6 +53,10 @@ onMounted(async () => {
 	}));
 
 	santri.value = data.santri;
+}
+
+onMounted(async () => {
+	await loadData();
 });
 
 const handleAdd = () => {

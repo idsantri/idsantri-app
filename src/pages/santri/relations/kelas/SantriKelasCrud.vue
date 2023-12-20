@@ -8,6 +8,15 @@
 				</toolbar-form>
 			</q-card-section>
 			<q-card-section>
+				<div v-if="loadingCrud">
+					<q-dialog v-model="loadingCrud" persistent="">
+						<q-spinner-cube
+							color="green-12"
+							size="8em"
+							class="flex q-ma-lg q-mx-auto"
+						/>
+					</q-dialog>
+				</div>
 				<q-input
 					dense
 					outlined
@@ -102,7 +111,7 @@
 					v-close-popup
 					class="bg-green-11"
 					no-caps=""
-					id="btn-close-santri-crud"
+					id="btn-close"
 				/>
 				<q-btn
 					type="submit"
@@ -116,14 +125,12 @@
 	</q-card>
 </template>
 <script setup>
-import { apiTokened } from 'src/api';
-import { toArray } from 'src/utils/array-object';
-import { rerenderSantriRelations } from 'src/utils/buttons-click';
-import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
-import apiDelete from 'src/api/api-delete';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import { getLists, getListsKey } from 'src/api/api-get-lists';
+import apiPost from 'src/api/api-post';
+import apiUpdate from 'src/api/api-update';
+import apiDelete from 'src/api/api-delete';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -133,12 +140,13 @@ const props = defineProps({
 
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
-// eslint-disable-next-line vue/no-setup-props-destructure
 const input = ref({});
 const lists = ref([]);
 const loading = ref([]);
+const loadingCrud = ref(false);
+
 onMounted(async () => {
-	input.value = props.data;
+	Object.assign(input.value, props.data);
 
 	await getListsKey({
 		key: 'tahun-ajaran',
@@ -157,7 +165,6 @@ onMounted(async () => {
 
 const submit = async () => {
 	const data = {
-		id: input.value.id,
 		santri_id: input.value.santri_id,
 		th_ajaran_h: input.value.th_ajaran_h,
 		tingkat_id: input.value.tingkat_id,
@@ -165,27 +172,38 @@ const submit = async () => {
 		no_absen: input.value.no_absen,
 		keterangan: input.value.keterangan,
 	};
-	// console.log(data);
-	// return;
-	try {
-		let response = null;
-		if (props.isNew) response = await apiTokened.post(`kelas`, data);
-		else response = await apiTokened.put(`kelas/${data.id}`, data);
-		notifySuccess(response.data.message);
-		// rerenderSantriRelations();
-		emit('successSubmit');
-	} catch (error) {
-		toArray(error.response.data.message).forEach((message) => {
-			notifyError(message);
+
+	let response = null;
+	if (props.isNew) {
+		response = await apiPost({
+			endPoint: 'kelas',
+			data,
+			loading: loadingCrud,
 		});
+	} else {
+		response = await apiUpdate({
+			endPoint: `kelas/${input.value.id}`,
+			data,
+			confirm: true,
+			notify: true,
+			loading: loadingCrud,
+		});
+	}
+	if (response) {
+		document.getElementById('btn-close').click();
+		emit('successSubmit');
 	}
 };
 
 const deleteData = async (id) => {
 	const data = {
 		endPoint: `kelas/${id}`,
+		loading: loadingCrud,
 	};
-	const deleted = await apiDelete(data);
-	if (deleted) emit('successDelete');
+	const del = await apiDelete(data);
+	if (del) {
+		document.getElementById('btn-close').click();
+		emit('successDelete');
+	}
 };
 </script>
