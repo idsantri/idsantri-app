@@ -8,8 +8,8 @@
 		@crop-upload-success="cropUploadSuccess"
 		@crop-upload-fail="cropUploadFail"
 		v-model="internalShowUploader"
-		:width="450"
-		:height="600"
+		:width="props.width"
+		:height="props.height"
 		:url="apiTokened.defaults.baseURL + props.url"
 		:params="paramsImage"
 		:headers="{
@@ -21,7 +21,6 @@
 </template>
 <script setup>
 import myUpload from 'vue-image-crop-upload';
-import { forceRerender } from 'src/utils/buttons-click';
 import { notifySuccess } from 'src/utils/notify';
 import { onUpdated, ref, watch } from 'vue';
 import { apiTokened } from 'src/api';
@@ -32,10 +31,13 @@ import { apiTokened } from 'src/api';
  * @emits
  */
 const props = defineProps({
+	width: { type: Number, default: 450 },
+	height: { type: Number, default: 600 },
 	showUploader: { type: Boolean, default: false },
 	url: { default: null },
 	headers: { default: null },
 });
+const emit = defineEmits(['updateUploader', 'successUpload']);
 
 const internalShowUploader = ref(false);
 watch(
@@ -44,8 +46,11 @@ watch(
 		internalShowUploader.value = newVal;
 	}
 );
-const emit = defineEmits(['updateUploader']);
-onUpdated(() => emit('updateUploader', internalShowUploader.value));
+
+onUpdated(() => {
+	// console.log('updated');
+	emit('updateUploader', internalShowUploader.value);
+});
 
 /**
  * uploader
@@ -82,7 +87,7 @@ const cropUploadSuccess = (jsonData, field) => {
 	// console.log(jsonData);
 	// console.log('field: ' + field);
 	notifySuccess(jsonData.message);
-	forceRerender();
+	emit('successUpload');
 };
 
 /**

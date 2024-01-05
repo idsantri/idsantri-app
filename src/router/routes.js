@@ -52,6 +52,7 @@ const routes = [
 		path: '/',
 		component: () => import('layouts/MainLayout.vue'),
 		children: [
+			// cari
 			{
 				path: 'cari',
 				component: () => import('src/pages/search/IndexSearch.vue'),
@@ -78,12 +79,16 @@ const routes = [
 					},
 				],
 			},
+
+			//santri -> redirect
 			{
 				path: 'santri',
 				redirect: 'cari/santri',
 				// component: () => import('src/pages/search/SantriSearch.vue'),
 				// meta: { title: 'Cari Santri' },
 			},
+
+			//santri
 			{
 				path: 'santri/:id',
 				component: () => import('src/pages/santri/SantriDetail.vue'),
@@ -153,39 +158,52 @@ const routes = [
 					// },
 				],
 			},
+
+			//wali -> redirect
 			{
 				path: 'wali',
 				redirect: 'cari/wali',
 				// component: () => import('src/pages/search/WaliSearch.vue'),
 				// meta: { title: 'Cari Wali' },
 			},
+
+			//wali
 			{
 				path: 'wali/:id',
 				component: () => import('src/pages/wali/WaliDetail.vue'),
 				meta: { title: 'Detail Wali' },
 			},
+
+			// ortu -> redirect
 			{
 				path: 'ortu',
 				redirect: 'cari/ortu',
 				// component: () => import('src/pages/search/OrtuSearch.vue'),
 				// meta: { title: 'Cari Orang Tua' },
 			},
+
+			//ortu
 			{
 				path: 'ortu/:id',
 				component: () => import('src/pages/ortu/OrtuDetail.vue'),
 				meta: { title: 'Detail Orang Tua' },
 			},
 
+			//home
 			{
 				path: 'home',
 				component: () => import('src/pages/home/HomeIndex.vue'),
 				meta: { title: 'Home' },
 			},
+
+			//sekretariat
 			{
 				path: 'sekretariat',
 				component: () => import('src/pages/sekretariat/IndexPage.vue'),
 				meta: { title: 'Sekretariat' },
 			},
+
+			//madrasah
 			{
 				path: 'madrasah',
 				meta: { title: 'Madrasah' },
@@ -319,7 +337,7 @@ const routes = [
 				],
 			},
 
-			// BENDAHARA
+			//bendahara
 			{
 				path: 'bendahara',
 				meta: { title: 'Bendahara' },
@@ -345,6 +363,7 @@ const routes = [
 				],
 			},
 
+			//keamanan
 			{
 				path: 'keamanan',
 				meta: { title: 'Keamanan' },
@@ -384,19 +403,28 @@ const routes = [
 				],
 			},
 
+			//personalia
 			{
 				path: 'personalia',
-				component: () =>
-					import('src/pages/personalia/PersonaliaIndexTable.vue'),
 				meta: { title: 'Pesonalia' },
-			},
-			{
-				path: 'personalia/:id',
-				component: () =>
-					import('src/pages/personalia/PersonaliaDetail.vue'),
-				meta: { title: 'Pesonalia Detail' },
+				children: [
+					{
+						path: '',
+						component: () =>
+							import(
+								'src/pages/personalia/PersonaliaIndexTable.vue'
+							),
+					},
+					{
+						path: ':id',
+						component: () =>
+							import('src/pages/personalia/PersonaliaDetail.vue'),
+						meta: { title: 'Pesonalia Detail' },
+					},
+				],
 			},
 
+			//settings
 			{
 				path: 'settings',
 				children: [
@@ -422,6 +450,13 @@ const routes = [
 						meta: { title: 'Setting: User' },
 					},
 				],
+			},
+
+			//profile
+			{
+				path: 'profile',
+				component: () => import('src/pages/profile/ProfileIndex.vue'),
+				meta: { title: 'User Profile' },
 			},
 		],
 	},

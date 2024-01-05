@@ -101,7 +101,13 @@ const submitLogin = async () => {
 			'Bearer ' + authState().getToken;
 
 		notifySuccess(response.data.message);
-		router.push('/');
+
+		const isConfirmed = response.data.user.confirmed_at;
+		if (!isConfirmed) {
+			router.push('/profile');
+		} else {
+			router.push('/');
+		}
 	} catch (error) {
 		// console.log('e', error);
 		emit('errors', toArray(error.response.data.message));

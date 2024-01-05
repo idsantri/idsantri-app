@@ -68,7 +68,8 @@
 	<upload-image
 		:show-uploader="showUploader"
 		:url="`/images/personalia/${route.params.id}`"
-		@update-uploader="handleUploader"
+		@update-uploader="updateUploader"
+		@success-upload="successUpload"
 	/>
 </template>
 <script setup>
@@ -90,11 +91,18 @@ async function handleEmit(val) {
 	crudShow.value = false;
 	if (val.id == route.params.id) {
 		await loadData();
+		await loadImage();
 	} else {
 		router.push(`/personalia/${val.id}`);
 	}
 }
 
+async function loadImage() {
+	const img = await apiGet({
+		endPoint: `images/personalia/${personalia.value.id}`,
+	});
+	personalia.value.image = img.image_url;
+}
 async function loadData() {
 	const data = await apiGet({
 		endPoint: `personalia/${route.params.id}`,
@@ -102,11 +110,6 @@ async function loadData() {
 	});
 	personalia.value = data.personalia;
 	// console.log(personalia.value);
-
-	const img = await apiGet({
-		endPoint: `images/personalia/${personalia.value.id}`,
-	});
-	personalia.value.image = img.image_url;
 
 	personaliaObj.value = {
 		Nama: `${personalia.value.nama?.toUpperCase()} (${personalia.value.sex?.toUpperCase()})`,
@@ -130,11 +133,17 @@ async function loadData() {
 onMounted(async () => {
 	if (route.params.id) {
 		await loadData();
+		await loadImage();
 	}
 });
 
 // uploader
 const showUploader = ref(false);
-const handleUploader = (value) => (showUploader.value = value);
+const updateUploader = (value) => (showUploader.value = value);
+
+async function successUpload() {
+	showUploader.value = false;
+	await loadImage();
+}
 </script>
 <style lang=""></style>

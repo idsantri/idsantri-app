@@ -71,7 +71,8 @@
 	<upload-image
 		:show-uploader="showUploader"
 		:url="`/images/santri/${santriId}`"
-		@update-uploader="handleUploader"
+		@update-uploader="updateUploader"
+		@success-upload="successUpload"
 	/>
 
 	<!-- <pre>{{ santri }}</pre> -->
@@ -108,18 +109,19 @@ const identity = ref({});
 const loading = ref(false);
 const loadingImage = ref(false);
 
-onMounted(async () => {
-	const data = await apiGet({ endPoint: `santri/${santriId}`, loading });
-	Object.assign(santri, data.santri);
-	// console.log(data.santri);
-
+async function loadImage() {
 	const img = await apiGet({
 		endPoint: `images/santri/${santriId}`,
 		loading: loadingImage,
 	});
 	// console.log(img.image_url);
 	santri.image = img.image_url;
+}
 
+onMounted(async () => {
+	const data = await apiGet({ endPoint: `santri/${santriId}`, loading });
+	Object.assign(santri, data.santri);
+	// console.log(data.santri);
 	// register
 	register.value = {
 		ID: santri.id,
@@ -153,6 +155,8 @@ onMounted(async () => {
 	santriStore().setOrtu(santri?.ortu);
 	santriStore().setWali(santri?.wali);
 	santriStore().setDataAkhir(santri?.data_akhir);
+
+	await loadImage();
 });
 
 /**
@@ -165,5 +169,10 @@ function editSantri() {
 
 // uploader
 const showUploader = ref(false);
-const handleUploader = (value) => (showUploader.value = value);
+const updateUploader = (value) => (showUploader.value = value);
+
+async function successUpload() {
+	showUploader.value = false;
+	await loadImage();
+}
 </script>
