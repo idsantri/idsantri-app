@@ -16,10 +16,19 @@
 					no-caps
 					size="sm"
 					color="green-2"
-					class="text-green-10"
+					class="text-green-10 q-mr-sm"
 					icon="edit"
 					label="Edit"
 					@click="editSantri"
+				/>
+				<q-btn
+					no-caps
+					size="sm"
+					color="green-2"
+					class="text-green-10"
+					icon="print"
+					label="Cetak"
+					@click="downloadPdf"
 				/>
 			</div>
 		</q-card-section>
@@ -89,6 +98,8 @@ import { bacaHijri } from 'src/utils/hijri';
 import SantriRelations from 'src/pages/santri/SantriRelations.vue';
 import dialogStore from 'src/stores/dialog-store';
 import apiGet from 'src/api/api-get';
+import { apiTokened } from 'src/api';
+import { notifyConfirm } from 'src/utils/notify';
 
 const path = ref(useRoute().fullPath);
 function pathIuran() {
@@ -116,6 +127,21 @@ async function loadImage() {
 	});
 	// console.log(img.image_url);
 	santri.image = img.image_url;
+}
+
+async function downloadPdf() {
+	const dialog = await notifyConfirm(
+		'Download formulir pendaftaran yang akan dicetak?',
+		true
+	);
+	if (!dialog) return;
+
+	let link = document.createElement('a');
+	link.href =
+		apiTokened.defaults.baseURL +
+		`/reports/santri/${santriId}/registrasi/download`;
+	link.click();
+	link.remove();
 }
 
 onMounted(async () => {

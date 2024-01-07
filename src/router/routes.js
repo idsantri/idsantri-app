@@ -458,6 +458,12 @@ const routes = [
 				component: () => import('src/pages/profile/ProfileIndex.vue'),
 				meta: { title: 'User Profile' },
 			},
+
+			//test
+			{
+				path: 'test',
+				component: () => import('src/pages/testPage.vue'),
+			},
 		],
 	},
 
