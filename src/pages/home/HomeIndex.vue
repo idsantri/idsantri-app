@@ -9,15 +9,11 @@
 	</div>
 
 	<pre>
-	loading:
-		{{ loading[key] }}
-	</pre
-	>
+	<!-- loading:{{ loading[key] }} -->
+	</pre>
 	<pre>
-lists:
-		{{ lists[key] }}
-	</pre
-	>
+<!-- lists:{{ lists[key] }} -->
+	</pre>
 </template>
 <script setup>
 import { getListsKey, getLists } from 'src/api/api-get-lists';

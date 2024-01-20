@@ -424,6 +424,34 @@ const routes = [
 				],
 			},
 
+			//ugt
+			{
+				path: 'ugt',
+				redirect: (to) => '/ugt/pjgt',
+				meta: { title: 'UGT' },
+				children: [
+					{
+						path: 'pjgt',
+						component: () =>
+							import('src/pages/ugt/pjgt/PjgtIndex.vue'),
+					},
+					{
+						path: 'pjgt/:id',
+						component: () =>
+							import('src/pages/ugt/pjgt/PjgtDetail.vue'),
+					},
+					{
+						path: 'gt',
+						component: () => import('src/pages/ugt/gt/GtIndex.vue'),
+					},
+					{
+						path: 'gt/:id',
+						component: () =>
+							import('src/pages/ugt/gt/GtDetail.vue'),
+					},
+				],
+			},
+
 			//settings
 			{
 				path: 'settings',

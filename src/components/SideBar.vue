@@ -34,11 +34,11 @@
 			</q-item> -->
 			<q-item clickable v-ripple @click="addNewSantri">
 				<q-item-section avatar>
-					<q-icon color="green-1" name="add" />
+					<q-icon color="green-1" name="person_add" />
 				</q-item-section>
 				<q-item-section>
-					<q-item-label>Tambah</q-item-label>
-					<q-item-label caption>Santri Baru</q-item-label>
+					<q-item-label>Santri</q-item-label>
+					<q-item-label caption>Tambah Santri Baru</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>
@@ -142,6 +142,37 @@
 				<q-item-section>
 					<q-item-label>Pelanggaran</q-item-label>
 					<q-item-label caption>Data Pelanggaran</q-item-label>
+				</q-item-section>
+			</q-item>
+		</q-expansion-item>
+
+		<!-- UGT -->
+		<q-separator dark />
+		<q-expansion-item
+			expand-separator
+			label="UGT"
+			caption="Urusan Guru Tugas"
+			header-class="text-body1 text-green-1"
+			expand-icon-class="text-green-1"
+		>
+			<q-item clickable v-ripple to="/ugt/pjgt">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="person_2" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>PJGT</q-item-label>
+					<q-item-label caption
+						>Penanggung Jawab Guru Tugas</q-item-label
+					>
+				</q-item-section>
+			</q-item>
+			<q-item clickable v-ripple to="/ugt/gt">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="school" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>GT</q-item-label>
+					<q-item-label caption>Guru Tugas</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>

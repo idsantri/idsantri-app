@@ -1,7 +1,6 @@
 const data = [
 	{ url: 'domisili', label: 'Domisili', mode: 'one' },
 	{ url: 'hubungan-wali', label: 'Hubungan Wali', mode: 'one' },
-	// { url: 'izin-keperluan', label: '', mode: 'one' },
 	{ url: 'jabatan', label: 'Jabatan', mode: 'one' },
 	{ url: 'jabatan-madrasah', label: 'Jabatan Madrasiyah', mode: 'one' },
 	{ url: 'kelas', label: 'Kelas', mode: 'one' },
@@ -35,7 +34,7 @@ const data = [
 	{ url: 'sifat-izin', label: 'Sifat Izin', mode: 'one' },
 	{ url: 'keperluan-izin', label: 'Keperluan Izin', mode: 'one' },
 
-	{ url: 'tingkat-pendidikan', label: 'Tingkat Pendidikan', mode: 'two' },
+	// { url: 'tingkat-pendidikan', label: 'Tingkat Pendidikan', mode: 'two' },
 	{ url: 'tahun-ajaran', label: 'Tahun Ajaran', mode: 'two' },
 
 	{ url: 'iuran', label: 'Iuran', mode: 'iuran' },

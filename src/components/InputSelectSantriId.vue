@@ -37,6 +37,7 @@
 	</q-select>
 
 	<q-input
+		:hint="input.data_akhir"
 		class="q-mt-sm"
 		dense
 		outlined
@@ -64,11 +65,23 @@ function onInput(val) {
 	input.value.nama = options.value.find(
 		(o) => o.id == input.value?.santri_id
 	)?.nama;
+	input.value.data_akhir = options.value.find(
+		(o) => o.id == input.value?.santri_id
+	)?.data_akhir;
+
 	emit('emitInput', input.value);
+	// console.log('input', input.value);
 }
 
 onMounted(async () => {
-	Object.assign(input.value, props.data);
+	const data = {
+		santri_id: props.data?.santri_id,
+		nama: props.data?.nama,
+		data_akhir: props.data?.data_akhir,
+	};
+	Object.assign(input.value, data);
+	// console.log('props', props.data);
+	// console.log('data', data);
 });
 
 async function filterFunction(val, update) {
