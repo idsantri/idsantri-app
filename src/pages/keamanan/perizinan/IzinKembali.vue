@@ -1,5 +1,5 @@
 <template lang="">
-	<q-card style="min-width: 400px; max-width: 500px">
+	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="setBack">
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
 				<div class="text-subtitle1">Tetapkan Tanggal Kembali</div>

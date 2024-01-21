@@ -449,6 +449,11 @@ const routes = [
 						component: () =>
 							import('src/pages/ugt/gt/GtDetail.vue'),
 					},
+					{
+						path: 'kas',
+						component: () =>
+							import('src/pages/ugt/kas/KasIndex.vue'),
+					},
 				],
 			},
 

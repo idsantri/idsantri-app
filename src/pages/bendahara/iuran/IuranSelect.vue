@@ -41,7 +41,7 @@
 				<q-btn
 					dense
 					type="submit"
-					label="Mulai"
+					label="Lanjut"
 					class="bg-green-10 text-green-11"
 					no-caps=""
 				/>

@@ -175,6 +175,15 @@
 					<q-item-label caption>Guru Tugas</q-item-label>
 				</q-item-section>
 			</q-item>
+			<q-item clickable v-ripple to="/ugt/kas">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="account_balance_wallet" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Kas</q-item-label>
+					<q-item-label caption>Keuangan</q-item-label>
+				</q-item-section>
+			</q-item>
 		</q-expansion-item>
 
 		<!-- SETTING -->

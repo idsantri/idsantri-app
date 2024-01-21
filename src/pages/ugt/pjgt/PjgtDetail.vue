@@ -146,7 +146,9 @@
 								</q-item-section>
 								<q-item-section avatar>
 									<q-btn
+										class="bg-green-11"
 										icon="info"
+										glossy
 										round
 										outline
 										:to="`/ugt/gt/${item.id}`"
@@ -160,7 +162,7 @@
 		</div>
 	</div>
 	<q-dialog persistent="" v-model="crudShow">
-		<modal-pjgt
+		<pjgt-crud
 			:is-new="false"
 			:data="pjgt"
 			@success-submit="loadPjgt()"
@@ -190,7 +192,7 @@ import { digitSeparator } from 'src/utils/format-number';
 import { formatAlamatLengkap } from 'src/utils/format-text';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import ModalPjgt from 'src/pages/ugt/pjgt/PjgtCrud.vue';
+import PjgtCrud from 'src/pages/ugt/pjgt/PjgtCrud.vue';
 import GtCrud from 'src/pages/ugt/gt/GtCrud.vue';
 
 const route = useRoute();
