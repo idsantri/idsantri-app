@@ -343,15 +343,19 @@ const routes = [
 				meta: { title: 'Bendahara' },
 				redirect: (to) => '/bendahara/iuran/tanggal',
 				children: [
-					// {
-					// 	path: '/bendahara/iuran/th-ajaran-h/:thAjaranH?',
-					// 	component: () =>
-					// 		import('src/pages/bendahara/iuran/IuranIndex.vue'),
-					// },
+					{
+						path: 'iuran/th-ajaran/:thAjaranH?',
+						component: () =>
+							import(
+								'src/pages/bendahara/iuran/filter/IuranByThAjaran.vue'
+							),
+					},
 					{
 						path: 'iuran/tanggal/:startDate?/:endDate?',
 						component: () =>
-							import('src/pages/bendahara/iuran/IuranIndex.vue'),
+							import(
+								'src/pages/bendahara/iuran/filter/IuranByTanggal.vue'
+							),
 					},
 					{
 						path: 'iuran/santri/:id/:thAjaranH?',

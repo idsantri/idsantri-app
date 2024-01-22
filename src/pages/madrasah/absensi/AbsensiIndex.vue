@@ -33,11 +33,7 @@
 								"
 								clickable
 								v-close-popup
-								@click="
-									$router.push(
-										`/madrasah/absensi-sekolah/input`
-									)
-								"
+								to="/madrasah/absensi-sekolah/input"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="edit_square" />
@@ -52,11 +48,7 @@
 								"
 								clickable
 								v-close-popup
-								@click="
-									$router.push(
-										`/madrasah/absensi-musyawarah/input`
-									)
-								"
+								to="/madrasah/absensi-musyawarah/input"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="edit_square" />
@@ -75,11 +67,7 @@
 								"
 								clickable
 								v-close-popup
-								@click="
-									$router.push(
-										`/madrasah/absensi-sekolah/rekap-ujian`
-									)
-								"
+								to="/madrasah/absensi-sekolah/rekap-ujian"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
@@ -94,11 +82,7 @@
 								"
 								clickable
 								v-close-popup
-								@click="
-									$router.push(
-										`/madrasah/absensi-musyawarah/rekap-ujian`
-									)
-								"
+								to="/madrasah/absensi-musyawarah/rekap-ujian"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
@@ -113,9 +97,7 @@
 								v-if="showButton(`madrasah/absensi/penomoran`)"
 								clickable
 								v-close-popup
-								@click="
-									$router.push(`/madrasah/absensi/penomoran`)
-								"
+								to="/madrasah/absensi/penomoran"
 							>
 								<q-item-section avatar>
 									<q-icon
@@ -133,9 +115,7 @@
 								v-if="showButton(`madrasah/absensi/setting`)"
 								clickable
 								v-close-popup
-								@click="
-									$router.push(`/madrasah/absensi/setting`)
-								"
+								to="/madrasah/absensi/setting"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="settings" />
@@ -157,9 +137,7 @@
 </template>
 <script setup>
 import { useRoute } from 'vue-router';
-
 const route = useRoute();
-
 function showButton(param) {
 	return route.fullPath.search(param) > 0 ? false : true;
 }

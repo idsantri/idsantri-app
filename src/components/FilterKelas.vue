@@ -1,7 +1,14 @@
 <template lang="">
 	<q-card>
 		<q-card-section class="q-px-sm q-py-sm bg-green-11">
-			<div class="text-subtitle2">&nbsp;Filter Data</div>
+			<q-toolbar class="no-padding" style="min-height: 0">
+				<q-toolbar-title class="text-subtitle1">
+					<div class="text-subtitle2 text-weight-bold">
+						Filter Kelas
+					</div>
+				</q-toolbar-title>
+				<slot></slot>
+			</q-toolbar>
 		</q-card-section>
 		<q-card-section class="no-padding">
 			<div class="row" style="max-width: 1000px; width: 100%">
@@ -20,6 +27,7 @@
 					:loading="loading['th_ajaran']"
 				/>
 				<q-select
+					v-if="props.showTingkat"
 					class="col-12 col-md-3 q-pa-sm"
 					dense
 					outlined
@@ -80,6 +88,10 @@ const props = defineProps({
 	showBulanUjian: Boolean,
 	startUrl: String,
 	showKelas: {
+		type: Boolean,
+		default: true,
+	},
+	showTingkat: {
 		type: Boolean,
 		default: true,
 	},
