@@ -56,7 +56,6 @@
 			<q-card-actions class="bg-green-6 text-green-11 q-pa-sm">
 				<q-btn
 					label="Belum Kembali"
-					dense
 					no-caps
 					class="q-px-sm text-red-1"
 					color="negative"
@@ -65,7 +64,6 @@
 				<q-space />
 				<q-btn
 					label="Tutup"
-					dense
 					no-caps
 					class="q-px-sm"
 					color="green-4"
@@ -73,7 +71,6 @@
 				/>
 				<q-btn
 					label="Simpan"
-					dense
 					no-caps
 					class="q-px-sm"
 					color="green-10"

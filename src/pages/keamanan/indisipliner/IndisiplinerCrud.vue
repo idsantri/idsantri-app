@@ -149,7 +149,6 @@
 
 			<q-card-actions class="flex bg-green-6">
 				<q-btn
-					dense
 					v-show="!$props.isNew"
 					label="Hapus"
 					class="bg-red text-red-1"
@@ -158,14 +157,12 @@
 				/>
 				<q-space />
 				<q-btn
-					dense
 					label="Tutup"
 					v-close-popup
 					class="bg-green-11"
 					no-caps=""
 				/>
 				<q-btn
-					dense
 					type="submit"
 					label="Simpan"
 					class="bg-green-10 text-green-11"

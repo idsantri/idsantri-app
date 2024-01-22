@@ -79,10 +79,10 @@
 		<iuran-santri-crud
 			:is-new="true"
 			title="Input Iuran"
-			:dataSantri="santri"
-			:dataIuran="dataIuran"
+			:data="dataIuran"
 			@success-submit="keyIuran++"
 			@success-delete="null"
+			:disable-santri-id="true"
 		/>
 	</q-dialog>
 </template>
@@ -99,8 +99,9 @@ const loading = ref(false);
 const route = useRoute();
 const tahunIuran = ref([]);
 const crudShow = ref(false);
-const dataIuran = ref({ th_ajaran_h: route.params.thAjaranH || '' });
+const dataIuran = ref({});
 const keyIuran = ref(0);
+
 async function loadData() {
 	const data = await apiGet({
 		endPoint: `iuran/santri/${route.params.id}`,
@@ -110,7 +111,6 @@ async function loadData() {
 	santri.value.santri_id = data.santri.id;
 	iuran.value = data.iuran;
 	tahunIuran.value = iuran.value.map((v) => v.th_ajaran_h);
-	// console.log(iuran.value[0].th_ajaran_h);
 
 	const img = await apiGet({
 		endPoint: `images/santri/${route.params.id}`,
@@ -119,6 +119,12 @@ async function loadData() {
 }
 onMounted(async () => {
 	await loadData();
+	dataIuran.value = {
+		th_ajaran_h: route.params.thAjaranH || '',
+		santri_id: santri.value.id,
+		nama: santri.value.nama,
+		data_akhir: santri.value.data_akhir,
+	};
 });
 
 function hasIuran() {

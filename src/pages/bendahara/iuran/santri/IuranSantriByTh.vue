@@ -125,10 +125,10 @@
 		<iuran-santri-crud
 			:is-new="false"
 			title="Input Iuran"
-			:dataSantri="santri"
-			:dataIuran="dataIuran"
+			:data="dataIuran"
 			@success-delete="loadData"
 			@success-submit="loadData"
+			:disable-santri-id="true"
 		/>
 	</q-dialog>
 </template>
@@ -200,6 +200,7 @@ function getTotalCheck() {
 function editIuran(iuran) {
 	dataIuran.value = iuran;
 	crudShow.value = true;
+	// console.log(dataIuran.value);
 }
 </script>
 <style lang=""></style>

@@ -180,7 +180,6 @@
 				<q-card-actions class="flex bg-green-6">
 					<q-space />
 					<q-btn
-						dense
 						label="Tutup"
 						v-close-popup
 						class="bg-green-11"
@@ -188,7 +187,6 @@
 						id="btn-close"
 					/>
 					<q-btn
-						dense
 						type="submit"
 						label="Simpan"
 						class="bg-green-10 text-green-11"

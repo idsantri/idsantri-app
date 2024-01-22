@@ -48,7 +48,7 @@
 		<q-expansion-item
 			expand-separator
 			label="Bendahara"
-			caption="Keuangan"
+			caption="Iuran"
 			header-class="text-body1 text-green-1"
 			expand-icon-class="text-green-1"
 		>

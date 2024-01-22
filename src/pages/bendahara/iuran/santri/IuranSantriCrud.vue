@@ -17,20 +17,13 @@
 						/>
 					</q-dialog>
 				</div>
-				<q-input
-					dense
-					outlined
-					label="Nama"
-					:model-value="
-						props.dataSantri?.nama +
-						' (' +
-						props.dataSantri?.id +
-						')'
-					"
-					disable=""
-					filled=""
-					:hint="props.dataSantri.data_akhir"
+				<InputSelectSantriId
+					:active-only="true"
+					@emit-input="(val) => Object.assign(input, val)"
+					:data="props.data"
+					:disable-select="$props.disableSantriId"
 				/>
+
 				<q-select
 					dense
 					:hint="
@@ -65,7 +58,7 @@
 					:loading="loading['iuran']"
 					option-value="val0"
 					option-label="val0"
-					@update:model-value="(val) => getVal1(val)"
+					@update:model-value="setNominal"
 				/>
 
 				<currency-input
@@ -75,14 +68,21 @@
 					v-model="input.nominal"
 					required
 					label="Nominal"
+					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
 				<q-input
+					hint="Untuk pecahan: awali/gunakan titik (.25 atau 0.25, .5 atau 0.5, …)"
 					dense
 					class="q-mt-sm"
 					outlined
-					label="Quantity"
 					v-model="input.qty"
-					hint="Untuk pecahan: awali/gunakan titik (.25 atau 0.25, .5 atau 0.5, …)"
+					required
+					label="Quantity"
+					:rules="[
+						(val) => !!val || 'Harus diisi!',
+						(val) => !val || !isNaN(val) || 'Hanya angka',
+						(val) => val > 0 || 'Harus lebih besar dari 0',
+					]"
 				/>
 				<q-input
 					disable=""
@@ -90,8 +90,13 @@
 					dense
 					class="q-mt-sm"
 					outlined
-					label="Terbayar"
-					:model-value="'Rp' + digitSeparator(totalBayar)"
+					label="Sub Total"
+					:model-value="
+						'Rp' +
+						digitSeparator(
+							Number(input.qty) * Number(input.nominal)
+						)
+					"
 				/>
 				<q-select
 					dense
@@ -155,23 +160,25 @@ import ToolbarForm from 'src/components/ToolbarForm.vue';
 import { getLists, getListsKey } from 'src/api/api-get-lists';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
+import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
 
 const props = defineProps({
-	dataSantri: { type: Object, required: true },
-	dataIuran: { type: Object, required: false, default: () => {} },
+	data: { type: Object, required: false, default: () => {} },
 	isNew: { type: Boolean, default: true },
 	title: { type: String, default: () => 'Input' },
+	disableSantriId: { type: Boolean, default: false },
 });
+
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
-const input = ref({});
+const input = ref({ qty: 1 });
 const lists = ref([]);
 const loading = ref([]);
-const totalBayar = ref(0);
 const loadingCrud = ref(false);
+
 onMounted(async () => {
-	input.value.santri_id = props.dataSantri.id;
-	Object.assign(input.value, props.dataIuran);
+	Object.assign(input.value, props.data);
+	// console.log(input.value);
 
 	await getListsKey({
 		key: 'tahun-ajaran',
@@ -190,23 +197,15 @@ onMounted(async () => {
 	await getLists({ key: 'metode-pembayaran', sort: true, loading, lists });
 });
 
-const getVal1 = (val) => {
+const setNominal = (val) => {
 	const selectedOption = lists.value['iuran'].find(
 		(item) => item.val0 === val
 	);
 	if (selectedOption) {
 		const val1 = selectedOption.val1;
 		input.value.nominal = val1;
-		input.value.qty = 1;
 	}
 };
-
-watch(
-	[() => input.value.qty, () => input.value.nominal],
-	([newQty, newNominal], [oldQty, oldNominal]) => {
-		totalBayar.value = newQty * newNominal;
-	}
-);
 
 const submit = async () => {
 	const data = {
@@ -236,7 +235,7 @@ const submit = async () => {
 	}
 	if (response) {
 		document.getElementById('btn-close').click();
-		emit('successSubmit');
+		emit('successSubmit', response?.iuran);
 	}
 };
 

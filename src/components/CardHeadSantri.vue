@@ -13,7 +13,7 @@
 				no-caps
 				color="green-12"
 				class="q-px-sm bg-green-8"
-				@click="$router.push(`/santri/${props.data.santri_id}`)"
+				:to="`/santri/${props.data.santri_id}`"
 			/>
 		</q-card-section>
 

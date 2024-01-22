@@ -74,7 +74,6 @@
 				/>
 				<q-input
 					dense
-					hint=""
 					class="q-mt-sm"
 					outlined
 					label="Durasi (hari)*"

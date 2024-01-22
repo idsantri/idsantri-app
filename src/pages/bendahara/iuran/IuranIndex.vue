@@ -18,7 +18,7 @@
 					no-caps
 					color="green-11 q-px-md"
 					class="text-green-10"
-					@click="showSelectId = true"
+					@click="crudShow = true"
 				/>
 			</q-card-section>
 			<q-table
@@ -40,9 +40,7 @@
 				"
 			>
 				<template v-slot:top-left>
-					<div class="text-subtitle1 text-green-10">
-						Data Perizinan
-					</div>
+					<div class="text-subtitle1 text-green-10">Data Iuran</div>
 				</template>
 				<template v-slot:top-right>
 					<q-input
@@ -69,19 +67,25 @@
 		</q-card>
 	</div>
 
-	<q-dialog v-model="showSelectId">
-		<iuran-select :is-new="true" />
+	<q-dialog v-model="crudShow">
+		<iuran-santri-crud
+			:is-new="true"
+			title="Input Iuran"
+			:data="{}"
+			@success-delete="null"
+			@success-submit="emitSuccess"
+		/>
 	</q-dialog>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
 import apiGet from 'src/api/api-get';
 import FilterTanggal from 'src/components/FilterTanggal';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { formatDateShort, isDate } from 'src/utils/format-date';
 import { formatHijri } from 'src/utils/hijri';
-import IuranSelect from 'src/pages/bendahara/iuran/IuranSelect.vue';
 import { digitSeparator } from 'src/utils/format-number';
+import IuranSantriCrud from 'src/pages/bendahara/iuran/santri/IuranSantriCrud.vue';
 
 const iuran = ref([{}]);
 const loading = ref(false);
@@ -94,10 +98,17 @@ const params = {
 };
 const startDate = ref(params.startDate);
 const endDate = ref(params.endDate);
-const showSelectId = ref(false);
+const crudShow = ref(false);
+const router = useRouter();
 
 function dataEmit(val) {
 	dataFilter.value = val;
+}
+
+function emitSuccess(val) {
+	crudShow.value = false;
+	// console.log(val);
+	router.push(`/bendahara/iuran/santri/${val.santri_id}/${val.th_ajaran_h}`);
 }
 
 function calculateTotal() {
