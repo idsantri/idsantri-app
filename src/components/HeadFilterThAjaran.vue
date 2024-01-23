@@ -23,8 +23,8 @@
 					option-label="val0"
 					emit-value
 					map-options
-					behavior="menu"
 					:loading="loading['tahun-ajaran']"
+					behavior="menu"
 				/>
 			</div>
 		</q-card-section>

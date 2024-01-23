@@ -111,8 +111,8 @@
 <script setup>
 import apiGet from 'src/api/api-get';
 import apiUpdate from 'src/api/api-update';
-import FilterKelas from 'src/components/FilterKelas.vue';
-import { notifyConfirm, notifyWarning, notifySuccess } from 'src/utils/notify';
+import FilterKelas from 'src/components/HeadFilterKelas.vue';
+import { notifyConfirm, notifyWarning } from 'src/utils/notify';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 

@@ -44,7 +44,7 @@
 				</template>
 				<template v-slot:top-right>
 					<q-input
-						borderless
+						outlined
 						dense
 						debounce="300"
 						v-model="filter"
@@ -66,7 +66,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import apiGet from 'src/api/api-get';
-import FilterTanggal from 'src/components/FilterTanggal';
+import FilterTanggal from 'src/components/HeadFilterTanggal';
 import { useRoute } from 'vue-router';
 import { formatDateShort, isDate } from 'src/utils/format-date';
 import { formatHijri } from 'src/utils/hijri';

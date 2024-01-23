@@ -45,6 +45,7 @@
 					:rules="[(val) => !!val || 'Harus diisi!']"
 					error-color="negative"
 					:loading="loading['tahun-ajaran']"
+					behavior="menu"
 				/>
 				<q-select
 					dense
@@ -59,6 +60,7 @@
 					option-value="val0"
 					option-label="val0"
 					@update:model-value="setNominal"
+					behavior="menu"
 				/>
 
 				<currency-input
@@ -108,6 +110,7 @@
 					v-model="input.via"
 					:options="lists['metode-pembayaran']"
 					:loading="loading['metode-pembayaran']"
+					behavior="menu"
 				/>
 				<q-select
 					dense
@@ -119,6 +122,7 @@
 					v-model="input.keterangan"
 					:options="lists['keterangan-iuran']"
 					:loading="loading['keterangan-iuran']"
+					behavior="menu"
 				/>
 				<!-- <pre>{{ lists['iuran'] }}</pre> -->
 				<!-- <pre>{{ lists['keterangan-iuran'] }}</pre> -->

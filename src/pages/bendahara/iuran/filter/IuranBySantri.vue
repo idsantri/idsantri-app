@@ -1,11 +1,12 @@
 <template lang="">
 	<div class="q-ma-sm">
-		<filter-tanggal
-			start-url="/bendahara/iuran/q/tanggal"
+		<FilterSantri
+			start-url="/bendahara/iuran/q/santri"
 			@data-filter="(val) => (dataFilter = val)"
+			:active-only="false"
 		>
 			<DropDownMenu />
-		</filter-tanggal>
+		</FilterSantri>
 
 		<IuranTable
 			:data="iuran"
@@ -17,9 +18,9 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import apiGet from 'src/api/api-get';
-import FilterTanggal from 'src/components/HeadFilterTanggal';
 import { useRoute } from 'vue-router';
 import { isDate } from 'src/utils/format-date';
+import FilterSantri from 'src/components/HeadFilterSantri.vue';
 import DropDownMenu from './DropDownMenu.vue';
 import IuranTable from './IuranTable.vue';
 
@@ -28,18 +29,15 @@ const loading = ref(false);
 const dataFilter = ref({});
 const route = useRoute();
 const params = {
-	startDate: route.params.startDate || 0,
-	endDate: route.params.endDate || 0,
+	id: route.params.id,
 };
-const startDate = ref(params.startDate);
-const endDate = ref(params.endDate);
 
 onMounted(async () => {
-	if (isDate(startDate.value) && isDate(endDate.value)) {
+	if (params.id) {
 		const data = await apiGet({
 			endPoint: 'iuran',
 			loading,
-			params: { start_date: startDate.value, end_date: endDate.value },
+			params: { santri_id: params.id },
 		});
 		iuran.value = data.iuran;
 	}

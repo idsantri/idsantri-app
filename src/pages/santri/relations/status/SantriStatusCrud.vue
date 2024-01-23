@@ -35,6 +35,7 @@
 					v-model="input.status"
 					:options="lists['status']"
 					:loading="loading['status']"
+					behavior="menu"
 				/>
 				<q-input
 					dense

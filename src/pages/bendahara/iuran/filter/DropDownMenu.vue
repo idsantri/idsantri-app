@@ -8,29 +8,33 @@
 	>
 		<q-list>
 			<q-item
-				v-if="showButton(`bendahara/iuran/th-ajaran`)"
+				v-if="showButton(`bendahara/iuran/q/th-ajaran`)"
 				clickable
 				v-close-popup
-				to="/bendahara/iuran/th-ajaran"
+				to="/bendahara/iuran/q/th-ajaran"
 			>
 				<q-item-section>
 					<q-item-label>Tahun Ajaran</q-item-label>
 				</q-item-section>
 			</q-item>
 			<q-item
-				v-if="showButton(`bendahara/iuran/tanggal`)"
+				v-if="showButton(`bendahara/iuran/q/tanggal`)"
 				clickable
 				v-close-popup
-				to="/bendahara/iuran/tanggal"
+				to="/bendahara/iuran/q/tanggal"
 			>
 				<q-item-section>
 					<q-item-label>Tanggal</q-item-label>
 				</q-item-section>
 			</q-item>
-
-			<q-item clickable v-close-popup>
+			<q-item
+				v-if="showButton(`bendahara/iuran/q/santri`)"
+				clickable
+				v-close-popup
+				to="/bendahara/iuran/q/santri"
+			>
 				<q-item-section>
-					<q-item-label>ID Santri</q-item-label>
+					<q-item-label>Santri</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-list>

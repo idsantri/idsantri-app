@@ -129,6 +129,7 @@
 		v-model="wali_status"
 		:options="lists['hubungan-wali']"
 		:loading="loading['hubungan-wali']"
+		behavior="menu"
 	/>
 </template>
 <script setup>

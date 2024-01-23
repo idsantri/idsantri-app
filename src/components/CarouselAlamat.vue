@@ -12,6 +12,7 @@
 		v-model="input.provinsi"
 		:options="lists['provinsi']"
 		:loading="loading['provinsi']"
+		behavior="menu"
 	/>
 
 	<q-select
@@ -25,6 +26,7 @@
 		v-model="input.kabupaten"
 		:options="lists['kabupaten']"
 		:loading="loading['kabupaten']"
+		behavior="menu"
 	/>
 
 	<q-select
@@ -38,6 +40,7 @@
 		v-model="input.kecamatan"
 		:options="lists['kecamatan']"
 		:loading="loading['kecamatan']"
+		behavior="menu"
 	/>
 
 	<q-select
@@ -53,6 +56,7 @@
 		:loading="loading['desa']"
 		use-input=""
 		new-value-mode="add"
+		behavior="menu"
 	/>
 
 	<div class="row">

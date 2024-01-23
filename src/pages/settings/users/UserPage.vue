@@ -13,7 +13,7 @@
 			</template>
 			<template v-slot:top-right>
 				<q-input
-					borderless
+					outlined
 					dense
 					debounce="300"
 					v-model="filter"
@@ -197,6 +197,7 @@ async function getUsers() {
 		loading: loading,
 	});
 	users.value = data.users;
+	// console.log(users.value);
 }
 
 onMounted(async () => {

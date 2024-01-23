@@ -82,6 +82,7 @@
 						emit-value
 						map-options
 						error-color="negative"
+						behavior="menu"
 					/>
 					<currency-input
 						dense

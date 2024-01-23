@@ -70,6 +70,7 @@
 		emit-value
 		map-options
 		error-color="negative"
+		behavior="menu"
 	/>
 </template>
 <script setup>

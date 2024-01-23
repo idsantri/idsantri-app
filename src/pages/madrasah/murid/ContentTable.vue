@@ -12,11 +12,11 @@
 		flat
 	>
 		<template v-slot:top-left>
-			<div class="text-h6 text-green-10">Data Murid</div>
+			<div class="text-subtitle1 text-green-10">Data Murid</div>
 		</template>
 		<template v-slot:top-right>
 			<q-input
-				borderless
+				outlined
 				dense
 				debounce="300"
 				v-model="filter"

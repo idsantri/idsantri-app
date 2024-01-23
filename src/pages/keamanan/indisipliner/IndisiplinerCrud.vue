@@ -69,6 +69,7 @@
 						map-options
 						:rules="[(val) => !!val || 'Harus diisi!']"
 						error-color="negative"
+						behavior="menu"
 					>
 						<template v-slot:after>
 							<q-rating

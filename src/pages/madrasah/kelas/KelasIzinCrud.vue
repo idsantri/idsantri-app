@@ -95,6 +95,7 @@
 					:options="lists['keperluan-izin']"
 					:loading="loading['keperluan-izin']"
 					:rules="[(val) => !!val || 'Harus diisi!']"
+					behavior="menu"
 				/>
 				<q-select
 					dense
@@ -107,6 +108,7 @@
 					:options="lists['keterangan-izin']"
 					:loading="loading['keterangan-izin']"
 					clearable
+					behavior="menu"
 				/>
 				<q-input
 					dense

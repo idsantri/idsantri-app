@@ -10,8 +10,8 @@
 					:options="listData"
 					emit-value
 					map-options
-					behavior="menu"
 					@update:model-value="(v) => routerPush(v)"
+					behavior="menu"
 				/>
 			</q-card-section>
 		</q-card>

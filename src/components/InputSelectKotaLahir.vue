@@ -17,6 +17,7 @@
 		new-value-mode="add"
 		@filter="filterFunction"
 		@update:model-value="onInput"
+		behavior="menu"
 	/>
 	<!-- <pre>{{ input }}</pre> -->
 </template>

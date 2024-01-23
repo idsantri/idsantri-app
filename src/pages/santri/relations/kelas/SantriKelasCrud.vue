@@ -46,6 +46,7 @@
 					:rules="[(val) => !!val || 'Harus diisi!']"
 					error-color="negative"
 					:loading="loading['tahun-ajaran']"
+					behavior="menu"
 				/>
 				<q-select
 					dense
@@ -68,6 +69,7 @@
 					:rules="[(val) => !!val || 'Harus diisi!']"
 					error-color="negative"
 					:loading="loading['tingkat-pendidikan']"
+					behavior="menu"
 				/>
 				<q-select
 					dense
@@ -79,6 +81,7 @@
 					v-model="input.kelas"
 					:options="lists['kelas']"
 					:loading="loading['kelas']"
+					behavior="menu"
 				/>
 				<q-input
 					dense

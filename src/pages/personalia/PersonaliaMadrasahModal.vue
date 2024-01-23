@@ -40,6 +40,7 @@
 					:rules="[(val) => !!val || 'Harus diisi!']"
 					error-color="negative"
 					:loading="loading['jabatan-madrasah']"
+					behavior="menu"
 				/>
 				<q-select
 					dense
@@ -62,6 +63,7 @@
 					:rules="[(val) => !!val || 'Harus diisi!']"
 					error-color="negative"
 					:loading="loading['tahun-ajaran']"
+					behavior="menu"
 				/>
 				<q-select
 					dense
@@ -84,6 +86,7 @@
 					:rules="[(val) => !!val || 'Harus diisi!']"
 					error-color="negative"
 					:loading="loading['tingkat-pendidikan']"
+					behavior="menu"
 				/>
 				<q-select
 					dense
@@ -96,6 +99,7 @@
 					:options="lists['kelas']"
 					:loading="loading['kelas']"
 					clearable=""
+					behavior="menu"
 				/>
 
 				<q-input

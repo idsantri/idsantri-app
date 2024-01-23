@@ -19,6 +19,7 @@
 		use-input=""
 		new-value-mode="add"
 		clearable
+		behavior="menu"
 	/>
 	<q-select
 		dense
@@ -34,6 +35,7 @@
 		use-input=""
 		new-value-mode="add"
 		clearable
+		behavior="menu"
 	/>
 	<q-input
 		dense
@@ -61,6 +63,7 @@
 		use-input=""
 		new-value-mode="add"
 		clearable
+		behavior="menu"
 	/>
 	<q-select
 		dense
@@ -76,6 +79,7 @@
 		use-input=""
 		new-value-mode="add"
 		clearable
+		behavior="menu"
 	/>
 	<q-input
 		dense

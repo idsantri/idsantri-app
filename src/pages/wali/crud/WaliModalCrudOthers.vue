@@ -17,6 +17,7 @@
 		use-input=""
 		new-value-mode="add"
 		clearable
+		behavior="menu"
 	/>
 
 	<q-select
@@ -33,6 +34,7 @@
 		use-input=""
 		new-value-mode="add"
 		clearable
+		behavior="menu"
 	/>
 
 	<q-select
@@ -49,6 +51,7 @@
 		use-input=""
 		new-value-mode="add"
 		clearable
+		behavior="menu"
 	/>
 
 	<q-input

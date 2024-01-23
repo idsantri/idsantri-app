@@ -341,28 +341,40 @@ const routes = [
 			{
 				path: 'bendahara',
 				meta: { title: 'Bendahara' },
-				redirect: (to) => '/bendahara/iuran/tanggal',
+				redirect: (to) => '/bendahara/iuran/q/tanggal',
 				children: [
-					{
-						path: 'iuran/th-ajaran/:thAjaranH?',
-						component: () =>
-							import(
-								'src/pages/bendahara/iuran/filter/IuranByThAjaran.vue'
-							),
-					},
-					{
-						path: 'iuran/tanggal/:startDate?/:endDate?',
-						component: () =>
-							import(
-								'src/pages/bendahara/iuran/filter/IuranByTanggal.vue'
-							),
-					},
 					{
 						path: 'iuran/santri/:id/:thAjaranH?',
 						component: () =>
 							import(
 								'src/pages/bendahara/iuran/santri/IuranSantri.vue'
 							),
+					},
+					{
+						path: 'iuran/q',
+						children: [
+							{
+								path: 'th-ajaran/:thAjaranH?',
+								component: () =>
+									import(
+										'src/pages/bendahara/iuran/filter/IuranByThAjaran.vue'
+									),
+							},
+							{
+								path: 'santri/:id?',
+								component: () =>
+									import(
+										'src/pages/bendahara/iuran/filter/IuranBySantri.vue'
+									),
+							},
+							{
+								path: 'tanggal/:startDate?/:endDate?',
+								component: () =>
+									import(
+										'src/pages/bendahara/iuran/filter/IuranByTanggal.vue'
+									),
+							},
+						],
 					},
 				],
 			},

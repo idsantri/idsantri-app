@@ -34,7 +34,7 @@
 			>
 				<template v-slot:top-right>
 					<q-input
-						borderless
+						outlined
 						dense
 						debounce="300"
 						v-model="filter"
@@ -80,6 +80,13 @@ onMounted(async () => {
 });
 
 const columns = [
+	{
+		name: 'id',
+		label: 'ID',
+		align: 'center',
+		field: 'id',
+		sortable: true,
+	},
 	{
 		name: 'nama',
 		label: 'Nama',

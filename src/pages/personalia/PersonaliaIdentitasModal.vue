@@ -123,6 +123,7 @@
 							emit-value
 							map-options
 							error-color="negative"
+							behavior="menu"
 						/>
 						<!-- <pre>{{ personalia }}</pre> -->
 					</q-carousel-slide>
@@ -160,6 +161,7 @@
 							use-input=""
 							new-value-mode="add"
 							clearable
+							behavior="menu"
 						/>
 
 						<q-select
@@ -176,6 +178,7 @@
 							use-input=""
 							new-value-mode="add"
 							clearable
+							behavior="menu"
 						/>
 
 						<q-input

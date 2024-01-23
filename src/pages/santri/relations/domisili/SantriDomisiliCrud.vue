@@ -35,6 +35,7 @@
 					v-model="input.domisili"
 					:options="lists['domisili']"
 					:loading="loading['domisili']"
+					behavior="menu"
 				/>
 				<q-input
 					dense

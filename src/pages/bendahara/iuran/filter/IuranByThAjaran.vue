@@ -1,7 +1,7 @@
 <template lang="">
 	<div class="q-ma-sm">
 		<filter-th-ajaran
-			start-url="/bendahara/iuran/th-ajaran"
+			start-url="/bendahara/iuran/q/th-ajaran"
 			@data-filter="(val) => (dataFilter = val)"
 		>
 			<DropDownMenu />
@@ -19,7 +19,7 @@ import { onMounted, ref } from 'vue';
 import apiGet from 'src/api/api-get';
 import { useRoute } from 'vue-router';
 import { isDate } from 'src/utils/format-date';
-import FilterThAjaran from 'src/components/FilterThAjaran.vue';
+import FilterThAjaran from 'src/components/HeadFilterThAjaran.vue';
 import DropDownMenu from './DropDownMenu.vue';
 import IuranTable from './IuranTable.vue';
 

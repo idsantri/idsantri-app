@@ -23,8 +23,8 @@
 					option-label="th_ajaran_h"
 					emit-value
 					map-options
-					behavior="menu"
 					:loading="loading['th_ajaran']"
+					behavior="menu"
 				/>
 				<q-select
 					v-if="props.showTingkat"
@@ -38,9 +38,9 @@
 					option-label="tingkat"
 					emit-value
 					map-options
-					behavior="menu"
 					:loading="loading['tingkat']"
 					clearable=""
+					behavior="menu"
 				/>
 				<q-select
 					v-if="props.showKelas"
@@ -54,9 +54,9 @@
 					option-label="kelas"
 					emit-value
 					map-options
-					behavior="menu"
 					:loading="loading['kelas_detail']"
 					clearable=""
+					behavior="menu"
 				/>
 				<q-select
 					v-if="props.showBulanUjian"
@@ -70,9 +70,9 @@
 					option-label="bulan_ujian"
 					emit-value
 					map-options
-					behavior="menu"
 					:loading="loading['bulan_ujian']"
 					clearable=""
+					behavior="menu"
 				/>
 			</div>
 		</q-card-section>

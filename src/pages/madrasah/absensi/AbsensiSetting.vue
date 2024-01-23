@@ -11,9 +11,9 @@
 					emit-value
 					map-options
 					option-label="val1"
-					behavior="menu"
 					@update:model-value="(v) => fetchSetting(v.val0)"
 					:loading="loading"
+					behavior="menu"
 				/>
 			</q-card-section>
 		</q-card>

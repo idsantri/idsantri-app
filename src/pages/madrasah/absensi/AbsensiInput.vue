@@ -417,7 +417,7 @@ import { useRoute, useRouter } from 'vue-router';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import apiGet from 'src/api/api-get';
-import FilterKelas from 'src/components/FilterKelas.vue';
+import FilterKelas from 'src/components/HeadFilterKelas.vue';
 import { kebabToSnakeCase, kebabToTitleCase } from 'src/utils/format-text';
 
 const spinner = ref(false);

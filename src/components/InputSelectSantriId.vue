@@ -24,6 +24,7 @@
 				@filter="filterFunction"
 				@update:model-value="onInput"
 				:disable="$props.disableSelect"
+				behavior="menu"
 			>
 				<template v-slot:option="scope">
 					<q-item v-bind="scope.itemProps">

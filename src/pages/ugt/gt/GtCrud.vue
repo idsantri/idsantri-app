@@ -39,6 +39,7 @@
 						use-input
 						clearable=""
 						@update:model-value="onInputPjgt"
+						behavior="menu"
 					>
 						<template v-slot:option="scope">
 							<q-item v-bind="scope.itemProps">
@@ -86,6 +87,7 @@
 						:rules="[(val) => !!val || 'Harus diisi!']"
 						error-color="negative"
 						:loading="loading['tahun-ajaran']"
+						behavior="menu"
 					/>
 
 					<q-input
