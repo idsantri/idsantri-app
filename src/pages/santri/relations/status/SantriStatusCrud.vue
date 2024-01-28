@@ -37,13 +37,20 @@
 					:loading="loading['status']"
 					behavior="menu"
 				/>
-				<q-input
+				<q-select
 					dense
 					class="q-mt-sm"
 					outlined
 					label="Keterangan"
+					emit-value
+					map-options
 					v-model="input.keterangan"
-					autogrow=""
+					:options="lists['keterangan-status']"
+					:loading="loading['keterangan-status']"
+					use-input=""
+					new-value-mode="add"
+					clearable
+					behavior="menu"
 				/>
 			</q-card-section>
 			<q-card-actions class="flex bg-green-6">
@@ -96,6 +103,7 @@ const loadingCrud = ref(false);
 onMounted(async () => {
 	Object.assign(input.value, props.data);
 	await getLists({ key: 'status', loading, lists, sort: true });
+	await getLists({ key: 'keterangan-status', loading, lists, sort: true });
 });
 
 const submit = async () => {
