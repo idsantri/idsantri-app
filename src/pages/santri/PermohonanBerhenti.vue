@@ -7,133 +7,141 @@
 				</toolbar-form>
 			</q-card-section>
 			<q-card-section class="q-pa-sm">
-				<div>
-					<q-input
-						dense
-						class=""
-						outlined
-						label="Santri ID"
-						v-model="santri.id"
-						filled
-						disable
-					/>
-					<q-input
-						dense
-						class="q-mt-sm"
-						outlined
-						label="Nama"
-						v-model="santri.nama"
-						filled
-						disable
-					/>
-					<q-select
-						dense
-						class="q-mt-sm"
-						outlined
-						label="Tunggakan*"
-						v-model="input.tunggakan"
-						:options="['Lunas', 'Belum Lunas']"
-						clearable
-						use-input
-						new-value-mode="add"
-						behavior="menu"
-					/>
-					<q-select
-						dense
-						class="q-mt-sm"
-						outlined
-						label="Jenis Permohonan*"
-						v-model="input.jenis_permohonan"
-						:options="['Berhenti', 'Cuti/Istirahat']"
-						clearable
-						use-input
-						new-value-mode="add"
-						behavior="menu"
-					/>
-					<q-select
-						dense
-						class="q-mt-sm"
-						outlined
-						label="Alasan*"
-						emit-value
-						map-options
-						v-model="input.alasan"
-						:options="lists['keterangan-status']"
-						:loading="loading['keterangan-status']"
-						use-input=""
-						new-value-mode="add"
-						clearable
-						behavior="menu"
-					/>
-
-					<q-card class="q-mt-sm" flat bordered>
-						<q-card-section class="q-pa-sm">
-							<div class="text-subtitle2">
-								Identitas Pemohon (Wali)
-							</div>
-							<q-input
-								dense
-								class=""
-								outlined
-								label="Nama*"
-								v-model="input.wali_nama"
-							/>
-							<q-input
-								dense
-								class="q-mt-sm"
-								outlined
-								label="Nomor Telepon"
-								v-model="input.wali_no_telepon"
-							/>
-							<q-select
-								dense
-								class="q-mt-sm"
-								outlined
-								label="Bukti Diri"
-								v-model="input.wali_bukti_diri"
-								:options="['KTP', 'SIM']"
-								clearable
-								use-input
-								new-value-mode="add"
-								behavior="menu"
-							/>
-							<q-input
-								dense
-								class="q-mt-sm"
-								outlined
-								label="Nomor / ID Bukti Diri"
-								v-model="input.wali_bukti_diri_id"
-							/>
-							<q-select
-								dense
-								class="q-mt-sm"
-								outlined
-								label="Status*"
-								v-model="input.wali_status"
-								:options="['Wali', 'Wakil Wali']"
-								clearable
-								use-input
-								new-value-mode="add"
-								behavior="menu"
-							/>
-							<q-select
-								dense
-								class="q-mt-sm"
-								outlined
-								label="Hubungan*"
-								emit-value
-								map-options
-								v-model="input.wali_hubungan"
-								:options="lists['hubungan-wali']"
-								:loading="loading['hubungan-wali']"
-								use-input=""
-								new-value-mode="add"
-								clearable
-								behavior="menu"
-							/>
-						</q-card-section>
-					</q-card>
+				<div v-if="loadingForm">
+					<q-dialog v-model="loadingForm" persistent="">
+						<q-spinner-cube
+							color="green-12"
+							size="8em"
+							class="flex q-ma-lg q-mx-auto"
+						/>
+					</q-dialog>
 				</div>
+
+				<q-input
+					dense
+					class=""
+					outlined
+					label="Santri ID"
+					v-model="santri.id"
+					filled
+					disable
+				/>
+				<q-input
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Nama"
+					v-model="santri.nama"
+					filled
+					disable
+				/>
+				<q-select
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Tunggakan*"
+					v-model="input.tunggakan"
+					:options="['Lunas', 'Belum Lunas']"
+					clearable
+					use-input
+					new-value-mode="add"
+					behavior="menu"
+				/>
+				<q-select
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Jenis Permohonan*"
+					v-model="input.jenis_permohonan"
+					:options="['Berhenti', 'Cuti/Istirahat']"
+					clearable
+					use-input
+					new-value-mode="add"
+					behavior="menu"
+				/>
+				<q-select
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Alasan*"
+					emit-value
+					map-options
+					v-model="input.alasan"
+					:options="lists['keterangan-status']"
+					:loading="loading['keterangan-status']"
+					use-input=""
+					new-value-mode="add"
+					clearable
+					behavior="menu"
+				/>
+
+				<q-card class="q-mt-sm" flat bordered>
+					<q-card-section class="q-pa-sm">
+						<div class="text-subtitle2">
+							Identitas Pemohon (Wali)
+						</div>
+						<q-input
+							dense
+							class=""
+							outlined
+							label="Nama*"
+							v-model="input.wali_nama"
+						/>
+						<q-input
+							dense
+							class="q-mt-sm"
+							outlined
+							label="Nomor Telepon"
+							v-model="input.wali_no_telepon"
+						/>
+						<q-select
+							dense
+							class="q-mt-sm"
+							outlined
+							label="Bukti Diri"
+							v-model="input.wali_bukti_diri"
+							:options="['KTP', 'SIM']"
+							clearable
+							use-input
+							new-value-mode="add"
+							behavior="menu"
+						/>
+						<q-input
+							dense
+							class="q-mt-sm"
+							outlined
+							label="Nomor / ID Bukti Diri"
+							v-model="input.wali_bukti_diri_id"
+						/>
+						<q-select
+							dense
+							class="q-mt-sm"
+							outlined
+							label="Status*"
+							v-model="input.wali_status"
+							:options="['Wali', 'Wakil Wali']"
+							clearable
+							use-input
+							new-value-mode="add"
+							behavior="menu"
+						/>
+						<q-select
+							dense
+							class="q-mt-sm"
+							outlined
+							label="Hubungan*"
+							emit-value
+							map-options
+							v-model="input.wali_hubungan"
+							:options="lists['hubungan-wali']"
+							:loading="loading['hubungan-wali']"
+							use-input=""
+							new-value-mode="add"
+							clearable
+							behavior="menu"
+						/>
+					</q-card-section>
+				</q-card>
 			</q-card-section>
 
 			<q-card-actions class="flex bg-green-6">
@@ -168,6 +176,7 @@ const input = ref({ jenis_permohonan: 'Berhenti', tunggakan: 'Lunas' });
 const { santri } = reactive(santriStore());
 const lists = ref([]);
 const loading = ref([]);
+const loadingForm = ref(false);
 
 onMounted(async () => {
 	await getLists({
@@ -196,11 +205,12 @@ async function onSubmit() {
 		return notifyError('Isian tidak lengkap');
 	}
 	obj.id = santri.id;
-	let result = new URLSearchParams(obj).toString();
-	// console.log(result);
 	const download = await apiDownload({
-		message: 'Download Permohonan Berhenti',
-		url: `/reports/santri/permohonan-berhenti/download?${result}`,
+		confirm: false,
+		url: `/reports/santri/permohonan-berhenti/download`,
+		params: obj,
+		fileName: 'permohonan-berhenti-' + obj.id,
+		loading: loadingForm,
 	});
 	if (download) {
 		document.getElementById('btn-close').click();

@@ -156,50 +156,26 @@ function m2h(inputMasehi, koreksi = 0) {
 		.padStart(2, '0')}${hTgl.toString().padStart(2, '0')}`;
 }
 
-function bulanHijri(inputMonth) {
-	let month = '';
-	const caseMonth = parseInt(inputMonth);
-	switch (caseMonth) {
-		case 1:
-			month = 'Muharram';
-			break;
-		case 2:
-			month = 'Shafar';
-			break;
-		case 3:
-			month = 'Rabiul Awal';
-			break;
-		case 4:
-			month = 'Rabiul Akhir';
-			break;
-		case 5:
-			month = 'Jumadal Ula';
-			break;
-		case 6:
-			month = 'Jumadal Akhirah';
-			break;
-		case 7:
-			month = 'Rajab';
-			break;
-		case 8:
-			month = 'Syaban';
-			break;
-		case 9:
-			month = 'Ramadan';
-			break;
-		case 10:
-			month = 'Syawal';
-			break;
-		case 11:
-			month = 'Dzul Qadah';
-			break;
-		case 12:
-			month = 'Dzul Hijjah';
-			break;
-		default:
-			month = '';
-	}
-	return month;
+const listBulanHijri = [
+	{ month: 1, name: 'Muharram' },
+	{ month: 2, name: 'Shafar' },
+	{ month: 3, name: 'Rabiul Awal' },
+	{ month: 4, name: 'Rabiul Akhir' },
+	{ month: 5, name: 'Jumadal Ula' },
+	{ month: 6, name: 'Jumadal Akhirah' },
+	{ month: 7, name: 'Rajab' },
+	{ month: 8, name: 'Syaban' },
+	{ month: 9, name: 'Ramadan' },
+	{ month: 10, name: 'Syawal' },
+	{ month: 11, name: 'Dzul Qadah' },
+	{ month: 12, name: 'Dzul Hijjah' },
+];
+
+function getBulanHijri(inputMonth) {
+	const monthObject = listBulanHijri.find(
+		(obj) => obj.month === parseInt(inputMonth)
+	);
+	return monthObject ? monthObject.name : '';
 }
 
 function bacaHijri(input) {
@@ -212,7 +188,7 @@ function bacaHijri(input) {
 	if (String(cleanInput).length != 8 || dd < 1 || mm < 1 || yy < 1) {
 		return 'Format salah!';
 	}
-	return `${dd} ${bulanHijri(mm)} ${yy}`;
+	return `${dd} ${getBulanHijri(mm)} ${yy}`;
 }
 
 function m2hFormat(input) {
@@ -234,4 +210,4 @@ function formatHijri(textHijri) {
 	if (!textHijri || textHijri.length != 8) return '';
 	else return textHijri.replace(/(.{4})(.{2})(.{2})/, '$1-$2-$3') || '';
 }
-export { m2h, bacaHijri, m2hFormat, m2hBacaHijri, formatHijri };
+export { m2h, bacaHijri, m2hFormat, m2hBacaHijri, formatHijri, listBulanHijri };

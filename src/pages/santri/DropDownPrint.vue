@@ -15,6 +15,7 @@
 					apiDownload({
 						message: 'Download data registrasi?',
 						url: `/reports/santri/registrasi/download?id=${route.params.id}`,
+						fileName: 'registrasi-' + route.params.id,
 					})
 				"
 			>
@@ -29,6 +30,7 @@
 					apiDownload({
 						message: 'Download standbook?',
 						url: `/reports/santri/standbook/download?id=${route.params.id}`,
+						fileName: 'standbook-' + route.params.id,
 					})
 				"
 			>
@@ -50,6 +52,7 @@
 					apiDownload({
 						message: 'Download Keterangan Berhenti',
 						url: `/reports/santri/keterangan-berhenti/download?id=${route.params.id}`,
+						fileName: 'keterangan-berhenti-' + route.params.id,
 					})
 				"
 			>

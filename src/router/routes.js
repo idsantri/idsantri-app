@@ -275,7 +275,7 @@ const routes = [
 								name: 'Rekap Ujian',
 							},
 							{
-								path: 'print/:thAjaranH?/:tingkatId?/:kelas?',
+								path: 'print',
 								component: () =>
 									import(
 										'src/pages/madrasah/absensi/AbsensiPrint.vue'
