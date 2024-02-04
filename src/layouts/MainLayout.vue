@@ -109,17 +109,32 @@
 		<!-- inject modal -->
 		<modals-main />
 
+		<div v-if="loadingMain">
+			<q-dialog v-model="loadingMain" persistent>
+				<q-spinner-cube
+					color="green-12"
+					size="8em"
+					class="flex q-ma-lg q-mx-auto"
+				/>
+			</q-dialog>
+		</div>
+
 		<q-footer bordered class="bg-green-6 text-green-12">
 			<p class="text-center no-margin q-pa-xs">
 				by idsantri {{ m2h('2023-08-01')?.substring(0, 4) }} &mdash; v.
 				{{ app.version }}
 			</p>
+			<!-- <q-btn
+				label="loading"
+				icon="user"
+				@click="setLoadingSpinner(true)"
+			/> -->
 		</q-footer>
 	</q-layout>
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted, computed } from 'vue';
+import { ref, watchEffect, onMounted, computed, toRefs } from 'vue';
 import SideBar from 'src/components/SideBar.vue';
 import ordersStore from 'src/stores/orders-store';
 import constanta from 'src/config/constanta';
@@ -128,9 +143,12 @@ import ModalsMain from 'src/components/ModalsMain.vue';
 const leftDrawerOpen = ref(false);
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 import app from '../../package.json';
+import loadingStore from 'src/stores/loading-store';
 
 const componentKey = ref(0);
 const forceRerender = () => componentKey.value++;
+
+const { loadingMain, setLoadingSpinner } = toRefs(loadingStore());
 
 const badge = ref(false);
 watchEffect(() => {

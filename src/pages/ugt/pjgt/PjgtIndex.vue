@@ -37,8 +37,7 @@
 					<div style="width: 250px">
 						<q-select
 							dense
-							hint=""
-							class="q-mt-sm"
+							class="q-my-xs"
 							outlined
 							label="Wilayah"
 							emit-value
@@ -59,6 +58,8 @@
 						debounce="300"
 						v-model="filter"
 						placeholder="Cari"
+						style="width: 250px"
+						class="q-my-xs"
 					>
 						<template v-slot:append>
 							<q-icon name="search" />

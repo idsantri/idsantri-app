@@ -8,99 +8,88 @@
 				</toolbar-form>
 			</q-card-section>
 			<q-card-section class="q-pa-sm">
-				<div v-if="loadingCrud">
-					<q-dialog v-model="loadingCrud" persistent="">
-						<q-spinner-cube
-							color="green-12"
-							size="8em"
-							class="flex q-ma-lg q-mx-auto"
+				<q-input
+					dense
+					hint="Diisi oleh sistem"
+					class=""
+					outlined
+					label="ID"
+					v-model="input.id"
+					disable
+					filled
+				/>
+				<q-card class="q-mt-sm" flat bordered>
+					<q-card-section class="q-pa-sm">
+						<div class="text-caption">
+							Jika terkait dengan administrasi GT
+						</div>
+						<q-input
+							dense
+							class="q-mt-sm"
+							outlined
+							label="GT ID"
+							v-model="input.gt_id"
 						/>
-					</q-dialog>
-				</div>
-				<div>
-					<q-input
-						dense
-						hint="Diisi oleh sistem"
-						class=""
-						outlined
-						label="ID"
-						v-model="input.id"
-						disable
-						filled
-					/>
-					<q-card class="q-mt-sm" flat bordered>
-						<q-card-section class="q-pa-sm">
-							<div class="text-caption">
-								Jika terkait dengan administrasi GT
-							</div>
-							<q-input
-								dense
-								class="q-mt-sm"
-								outlined
-								label="GT ID"
-								v-model="input.gt_id"
-							/>
-							<q-input
-								dense
-								class="q-mt-sm"
-								outlined
-								label="Nama GT"
-								v-model="gt.nama"
-								disable
-								filled
-								:loading="loadingGt"
-							/>
-							<q-input
-								dense
-								class="q-mt-sm"
-								outlined
-								label="Nama PJGT"
-								v-model="gt.pjgt_nama"
-								disable
-								filled
-								:loading="loadingGt"
-							/>
-						</q-card-section>
-					</q-card>
-					<q-input
-						dense
-						class="q-mt-sm"
-						outlined
-						label="Keperluan"
-						v-model="input.keperluan"
-					/>
-					<q-select
-						dense
-						class="q-mt-sm"
-						outlined
-						label="Kas Masuk/Keluar"
-						v-model="input.flag"
-						:options="[
-							{ value: '+', label: 'Masuk' },
-							{ value: '-', label: 'Keluar' },
-						]"
-						emit-value
-						map-options
-						error-color="negative"
-						behavior="menu"
-					/>
-					<currency-input
-						dense
-						class="q-mt-sm"
-						outlined
-						v-model="input.nominal"
-						required
-						label="Nominal"
-					/>
-					<q-input
-						dense
-						class="q-mt-sm"
-						outlined
-						label="Keterangan"
-						v-model="input.keterangan"
-						autogrow
-					/>
-				</div>
+						<q-input
+							dense
+							class="q-mt-sm"
+							outlined
+							label="Nama GT"
+							v-model="gt.nama"
+							disable
+							filled
+							:loading="loadingGt"
+						/>
+						<q-input
+							dense
+							class="q-mt-sm"
+							outlined
+							label="Nama PJGT"
+							v-model="gt.pjgt_nama"
+							disable
+							filled
+							:loading="loadingGt"
+						/>
+					</q-card-section>
+				</q-card>
+				<q-input
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Keperluan"
+					v-model="input.keperluan"
+				/>
+				<q-select
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Kas Masuk/Keluar"
+					v-model="input.flag"
+					:options="[
+						{ value: '+', label: 'Masuk' },
+						{ value: '-', label: 'Keluar' },
+					]"
+					emit-value
+					map-options
+					error-color="negative"
+					behavior="menu"
+				/>
+				<currency-input
+					dense
+					class="q-mt-sm"
+					outlined
+					v-model="input.nominal"
+					required
+					label="Nominal"
+				/>
+				<q-input
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Keterangan"
+					v-model="input.keterangan"
+					autogrow
+				/>
 			</q-card-section>
 			<!-- <pre>{{ input }}</pre> -->
 			<q-card-actions class="flex bg-green-6">
@@ -132,7 +121,7 @@
 </template>
 <script setup>
 import apiGet from 'src/api/api-get';
-import { onMounted, ref, watch, watchEffect } from 'vue';
+import { onMounted, ref, toRefs, watch, watchEffect } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
 import apiPost from 'src/api/api-post';
@@ -141,7 +130,10 @@ import apiDelete from 'src/api/api-delete';
 import { useRouter } from 'vue-router';
 import { getListsKey } from 'src/api/api-get-lists';
 import CurrencyInput from 'src/components/CurrencyInput.vue';
+import loadingStore from 'src/stores/loading-store';
 
+const loadingState = loadingStore();
+const { loadingMain } = toRefs(loadingState);
 const props = defineProps({
 	data: Object,
 	isNew: Boolean,
@@ -152,7 +144,6 @@ const input = ref({
 	keterangan: 'Lunas',
 	flag: '+',
 });
-const loadingCrud = ref(false);
 const loadingGt = ref(false);
 const gt = ref({});
 
@@ -190,7 +181,7 @@ async function onSubmit() {
 		response = await apiPost({
 			endPoint: 'ugt/kas',
 			data,
-			loading: loadingCrud,
+			loading: loadingMain,
 		});
 	} else {
 		response = await apiUpdate({
@@ -198,7 +189,7 @@ async function onSubmit() {
 			data,
 			confirm: true,
 			notify: true,
-			loading: loadingCrud,
+			loading: loadingMain,
 		});
 	}
 	if (response) {
@@ -210,7 +201,7 @@ async function onSubmit() {
 const handleDelete = async () => {
 	const result = await apiDelete({
 		endPoint: `ugt/kas/${input.value.id}`,
-		loading: loadingCrud,
+		loading: loadingMain,
 		rerender: false,
 	});
 	if (result) {

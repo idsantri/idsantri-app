@@ -76,16 +76,27 @@
 							{{ props.row.cr_by }}
 						</q-td>
 						<q-td key="edit" :props="props">
-							<q-btn
-								icon="edit"
-								label="Edit"
-								no-caps
-								color="green-10"
-								outline
-								dense
-								class="q-px-md"
-								@click="editKas(props.row)"
-							/>
+							<div class="q-gutter-sm">
+								<q-btn
+									icon="edit"
+									no-caps
+									color="green-10"
+									outline
+									dense
+									class="q-px-md"
+									@click="editKas(props.row)"
+								/>
+								<q-btn
+									icon="print"
+									no-caps
+									color="green-10"
+									outline
+									dense
+									class="q-px-md"
+									@click="print(props.row)"
+									:disable="props.row.gt_id ? false : true"
+								/>
+							</div>
 						</q-td>
 					</q-tr>
 				</template>
@@ -104,11 +115,15 @@
 	<!-- <pre>{{ wilayah }}</pre> -->
 </template>
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, toRefs } from 'vue';
 import apiGet from 'src/api/api-get.js';
 import { digitSeparator } from 'src/utils/format-number';
 import KasCrud from 'src/pages/ugt/kas/KasCrud.vue';
+import loadingStore from 'src/stores/loading-store';
+import apiDownload from 'src/api/api-download';
 
+const loadingState = loadingStore();
+const { loadingMain } = toRefs(loadingState);
 const kas = ref([]);
 const loading = ref(false);
 const filter = ref('');
@@ -127,7 +142,15 @@ function addKas() {
 	isNew.value = true;
 	crudShow.value = true;
 }
-
+async function print(val) {
+	await apiDownload({
+		url: `/reports/ugt/kuitansi/download`,
+		loading: loadingMain,
+		confirm: false,
+		fileName: 'kuitansi-' + val.id,
+		params: { id: val.id },
+	});
+}
 function editKas(row) {
 	const flag = row.masuk ? '+' : '-';
 	const nominal = row.masuk || row.keluar;
@@ -208,7 +231,7 @@ const columns = [
 	},
 	{
 		name: 'edit',
-		label: 'Edit',
+		label: '!',
 		align: 'center',
 		field: '',
 		sortable: false,

@@ -4,7 +4,7 @@ import { apiTokened } from '.';
 async function apiDownload({
 	message = 'Download data yang dicetak?',
 	url,
-	confirm = true,
+	confirm = false,
 	loading,
 	params,
 	fileName = 'dokumen',

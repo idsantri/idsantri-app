@@ -8,116 +8,102 @@
 				</toolbar-form>
 			</q-card-section>
 			<q-card-section class="q-pa-sm">
-				<div v-if="loadingCrud">
-					<q-dialog v-model="loadingCrud" persistent="">
-						<q-spinner-cube
-							color="green-12"
-							size="8em"
-							class="flex q-ma-lg q-mx-auto"
-						/>
-					</q-dialog>
-				</div>
-				<div>
-					<InputSelectSantriId
-						:active-only="true"
-						@emit-input="(val) => Object.assign(input, val)"
-						:data="props.data"
-					/>
-					<q-select
-						class="q-mt-sm"
-						dense
-						outlined
-						label="PJGT ID*"
-						v-model="input.pjgt_id"
-						:options="pjgtList"
-						emit-value
-						map-options
-						option-value="id"
-						option-label="id"
-						error-color="negative"
-						:loading="pjgtLoading"
-						use-input
-						clearable=""
-						@update:model-value="onInputPjgt"
-						behavior="menu"
-					>
-						<template v-slot:option="scope">
-							<q-item v-bind="scope.itemProps">
-								<q-item-section>
-									<q-item-label
-										>{{ scope.opt.id }} &mdash;
-										{{ scope.opt.nama }}
-									</q-item-label>
-									<q-item-label caption>{{
-										scope.opt.wilayah
-									}}</q-item-label>
-								</q-item-section>
-							</q-item>
-						</template>
-					</q-select>
-					<q-input
-						dense
-						:hint="input.pjgt_wilayah"
-						class="q-mt-sm"
-						outlined
-						label="Nama PJGT"
-						v-model="input.pjgt_nama"
-						disable
-						filled
-					/>
-					<q-select
-						dense
-						:hint="
-							input.th_ajaran_h?.length == 9
-								? lists['tahun-ajaran']?.find(
-										(item) =>
-											item.val0 === input.th_ajaran_h
-								  )?.val1
-								: ''
-						"
-						class="q-mt-sm"
-						outlined
-						label="Tahun Ajaran*"
-						v-model="input.th_ajaran_h"
-						:options="lists['tahun-ajaran']"
-						option-value="val0"
-						option-label="val0"
-						emit-value
-						map-options
-						:rules="[(val) => !!val || 'Harus diisi!']"
-						error-color="negative"
-						:loading="loading['tahun-ajaran']"
-						behavior="menu"
-					/>
+				<InputSelectSantriId
+					:active-only="true"
+					@emit-input="(val) => Object.assign(input, val)"
+					:data="props.data"
+				/>
+				<q-select
+					class="q-mt-sm"
+					dense
+					outlined
+					label="PJGT ID*"
+					v-model="input.pjgt_id"
+					:options="pjgtList"
+					emit-value
+					map-options
+					option-value="id"
+					option-label="id"
+					error-color="negative"
+					:loading="pjgtLoading"
+					use-input
+					clearable=""
+					@update:model-value="onInputPjgt"
+					behavior="menu"
+				>
+					<template v-slot:option="scope">
+						<q-item v-bind="scope.itemProps">
+							<q-item-section>
+								<q-item-label
+									>{{ scope.opt.id }} &mdash;
+									{{ scope.opt.nama }}
+								</q-item-label>
+								<q-item-label caption>{{
+									scope.opt.wilayah
+								}}</q-item-label>
+							</q-item-section>
+						</q-item>
+					</template>
+				</q-select>
+				<q-input
+					dense
+					:hint="input.pjgt_wilayah"
+					class="q-mt-sm"
+					outlined
+					label="Nama PJGT"
+					v-model="input.pjgt_nama"
+					disable
+					filled
+				/>
+				<q-select
+					dense
+					:hint="
+						input.th_ajaran_h?.length == 9
+							? lists['tahun-ajaran']?.find(
+									(item) => item.val0 === input.th_ajaran_h
+							  )?.val1
+							: ''
+					"
+					class="q-mt-sm"
+					outlined
+					label="Tahun Ajaran*"
+					v-model="input.th_ajaran_h"
+					:options="lists['tahun-ajaran']"
+					option-value="val0"
+					option-label="val0"
+					emit-value
+					map-options
+					:rules="[(val) => !!val || 'Harus diisi!']"
+					error-color="negative"
+					:loading="loading['tahun-ajaran']"
+					behavior="menu"
+				/>
 
-					<q-input
-						dense
-						hint="08123456789"
-						class="q-mt-sm"
-						outlined
-						label="Telepon"
-						v-model="input.telepon"
-						:rules="[
-							(val) => !val || !isNaN(val) || 'Hanya angka!',
-						]"
-						error-color="negative"
-					/>
-					<q-input
-						dense
-						class="q-mt-sm"
-						outlined
-						label="Email GT"
-						v-model="input.email"
-					/>
-					<q-input
-						dense
-						class="q-mt-sm"
-						outlined
-						label="Keterangan"
-						v-model="input.keterangan"
-						autogrow=""
-					/>
-				</div>
+				<q-input
+					dense
+					hint="08123456789"
+					class="q-mt-sm"
+					outlined
+					label="Telepon"
+					v-model="input.telepon"
+					:rules="[(val) => !val || !isNaN(val) || 'Hanya angka!']"
+					error-color="negative"
+				/>
+				<q-input
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Email GT"
+					v-model="input.email"
+				/>
+				<q-input
+					dense
+					class="q-mt-sm"
+					outlined
+					label="Keterangan"
+					v-model="input.keterangan"
+					autogrow=""
+				/>
 			</q-card-section>
 
 			<q-card-actions class="flex bg-green-6">
@@ -149,14 +135,16 @@
 </template>
 <script setup>
 import apiGet from 'src/api/api-get';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, toRefs } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
-import { useRouter } from 'vue-router';
 import { getListsKey } from 'src/api/api-get-lists';
+import loadingStore from 'src/stores/loading-store';
+
+const { loadingMain } = toRefs(loadingStore());
 
 const props = defineProps({
 	isNew: Boolean,
@@ -164,9 +152,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
-const router = useRouter();
 const input = ref({});
-const loadingCrud = ref(false);
 const lists = ref([]);
 const loading = ref([]);
 const pjgtList = ref([]);
@@ -198,7 +184,7 @@ async function onSubmit() {
 		response = await apiPost({
 			endPoint: 'ugt/gt',
 			data,
-			loading: loadingCrud,
+			loading: loadingMain,
 		});
 	} else {
 		response = await apiUpdate({
@@ -206,7 +192,7 @@ async function onSubmit() {
 			data,
 			confirm: true,
 			notify: true,
-			loading: loadingCrud,
+			loading: loadingMain,
 		});
 	}
 	if (response) {
@@ -218,7 +204,7 @@ async function onSubmit() {
 const handleDelete = async () => {
 	const result = await apiDelete({
 		endPoint: `ugt/gt/${input.value.id}`,
-		loading: loadingCrud,
+		loading: loadingMain,
 		rerender: false,
 	});
 	if (result) {

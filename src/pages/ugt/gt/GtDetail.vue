@@ -79,6 +79,17 @@
 						</q-markup-table>
 					</div>
 				</q-card-section>
+				<q-card-actions class="bg-green-7" align="right">
+					<q-btn
+						label="Print"
+						dense
+						no-caps
+						icon="print"
+						color="green-11"
+						class="q-px-md text-green-10"
+						@click="suratTugas"
+					/>
+				</q-card-actions>
 			</q-card>
 		</div>
 		<!-- pjgt -->
@@ -182,9 +193,13 @@
 <script setup>
 import apiGet from 'src/api/api-get';
 import { digitSeparator } from 'src/utils/format-number';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 import GtCrud from 'src/pages/ugt/gt/GtCrud.vue';
+import apiDownload from 'src/api/api-download';
+import loadingStore from 'src/stores/loading-store';
+
+const { loadingMain } = toRefs(loadingStore());
 
 const route = useRoute();
 const id = route.params.id;
@@ -203,5 +218,16 @@ async function loadGt() {
 onMounted(async () => {
 	await loadGt();
 });
+
+async function suratTugas() {
+	// console.log(gt.value.id);
+	await apiDownload({
+		confirm: false,
+		url: `/reports/ugt/surat-tugas/download`,
+		fileName: 'surat-tugas-' + gt.value.id,
+		params: { id: gt.value.id },
+		loading: loadingMain,
+	});
+}
 </script>
 <style lang=""></style>

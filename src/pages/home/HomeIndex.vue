@@ -7,7 +7,8 @@
 			<q-img src="../../assets/icon-c.png" />
 		</q-avatar>
 	</div>
-
+	<!-- <q-btn label="Test Loading1" @click="setLoadingSpinner(true)" />
+	<q-btn label="Test Loading2" @click="setLoadingSpinner(false)" /> -->
 	<pre>
 	<!-- loading:{{ loading[key] }} -->
 	</pre>
@@ -17,7 +18,12 @@
 </template>
 <script setup>
 import { getListsKey, getLists } from 'src/api/api-get-lists';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, toRefs } from 'vue';
+
+import loadingStore from 'src/stores/loading-store';
+const loadingState = loadingStore();
+const { loadingSpinner, setLoadingSpinner } = toRefs(loadingState);
+
 const lists = ref([]);
 const loading = ref([]);
 const key = 'tahun-ajaran';

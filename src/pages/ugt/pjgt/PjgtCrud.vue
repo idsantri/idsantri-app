@@ -8,18 +8,7 @@
 				</toolbar-form>
 			</q-card-section>
 			<q-card-section class="no-padding">
-				<div v-if="loadingCrud" style="height: 60vh">
-					<q-dialog v-model="loadingCrud" persistent="">
-						<q-spinner-cube
-							color="green-12"
-							size="8em"
-							class="flex q-ma-lg q-mx-auto"
-						/>
-					</q-dialog>
-				</div>
-
 				<q-carousel
-					v-else
 					v-model="slide"
 					transition-prev="slide-right"
 					transition-next="slide-left"
@@ -217,7 +206,7 @@
 	</q-card>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, toRefs } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
@@ -225,6 +214,10 @@ import apiDelete from 'src/api/api-delete';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
 import { getListsCustom } from 'src/api/api-get-lists';
+import loadingStore from 'src/stores/loading-store';
+
+const loadingState = loadingStore();
+const { loadingMain } = toRefs(loadingState);
 
 const props = defineProps({
 	data: Object,
@@ -238,7 +231,6 @@ const input = ref({});
 
 const lists = ref([]);
 const loading = ref([]);
-const loadingCrud = ref(false);
 onMounted(async () => {
 	Object.assign(input.value, props.data);
 
@@ -268,7 +260,7 @@ const onSubmit = async () => {
 		response = await apiPost({
 			endPoint: 'ugt/pjgt',
 			data,
-			loading: loadingCrud,
+			loading: loadingMain,
 		});
 	} else {
 		response = await apiUpdate({
@@ -276,7 +268,7 @@ const onSubmit = async () => {
 			data,
 			confirm: true,
 			notify: true,
-			loading: loadingCrud,
+			loading: loadingMain,
 		});
 	}
 
@@ -289,7 +281,7 @@ const onSubmit = async () => {
 const handleDelete = async () => {
 	const result = await apiDelete({
 		endPoint: `ugt/pjgt/${route.params.id}`,
-		loading: loadingCrud,
+		loading: loadingMain,
 		rerender: false,
 	});
 	if (result) {
