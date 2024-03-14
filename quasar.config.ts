@@ -6,13 +6,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import { configure } from 'quasar/wrappers';
+import config from 'src/config';
 
 export default configure((ctx) => {
 	const env = ctx.dev ? 'development' : 'production';
 	const baseURL_API =
-		env === 'development'
-			? 'http://localhost:8000/api'
-			: 'https://demo.idsantri.my.id/api';
+		env === 'development' ? 'http://localhost:8000/api' : config.BASE_API;
 	return {
 		eslint: {
 			// fix: true,
