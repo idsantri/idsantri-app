@@ -1,6 +1,6 @@
-# ID Santri (idsantri)
+# IDSantri App (idsantri-app)
 
-Aplikasi ID Santri
+Aplikasi Madrasah dan Pesantren
 
 ## Install the dependencies
 

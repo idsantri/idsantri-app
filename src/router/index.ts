@@ -1,14 +1,15 @@
 import { route } from 'quasar/wrappers';
 import {
-	createRouter,
 	createMemoryHistory,
-	createWebHistory,
+	createRouter,
 	createWebHashHistory,
+	createWebHistory,
 } from 'vue-router';
 import routes from './routes';
 import { nextTick } from 'vue';
 import authStore from '../stores/auth-store';
 import constanta from 'src/config/constanta';
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -22,8 +23,8 @@ export default route(function (/* { store, ssrContext } */) {
 	const createHistory = process.env.SERVER
 		? createMemoryHistory
 		: process.env.VUE_ROUTER_MODE === 'history'
-		? createWebHistory
-		: createWebHashHistory;
+			? createWebHistory
+			: createWebHashHistory;
 
 	const Router = createRouter({
 		scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -32,9 +33,7 @@ export default route(function (/* { store, ssrContext } */) {
 		// Leave this as is and make changes in quasar.conf.js instead!
 		// quasar.conf.js -> build -> vueRouterMode
 		// quasar.conf.js -> build -> publicPath
-		history: createHistory(
-			process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE
-		),
+		history: createHistory(process.env.VUE_ROUTER_BASE),
 	});
 
 	Router.beforeEach((to, from, next) => {
@@ -44,8 +43,9 @@ export default route(function (/* { store, ssrContext } */) {
 
 		const store = authStore();
 		const authRoutes = ['Register', 'Login', 'Forgot', 'Reset', 'Verify'];
-		const toAuthRoutes = authRoutes.includes(to.name);
-		const isAuthenticate = store.getToken && store.getToken.length > 0;
+		const toAuthRoutes = authRoutes.includes(to.name as string);
+		const isAuthenticate =
+			store.getToken && (store.getToken as string).length > 0;
 
 		if (!toAuthRoutes && !isAuthenticate) {
 			next('/login');

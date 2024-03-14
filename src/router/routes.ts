@@ -1,10 +1,6 @@
-import { defineAsyncComponent } from 'vue';
+import { RouteRecordRaw } from 'vue-router';
 
-function page(filename) {
-	return defineAsyncComponent(() => import('src/pages/' + filename + '.vue'));
-}
-
-const routes = [
+const routes: RouteRecordRaw[] = [
 	{
 		path: '/',
 		name: 'Auth',
@@ -207,7 +203,7 @@ const routes = [
 			{
 				path: 'madrasah',
 				meta: { title: 'Madrasah' },
-				redirect: (to) => '/madrasah/murid',
+				redirect: () => '/madrasah/murid',
 				children: [
 					{
 						path: 'murid',
@@ -306,7 +302,7 @@ const routes = [
 							import(
 								'src/pages/madrasah/tingkat/IndexTingkat.vue'
 							),
-						redirect: (to) => '/madrasah/tingkat/id-murid',
+						redirect: () => '/madrasah/tingkat/id-murid',
 						children: [
 							{
 								path: 'id-murid',
@@ -341,7 +337,7 @@ const routes = [
 			{
 				path: 'bendahara',
 				meta: { title: 'Bendahara' },
-				redirect: (to) => '/bendahara/iuran/q/tanggal',
+				redirect: () => '/bendahara/iuran/q/tanggal',
 				children: [
 					{
 						path: 'iuran/santri/:id/:thAjaranH?',
@@ -383,7 +379,7 @@ const routes = [
 			{
 				path: 'keamanan',
 				meta: { title: 'Keamanan' },
-				redirect: (to) => '/keamanan/izin-pesantren',
+				redirect: () => '/keamanan/izin-pesantren',
 				children: [
 					{
 						// /:id -> matches only numbers
@@ -443,7 +439,7 @@ const routes = [
 			//ugt
 			{
 				path: 'ugt',
-				redirect: (to) => '/ugt/pjgt',
+				redirect: () => '/ugt/pjgt',
 				meta: { title: 'UGT' },
 				children: [
 					{

@@ -5,6 +5,7 @@
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.codeActionsOnSave": ["source.fixAll.eslint"],
 	"eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
+	"typescript.tsdk": "node_modules/typescript/lib",
 	"html-css-class-completion.remoteStyleSheets": [
 		"https://cdn.jsdelivr.net/npm/quasar@2.12.7/dist/quasar.prod.css"
 	],
