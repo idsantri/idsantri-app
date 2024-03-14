@@ -1,0 +1,3 @@
+* merge=ours
+!user-default.png merge=theirs
+!_redirects merge=theirs
