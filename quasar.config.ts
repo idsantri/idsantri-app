@@ -12,7 +12,7 @@ export default configure((ctx) => {
 	const baseURL_API =
 		env === 'development'
 			? 'http://localhost:8000/api'
-			: 'https://api.demangan.net/api';
+			: 'https://demo.idsantri.my.id/api';
 	return {
 		eslint: {
 			// fix: true,
