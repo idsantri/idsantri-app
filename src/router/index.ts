@@ -8,7 +8,7 @@ import {
 import routes from './routes';
 import { nextTick } from 'vue';
 import authStore from '../stores/auth-store';
-import constanta from 'src/config/constanta';
+import config from 'src/config';
 
 /*
  * If not building with SSR mode, you can
@@ -36,7 +36,7 @@ export default route(function (/* { store, ssrContext } */) {
 		history: createHistory(process.env.VUE_ROUTER_BASE),
 	});
 
-	Router.beforeEach((to, from, next) => {
+	Router.beforeEach((to, _from, next) => {
 		if (to.fullPath == '/') {
 			return next('/cari');
 		}
@@ -56,7 +56,7 @@ export default route(function (/* { store, ssrContext } */) {
 		}
 	});
 
-	const DEFAULT_TITLE = constanta.APP_NAME_1;
+	const DEFAULT_TITLE = config.APP_NAME_1;
 	Router.afterEach((to) => {
 		nextTick(() => {
 			document.title = to.meta.title
