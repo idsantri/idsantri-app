@@ -13,7 +13,7 @@
 				/>
 
 				<q-toolbar-title class="text-green-11">
-					{{ constanta.APP_NAME }}
+					{{ config.APP_NAME }}
 				</q-toolbar-title>
 
 				<q-btn
@@ -137,7 +137,7 @@
 import { ref, watchEffect, onMounted, computed, toRefs } from 'vue';
 import SideBar from 'src/components/SideBar.vue';
 import ordersStore from 'src/stores/orders-store';
-import constanta from 'src/config';
+import config from 'src/config';
 import { m2h } from 'src/utils/hijri';
 import ModalsMain from 'src/components/ModalsMain.vue';
 const leftDrawerOpen = ref(false);

@@ -3,9 +3,9 @@
 		<q-card class="my-card q-pa-lg bg-green-5 text-green-1">
 			<q-card-section class="no-padding q-mb-md">
 				<div class="container-title">
-					<h1 class="title">{{ constanta.APP_NAME }}</h1>
+					<h1 class="title">{{ config.APP_NAME }}</h1>
 					<h2 class="text-subtitle1 text-center q-ma-none">
-						{{ constanta.APP_DESCRIPTION }}
+						{{ config.APP_DESCRIPTION }}
 					</h2>
 				</div>
 				<q-separator dark />
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import constanta from 'src/config';
+import config from 'src/config';
 import { ref } from 'vue';
 
 const title = ref('Autentikasi');
