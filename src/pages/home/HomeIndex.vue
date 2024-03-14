@@ -4,7 +4,7 @@
 	</div>
 	<div class="text-center" style="margin-top: 20px">
 		<q-avatar size="150px" square="">
-			<q-img src="../../assets/icon-c.png" />
+			<q-img src="icons/icon-192x192.png" />
 		</q-avatar>
 	</div>
 	<!-- <q-btn label="Test Loading1" @click="setLoadingSpinner(true)" />

@@ -1,3 +1,4 @@
+#  git config --global merge.ours.driver true
 * merge=ours
 !user-default.png merge=theirs
 !_redirects merge=theirs
