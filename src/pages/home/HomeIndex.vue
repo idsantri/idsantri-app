@@ -7,14 +7,6 @@
 			<q-img src="icons/icon-192x192.png" />
 		</q-avatar>
 	</div>
-	<!-- <q-btn label="Test Loading1" @click="setLoadingSpinner(true)" />
-	<q-btn label="Test Loading2" @click="setLoadingSpinner(false)" /> -->
-	<pre>
-	<!-- loading:{{ loading[key] }} -->
-	</pre>
-	<pre>
-<!-- lists:{{ lists[key] }} -->
-	</pre>
 </template>
 <script setup>
 import { getListsKey, getLists } from 'src/api/api-get-lists';
@@ -38,3 +30,5 @@ onMounted(async () => {
 	console.log('data', data);
 });
 </script>
+
+<style lang="scss" scoped></style>

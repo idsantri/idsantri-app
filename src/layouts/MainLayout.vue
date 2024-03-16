@@ -148,7 +148,7 @@ import loadingStore from 'src/stores/loading-store';
 const componentKey = ref(0);
 const forceRerender = () => componentKey.value++;
 
-const { loadingMain, setLoadingSpinner } = toRefs(loadingStore());
+const { loadingMain } = toRefs(loadingStore());
 
 const badge = ref(false);
 watchEffect(() => {
@@ -196,4 +196,3 @@ const installApp = async () => {
 	margin: 30px auto;
 }
 </style>
-src/config

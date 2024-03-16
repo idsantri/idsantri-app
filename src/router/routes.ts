@@ -509,6 +509,10 @@ const routes: RouteRecordRaw[] = [
 				path: 'test',
 				component: () => import('src/pages/testPage.vue'),
 			},
+			{
+				path: 'test-pdf',
+				component: () => import('src/pages/testPDF.vue'),
+			},
 		],
 	},
 

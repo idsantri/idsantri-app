@@ -18,11 +18,11 @@ api.interceptors.response.use(
 			// Teruskan kesalahan lain ke blok catch berikutnya
 			return Promise.reject(error);
 		}
-	}
+	},
 );
 
 const apiTokened = api;
-const auth = JSON.parse(sessionStorage.getItem('auth'));
+const auth = JSON.parse(sessionStorage.getItem('auth') as string);
 const token = auth ? auth.token : 'FAIL TO GET TOKEN';
 apiTokened.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 

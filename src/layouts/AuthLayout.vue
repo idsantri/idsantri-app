@@ -72,4 +72,3 @@ const handleErrors = (value) => (errors.value = value);
 	margin-bottom: 10px;
 }
 </style>
-src/config
