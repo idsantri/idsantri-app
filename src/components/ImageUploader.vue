@@ -44,7 +44,7 @@ watch(
 	() => props.showUploader,
 	(newVal) => {
 		internalShowUploader.value = newVal;
-	}
+	},
 );
 
 onUpdated(() => {
@@ -77,13 +77,13 @@ const translate = {
 
 const imgDataUrl = ref('');
 const paramsImage = {};
-const cropSuccess = (imgData, field) => {
+const cropSuccess = (imgData /*, field*/) => {
 	imgDataUrl.value = imgData;
 	// console.log(imgData);
 	// console.log(field);
 };
 
-const cropUploadSuccess = (jsonData, field) => {
+const cropUploadSuccess = (jsonData /*, field*/) => {
 	// console.log(jsonData);
 	// console.log('field: ' + field);
 	notifySuccess(jsonData.message);

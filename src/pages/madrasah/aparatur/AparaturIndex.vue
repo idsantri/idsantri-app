@@ -1,5 +1,5 @@
 <template lang="">
-	<div class="q-ma-sm">
+	<q-page class="q-pa-sm">
 		<filter-kelas
 			:showBulanUjian="false"
 			:showKelas="false"
@@ -26,7 +26,7 @@
 				<router-view :key="$route.fullPath" />
 			</q-card-section>
 		</q-card>
-	</div>
+	</q-page>
 </template>
 <script setup>
 import FilterKelas from 'src/components/HeadFilterKelas.vue';

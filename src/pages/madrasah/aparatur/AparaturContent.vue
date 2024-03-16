@@ -43,11 +43,9 @@
 <script setup>
 import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 
-const spinner = ref(false);
 const route = useRoute();
-const router = useRouter();
 const filter = ref('');
 const params = {
 	thAjaranH: route.params.thAjaranH,
@@ -59,7 +57,7 @@ const personalia = ref([]);
 onMounted(async () => {
 	if (params.thAjaranH && params.tingkatId) {
 		const data = await apiGet({
-			endPoint: `personalia-madrasah`,
+			endPoint: 'personalia-madrasah',
 			params: {
 				th_ajaran_h: params.thAjaranH,
 				tingkat_id: params.tingkatId,

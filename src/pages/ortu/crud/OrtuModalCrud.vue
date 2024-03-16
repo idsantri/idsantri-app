@@ -158,7 +158,8 @@ const resetOrDelete = async () => {
 	} else {
 		const result = await apiDelete({
 			endPoint: `ortu/${ortu.id}`,
-			message: `<span style="color:'red'">Hapus Orang Tua?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>`,
+			message:
+				'<span style="color:\'red\'">Hapus Orang Tua?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>',
 			rerender: false,
 			loading: loadingCrud,
 		});

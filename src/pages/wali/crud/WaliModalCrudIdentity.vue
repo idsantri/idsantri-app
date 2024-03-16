@@ -85,5 +85,5 @@ const props = defineProps({
 });
 
 const { wali } = waliState();
-const { id, nama, tgl_lahir, tmp_lahir, nik, sex } = toRefs(wali);
+const { id, nama, tgl_lahir, nik, sex } = toRefs(wali);
 </script>

@@ -1,5 +1,5 @@
 <template lang="">
-	<q-card class="q-mx-sm">
+	<q-card class="">
 		<q-card-section class="bg-green-8 no-padding">
 			<q-toolbar class="no-padding no-margin">
 				<q-toolbar-title class="text-subtitle1 q-ml-sm text-green-11">
@@ -114,17 +114,17 @@ async function loadData() {
 	personaliaObj.value = {
 		Nama: `${personalia.value.nama?.toUpperCase()} (${personalia.value.sex?.toUpperCase()})`,
 		Alamat: `${personalia.value.jl || ' '} RT ${String(
-			personalia.value.rt || 0
+			personalia.value.rt || 0,
 		).padStart(3, 0)} RW ${String(personalia.value.rw || 0).padStart(
 			3,
-			'0'
+			'0',
 		)} ${personalia.value.desa || ' '} ${
 			personalia.value.kecamatan || ' '
 		} ${personalia.value.kabupaten || ' '} ${
 			personalia.value.provinsi || ' '
 		} ${personalia.value.kode_pos || ' '}`.replace(/\s\s+/g, ' '),
 		Kelahiran: `${personalia.value.tmp_lahir || '-'}, ${formatDateFull(
-			personalia.value.tgl_lahir
+			personalia.value.tgl_lahir,
 		)}`,
 		Telepon: personalia.value.telepon || '-',
 		Email: personalia.value.email || '-',

@@ -1,5 +1,5 @@
 <template>
-	<div class="q-pa-xs">
+	<div class="">
 		<form @submit.prevent="submitLogin">
 			<div class="q-gutter-y-md column">
 				<q-input
@@ -58,13 +58,13 @@
 				</q-card>
 			</div>
 		</form>
+		<q-spinner-cube
+			v-show="showSpinner"
+			color="green-12"
+			size="14em"
+			class="absolute-center"
+		/>
 	</div>
-	<q-spinner-cube
-		v-show="showSpinner"
-		color="green-12"
-		size="14em"
-		class="absolute-center"
-	/>
 </template>
 
 <script setup>

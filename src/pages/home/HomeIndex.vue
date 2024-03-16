@@ -1,20 +1,18 @@
 <template>
-	<div style="margin-top: 50px">
-		<div class="text-subtitle1 text-center">Selamat Datang</div>
-	</div>
-	<div class="text-center" style="margin-top: 20px">
-		<q-avatar size="150px" square="">
-			<q-img src="icons/icon-192x192.png" />
-		</q-avatar>
-	</div>
+	<q-page class="q-pa-sm">
+		<div style="margin-top: 50px">
+			<div class="text-subtitle1 text-center">Selamat Datang</div>
+		</div>
+		<div class="text-center" style="margin-top: 20px">
+			<q-avatar size="150px" square="">
+				<q-img src="icons/icon-192x192.png" />
+			</q-avatar>
+		</div>
+	</q-page>
 </template>
 <script setup>
-import { getListsKey, getLists } from 'src/api/api-get-lists';
-import { onMounted, ref, toRefs } from 'vue';
-
-import loadingStore from 'src/stores/loading-store';
-const loadingState = loadingStore();
-const { loadingSpinner, setLoadingSpinner } = toRefs(loadingState);
+import { getListsKey } from 'src/api/api-get-lists';
+import { onMounted, ref } from 'vue';
 
 const lists = ref([]);
 const loading = ref([]);

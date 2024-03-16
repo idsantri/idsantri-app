@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
+	// layout auth
 	{
 		path: '/',
 		name: 'Auth',
@@ -44,6 +45,8 @@ const routes: RouteRecordRaw[] = [
 			},
 		],
 	},
+
+	// layout main
 	{
 		path: '/',
 		component: () => import('layouts/MainLayout.vue'),

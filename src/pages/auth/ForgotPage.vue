@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-	<div class="q-pa-xs">
-		<q-card class="my-card q-mb-lg" flat>
+	<div class="">
+		<q-card class="q-mb-lg" flat>
 			<q-card-section class="no-padding no-margin">
 				<p
 					class="q-pa-sm no-margin text-green-10 text-justify bg-green-2 rounded-borders"
@@ -31,7 +31,7 @@
 					label="Kirim instruksi"
 				/>
 
-				<q-card class="my-card" flat>
+				<q-card class="" flat>
 					<q-card-section
 						class="text-green-10 text-center bg-green-2 q-pa-sm"
 					>

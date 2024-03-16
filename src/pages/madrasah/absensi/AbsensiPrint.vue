@@ -208,9 +208,6 @@ import { getListsCustom } from 'src/api/api-get-lists';
 import { onMounted, ref, watch } from 'vue';
 import { listBulanHijri } from 'src/utils/hijri';
 import apiDownload from 'src/api/api-download';
-import { apiTokened } from 'src/api';
-import axios from 'axios';
-import apiGet from 'src/api/api-get';
 
 const loading = ref([]);
 const lists = ref([]);
@@ -240,9 +237,9 @@ async function onSubmit() {
 	// return;
 	let url = '';
 	if (perpekan.value) {
-		url = `/reports/absensi/pekanan/download`;
+		url = '/reports/absensi/pekanan/download';
 	} else {
-		url = `/reports/absensi/bulanan/download`;
+		url = '/reports/absensi/bulanan/download';
 	}
 	await apiDownload({
 		url,
@@ -293,7 +290,7 @@ function inputDay(val) {
 
 onMounted(async () => {
 	await getListsCustom({
-		url: `murid/lists-kelas`,
+		url: 'murid/lists-kelas',
 		lists,
 		key: 'th_ajaran',
 		loading,
@@ -323,7 +320,7 @@ watch(
 				newValue.substring(5),
 			];
 		}
-	}
+	},
 );
 
 // watch tingkat
@@ -343,7 +340,7 @@ watch(
 			}
 			// console.log(lists.value);
 		}
-	}
+	},
 );
 </script>
 <style lang=""></style>

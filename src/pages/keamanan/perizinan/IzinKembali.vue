@@ -138,13 +138,13 @@ watch(
 		if (newValue !== oldValue) {
 			input.value.kembali_h = newValue?.replace(/-/g, '');
 		}
-	}
+	},
 );
 watch(
 	() => input.value.kembali_m,
-	(newValue, oldValue) => {
+	(newValue) => {
 		input.value.kembali_m = formatDateTimeHtmlToSql(newValue);
-	}
+	},
 );
 </script>
 <style lang=""></style>

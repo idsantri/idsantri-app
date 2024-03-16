@@ -48,7 +48,7 @@ async function loadData() {
 	});
 	izin.value = data.izin_madrasah;
 	kelas.value = data.kelas;
-	izinMap.value = data.izin_madrasah.map((v, i) => ({
+	izinMap.value = data.izin_madrasah.map((v) => ({
 		Tanggal: formatDateShort(v.tgl_m) + ' | ' + formatHijri(v.tgl_h),
 		Durasi: v.durasi + ' hari',
 		Keperluan:

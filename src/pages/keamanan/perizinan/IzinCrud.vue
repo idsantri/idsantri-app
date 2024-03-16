@@ -157,7 +157,6 @@
 	</q-card>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { onMounted, ref, watch } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
@@ -241,7 +240,7 @@ watch(
 		if (newValue !== oldValue) {
 			input.value.tgl_h = newValue.replace(/-/g, '');
 		}
-	}
+	},
 );
 </script>
 <style lang=""></style>

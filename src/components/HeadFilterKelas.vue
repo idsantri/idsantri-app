@@ -118,7 +118,7 @@ const lists = ref([]);
 onMounted(async () => {
 	// get tahun ajaran
 	await getListsCustom({
-		url: `murid/lists-kelas`,
+		url: 'murid/lists-kelas',
 		lists,
 		key: 'th_ajaran',
 		loading,
@@ -163,7 +163,7 @@ onMounted(async () => {
 
 		if (!lists.value['bulan_ujian'].length) {
 			notifyWarning(
-				'Jadwal ujian untuk jenjang ini belum diatur.<br>Silakan masuk ke menu pengaturan (kanan atas)!'
+				'Jadwal ujian untuk jenjang ini belum diatur.<br>Silakan masuk ke menu pengaturan (kanan atas)!',
 			);
 		}
 	}
@@ -174,15 +174,15 @@ function sendEmit() {
 	const th = () =>
 		thAjaranH.value && lists.value.th_ajaran
 			? lists.value.th_ajaran.find(
-					({ th_ajaran_h }) => th_ajaran_h === thAjaranH.value
-			  )
+					({ th_ajaran_h }) => th_ajaran_h === thAjaranH.value,
+				)
 			: {};
 
 	const tk = () =>
 		tingkatId.value && lists.value.tingkat
 			? lists.value.tingkat.find(
-					({ tingkat_id }) => tingkat_id === tingkatId.value
-			  )
+					({ tingkat_id }) => tingkat_id === tingkatId.value,
+				)
 			: {};
 
 	const kl = () =>
@@ -257,13 +257,13 @@ watch(tingkatId, (newValue, oldValue) => {
 watch(kelas, (newValue, oldValue) => {
 	if (!newValue) {
 		router.push(
-			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}`
+			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}`,
 		);
 		return;
 	}
 	if (newValue != oldValue) {
 		router.push(
-			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}/${newValue}`
+			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}/${newValue}`,
 		);
 		return;
 	}
@@ -272,13 +272,13 @@ watch(kelas, (newValue, oldValue) => {
 watch(bulanUjian, (newValue, oldValue) => {
 	if (!newValue) {
 		router.push(
-			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`
+			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`,
 		);
 		return;
 	}
 	if (newValue != oldValue) {
 		router.push(
-			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}/${params.kelas}/${newValue}`
+			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}/${params.kelas}/${newValue}`,
 		);
 		return;
 	}

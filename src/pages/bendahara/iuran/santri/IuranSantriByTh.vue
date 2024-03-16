@@ -184,7 +184,7 @@ async function toggleUpdate(val, evt, item, index) {
 	}
 }
 
-function printIuran(val) {
+function printIuran() {
 	console.log(iuran.value);
 	alert('belum siap');
 }

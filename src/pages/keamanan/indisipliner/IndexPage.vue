@@ -1,5 +1,5 @@
 <template lang="">
-	<div class="q-ma-sm">
+	<q-page class="q-pa-sm">
 		<filter-tanggal
 			:showBulanUjian="true"
 			start-url="/keamanan/indisipliner"
@@ -57,7 +57,7 @@
 				</template>
 			</q-table>
 		</q-card>
-	</div>
+	</q-page>
 
 	<q-dialog v-model="crudShow">
 		<indisipliner-crud :is-new="true" />
@@ -69,7 +69,6 @@ import apiGet from 'src/api/api-get';
 import FilterTanggal from 'src/components/HeadFilterTanggal';
 import { useRoute } from 'vue-router';
 import { formatDateShort, isDate } from 'src/utils/format-date';
-import { formatHijri } from 'src/utils/hijri';
 import IndisiplinerCrud from 'src/pages/keamanan/indisipliner/IndisiplinerCrud.vue';
 
 const indisipliner = ref([{}]);
