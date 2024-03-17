@@ -60,8 +60,8 @@
 					:hint="
 						input.th_ajaran_h?.length == 9
 							? lists['tahun-ajaran']?.find(
-									(item) => item.val0 === input.th_ajaran_h
-							  )?.val1
+									(item) => item.val0 === input.th_ajaran_h,
+								)?.val1
 							: ''
 					"
 					class="q-mt-sm"
@@ -158,12 +158,12 @@ const loading = ref([]);
 const pjgtList = ref([]);
 const pjgtLoading = ref(false);
 
-function onInputPjgt(val) {
+function onInputPjgt() {
 	input.value.pjgt_nama = pjgtList.value.find(
-		(o) => o.id == input.value?.pjgt_id
+		(o) => o.id == input.value?.pjgt_id,
 	)?.nama;
 	input.value.pjgt_wilayah = pjgtList.value.find(
-		(o) => o.id == input.value?.pjgt_id
+		(o) => o.id == input.value?.pjgt_id,
 	)?.wilayah;
 }
 

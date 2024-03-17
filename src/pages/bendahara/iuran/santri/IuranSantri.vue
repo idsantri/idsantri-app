@@ -1,90 +1,102 @@
 <template lang="">
-	<q-card class="q-ma-sm" style="max-width: 600px">
-		<q-card-section class="bg-green-8 no-padding">
-			<q-toolbar class="no-padding no-margin">
-				<q-toolbar-title class="text-subtitle1 q-ml-sm text-green-11">
-					Data Iuran Santri
-				</q-toolbar-title>
-			</q-toolbar>
-		</q-card-section>
-		<q-card-section class="q-pa-sm">
-			<card-head-santri :data="santri" :loading="loading" />
-			<q-card bordered flat class="q-mt-sm">
-				<q-card-section class="q-pa-sm text-subtitle1 bg-green-11 flex">
-					Data Iuran
-					<q-space />
-					<q-btn
-						dense
-						class="q-px-md text-green-11"
-						label="Tambah"
-						no-caps=""
-						icon="add"
-						color="green-10"
-						@click="crudShow = true"
-					/>
-				</q-card-section>
-				<q-card-section class="no-padding">
-					<div v-if="loading && !route.params.thAjaranH">
-						<q-spinner-cube
-							color="green-12"
-							size="8em"
-							class="flex q-ma-lg q-mx-auto"
+	<q-page class="q-pa-sm">
+		<q-card class="" style="max-width: 600px">
+			<q-card-section class="bg-green-8 no-padding">
+				<q-toolbar class="no-padding no-margin">
+					<q-toolbar-title
+						class="text-subtitle1 q-ml-sm text-green-11"
+					>
+						Data Iuran Santri
+					</q-toolbar-title>
+				</q-toolbar>
+			</q-card-section>
+			<q-card-section class="q-pa-sm">
+				<card-head-santri :data="santri" :loading="loading" />
+				<q-card bordered flat class="q-mt-sm">
+					<q-card-section
+						class="q-pa-sm text-subtitle1 bg-green-11 flex"
+					>
+						Data Iuran
+						<q-space />
+						<q-btn
+							dense
+							class="q-px-md text-green-11"
+							label="Tambah"
+							no-caps=""
+							icon="add"
+							color="green-10"
+							@click="crudShow = true"
 						/>
-					</div>
-					<div v-if="!hasIuran()" class="q-ma-lg">
-						<div class="text-body2 text-italic text-center">
-							Tidak ada data untuk ditampilkan!
+					</q-card-section>
+					<q-card-section class="no-padding">
+						<div v-if="loading && !route.params.thAjaranH">
+							<q-spinner-cube
+								color="green-12"
+								size="8em"
+								class="flex q-ma-lg q-mx-auto"
+							/>
 						</div>
-						<hr />
-						<div class="text-weight-thin text-italic text-center">
-							Yang bersangkutan belum pernah melakuan pembayaran.
-							<br />
-							Silakan klik tombol tambah!
+						<div v-if="!hasIuran()" class="q-ma-lg">
+							<div class="text-body2 text-italic text-center">
+								Tidak ada data untuk ditampilkan!
+							</div>
+							<hr />
+							<div
+								class="text-weight-thin text-italic text-center"
+							>
+								Yang bersangkutan belum pernah melakuan
+								pembayaran.
+								<br />
+								Silakan klik tombol tambah!
+							</div>
 						</div>
-					</div>
 
-					<div v-else class="row">
-						<div class="col bg-green-1" style="max-width: 90px">
-							<q-tabs vertical dense="" align="left" no-caps>
+						<div v-else class="row">
+							<div class="col bg-green-1" style="max-width: 90px">
+								<q-tabs vertical dense="" align="left" no-caps>
+									<div
+										v-for="(th, index) in tahunIuran"
+										:key="index"
+									>
+										<q-route-tab
+											:name="th"
+											:label="th"
+											:to="`/bendahara/iuran/santri/${route.params.id}/${th}`"
+										/>
+									</div>
+								</q-tabs>
+							</div>
+
+							<div class="col">
 								<div
-									v-for="(th, index) in tahunIuran"
-									:key="index"
+									v-if="!route.params.thAjaranH"
+									class="q-ma-lg"
 								>
-									<q-route-tab
-										:name="th"
-										:label="th"
-										:to="`/bendahara/iuran/santri/${route.params.id}/${th}`"
-									/>
+									<div class="text-italic text-center">
+										Klik angka tahun disamping, atau
+										tambahkan data!
+									</div>
 								</div>
-							</q-tabs>
-						</div>
-
-						<div class="col">
-							<div v-if="!route.params.thAjaranH" class="q-ma-lg">
-								<div class="text-italic text-center">
-									Klik angka tahun disamping, atau tambahkan
-									data!
+								<div v-else :key="keyIuran">
+									<iuran-santri-by-th />
 								</div>
 							</div>
-							<div v-else :key="keyIuran">
-								<iuran-santri-by-th />
-							</div>
 						</div>
-					</div>
-				</q-card-section>
-			</q-card>
-		</q-card-section>
-	</q-card>
-	<q-dialog v-model="crudShow">
-		<iuran-santri-crud
-			:is-new="true"
-			title="Input Iuran"
-			:data="dataIuran"
-			@success-submit="keyIuran++"
-			@success-delete="null"
-			:disable-santri-id="true"
-		/>
-	</q-dialog>
+					</q-card-section>
+				</q-card>
+			</q-card-section>
+		</q-card>
+		<q-dialog v-model="crudShow">
+			<iuran-santri-crud
+				:is-new="true"
+				title="Input Iuran"
+				:data="dataIuran"
+				@success-submit="keyIuran++"
+				@success-delete="null"
+				:disable-santri-id="true"
+			/>
+		</q-dialog>
+	</q-page>
 </template>
 <script setup>
 import apiGet from 'src/api/api-get';

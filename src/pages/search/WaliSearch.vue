@@ -44,7 +44,7 @@
 <script setup>
 import DataTable from 'datatables.net-vue3';
 import DataTablesLib from 'datatables.net-dt';
-import { ref, onMounted, onUnmounted, toRefs } from 'vue';
+import { ref, onMounted, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { apiTokened } from 'src/api';
 import { notifySuccess } from 'src/utils/notify';
@@ -82,21 +82,21 @@ const options = ref({
 		{
 			title: 'ID',
 			data: 'id',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*meta*/) {
 				return `<button onclick='copyId(${row.id})' class='dt-btn-flat' title='Klik/Tap untuk menyalin ID'>${row.id}</button>`;
 			},
 		},
 		{
 			title: 'Nama',
 			data: 'nama',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*meta*/) {
 				return `<span class="dt-link" onclick='goToWali(${row.id})'>${row.nama}</span>`;
 			},
 		},
 		{
 			title: 'Alamat',
 			data: 'alamat_pendek',
-			render: function (data, type, row, meta) {
+			render: function (data, type /*row, meta*/) {
 				return type === 'display' && data.length > 50
 					? `<span title='${data}'>${data.substr(0, 50)}&mldr;</span>`
 					: data;
@@ -108,7 +108,7 @@ const options = ref({
 		},
 		{
 			title: 'Anak1',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*meta*/) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri1_id
 				})'>${row.santri1_nama || '-'}</span>`;
@@ -116,7 +116,7 @@ const options = ref({
 		},
 		{
 			title: 'Anak2',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*meta*/) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri2_id
 				})'>${row.santri2_nama || '-'}</span>`;
@@ -124,7 +124,7 @@ const options = ref({
 		},
 		{
 			title: 'Anak3',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*meta*/) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri3_id
 				})'>${row.santri3_nama || '-'}</span>`;
@@ -132,7 +132,7 @@ const options = ref({
 		},
 		{
 			title: 'Anak4',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*meta*/) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri4_id
 				})'>${row.santri4_nama || '-'}</span>`;
@@ -140,7 +140,7 @@ const options = ref({
 		},
 		{
 			title: 'Anak5',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*meta*/) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri5_id
 				})'>${row.santri5_nama || '-'}</span>`;

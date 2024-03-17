@@ -207,7 +207,7 @@ async function onSubmit() {
 	obj.id = santri.id;
 	const download = await apiDownload({
 		confirm: false,
-		url: `/reports/santri/permohonan-berhenti/download`,
+		url: '/reports/santri/permohonan-berhenti/download',
 		params: obj,
 		fileName: 'permohonan-berhenti-' + obj.id,
 		loading: loadingForm,

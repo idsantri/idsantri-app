@@ -41,10 +41,7 @@ const input = ref({});
 const options = ref([]);
 const loading = ref(false);
 
-function onInput(val) {
-	// console.log(val);
-	// console.log(input.value);
-	// emit('emitInput', val);
+function onInput() {
 	emit('emitInput', input.value);
 }
 
@@ -76,7 +73,7 @@ async function filterFunction(val, update) {
 				menuRef.setOptionIndex(-1);
 				menuRef.moveOptionSelection(1, true);
 			}
-		}
+		},
 	);
 }
 </script>

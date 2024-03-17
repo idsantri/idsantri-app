@@ -16,11 +16,8 @@ import { digitSeparator } from 'src/utils/format-number';
 import apiGet from 'src/api/api-get';
 
 const spinner = ref(false);
-const crudShow = ref(false);
-const dataObj = ref({});
 const dataMap = ref([]);
 const dataArr = ref([]);
-const isNew = ref(false);
 const santri = ref({});
 
 const route = useRoute();
@@ -33,7 +30,7 @@ onMounted(async () => {
 	});
 
 	dataArr.value = data.iuran_total;
-	dataMap.value = data.iuran_total.map((v, i) => ({
+	dataMap.value = data.iuran_total.map((v) => ({
 		'Tahun Ajaran': `${v.th_ajaran_h}  |  ${v.th_ajaran_m || ''} `,
 		Kelas: `${v.kelas || ''} ${v.tingkat || ''}`,
 		Pembayaran: `Rp${digitSeparator(v.total)}`,

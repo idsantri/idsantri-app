@@ -1,5 +1,5 @@
 <template lang="">
-	<q-card class="q-mx-sm">
+	<q-card class="">
 		<q-card-section class="bg-green-8 no-padding">
 			<q-toolbar class="no-padding no-margin">
 				<q-toolbar-title class="text-subtitle1 q-ml-sm text-green-11">

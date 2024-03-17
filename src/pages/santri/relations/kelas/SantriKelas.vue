@@ -44,7 +44,7 @@ async function loadData() {
 	});
 	dataArr.value = data.kelas;
 	dataMap.value = data.kelas
-		.map((v, i) => ({
+		.map((v) => ({
 			'Tahun Ajaran': `${v.th_ajaran_h}  |  ${v.th_ajaran_m || ''} `,
 			Kelas:
 				`${v.kelas} ${v.tingkat}` +

@@ -56,7 +56,7 @@ export default route(function (/* { store, ssrContext } */) {
 		}
 	});
 
-	const DEFAULT_TITLE = config.APP_NAME_1;
+	const DEFAULT_TITLE = config.APP_NAME;
 	Router.afterEach((to) => {
 		nextTick(() => {
 			document.title = to.meta.title

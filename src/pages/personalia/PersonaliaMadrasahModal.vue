@@ -47,8 +47,8 @@
 					:hint="
 						input.th_ajaran_h?.length == 9
 							? lists['tahun-ajaran']?.find(
-									(item) => item.val0 === input.th_ajaran_h
-							  )?.val1
+									(item) => item.val0 === input.th_ajaran_h,
+								)?.val1
 							: ''
 					"
 					class="q-mt-sm"
@@ -70,8 +70,8 @@
 					:hint="
 						!isNaN(input.tingkat_id)
 							? lists['tingkat-pendidikan']?.find(
-									(item) => item.val0 == input.tingkat_id
-							  )?.val1
+									(item) => item.val0 == input.tingkat_id,
+								)?.val1
 							: 'Jenjang Pendidikan'
 					"
 					class="q-mt-sm"
@@ -204,7 +204,7 @@ const submit = async () => {
 	let response = null;
 	if (props.isNew) {
 		response = await apiPost({
-			endPoint: `personalia-madrasah`,
+			endPoint: 'personalia-madrasah',
 			data,
 			loading: loadingCrud,
 		});

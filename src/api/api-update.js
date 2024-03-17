@@ -35,7 +35,7 @@ async function apiUpdate({
 	endPoint,
 	data,
 	confirm = true,
-	message = `<span style="color:'red'">Update data ini?</span>`,
+	message = '<span style="color:\'red\'">Update data ini?</span>',
 	rerender,
 	loading,
 	notify = true,
@@ -51,7 +51,7 @@ async function apiUpdate({
 					loading,
 					notify,
 					params,
-			  })
+				})
 			: false;
 	} else {
 		return updateData({

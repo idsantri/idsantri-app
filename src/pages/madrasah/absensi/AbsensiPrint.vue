@@ -200,6 +200,18 @@
 			</q-card-actions>
 		</q-form>
 	</q-card>
+	<div>
+		<q-btn
+			label="Proses"
+			icon="download"
+			color="green-11"
+			class="q-px-md text-green-10"
+			dense
+			no-caps
+			@click="onProses"
+		/>
+		<TestPrint :data-murid="murid" />
+	</div>
 	<!-- <pre>{{ input }}</pre>
 	<pre>download: {{ loadingDownload }}</pre> -->
 </template>
@@ -208,8 +220,7 @@ import { getListsCustom } from 'src/api/api-get-lists';
 import { onMounted, ref, watch } from 'vue';
 import { listBulanHijri } from 'src/utils/hijri';
 import apiDownload from 'src/api/api-download';
-import { apiTokened } from 'src/api';
-import axios from 'axios';
+import TestPrint from './TestPrint.vue';
 import apiGet from 'src/api/api-get';
 
 const loading = ref([]);
@@ -219,6 +230,18 @@ const optionsTahun = ref([]);
 const optionsBulan = ref(listBulanHijri.map((bulan) => bulan.name));
 const perpekan = ref(false);
 const loadingDownload = ref(false);
+
+const murid = ref([]);
+async function onProses() {
+	murid.value = [];
+	const data = await apiGet({
+		loading: loadingDownload,
+		endPoint: `murid/${input.value.th_ajaran_h}/${input.value.tingkat_id}${input.value.kelas ? '/' + input.value.kelas : ''}`,
+	});
+	// console.log(data);
+	murid.value = data.murid;
+	// console.log(murid.value);
+}
 
 async function onSubmit() {
 	const obj = JSON.parse(JSON.stringify(input.value));
@@ -240,9 +263,9 @@ async function onSubmit() {
 	// return;
 	let url = '';
 	if (perpekan.value) {
-		url = `/reports/absensi/pekanan/download`;
+		url = '/reports/absensi/pekanan/download';
 	} else {
-		url = `/reports/absensi/bulanan/download`;
+		url = '/reports/absensi/bulanan/download';
 	}
 	await apiDownload({
 		url,
@@ -293,7 +316,7 @@ function inputDay(val) {
 
 onMounted(async () => {
 	await getListsCustom({
-		url: `murid/lists-kelas`,
+		url: 'murid/lists-kelas',
 		lists,
 		key: 'th_ajaran',
 		loading,
@@ -323,7 +346,7 @@ watch(
 				newValue.substring(5),
 			];
 		}
-	}
+	},
 );
 
 // watch tingkat
@@ -343,7 +366,7 @@ watch(
 			}
 			// console.log(lists.value);
 		}
-	}
+	},
 );
 </script>
 <style lang=""></style>

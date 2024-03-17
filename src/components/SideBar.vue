@@ -226,7 +226,7 @@ import santriStore from 'src/stores/santri-store';
 import { toRefs } from 'vue';
 
 const dialog = dialogStore();
-const { searchSantri, crudSantri } = toRefs(dialog);
+const { crudSantri } = toRefs(dialog);
 
 const addNewSantri = () => {
 	santriStore().$reset();

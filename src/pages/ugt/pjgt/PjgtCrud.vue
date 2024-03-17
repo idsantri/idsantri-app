@@ -65,8 +65,8 @@
 								input.sex == 'L'
 									? 'Laki-Laki'
 									: input.sex == 'P'
-									? 'Perempuan'
-									: ''
+										? 'Perempuan'
+										: ''
 							"
 							class="q-mt-sm"
 							outlined
@@ -207,7 +207,7 @@
 </template>
 <script setup>
 import { onMounted, ref, toRefs } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
 import apiDelete from 'src/api/api-delete';
@@ -225,7 +225,6 @@ const props = defineProps({
 });
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
-const router = useRouter();
 const route = useRoute();
 const input = ref({});
 
@@ -235,13 +234,13 @@ onMounted(async () => {
 	Object.assign(input.value, props.data);
 
 	await getListsCustom({
-		url: `ugt/pjgt/lists/jenis-lembaga`,
+		url: 'ugt/pjgt/lists/jenis-lembaga',
 		lists,
 		key: 'jenis_lembaga',
 		loading,
 	});
 	await getListsCustom({
-		url: `ugt/pjgt/lists/wilayah`,
+		url: 'ugt/pjgt/lists/wilayah',
 		lists,
 		key: 'wilayah',
 		loading,

@@ -1,32 +1,41 @@
 <template>
-	<div style="max-width: 95%; margin: auto">
-		<q-card class="my-card q-pa-lg bg-green-5 text-green-1">
-			<q-card-section class="no-padding q-mb-md">
-				<div class="container-title">
-					<h1 class="title">{{ config.APP_NAME }}</h1>
-					<h2 class="text-subtitle1 text-center q-ma-none">
-						{{ config.APP_DESCRIPTION }}
-					</h2>
-				</div>
-				<q-separator dark />
-				<h3 class="sub-title">{{ title }}</h3>
-			</q-card-section>
+	<q-layout>
+		<q-page-container>
+			<q-page class="flex flex-center">
+				<q-card class="my-card q-pa-lg bg-green-5 text-green-1">
+					<q-card-section class="no-padding q-mb-md">
+						<div class="container-title">
+							<h1 class="title">{{ config.APP_NAME }}</h1>
+							<h2 class="text-subtitle1 text-center q-ma-none">
+								{{ config.APP_DESCRIPTION }}
+							</h2>
+						</div>
+						<q-separator dark />
+						<h3 class="sub-title">{{ title }}</h3>
+					</q-card-section>
 
-			<q-card flat v-if="errors.length > 0" class="q-ma-xs" id="error">
-				<q-card-section class="q-pa-xs bg-red-2 text-red">
-					<ul class="q-my-xs">
-						<li v-for="(error, index) in errors" :key="index">
-							<span v-html="error"></span>
-						</li>
-					</ul>
-				</q-card-section>
-			</q-card>
+					<q-banner
+						v-if="errors.length > 0"
+						id="error"
+						class="q-mb-sm no-padding bg-red-2 text-red"
+					>
+						<ul class="q-my-xs">
+							<li v-for="(error, index) in errors" :key="index">
+								<span v-html="error"></span>
+							</li>
+						</ul>
+					</q-banner>
 
-			<q-card-section class="no-padding no-margin">
-				<router-view @title="handleTitle" @errors="handleErrors" />
-			</q-card-section>
-		</q-card>
-	</div>
+					<q-card-section class="no-padding no-margin">
+						<router-view
+							@title="handleTitle"
+							@errors="handleErrors"
+						/>
+					</q-card-section>
+				</q-card>
+			</q-page>
+		</q-page-container>
+	</q-layout>
 </template>
 
 <script setup>
@@ -62,14 +71,11 @@ const handleErrors = (value) => (errors.value = value);
 }
 
 .my-card {
-	margin: 2em auto;
-	margin-top: 10vh;
-	width: 100%;
-	max-width: 400px;
+	width: 400px;
+	max-width: 95vw;
 }
 
 .container-title {
 	margin-bottom: 10px;
 }
 </style>
-src/config
