@@ -58,7 +58,9 @@
 			</q-table>
 		</q-card>
 
-		<q-dialog v-model="crudShow"> <izin-crud :is-new="true" /> </q-dialog>
+		<q-dialog v-model="crudShow">
+			<izin-crud :is-new="true" />
+		</q-dialog>
 	</q-page>
 </template>
 <script setup>
@@ -128,17 +130,17 @@ const columns = [
 		sortable: true,
 	},
 	{
-		name: 'tgl_m',
+		name: 'dari_tgl',
 		label: 'Dari',
 		align: 'left',
-		field: 'tgl_m',
+		field: 'dari_tgl',
 		sortable: true,
 	},
 	{
-		name: 'must_back_m',
+		name: 'sampai_tgl',
 		label: 'Sampai',
 		align: 'left',
-		field: 'must_back_m',
+		field: 'sampai_tgl',
 		sortable: true,
 	},
 	{
