@@ -15,7 +15,7 @@
 						no-caps=""
 						icon="print"
 						color="green-11"
-						disable
+						@click="print"
 					/>
 					<q-btn
 						dense
@@ -55,19 +55,29 @@
 								<td>{{ izin.sifat }}</td>
 							</tr>
 							<tr>
-								<td class="text-italic">Tanggal:</td>
+								<td class="text-italic">Durasi:</td>
+								<td>
+									{{ izin.durasi + ' hari' }}
+								</td>
+							</tr>
+							<tr>
+								<td class="text-italic">Dari Tanggal:</td>
 								<td>
 									{{
-										formatDateFull(izin.tgl_m) +
+										formatDateFull(izin.dari_tgl) +
 										' | ' +
-										bacaHijri(izin.tgl_h)
+										bacaHijri(m2h(izin.dari_tgl))
 									}}
 								</td>
 							</tr>
 							<tr>
-								<td class="text-italic">Durasi:</td>
+								<td class="text-italic">Sampai Tanggal:</td>
 								<td>
-									{{ izin.durasi + ' hari' }}
+									{{
+										formatDateFull(izin.sampai_tgl) +
+										' | ' +
+										bacaHijri(m2h(izin.sampai_tgl))
+									}}
 								</td>
 							</tr>
 
@@ -103,9 +113,9 @@
 								<td class="text-italic">Kembali:</td>
 								<td>
 									{{
-										formatDateFull(izin.kembali_m) +
+										formatDateFull(izin.kembali_tgl) +
 										' | ' +
-										bacaHijri(izin.kembali_h)
+										bacaHijri(m2h(izin.kembali_tgl))
 									}}
 								</td>
 							</tr>
@@ -131,11 +141,13 @@
 			<izin-kembali
 				:data="{
 					id: izin.id,
-					kembali_m: izin.kembali_m,
-					kembali_h: izin.kembali_h,
+					kembali_tgl: izin.kembali_tgl,
 				}"
 				@success-submit="submitSetBack"
 			/>
+		</q-dialog>
+		<q-dialog v-model="showViewer">
+			<ReportViewer :url="urlReport" />
 		</q-dialog>
 		<!-- <pre>{{ izin }}</pre> -->
 	</q-page>
@@ -143,18 +155,27 @@
 <script setup>
 import apiGet from 'src/api/api-get';
 import { formatDateFull } from 'src/utils/format-date';
-import { bacaHijri } from 'src/utils/hijri';
+import { bacaHijri, m2h } from 'src/utils/hijri';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import IzinCrud from 'src/pages/keamanan/perizinan/IzinCrud.vue';
 import IzinKembali from 'src/pages/keamanan/perizinan/IzinKembali.vue';
 import CardHeadSantri from 'src/components/CardHeadSantri.vue';
+import ReportViewer from 'src/components/ReportViewer.vue';
 
+const showViewer = ref(false);
+const urlReport = ref('');
 const route = useRoute();
 const izin = ref({});
 const loading = ref(false);
 const crudShow = ref(false);
 const showKembali = ref(false);
+
+function print() {
+	urlReport.value = `reports/izin-pesantren/view?id=${izin.value.id}`;
+	// console.log(urlReport.value);
+	showViewer.value = true;
+}
 
 async function loadData() {
 	const data = await apiGet({
@@ -162,6 +183,7 @@ async function loadData() {
 		loading,
 	});
 	izin.value = data.izin_pesantren;
+	// console.log(izin.value);
 	if (izin.value) {
 		const img = await apiGet({
 			endPoint: `images/santri/${izin.value.santri_id}`,

@@ -4,7 +4,7 @@
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
 				<div class="text-subtitle1">Tetapkan Tanggal Kembali</div>
 			</q-card-section>
-			<q-card-section class="q-pa-sm" style="height: 40vh">
+			<q-card-section class="q-pa-sm">
 				<div v-if="loading">
 					<q-dialog v-model="loading" persistent="">
 						<q-spinner-cube
@@ -17,39 +17,16 @@
 				<q-input
 					dense
 					:hint="
-						isDate(input.kembali_m)
-							? formatDateFull(input.kembali_m)
+						isDate(input.kembali_tgl)
+							? formatDateFull(input.kembali_tgl)
 							: ''
 					"
 					class="q-mt-sm"
 					outlined
 					label="Tanggal (M)*"
-					v-model="input.kembali_m"
+					v-model="input.kembali_tgl"
 					type="datetime-local"
-					@change="
-						isDate(input.kembali_m)
-							? (input.kembali_h = m2h(input.kembali_m))
-							: ''
-					"
 					:rules="[(val) => !!val || 'Harus diisi!']"
-					error-color="negative"
-				/>
-				<q-input
-					dense
-					:hint="
-						input.kembali_h?.length
-							? bacaHijri(input.kembali_h)
-							: ''
-					"
-					class="q-mt-sm"
-					outlined
-					label="Tanggal (H)*"
-					v-model="input.kembali_h"
-					mask="####-##-##"
-					:rules="[
-						(val) => !!val || 'Harus diisi!',
-						(val) => val?.length == 8 || '8 digit angka!',
-					]"
 					error-color="negative"
 				/>
 			</q-card-section>
@@ -88,7 +65,6 @@ import {
 	isDate,
 	formatDateTimeHtmlToSql,
 } from 'src/utils/format-date';
-import { bacaHijri, m2h } from 'src/utils/hijri';
 import { onMounted, ref, watch } from 'vue';
 
 const props = defineProps({
@@ -104,8 +80,7 @@ async function setBack() {
 		endPoint: `izin-pesantren/${input.value.id}/set-kembali`,
 		loading,
 		data: {
-			kembali_m: input.value.kembali_m,
-			kembali_h: input.value.kembali_h,
+			kembali_tgl: input.value.kembali_tgl,
 		},
 		message: 'Tetapkan sudah kembali ke pesantren pada tanggal ini?',
 	});
@@ -118,8 +93,7 @@ async function setNotBack() {
 		endPoint: `izin-pesantren/${input.value.id}/set-kembali`,
 		loading,
 		data: {
-			kembali_m: null,
-			kembali_h: null,
+			kembali_tgl: null,
 		},
 		message: 'Tetapkan belum kembali ke pesantren?',
 	});
@@ -133,17 +107,9 @@ onMounted(() => {
 });
 
 watch(
-	() => input.value.kembali_h,
-	(newValue, oldValue) => {
-		if (newValue !== oldValue) {
-			input.value.kembali_h = newValue?.replace(/-/g, '');
-		}
-	},
-);
-watch(
-	() => input.value.kembali_m,
+	() => input.value.kembali_tgl,
 	(newValue) => {
-		input.value.kembali_m = formatDateTimeHtmlToSql(newValue);
+		input.value.kembali_tgl = formatDateTimeHtmlToSql(newValue);
 	},
 );
 </script>
