@@ -153,6 +153,7 @@ import apiGet from 'src/api/api-get';
 import apiPost from 'src/api/api-post';
 
 const loading = ref(false);
+// init data
 const profile = ref({
 	pesantren: [],
 	madrasah: [],
@@ -161,11 +162,12 @@ const profile = ref({
 });
 
 async function loadData() {
-	const responseData = await apiGet({
-		endPoint: 'config/profile',
+	const data = await apiGet({
+		endPoint: 'config/profiles',
 		loading: loading,
 	});
-	profile.value = responseData.profile;
+	Object.assign(profile.value, data.profiles);
+	// console.log(profile.value);
 }
 
 onMounted(async () => {
@@ -175,7 +177,7 @@ async function onSubmit() {
 	const data = JSON.parse(JSON.stringify(profile.value));
 	// console.log(data);
 	const res = await apiPost({
-		endPoint: 'config/profile',
+		endPoint: 'config/profiles',
 		data,
 		loading,
 	});
