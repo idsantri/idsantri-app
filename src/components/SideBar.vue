@@ -198,11 +198,13 @@
 			<!-- APP -->
 			<q-item clickable v-ripple to="/settings/lists">
 				<q-item-section avatar>
-					<q-icon color="green-1" name="settings" />
+					<q-icon color="green-1" name="list" />
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>List</q-item-label>
-					<q-item-label caption>Pengaturan List</q-item-label>
+					<q-item-label caption
+						>Auto Complete (Form Isian)</q-item-label
+					>
 				</q-item-section>
 			</q-item>
 
@@ -212,8 +214,28 @@
 					<q-icon color="green-1" name="manage_accounts" />
 				</q-item-section>
 				<q-item-section>
-					<q-item-label>Pengguna</q-item-label>
-					<q-item-label caption>Pengaturan Pengguna</q-item-label>
+					<q-item-label>Users</q-item-label>
+					<q-item-label caption>Akses Pengguna</q-item-label>
+				</q-item-section>
+			</q-item>
+
+			<q-item clickable v-ripple to="/settings/profile">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="room_preferences" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Profil</q-item-label>
+					<q-item-label caption>Profil Lembaga</q-item-label>
+				</q-item-section>
+			</q-item>
+
+			<q-item clickable v-ripple to="/settings/reports">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="print" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Report</q-item-label>
+					<q-item-label caption>Print Out</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>
