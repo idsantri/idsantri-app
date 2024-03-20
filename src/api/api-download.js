@@ -3,7 +3,7 @@ import { apiTokened } from '.';
 
 async function apiDownload({
 	message = 'Download data yang dicetak?',
-	url,
+	endPoint,
 	confirm = false,
 	loading,
 	params,
@@ -16,11 +16,10 @@ async function apiDownload({
 
 	if (loading && typeof loading.value === 'boolean') loading.value = true;
 	try {
-		const response = await apiTokened({
-			endPoint: url,
+		const response = await apiTokened.request({
+			url: endPoint,
 			method: 'GET',
 			responseType: 'blob', // important
-			timeout: 30000,
 			headers: {
 				'Content-Type': 'application/pdf',
 			},
