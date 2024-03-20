@@ -190,25 +190,26 @@
 				@success-delete="$router.go(-1)"
 			/>
 		</q-dialog>
+		<q-dialog v-model="showViewer">
+			<ReportViewer :url="urlReport" />
+		</q-dialog>
 		<!-- <pre>{{ gt }}</pre> -->
 	</q-page>
 </template>
 <script setup>
 import apiGet from 'src/api/api-get';
 import { digitSeparator } from 'src/utils/format-number';
-import { onMounted, ref, toRefs } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import GtCrud from 'src/pages/ugt/gt/GtCrud.vue';
-import apiDownload from 'src/api/api-download';
-import loadingStore from 'src/stores/loading-store';
-
-const { loadingMain } = toRefs(loadingStore());
+import ReportViewer from 'src/components/ReportViewer.vue';
 
 const route = useRoute();
 const id = route.params.id;
 const loadingGt = ref(false);
 const gt = ref({});
 const crudShow = ref(false);
+const urlReport = ref('');
 
 async function loadGt() {
 	const data = await apiGet({
@@ -222,15 +223,10 @@ onMounted(async () => {
 	await loadGt();
 });
 
+const showViewer = ref(false);
 async function suratTugas() {
-	// console.log(gt.value.id);
-	await apiDownload({
-		confirm: false,
-		url: '/reports/ugt/surat-tugas/download',
-		fileName: 'surat-tugas-' + gt.value.id,
-		params: { id: gt.value.id },
-		loading: loadingMain,
-	});
+	urlReport.value = `reports/ugt/surat-tugas/view?id=${gt.value.id}`;
+	showViewer.value = true;
 }
 </script>
 <style lang=""></style>
