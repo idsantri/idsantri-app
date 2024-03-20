@@ -26,7 +26,7 @@
 					:rows="gtFiltered"
 					:loading="loading"
 					:rows-per-page-options="[10, 25, 50, 100, 0]"
-					class="dt"
+					class="dt q-px-sm"
 					:columns="columns"
 					:filter="filter"
 					no-data-label="Tidak ada data untuk ditampilkan!"

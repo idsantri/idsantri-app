@@ -27,7 +27,7 @@
 					:loading="loading"
 					:rows-per-page-options="[10, 25, 50, 100, 0]"
 					:pagination="{ page: 999 }"
-					class="dt"
+					class="dt q-px-sm"
 					:columns="columns"
 					:filter="filter"
 					no-data-label="Tidak ada data untuk ditampilkan!"
@@ -116,26 +116,27 @@
 				@success-delete="loadData()"
 			/>
 		</q-dialog>
+		<q-dialog v-model="showViewer">
+			<ReportViewer :url="urlReport" />
+		</q-dialog>
 		<!-- <pre>{{ kas[0] }}</pre> -->
 		<!-- <pre>{{ wilayah }}</pre> -->
 	</q-page>
 </template>
 <script setup>
-import { ref, onMounted, toRefs } from 'vue';
+import { ref, onMounted } from 'vue';
 import apiGet from 'src/api/api-get.js';
 import { digitSeparator } from 'src/utils/format-number';
 import KasCrud from 'src/pages/ugt/kas/KasCrud.vue';
-import loadingStore from 'src/stores/loading-store';
-import apiDownload from 'src/api/api-download';
+import ReportViewer from 'src/components/ReportViewer.vue';
 
-const loadingState = loadingStore();
-const { loadingMain } = toRefs(loadingState);
 const kas = ref([]);
 const loading = ref(false);
 const filter = ref('');
 const crudShow = ref(false);
 const isNew = ref(false);
 const kasObj = ref({});
+const urlReport = ref('');
 
 async function loadData() {
 	crudShow.value = false;
@@ -148,15 +149,13 @@ function addKas() {
 	isNew.value = true;
 	crudShow.value = true;
 }
+
+const showViewer = ref(false);
 async function print(val) {
-	await apiDownload({
-		url: '/reports/ugt/kuitansi/download',
-		loading: loadingMain,
-		confirm: false,
-		fileName: 'kuitansi-' + val.id,
-		params: { id: val.id },
-	});
+	urlReport.value = `reports/ugt/kuitansi/view?id=${val.id}`;
+	showViewer.value = true;
 }
+
 function editKas(row) {
 	const flag = row.masuk ? '+' : '-';
 	const nominal = row.masuk || row.keluar;

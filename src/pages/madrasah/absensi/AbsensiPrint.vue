@@ -189,6 +189,15 @@
 			</q-card-section>
 			<q-card-actions align="right" class="bg-green-7">
 				<q-btn
+					label="Print"
+					icon="print"
+					color="green-11"
+					class="q-px-md text-green-10"
+					dense
+					no-caps
+					@click="handlePrint"
+				/>
+				<q-btn
 					type="submit"
 					label="Unduh"
 					icon="download"
@@ -200,7 +209,11 @@
 			</q-card-actions>
 		</q-form>
 	</q-card>
-	<div>
+	<q-dialog v-model="showViewer">
+		<ReportViewer :url="urlReport" />
+	</q-dialog>
+	<!-- TEST -->
+	<div v-if="false">
 		<q-btn
 			label="Proses"
 			icon="download"
@@ -222,6 +235,7 @@ import { listBulanHijri } from 'src/utils/hijri';
 import apiDownload from 'src/api/api-download';
 import TestPrint from './TestPrint.vue';
 import apiGet from 'src/api/api-get';
+import ReportViewer from 'src/components/ReportViewer.vue';
 
 const loading = ref([]);
 const lists = ref([]);
@@ -230,6 +244,7 @@ const optionsTahun = ref([]);
 const optionsBulan = ref(listBulanHijri.map((bulan) => bulan.name));
 const perpekan = ref(false);
 const loadingDownload = ref(false);
+const urlReport = ref('');
 
 const murid = ref([]);
 async function onProses() {
@@ -268,12 +283,27 @@ async function onSubmit() {
 		url = '/reports/absensi/bulanan/download';
 	}
 	await apiDownload({
-		url,
+		endPoint: url,
 		// confirm: false,
 		loading: loadingDownload,
 		params: obj,
 		fileName,
 	});
+}
+
+const showViewer = ref(false);
+function handlePrint() {
+	const queryString = new URLSearchParams(input.value).toString();
+	// console.log(queryString);
+	// return;
+	let url = '';
+	if (perpekan.value) {
+		url = 'reports/absensi/pekanan/view';
+	} else {
+		url = 'reports/absensi/bulanan/view';
+	}
+	urlReport.value = `${url}?${queryString}`;
+	showViewer.value = true;
 }
 
 function inputDay(val) {

@@ -155,9 +155,10 @@
 				/>
 				<q-btn
 					type="submit"
-					label="Proses"
+					label="Print"
 					class="bg-green-10 text-green-11"
 					no-caps=""
+					icon="print"
 				/>
 			</q-card-actions>
 			<!-- <pre>{{ input }}</pre> -->
@@ -169,7 +170,6 @@ import { onMounted, reactive, ref } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import santriStore from 'src/stores/santri-store';
 import { getLists } from 'src/api/api-get-lists';
-import apiDownload from 'src/api/api-download';
 import { notifyError } from 'src/utils/notify';
 
 const input = ref({ jenis_permohonan: 'Berhenti', tunggakan: 'Lunas' });
@@ -177,6 +177,7 @@ const { santri } = reactive(santriStore());
 const lists = ref([]);
 const loading = ref([]);
 const loadingForm = ref(false);
+const emit = defineEmits(['submitted']);
 
 onMounted(async () => {
 	await getLists({
@@ -205,16 +206,9 @@ async function onSubmit() {
 		return notifyError('Isian tidak lengkap');
 	}
 	obj.id = santri.id;
-	const download = await apiDownload({
-		confirm: false,
-		url: '/reports/santri/permohonan-berhenti/download',
-		params: obj,
-		fileName: 'permohonan-berhenti-' + obj.id,
-		loading: loadingForm,
-	});
-	if (download) {
-		document.getElementById('btn-close').click();
-	}
+
+	emit('submitted', obj);
+	document.getElementById('btn-close').click();
 }
 </script>
 <style lang=""></style>
