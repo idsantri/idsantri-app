@@ -81,7 +81,7 @@ import { getObjectById } from 'src/utils/array-object';
 const route = useRoute();
 const loading = ref(false);
 const jabatan = ref([]);
-const personalia = ref({});
+const aparatur = ref({});
 const crudShow = ref(false);
 const dataObj = ref({});
 const isNew = ref(false);
@@ -93,11 +93,11 @@ async function handleEmit() {
 async function loadData() {
 	if (route.params.id) {
 		const data = await apiGet({
-			endPoint: `personalia/${route.params.id}/madrasah`,
+			endPoint: `aparatur/${route.params.id}/madrasah`,
 			loading,
 		});
-		jabatan.value = data.personalia_madrasah;
-		personalia.value = data.personalia;
+		jabatan.value = data.aparatur_madrasah;
+		aparatur.value = data.aparatur;
 	}
 }
 onMounted(async () => {
@@ -106,8 +106,8 @@ onMounted(async () => {
 
 const handleAdd = () => {
 	dataObj.value = {
-		personalia_id: personalia.value.id,
-		nama: personalia.value.nama,
+		aparatur_id: aparatur.value.id,
+		nama: aparatur.value.nama,
 	};
 
 	isNew.value = true;
@@ -116,7 +116,7 @@ const handleAdd = () => {
 
 const handleEdit = (id) => {
 	dataObj.value = getObjectById(jabatan.value, id);
-	dataObj.value.nama = personalia.value.nama;
+	dataObj.value.nama = aparatur.value.nama;
 	isNew.value = false;
 	crudShow.value = true;
 };

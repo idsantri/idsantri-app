@@ -1,11 +1,5 @@
 <template lang="">
-	<h6>nilai</h6>
-	<div>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur
-		animi laboriosam, repellat quam at placeat autem eveniet iste voluptates
-		tempore vitae ullam commodi, odit quia! Sequi porro at obcaecati?
-		Impedit.
-	</div>
+	<div class="flex flex-center q-pa-lg">fitur belum siap</div>
 </template>
 <script>
 export default {};

@@ -20,9 +20,7 @@
 					dense
 					outlined
 					label="Nama"
-					:model-value="
-						input?.nama + ' (' + input?.personalia_id + ')'
-					"
+					:model-value="input?.nama + ' (' + input?.aparatur_id + ')'"
 					disable=""
 					filled=""
 				/>
@@ -192,7 +190,7 @@ onMounted(async () => {
 const submit = async () => {
 	const data = {
 		id: input.value.id,
-		personalia_id: input.value.personalia_id,
+		aparatur_id: input.value.aparatur_id,
 		jabatan: input.value.jabatan,
 		th_ajaran_h: input.value.th_ajaran_h,
 		tingkat_id: input.value.tingkat_id,
@@ -204,13 +202,13 @@ const submit = async () => {
 	let response = null;
 	if (props.isNew) {
 		response = await apiPost({
-			endPoint: 'personalia-madrasah',
+			endPoint: 'aparatur-madrasah',
 			data,
 			loading: loadingCrud,
 		});
 	} else {
 		response = await apiUpdate({
-			endPoint: `personalia-madrasah/${data.id}`,
+			endPoint: `aparatur-madrasah/${data.id}`,
 			data,
 			confirm: true,
 			loading: loadingCrud,
@@ -221,7 +219,7 @@ const submit = async () => {
 
 const deleteData = async (id) => {
 	const deleted = await apiDelete({
-		endPoint: `personalia-madrasah/${id}`,
+		endPoint: `aparatur-madrasah/${id}`,
 		loading: loadingCrud,
 	});
 	if (deleted) emit('successDelete');

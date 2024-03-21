@@ -57,13 +57,13 @@ const personalia = ref([]);
 onMounted(async () => {
 	if (params.thAjaranH && params.tingkatId) {
 		const data = await apiGet({
-			endPoint: 'personalia-madrasah',
+			endPoint: 'aparatur-madrasah',
 			params: {
 				th_ajaran_h: params.thAjaranH,
 				tingkat_id: params.tingkatId,
 			},
 		});
-		personalia.value = data.personalia_madrasah;
+		personalia.value = data.aparatur_madrasah;
 	} else {
 		personalia.value = [];
 	}
