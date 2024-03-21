@@ -1,12 +1,11 @@
 <template lang="">
 	<q-table
 		flat
-		:rows="personalia"
+		:rows="aparatur"
 		:columns="columns"
 		:filter="filter"
 		@row-click="
-			(evt, row, index) =>
-				$router.push(`/personalia/${row.personalia_id}`)
+			(evt, row, index) => $router.push(`/personalia/${row.aparatur_id}`)
 		"
 		:rows-per-page-options="[10, 25, 50, 75, 100, 0]"
 		no-data-label="Silakan tentukan filter!"
@@ -52,7 +51,7 @@ const params = {
 	tingkatId: route.params.tingkatId,
 };
 
-const personalia = ref([]);
+const aparatur = ref([]);
 
 onMounted(async () => {
 	if (params.thAjaranH && params.tingkatId) {
@@ -63,9 +62,9 @@ onMounted(async () => {
 				tingkat_id: params.tingkatId,
 			},
 		});
-		personalia.value = data.aparatur_madrasah;
+		aparatur.value = data.aparatur_madrasah;
 	} else {
-		personalia.value = [];
+		aparatur.value = [];
 	}
 });
 
