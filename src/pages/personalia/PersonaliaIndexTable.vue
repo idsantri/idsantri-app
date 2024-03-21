@@ -25,7 +25,7 @@
 					:rows="personalia"
 					:loading="loading"
 					:rows-per-page-options="[10, 25, 50, 100, 0]"
-					class="dt"
+					class="dt q-px-sm"
 					:columns="columns"
 					:filter="filter"
 					no-data-label="Tidak ada data untuk ditampilkan!"
@@ -80,8 +80,8 @@ function handleEmit(val) {
 }
 
 onMounted(async () => {
-	const data = await apiGet({ endPoint: 'personalia', loading });
-	personalia.value = data.personalia;
+	const data = await apiGet({ endPoint: 'aparatur', loading });
+	personalia.value = data.aparatur;
 });
 
 const columns = [

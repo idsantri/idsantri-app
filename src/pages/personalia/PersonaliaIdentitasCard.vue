@@ -27,9 +27,9 @@
 			<div v-else class="row">
 				<div class="col-4 q-pr-sm">
 					<q-img
-						:src="personalia?.image || '/user-default.png'"
+						:src="aparatur?.image || '/user-default.png'"
 						:ratio="3 / 4"
-						alt="personalia"
+						alt="aparatur"
 					/>
 					<q-btn
 						class="q-mt-sm full-width"
@@ -44,7 +44,7 @@
 					/>
 				</div>
 				<div class="col">
-					<div v-for="(value, key) in personaliaObj" :key="key">
+					<div v-for="(value, key) in aparaturObj" :key="key">
 						<div class="text-caption text-italic">
 							{{ key }}
 						</div>
@@ -59,7 +59,7 @@
 	<q-dialog persistent="" v-model="crudShow">
 		<PersonaliaModal
 			:is-new="false"
-			:data-personalia="personalia"
+			:data-aparatur="aparatur"
 			@success-submit="handleEmit"
 			@success-delete="handleEmit"
 		/>
@@ -67,7 +67,7 @@
 	<!-- modal -->
 	<upload-image
 		:show-uploader="showUploader"
-		:url="`/images/personalia/${route.params.id}`"
+		:url="`/images/aparatur/${route.params.id}`"
 		@update-uploader="updateUploader"
 		@success-upload="successUpload"
 	/>
@@ -82,13 +82,15 @@ import UploadImage from 'src/components/ImageUploader.vue';
 
 const route = useRoute();
 const router = useRouter();
-const personalia = ref({});
-const personaliaObj = ref({});
+const aparatur = ref({});
+const aparaturObj = ref({});
 const loading = ref(false);
 const crudShow = ref(false);
 
 async function handleEmit(val) {
 	crudShow.value = false;
+	// console.log(val);
+	// return;
 	if (val.id == route.params.id) {
 		await loadData();
 		await loadImage();
@@ -99,35 +101,35 @@ async function handleEmit(val) {
 
 async function loadImage() {
 	const img = await apiGet({
-		endPoint: `images/personalia/${personalia.value.id}`,
+		endPoint: `images/aparatur/${aparatur.value.id}`,
 	});
-	personalia.value.image = img.image_url;
+	aparatur.value.image = img.image_url;
 }
 async function loadData() {
 	const data = await apiGet({
-		endPoint: `personalia/${route.params.id}`,
+		endPoint: `aparatur/${route.params.id}`,
 		loading,
 	});
-	personalia.value = data.personalia;
+	aparatur.value = data.aparatur;
 	// console.log(personalia.value);
 
-	personaliaObj.value = {
-		Nama: `${personalia.value.nama?.toUpperCase()} (${personalia.value.sex?.toUpperCase()})`,
-		Alamat: `${personalia.value.jl || ' '} RT ${String(
-			personalia.value.rt || 0,
-		).padStart(3, 0)} RW ${String(personalia.value.rw || 0).padStart(
+	aparaturObj.value = {
+		Nama: `${aparatur.value.nama?.toUpperCase()} (${aparatur.value.sex?.toUpperCase()})`,
+		Alamat: `${aparatur.value.jl || ' '} RT ${String(
+			aparatur.value.rt || 0,
+		).padStart(3, 0)} RW ${String(aparatur.value.rw || 0).padStart(
 			3,
 			'0',
-		)} ${personalia.value.desa || ' '} ${
-			personalia.value.kecamatan || ' '
-		} ${personalia.value.kabupaten || ' '} ${
-			personalia.value.provinsi || ' '
-		} ${personalia.value.kode_pos || ' '}`.replace(/\s\s+/g, ' '),
-		Kelahiran: `${personalia.value.tmp_lahir || '-'}, ${formatDateFull(
-			personalia.value.tgl_lahir,
+		)} ${aparatur.value.desa || ' '} ${
+			aparatur.value.kecamatan || ' '
+		} ${aparatur.value.kabupaten || ' '} ${
+			aparatur.value.provinsi || ' '
+		} ${aparatur.value.kode_pos || ' '}`.replace(/\s\s+/g, ' '),
+		Kelahiran: `${aparatur.value.tmp_lahir || '-'}, ${formatDateFull(
+			aparatur.value.tgl_lahir,
 		)}`,
-		Telepon: personalia.value.telepon || '-',
-		Email: personalia.value.email || '-',
+		Telepon: aparatur.value.telepon || '-',
+		Email: aparatur.value.email || '-',
 	};
 }
 onMounted(async () => {
