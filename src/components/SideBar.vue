@@ -23,22 +23,13 @@
 			header-class="text-body1 text-green-1"
 			expand-icon-class="text-green-1"
 		>
-			<!-- <q-item clickable v-ripple to="/sekretariat">
+			<q-item clickable v-ripple to="/cari/santri">
 				<q-item-section avatar>
 					<q-icon color="green-1" name="home_work" />
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>Beranda</q-item-label>
 					<q-item-label caption>Beranda sekretariat</q-item-label>
-				</q-item-section>
-			</q-item> -->
-			<q-item clickable v-ripple @click="addNewSantri">
-				<q-item-section avatar>
-					<q-icon color="green-1" name="person_add" />
-				</q-item-section>
-				<q-item-section>
-					<q-item-label>Santri</q-item-label>
-					<q-item-label caption>Tambah Santri Baru</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>
@@ -242,16 +233,4 @@
 	</q-list>
 </template>
 
-<script setup>
-import dialogStore from 'src/stores/dialog-store';
-import santriStore from 'src/stores/santri-store';
-import { toRefs } from 'vue';
-
-const dialog = dialogStore();
-const { crudSantri } = toRefs(dialog);
-
-const addNewSantri = () => {
-	santriStore().$reset();
-	crudSantri.value = true;
-};
-</script>
+<script setup></script>
