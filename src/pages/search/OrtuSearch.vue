@@ -49,10 +49,11 @@ import DataTablesLib from 'datatables.net-dt';
 import { ref, onMounted, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { apiTokened } from 'src/api';
-import { notifySuccess } from 'src/utils/notify';
+import { notifyError, notifySuccess } from 'src/utils/notify';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
 import ortuStore from 'src/stores/ortu-store';
+import { toArray } from 'src/utils/array-object';
 
 const dialog = dialogStore();
 const { searchOrtu, crudOrtu, crudSantri } = toRefs(dialog);
@@ -79,6 +80,11 @@ const options = ref({
 		url: url,
 		type: 'POST',
 		headers: headers,
+		error: (xhr) => {
+			const message = xhr.responseJSON?.message;
+			if (message) toArray(message).forEach((msg) => notifyError(msg));
+			else console.log(`Error during get ${url}`, xhr);
+		},
 	},
 	order: [],
 	columns: [
