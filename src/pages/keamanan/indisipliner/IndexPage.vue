@@ -123,10 +123,10 @@ const columns = [
 		sortable: true,
 	},
 	{
-		name: 'tgl_sidang_m',
+		name: 'tgl_sidang',
 		label: 'Sidang',
 		align: 'left',
-		field: (row) => formatDateShort(row.tgl_sidang_m),
+		field: (row) => formatDateShort(row.tgl_sidang),
 		sortable: true,
 	},
 	{

@@ -120,7 +120,12 @@ const register = async () => {
 		await notification; // tunggu notifikasi ditutup
 		router.push({ name: 'Login' });
 	} catch (error) {
-		emit('errors', toArray(error.response.data.message));
+		emit(
+			'errors',
+			toArray(
+				error.response?.data?.message || 'Terjadi sebuah kesalahan',
+			),
+		);
 	} finally {
 		showSpinner.value = false;
 	}

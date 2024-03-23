@@ -68,11 +68,9 @@
 								<td class="text-italic">Kasus</td>
 								<td>
 									{{
-										formatDateFull(
-											indisipliner.tgl_kasus_m,
-										) +
+										formatDateFull(indisipliner.tgl_kasus) +
 										' | ' +
-										m2hBacaHijri(indisipliner.tgl_kasus_m)
+										m2hBacaHijri(indisipliner.tgl_kasus)
 									}}
 								</td>
 							</tr>
@@ -81,10 +79,10 @@
 								<td>
 									{{
 										formatDateFull(
-											indisipliner.tgl_sidang_m,
+											indisipliner.tgl_sidang,
 										) +
 										' | ' +
-										m2hBacaHijri(indisipliner.tgl_sidang_m)
+										m2hBacaHijri(indisipliner.tgl_sidang)
 									}}
 								</td>
 							</tr>
