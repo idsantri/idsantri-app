@@ -1,5 +1,5 @@
 <template>
-	<div class="q-pa-sm">
+	<q-page class="q-pa-sm">
 		<q-toolbar class="bg-green-8 text-green-11 shadow-2 rounded-borders">
 			<!-- <q-btn flat label="Homepage" /> -->
 			<div class="text-subtitle1">Cari &hellip;</div>
@@ -30,14 +30,7 @@
 				<ortu-search />
 			</q-tab-panel>
 		</q-tab-panels> -->
-	</div>
+	</q-page>
 </template>
 
-<script setup>
-import SantriSearch from './SantriSearch.vue';
-import WaliSearch from './WaliSearch.vue';
-import OrtuSearch from './OrtuSearch.vue';
-import { ref } from 'vue';
-
-const tab = ref('santri');
-</script>
+<script setup></script>

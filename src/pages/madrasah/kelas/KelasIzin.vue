@@ -1,23 +1,24 @@
 <template lang="">
-	<div>
-		<template-array
-			:data="izinMap"
-			:spinner="loading"
-			:btn-print="true"
-			@add="handleAdd"
-			@edit="handleEdit"
-			@print="handlePrint"
+	<template-array
+		:data="izinMap"
+		:spinner="loading"
+		:btn-print="true"
+		@add="handleAdd"
+		@edit="handleEdit"
+		@print="handlePrint"
+	/>
+	<q-dialog v-model="crudShow">
+		<kelas-izin-crud
+			:data="izinObj"
+			:is-new="isNew"
+			title="Input Izin Madrasah"
+			@success-submit="loadData"
+			@success-delete="loadData"
 		/>
-		<q-dialog v-model="crudShow">
-			<kelas-izin-crud
-				:data="izinObj"
-				:is-new="isNew"
-				title="Input Izin Madrasah"
-				@success-submit="loadData"
-				@success-delete="loadData"
-			/>
-		</q-dialog>
-	</div>
+	</q-dialog>
+	<q-dialog v-model="showViewer">
+		<ReportViewer :url="urlReport" />
+	</q-dialog>
 
 	<!-- <pre>{{ izin }}	</pre> -->
 </template>
@@ -27,9 +28,10 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import TemplateArray from 'src/pages/santri/relations/TemplateArray.vue';
 import { formatDateShort } from 'src/utils/format-date';
-import { formatHijri } from 'src/utils/hijri';
+import { formatHijri, m2h } from 'src/utils/hijri';
 import KelasIzinCrud from 'src/pages/madrasah/kelas/KelasIzinCrud.vue';
 import { getObjectById } from 'src/utils/array-object';
+import ReportViewer from 'src/components/ReportViewer.vue';
 
 const route = useRoute();
 const params = route.params;
@@ -40,7 +42,7 @@ const loading = ref(false);
 const isNew = ref(false);
 const crudShow = ref(false);
 const kelas = ref({});
-
+const urlReport = ref('');
 async function loadData() {
 	const data = await apiGet({
 		endPoint: `izin-madrasah/kelas/${params.id}`,
@@ -48,8 +50,9 @@ async function loadData() {
 	});
 	izin.value = data.izin_madrasah;
 	kelas.value = data.kelas;
-	izinMap.value = data.izin_madrasah.map((v, i) => ({
-		Tanggal: formatDateShort(v.tgl_m) + ' | ' + formatHijri(v.tgl_h),
+	izinMap.value = data.izin_madrasah.map((v) => ({
+		Tanggal:
+			formatDateShort(v.dari_tgl) + ' | ' + formatHijri(m2h(v.dari_tgl)),
 		Durasi: v.durasi + ' hari',
 		Keperluan:
 			v.keperluan +
@@ -88,9 +91,10 @@ const handleEdit = ({ id }) => {
 	crudShow.value = true;
 };
 
+const showViewer = ref(false);
 function handlePrint(v) {
-	console.log(v);
-	alert('Belum siap');
+	urlReport.value = `reports/izin-madrasah/view?id=${v.id}`;
+	showViewer.value = true;
 }
 </script>
 <style lang=""></style>

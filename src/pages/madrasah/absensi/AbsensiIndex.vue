@@ -1,5 +1,5 @@
 <template>
-	<div class="q-ma-sm">
+	<q-page class="q-pa-sm">
 		<q-card>
 			<q-card-section class="bg-green-8 text-green-11 q-px-sm q-py-none">
 				<q-toolbar class="no-padding no-margin">
@@ -43,7 +43,7 @@
 							<q-item
 								v-if="
 									showButton(
-										`madrasah/absensi-musyawarah/input`
+										`madrasah/absensi-musyawarah/input`,
 									)
 								"
 								clickable
@@ -62,7 +62,7 @@
 							<q-item
 								v-if="
 									showButton(
-										`madrasah/absensi-sekolah/rekap-ujian`
+										`madrasah/absensi-sekolah/rekap-ujian`,
 									)
 								"
 								clickable
@@ -77,7 +77,7 @@
 							<q-item
 								v-if="
 									showButton(
-										`madrasah/absensi-musyawarah/rekap-ujian`
+										`madrasah/absensi-musyawarah/rekap-ujian`,
 									)
 								"
 								clickable
@@ -133,7 +133,7 @@
 				<router-view :key="$route.fullPath" />
 			</q-card-section>
 		</q-card>
-	</div>
+	</q-page>
 </template>
 <script setup>
 import { useRoute } from 'vue-router';

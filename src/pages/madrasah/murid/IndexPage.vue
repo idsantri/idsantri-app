@@ -1,5 +1,5 @@
 <template>
-	<div class="q-ma-sm">
+	<q-page class="q-pa-sm">
 		<filter-kelas
 			:showBulanUjian="false"
 			start-url="/madrasah/murid"
@@ -31,7 +31,7 @@
 				<router-view :key="$route.fullPath" />
 			</q-card-section>
 		</q-card>
-	</div>
+	</q-page>
 </template>
 <script setup>
 import { ref } from 'vue';

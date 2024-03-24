@@ -1,5 +1,5 @@
 <template>
-	<div class="q-pa-xs">
+	<div class="">
 		<form @submit.prevent="reset">
 			<div class="q-gutter-y-md column">
 				<q-input
@@ -115,7 +115,12 @@ const reset = async () => {
 		await notification; // tunggu notifikasi ditutup
 		router.push({ name: 'Login' });
 	} catch (error) {
-		emit('errors', toArray(error.response.data.message));
+		emit(
+			'errors',
+			toArray(
+				error.response?.data?.message || 'Terjadi sebuah kesalahan',
+			),
+		);
 	} finally {
 		showSpinner.value = false;
 	}

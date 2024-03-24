@@ -45,7 +45,7 @@ async function loadData() {
 		loading: spinner,
 	});
 	dataArr.value = data.status;
-	dataMap.value = data.status.map((v, i) => ({
+	dataMap.value = data.status.map((v) => ({
 		Tanggal: formatDateShort(v.date_m) + ' | ' + m2hFormat(v.date_m),
 		Status: v.status,
 		Keterangan: v.keterangan || '-',

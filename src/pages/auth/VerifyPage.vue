@@ -34,9 +34,13 @@ async function makeRequest() {
 		await notification; // tunggu notifikasi ditutup
 		router.push({ name: 'Login' });
 	} catch (error) {
-		toArray(error.response.data.message).forEach((message) => {
-			notifyError(message);
-		});
+		if (error.response.data.message) {
+			toArray(error.response.data.message).forEach((message) => {
+				notifyError(message);
+			});
+		} else {
+			notifyError('Terjadi sebuah kesalahan');
+		}
 	} finally {
 		showSpinner.value = false;
 	}

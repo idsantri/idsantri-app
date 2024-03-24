@@ -1,5 +1,5 @@
 <template lang="">
-	<div class="q-ma-sm">
+	<q-page class="q-pa-sm">
 		<filter-tanggal
 			:showBulanUjian="true"
 			start-url="/keamanan/izin-pesantren"
@@ -57,9 +57,11 @@
 				</template>
 			</q-table>
 		</q-card>
-	</div>
 
-	<q-dialog v-model="crudShow"> <izin-crud :is-new="true" /> </q-dialog>
+		<q-dialog v-model="crudShow">
+			<izin-crud :is-new="true" />
+		</q-dialog>
+	</q-page>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
@@ -67,7 +69,6 @@ import apiGet from 'src/api/api-get';
 import FilterTanggal from 'src/components/HeadFilterTanggal';
 import { useRoute } from 'vue-router';
 import { isDate } from 'src/utils/format-date';
-import { formatHijri } from 'src/utils/hijri';
 import IzinCrud from 'src/pages/keamanan/perizinan/IzinCrud.vue';
 
 const izin = ref([{}]);
@@ -129,17 +130,17 @@ const columns = [
 		sortable: true,
 	},
 	{
-		name: 'tgl_m',
+		name: 'dari_tgl',
 		label: 'Dari',
 		align: 'left',
-		field: 'tgl_m',
+		field: 'dari_tgl',
 		sortable: true,
 	},
 	{
-		name: 'must_back_m',
+		name: 'sampai_tgl',
 		label: 'Sampai',
 		align: 'left',
-		field: 'must_back_m',
+		field: 'sampai_tgl',
 		sortable: true,
 	},
 	{

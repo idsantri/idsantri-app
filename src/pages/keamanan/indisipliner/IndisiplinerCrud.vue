@@ -26,16 +26,16 @@
 					<q-input
 						dense
 						:hint="
-							isDate(input.tgl_kasus_m)
-								? formatDateFull(input.tgl_kasus_m) +
-								  ' | ' +
-								  bacaHijri(m2h(input.tgl_kasus_m))
+							isDate(input.tgl_kasus)
+								? formatDateFull(input.tgl_kasus) +
+									' | ' +
+									bacaHijri(m2h(input.tgl_kasus))
 								: ''
 						"
 						class="q-mt-sm"
 						outlined
 						label="Tanggal Kasus*"
-						v-model="input.tgl_kasus_m"
+						v-model="input.tgl_kasus"
 						type="date"
 						:rules="[(val) => !!val || 'Harus diisi!']"
 						error-color="negative"
@@ -44,16 +44,16 @@
 					<q-input
 						dense
 						:hint="
-							isDate(input.tgl_sidang_m)
-								? formatDateFull(input.tgl_sidang_m) +
-								  ' | ' +
-								  bacaHijri(m2h(input.tgl_sidang_m))
+							isDate(input.tgl_sidang)
+								? formatDateFull(input.tgl_sidang) +
+									' | ' +
+									bacaHijri(m2h(input.tgl_sidang))
 								: ''
 						"
 						class="q-mt-sm"
 						outlined
 						label="Tanggal Sidang*"
-						v-model="input.tgl_sidang_m"
+						v-model="input.tgl_sidang"
 						type="date"
 						:rules="[(val) => !!val || 'Harus diisi!']"
 						error-color="negative"
@@ -203,8 +203,8 @@ async function onSubmit() {
 	// return;
 	const data = {
 		santri_id: input.value.santri_id,
-		tgl_kasus_m: input.value.tgl_kasus_m,
-		tgl_sidang_m: input.value.tgl_sidang_m,
+		tgl_kasus: input.value.tgl_kasus,
+		tgl_sidang: input.value.tgl_sidang,
 		kategori: input.value.kategori,
 		pasal: input.value.pasal?.join('; '),
 		deskripsi: input.value.deskripsi,

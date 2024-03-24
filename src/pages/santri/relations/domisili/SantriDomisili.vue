@@ -45,7 +45,7 @@ async function loadData() {
 		loading: spinner,
 	});
 	dataArr.value = data.domisili;
-	dataMap.value = data.domisili.map((v, i) => ({
+	dataMap.value = data.domisili.map((v) => ({
 		Tanggal: formatDateShort(v.date_m) + ' | ' + m2hFormat(v.date_m),
 		Domisili: v.domisili,
 		Keterangan: v.keterangan || '-',

@@ -64,7 +64,7 @@
 							:rules="[
 								(val) => !!val || 'Harus diisi!',
 								(val) =>
-									val?.length >= 5 || 'Setidaknya 5 huruf!',
+									val?.length >= 3 || 'Setidaknya 3 huruf!',
 							]"
 							error-color="negative"
 							autocapitalize="words"
@@ -95,8 +95,8 @@
 							:hint="
 								isDate(input.tgl_lahir)
 									? formatDateFull(input.tgl_lahir) +
-									  ' | ' +
-									  bacaHijri(m2h(input.tgl_lahir))
+										' | ' +
+										bacaHijri(m2h(input.tgl_lahir))
 									: ''
 							"
 							class="q-mt-sm"
@@ -112,8 +112,8 @@
 								input.sex == 'L'
 									? 'Laki-Laki'
 									: input.sex == 'P'
-									? 'Perempuan'
-									: ''
+										? 'Perempuan'
+										: ''
 							"
 							class="q-mt-sm"
 							outlined
@@ -258,14 +258,14 @@ import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
 import { getLists } from 'src/api/api-get-lists';
 
 const props = defineProps({
-	dataPersonalia: Object,
+	dataAparatur: Object,
 	isNew: Boolean,
 });
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const router = useRouter();
 const route = useRoute();
-const input = ref(props.dataPersonalia);
+const input = ref(props.dataAparatur);
 
 const lists = ref([]);
 const loading = ref([]);
@@ -293,13 +293,13 @@ const onSubmit = async () => {
 	let response = null;
 	if (props.isNew) {
 		response = await apiPost({
-			endPoint: 'personalia',
+			endPoint: 'aparatur',
 			data,
 			loading: loadingCrud,
 		});
 	} else {
 		response = await apiUpdate({
-			endPoint: `personalia/${route.params.id}`,
+			endPoint: `aparatur/${route.params.id}`,
 			data,
 			confirm: true,
 			notify: true,
@@ -308,13 +308,13 @@ const onSubmit = async () => {
 	}
 
 	if (response) {
-		emit('successSubmit', response?.personalia);
+		emit('successSubmit', response?.aparatur);
 	}
 };
 
 const handleDelete = async () => {
 	const result = await apiDelete({
-		endPoint: `personalia/${route.params.id}`,
+		endPoint: `aparatur/${route.params.id}`,
 		loading: loadingCrud,
 		rerender: false,
 	});

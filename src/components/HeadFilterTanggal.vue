@@ -57,9 +57,6 @@ const params = {
 const startDate = ref(params.startDate);
 const endDate = ref(params.endDate);
 
-const loading = ref([]);
-const lists = ref([]);
-
 onMounted(async () => {
 	sendEmit();
 });

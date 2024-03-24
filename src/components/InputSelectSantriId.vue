@@ -68,12 +68,12 @@ const input = ref({});
 const loading = ref(false);
 const options = ref([]);
 
-function onInput(val) {
+function onInput() {
 	input.value.nama = options.value.find(
-		(o) => o.id == input.value?.santri_id
+		(o) => o.id == input.value?.santri_id,
 	)?.nama;
 	input.value.data_akhir = options.value.find(
-		(o) => o.id == input.value?.santri_id
+		(o) => o.id == input.value?.santri_id,
 	)?.data_akhir;
 
 	emit('emitInput', input.value);
@@ -114,7 +114,7 @@ async function filterFunction(val, update) {
 				menuRef.setOptionIndex(-1);
 				menuRef.moveOptionSelection(1, true);
 			}
-		}
+		},
 	);
 }
 </script>

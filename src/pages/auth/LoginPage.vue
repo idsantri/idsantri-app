@@ -1,5 +1,5 @@
 <template>
-	<div class="q-pa-xs">
+	<div class="">
 		<form @submit.prevent="submitLogin">
 			<div class="q-gutter-y-md column">
 				<q-input
@@ -58,13 +58,13 @@
 				</q-card>
 			</div>
 		</form>
+		<q-spinner-cube
+			v-show="showSpinner"
+			color="green-12"
+			size="14em"
+			class="absolute-center"
+		/>
 	</div>
-	<q-spinner-cube
-		v-show="showSpinner"
-		color="green-12"
-		size="14em"
-		class="absolute-center"
-	/>
 </template>
 
 <script setup>
@@ -110,7 +110,12 @@ const submitLogin = async () => {
 		}
 	} catch (error) {
 		// console.log('e', error);
-		emit('errors', toArray(error.response.data.message));
+		emit(
+			'errors',
+			toArray(
+				error.response?.data?.message || 'Terjadi sebuah kesalahan',
+			),
+		);
 	} finally {
 		showSpinner.value = false;
 	}
@@ -120,7 +125,7 @@ onUpdated(() => {
 	const resend = document.querySelector('ul > li > span > a');
 	if (!resend) return;
 	resend.addEventListener('click', async (e) => {
-		console.log('anchor clicked');
+		// console.log('anchor clicked');
 		emit('errors', []);
 		e.preventDefault();
 		const href = resend.href.replace('%2540', '@');
@@ -131,7 +136,12 @@ onUpdated(() => {
 			const notification = notifyAlert(response.data.message, 0);
 			await notification; // tunggu notifikasi ditutup
 		} catch (error) {
-			emit('errors', toArray(error.response.data.message));
+			emit(
+				'errors',
+				toArray(
+					error.response?.data?.message || 'Terjadi sebuah kesalahan',
+				),
+			);
 		} finally {
 			showSpinner.value = false;
 		}

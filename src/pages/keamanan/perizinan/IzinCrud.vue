@@ -39,37 +39,16 @@
 					<q-input
 						dense
 						:hint="
-							isDate(input.tgl_m)
-								? formatDateFull(input.tgl_m)
+							isDate(input.dari_tgl)
+								? formatDateFull(input.dari_tgl)
 								: ''
 						"
 						class="q-mt-sm"
 						outlined
 						label="Tanggal (M)*"
-						v-model="input.tgl_m"
+						v-model="input.dari_tgl"
 						type="date"
-						@change="
-							isDate(input.tgl_m)
-								? (input.tgl_h = m2h(input.tgl_m))
-								: ''
-						"
 						:rules="[(val) => !!val || 'Harus diisi!']"
-						error-color="negative"
-					/>
-					<q-input
-						dense
-						:hint="
-							input.tgl_h?.length ? bacaHijri(input.tgl_h) : ''
-						"
-						class="q-mt-sm"
-						outlined
-						label="Tanggal (H)*"
-						v-model="input.tgl_h"
-						mask="####-##-##"
-						:rules="[
-							(val) => !!val || 'Harus diisi!',
-							(val) => val?.length == 8 || '8 digit angka!',
-						]"
 						error-color="negative"
 					/>
 					<q-input
@@ -157,11 +136,9 @@
 	</q-card>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
-import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
@@ -182,8 +159,7 @@ async function onSubmit() {
 	const data = {
 		santri_id: input.value.santri_id,
 		sifat: input.value.sifat,
-		tgl_m: input.value.tgl_m,
-		tgl_h: input.value.tgl_h,
+		dari_tgl: input.value.dari_tgl,
 		durasi: input.value.durasi,
 		keperluan: input.value.keperluan,
 		keterangan: input.value.keterangan,
@@ -234,14 +210,5 @@ onMounted(async () => {
 	await getLists({ key: 'keperluan-izin', loading, lists, sort: true });
 	await getLists({ key: 'keterangan-izin', loading, lists, sort: true });
 });
-
-watch(
-	() => input.value.tgl_h,
-	(newValue, oldValue) => {
-		if (newValue !== oldValue) {
-			input.value.tgl_h = newValue.replace(/-/g, '');
-		}
-	}
-);
 </script>
 <style lang=""></style>

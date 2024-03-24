@@ -82,7 +82,7 @@
 													listsBulanHijri.find(
 														(b) =>
 															Number(b.val2) ==
-															Number(item.bulan)
+															Number(item.bulan),
 													)?.val1 || ''
 												"
 												readonly=""
@@ -160,7 +160,9 @@
 												listsBulanHijri.find(
 													(b) =>
 														Number(b.val2) ==
-														Number(newSetting.bulan)
+														Number(
+															newSetting.bulan,
+														),
 												)?.val1 || ''
 											"
 										/>
@@ -210,10 +212,7 @@ import apiGet from 'src/api/api-get';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 
-const router = useRouter();
-const route = useRoute();
 const modelTingkatId = ref('');
 const listsTingkatId = ref([]);
 const listsBulanHijri = ref([{}]);

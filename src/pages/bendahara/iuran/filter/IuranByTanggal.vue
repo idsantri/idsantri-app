@@ -1,5 +1,5 @@
 <template lang="">
-	<div class="q-ma-sm">
+	<q-page class="q-pa-sm">
 		<filter-tanggal
 			start-url="/bendahara/iuran/q/tanggal"
 			@data-filter="(val) => (dataFilter = val)"
@@ -12,7 +12,7 @@
 			:loading="loading"
 			:heading="dataFilter.display"
 		/>
-	</div>
+	</q-page>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';

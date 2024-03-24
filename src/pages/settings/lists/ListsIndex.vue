@@ -1,42 +1,44 @@
 <template>
-	<div class="q-ma-sm" style="max-width: 600px">
-		<q-card>
-			<q-card-section class="q-pa-sm">
-				<q-select
-					dense
-					outlined
-					label="Pilih List"
-					v-model="listModel"
-					:options="listData"
-					emit-value
-					map-options
-					@update:model-value="(v) => routerPush(v)"
-					behavior="menu"
-				/>
-			</q-card-section>
-		</q-card>
-		<q-card class="q-mt-sm" v-if="listModel">
-			<q-card-section
-				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
-			>
-				List {{ listModel.label }}
-				<q-space />
-				<q-btn flat="" icon="cached" @click="keyReload++" />
-			</q-card-section>
-			<q-card-section class="q-pa-sm" :key="keyReload">
-				<router-view :key="$route.fullPath" />
-				<!-- <suspense>
+	<q-page class="q-pa-sm">
+		<div class="" style="max-width: 600px">
+			<q-card>
+				<q-card-section class="q-pa-sm">
+					<q-select
+						dense
+						outlined
+						label="Pilih List"
+						v-model="listModel"
+						:options="listData"
+						emit-value
+						map-options
+						@update:model-value="(v) => routerPush(v)"
+						behavior="menu"
+					/>
+				</q-card-section>
+			</q-card>
+			<q-card class="q-mt-sm" v-if="listModel">
+				<q-card-section
+					class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
+				>
+					List {{ listModel.label }}
+					<q-space />
+					<q-btn flat="" icon="cached" @click="keyReload++" />
+				</q-card-section>
+				<q-card-section class="q-pa-sm" :key="keyReload">
+					<router-view :key="$route.fullPath" />
+					<!-- <suspense>
 					<template #default>
 						<router-view :key="$route.fullPath" />
 					</template>
 					<template #fallback> loading... </template>
 				</suspense> -->
-			</q-card-section>
-		</q-card>
-	</div>
+				</q-card-section>
+			</q-card>
+		</div>
 
-	<!-- <pre>list model:{{ listModel }}</pre> -->
-	<!-- <pre>list data:{{ listData }}</pre> -->
+		<!-- <pre>list model:{{ listModel }}</pre> -->
+		<!-- <pre>list data:{{ listData }}</pre> -->
+	</q-page>
 </template>
 <script setup>
 import { ref } from 'vue';

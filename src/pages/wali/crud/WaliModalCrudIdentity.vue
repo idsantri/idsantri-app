@@ -21,7 +21,7 @@
 		v-model="nama"
 		:rules="[
 			(val) => !!val || 'Harus diisi!',
-			(val) => val?.length >= 5 || 'Setidaknya 5 huruf!',
+			(val) => val?.length >= 3 || 'Setidaknya 3 huruf!',
 		]"
 		error-color="negative"
 		autocapitalize="words"
@@ -85,5 +85,5 @@ const props = defineProps({
 });
 
 const { wali } = waliState();
-const { id, nama, tgl_lahir, tmp_lahir, nik, sex } = toRefs(wali);
+const { id, nama, tgl_lahir, nik, sex } = toRefs(wali);
 </script>

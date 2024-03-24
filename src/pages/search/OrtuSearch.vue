@@ -46,13 +46,14 @@
 <script setup>
 import DataTable from 'datatables.net-vue3';
 import DataTablesLib from 'datatables.net-dt';
-import { ref, onMounted, onUnmounted, toRefs } from 'vue';
+import { ref, onMounted, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { apiTokened } from 'src/api';
-import { notifySuccess } from 'src/utils/notify';
+import { notifyError, notifySuccess } from 'src/utils/notify';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
 import ortuStore from 'src/stores/ortu-store';
+import { toArray } from 'src/utils/array-object';
 
 const dialog = dialogStore();
 const { searchOrtu, crudOrtu, crudSantri } = toRefs(dialog);
@@ -79,20 +80,25 @@ const options = ref({
 		url: url,
 		type: 'POST',
 		headers: headers,
+		error: (xhr) => {
+			const message = xhr.responseJSON?.message;
+			if (message) toArray(message).forEach((msg) => notifyError(msg));
+			else console.log(`Error during get ${url}`, xhr);
+		},
 	},
 	order: [],
 	columns: [
 		{
 			title: 'ID',
 			data: 'id',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<button onclick='copyId(${row.id})' class='dt-btn-flat' title='Klik/Tap untuk menyalin ID'>${row.id}</button>`;
 			},
 		},
 		{
 			title: 'Ayah',
 			data: 'ayah',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<span class="dt-link" onclick='goToOrtu(${row.id})'>${row.ayah}</span>`;
 			},
 		},
@@ -103,7 +109,7 @@ const options = ref({
 		{
 			title: 'Ibu',
 			data: 'ibu',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<span class="dt-link" onclick='goToOrtu(${row.id})'>${row.ibu}</span>`;
 			},
 		},
@@ -114,7 +120,7 @@ const options = ref({
 
 		{
 			title: 'Anak1',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri1_id
 				})'>${row.santri1_nama || '-'}</span>`;
@@ -122,7 +128,7 @@ const options = ref({
 		},
 		{
 			title: 'Anak2',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri2_id
 				})'>${row.santri2_nama || '-'}</span>`;
@@ -130,7 +136,7 @@ const options = ref({
 		},
 		{
 			title: 'Anak3',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri3_id
 				})'>${row.santri3_nama || '-'}</span>`;
@@ -138,7 +144,7 @@ const options = ref({
 		},
 		{
 			title: 'Anak4',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri4_id
 				})'>${row.santri4_nama || '-'}</span>`;
@@ -146,7 +152,7 @@ const options = ref({
 		},
 		{
 			title: 'Anak5',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<span class="dt-link" onclick='goToSantri(${
 					row.santri5_id
 				})'>${row.santri5_nama || '-'}</span>`;

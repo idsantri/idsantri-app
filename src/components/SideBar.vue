@@ -23,22 +23,13 @@
 			header-class="text-body1 text-green-1"
 			expand-icon-class="text-green-1"
 		>
-			<!-- <q-item clickable v-ripple to="/sekretariat">
+			<q-item clickable v-ripple to="/cari/santri">
 				<q-item-section avatar>
 					<q-icon color="green-1" name="home_work" />
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>Beranda</q-item-label>
 					<q-item-label caption>Beranda sekretariat</q-item-label>
-				</q-item-section>
-			</q-item> -->
-			<q-item clickable v-ripple @click="addNewSantri">
-				<q-item-section avatar>
-					<q-icon color="green-1" name="person_add" />
-				</q-item-section>
-				<q-item-section>
-					<q-item-label>Santri</q-item-label>
-					<q-item-label caption>Tambah Santri Baru</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>
@@ -198,11 +189,13 @@
 			<!-- APP -->
 			<q-item clickable v-ripple to="/settings/lists">
 				<q-item-section avatar>
-					<q-icon color="green-1" name="settings" />
+					<q-icon color="green-1" name="list" />
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>List</q-item-label>
-					<q-item-label caption>Pengaturan List</q-item-label>
+					<q-item-label caption
+						>Auto Complete (Form Isian)</q-item-label
+					>
 				</q-item-section>
 			</q-item>
 
@@ -212,24 +205,32 @@
 					<q-icon color="green-1" name="manage_accounts" />
 				</q-item-section>
 				<q-item-section>
-					<q-item-label>Pengguna</q-item-label>
-					<q-item-label caption>Pengaturan Pengguna</q-item-label>
+					<q-item-label>Users</q-item-label>
+					<q-item-label caption>Akses Pengguna</q-item-label>
+				</q-item-section>
+			</q-item>
+
+			<q-item clickable v-ripple to="/settings/profile">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="room_preferences" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Profil</q-item-label>
+					<q-item-label caption>Profil Lembaga</q-item-label>
+				</q-item-section>
+			</q-item>
+
+			<q-item clickable v-ripple to="/settings/reports">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="print" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Report</q-item-label>
+					<q-item-label caption>Print Out</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>
 	</q-list>
 </template>
 
-<script setup>
-import dialogStore from 'src/stores/dialog-store';
-import santriStore from 'src/stores/santri-store';
-import { toRefs } from 'vue';
-
-const dialog = dialogStore();
-const { searchSantri, crudSantri } = toRefs(dialog);
-
-const addNewSantri = () => {
-	santriStore().$reset();
-	crudSantri.value = true;
-};
-</script>
+<script setup></script>

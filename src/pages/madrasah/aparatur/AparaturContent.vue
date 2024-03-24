@@ -1,12 +1,11 @@
 <template lang="">
 	<q-table
 		flat
-		:rows="personalia"
+		:rows="aparatur"
 		:columns="columns"
 		:filter="filter"
 		@row-click="
-			(evt, row, index) =>
-				$router.push(`/personalia/${row.personalia_id}`)
+			(evt, row, index) => $router.push(`/personalia/${row.aparatur_id}`)
 		"
 		:rows-per-page-options="[10, 25, 50, 75, 100, 0]"
 		no-data-label="Silakan tentukan filter!"
@@ -43,31 +42,29 @@
 <script setup>
 import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 
-const spinner = ref(false);
 const route = useRoute();
-const router = useRouter();
 const filter = ref('');
 const params = {
 	thAjaranH: route.params.thAjaranH,
 	tingkatId: route.params.tingkatId,
 };
 
-const personalia = ref([]);
+const aparatur = ref([]);
 
 onMounted(async () => {
 	if (params.thAjaranH && params.tingkatId) {
 		const data = await apiGet({
-			endPoint: `personalia-madrasah`,
+			endPoint: 'aparatur-madrasah',
 			params: {
 				th_ajaran_h: params.thAjaranH,
 				tingkat_id: params.tingkatId,
 			},
 		});
-		personalia.value = data.personalia_madrasah;
+		aparatur.value = data.aparatur_madrasah;
 	} else {
-		personalia.value = [];
+		aparatur.value = [];
 	}
 });
 

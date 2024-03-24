@@ -189,6 +189,15 @@
 			</q-card-section>
 			<q-card-actions align="right" class="bg-green-7">
 				<q-btn
+					label="Print"
+					icon="print"
+					color="green-11"
+					class="q-px-md text-green-10"
+					dense
+					no-caps
+					@click="handlePrint"
+				/>
+				<q-btn
 					type="submit"
 					label="Unduh"
 					icon="download"
@@ -200,6 +209,22 @@
 			</q-card-actions>
 		</q-form>
 	</q-card>
+	<q-dialog v-model="showViewer">
+		<ReportViewer :url="urlReport" />
+	</q-dialog>
+	<!-- TEST -->
+	<div v-if="false">
+		<q-btn
+			label="Proses"
+			icon="download"
+			color="green-11"
+			class="q-px-md text-green-10"
+			dense
+			no-caps
+			@click="onProses"
+		/>
+		<TestPrint :data-murid="murid" />
+	</div>
 	<!-- <pre>{{ input }}</pre>
 	<pre>download: {{ loadingDownload }}</pre> -->
 </template>
@@ -208,9 +233,9 @@ import { getListsCustom } from 'src/api/api-get-lists';
 import { onMounted, ref, watch } from 'vue';
 import { listBulanHijri } from 'src/utils/hijri';
 import apiDownload from 'src/api/api-download';
-import { apiTokened } from 'src/api';
-import axios from 'axios';
+import TestPrint from './TestPrint.vue';
 import apiGet from 'src/api/api-get';
+import ReportViewer from 'src/components/ReportViewer.vue';
 
 const loading = ref([]);
 const lists = ref([]);
@@ -219,6 +244,19 @@ const optionsTahun = ref([]);
 const optionsBulan = ref(listBulanHijri.map((bulan) => bulan.name));
 const perpekan = ref(false);
 const loadingDownload = ref(false);
+const urlReport = ref('');
+
+const murid = ref([]);
+async function onProses() {
+	murid.value = [];
+	const data = await apiGet({
+		loading: loadingDownload,
+		endPoint: `murid/${input.value.th_ajaran_h}/${input.value.tingkat_id}${input.value.kelas ? '/' + input.value.kelas : ''}`,
+	});
+	// console.log(data);
+	murid.value = data.murid;
+	// console.log(murid.value);
+}
 
 async function onSubmit() {
 	const obj = JSON.parse(JSON.stringify(input.value));
@@ -240,17 +278,32 @@ async function onSubmit() {
 	// return;
 	let url = '';
 	if (perpekan.value) {
-		url = `/reports/absensi/pekanan/download`;
+		url = '/reports/absensi/pekanan/download';
 	} else {
-		url = `/reports/absensi/bulanan/download`;
+		url = '/reports/absensi/bulanan/download';
 	}
 	await apiDownload({
-		url,
+		endPoint: url,
 		// confirm: false,
 		loading: loadingDownload,
 		params: obj,
 		fileName,
 	});
+}
+
+const showViewer = ref(false);
+function handlePrint() {
+	const queryString = new URLSearchParams(input.value).toString();
+	// console.log(queryString);
+	// return;
+	let url = '';
+	if (perpekan.value) {
+		url = 'reports/absensi/pekanan/view';
+	} else {
+		url = 'reports/absensi/bulanan/view';
+	}
+	urlReport.value = `${url}?${queryString}`;
+	showViewer.value = true;
 }
 
 function inputDay(val) {
@@ -293,7 +346,7 @@ function inputDay(val) {
 
 onMounted(async () => {
 	await getListsCustom({
-		url: `murid/lists-kelas`,
+		url: 'murid/lists-kelas',
 		lists,
 		key: 'th_ajaran',
 		loading,
@@ -323,7 +376,7 @@ watch(
 				newValue.substring(5),
 			];
 		}
-	}
+	},
 );
 
 // watch tingkat
@@ -343,7 +396,7 @@ watch(
 			}
 			// console.log(lists.value);
 		}
-	}
+	},
 );
 </script>
 <style lang=""></style>

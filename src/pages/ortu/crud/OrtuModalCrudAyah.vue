@@ -11,7 +11,7 @@
 		v-model="ayah"
 		:rules="[
 			(val) => !!val || 'Harus diisi!',
-			(val) => val?.length >= 5 || 'Setidaknya 5 huruf!',
+			(val) => val?.length >= 3 || 'Setidaknya 3 huruf!',
 		]"
 		error-color="negative"
 		autocapitalize="words"
@@ -40,8 +40,8 @@
 		:hint="
 			isDate(a_tgl_lahir)
 				? formatDateFull(a_tgl_lahir) +
-				  ' | ' +
-				  bacaHijri(m2h(a_tgl_lahir))
+					' | ' +
+					bacaHijri(m2h(a_tgl_lahir))
 				: ''
 		"
 		class="q-mt-sm"

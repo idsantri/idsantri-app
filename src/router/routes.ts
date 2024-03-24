@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
+	// layout auth
 	{
 		path: '/',
 		name: 'Auth',
@@ -44,6 +45,8 @@ const routes: RouteRecordRaw[] = [
 			},
 		],
 	},
+
+	// layout main
 	{
 		path: '/',
 		component: () => import('layouts/MainLayout.vue'),
@@ -494,6 +497,22 @@ const routes: RouteRecordRaw[] = [
 							import('src/pages/settings/users/UserPage.vue'),
 						meta: { title: 'Setting: User' },
 					},
+					{
+						path: 'profile',
+						component: () =>
+							import(
+								'src/pages/settings/profile/IndexProfile.vue'
+							),
+						meta: { title: 'Setting: Profile' },
+					},
+					{
+						path: 'reports',
+						component: () =>
+							import(
+								'src/pages/settings/reports/IndexReport.vue'
+							),
+						meta: { title: 'Setting: Reports' },
+					},
 				],
 			},
 
@@ -508,6 +527,10 @@ const routes: RouteRecordRaw[] = [
 			{
 				path: 'test',
 				component: () => import('src/pages/testPage.vue'),
+			},
+			{
+				path: 'test-pdf',
+				component: () => import('src/pages/testPDF.vue'),
 			},
 		],
 	},

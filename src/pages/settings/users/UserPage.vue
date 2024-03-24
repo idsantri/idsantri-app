@@ -1,5 +1,5 @@
 <template>
-	<div class="q-ma-sm">
+	<q-page class="q-pa-sm">
 		<q-table
 			:rows="users"
 			:columns="columns"
@@ -117,7 +117,7 @@
 				</q-card-actions>
 			</q-card>
 		</q-dialog>
-	</div>
+	</q-page>
 	<!-- <pre>{{ users }}</pre> -->
 </template>
 <script setup>
@@ -193,7 +193,7 @@ const columns = [
 
 async function getUsers() {
 	const data = await apiGet({
-		endPoint: `users`,
+		endPoint: 'users',
 		loading: loading,
 	});
 	users.value = data.users;
@@ -204,7 +204,7 @@ onMounted(async () => {
 	await getUsers();
 });
 
-function rowClick(evt, row, index) {
+function rowClick(evt, row /*, index*/) {
 	showUserModal.value = true;
 	user.value = row;
 	user.value.isConfirmed = row.confirmed_at ? true : false;

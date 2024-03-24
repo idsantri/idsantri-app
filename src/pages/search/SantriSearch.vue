@@ -20,6 +20,7 @@
 				class="display table nowrap dt"
 				:options="options"
 				style="overflow: hidden"
+				id="tabel"
 			/>
 		</q-card-section>
 		<q-card-actions class="bg-green-7">
@@ -43,12 +44,13 @@
 <script setup>
 import DataTable from 'datatables.net-vue3';
 import DataTablesLib from 'datatables.net-dt';
-import { ref, onMounted, onUnmounted, toRefs } from 'vue';
+import { ref, onMounted, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { apiTokened } from 'src/api';
-import { notifySuccess } from 'src/utils/notify';
+import { notifyError, notifySuccess } from 'src/utils/notify';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
+import { toArray } from 'src/utils/array-object';
 
 const dialog = dialogStore();
 const { searchSantri, crudSantri } = toRefs(dialog);
@@ -73,27 +75,32 @@ const options = ref({
 		url: url,
 		type: 'POST',
 		headers: headers,
+		error: (xhr) => {
+			const message = xhr.responseJSON?.message;
+			if (message) toArray(message).forEach((msg) => notifyError(msg));
+			else console.log(`Error during get ${url}`, xhr);
+		},
 	},
 	order: [],
 	columns: [
 		{
 			title: 'ID',
 			data: 'id',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<button onclick='copyId(${row.id})' class='dt-btn-flat' title='Klik/Tap untuk menyalin ID'>${row.id}</button>`;
 			},
 		},
 		{
 			title: 'Nama',
 			data: 'nama',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<span class="dt-link" onclick='goToSantri(${row.id})'>${row.nama}</span>`;
 			},
 		},
 		{
 			title: 'Alamat',
 			data: 'alamat_pendek',
-			render: function (data, type, row, meta) {
+			render: function (data, type /*, row , meta*/) {
 				return type === 'display' && data.length > 50
 					? `<span title='${data}'>${data.substr(0, 50)}&mldr;</span>`
 					: data;
@@ -109,13 +116,13 @@ const options = ref({
 		},
 		{
 			title: 'Wali',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<span class="dt-link" onclick='goToWali(${row.wali_id})'>${row.wali_nama} (${row.wali_status})</span>`;
 			},
 		},
 		{
 			title: 'Ortu',
-			render: function (data, type, row, meta) {
+			render: function (data, type, row /*, meta*/) {
 				return `<span class="dt-link" onclick='goToOrtu(${row.ortu_id})'>${row.ayah} | ${row.ibu}</span>`;
 			},
 		},

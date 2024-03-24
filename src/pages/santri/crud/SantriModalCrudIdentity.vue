@@ -11,7 +11,7 @@
 		v-model="nama"
 		:rules="[
 			(val) => !!val || 'Harus diisi!',
-			(val) => val?.length >= 4 || 'Setidaknya 4 huruf!',
+			(val) => val?.length >= 3 || 'Setidaknya 3 huruf!',
 		]"
 		error-color="negative"
 		autocapitalize="words"
@@ -97,5 +97,5 @@ const props = defineProps({
 });
 
 const { santri } = santriState();
-const { nama, nisn, nkk, nik, tmp_lahir, tgl_lahir, sex } = toRefs(santri);
+const { nama, nisn, nkk, nik, tgl_lahir, sex } = toRefs(santri);
 </script>

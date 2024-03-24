@@ -101,7 +101,7 @@ async function handleAdd(list) {
 	};
 	// console.log(data);
 
-	const post = await apiPost({ endPoint: `lists`, data });
+	const post = await apiPost({ endPoint: 'lists', data });
 	if (post) {
 		await fetchData();
 	}

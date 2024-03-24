@@ -43,33 +43,16 @@
 				<q-input
 					dense
 					:hint="
-						isDate(input.tgl_m) ? formatDateFull(input.tgl_m) : ''
+						isDate(input.dari_tgl)
+							? formatDateFull(input.dari_tgl)
+							: ''
 					"
 					class="q-mt-sm"
 					outlined
 					label="Tanggal (M)*"
-					v-model="input.tgl_m"
+					v-model="input.dari_tgl"
 					type="date"
-					@change="
-						isDate(input.tgl_m)
-							? (input.tgl_h = m2h(input.tgl_m))
-							: ''
-					"
 					:rules="[(val) => !!val || 'Harus diisi!']"
-					error-color="negative"
-				/>
-				<q-input
-					dense
-					:hint="input.tgl_h?.length ? bacaHijri(input.tgl_h) : ''"
-					class="q-mt-sm"
-					outlined
-					label="Tanggal (H)*"
-					v-model="input.tgl_h"
-					mask="####-##-##"
-					:rules="[
-						(val) => !!val || 'Harus diisi!',
-						(val) => val?.length == 8 || '8 digit angka!',
-					]"
 					error-color="negative"
 				/>
 				<q-input
@@ -147,9 +130,8 @@
 	</q-card>
 </template>
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import { bacaHijri, m2h } from 'src/utils/hijri';
 import { formatDateFull, isDate } from 'src/utils/format-date';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
@@ -179,8 +161,7 @@ const onSubmit = async () => {
 	// return;
 	const data = {
 		kelas_id: input.value.kelas_id,
-		tgl_m: input.value.tgl_m,
-		tgl_h: input.value.tgl_h,
+		dari_tgl: input.value.dari_tgl,
 		durasi: input.value.durasi,
 		keperluan: input.value.keperluan,
 		keterangan: input.value.keterangan,
@@ -223,13 +204,4 @@ const handleDelete = async () => {
 		emit('successDelete');
 	}
 };
-
-watch(
-	() => input.value.tgl_h,
-	(newValue, oldValue) => {
-		if (newValue !== oldValue) {
-			input.value.tgl_h = newValue.replace(/-/g, '');
-		}
-	}
-);
 </script>

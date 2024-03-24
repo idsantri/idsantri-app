@@ -29,8 +29,8 @@
 					:hint="
 						input.th_ajaran_h?.length == 9
 							? lists['tahun-ajaran']?.find(
-									(item) => item.val0 === input.th_ajaran_h
-							  )?.val1
+									(item) => item.val0 === input.th_ajaran_h,
+								)?.val1
 							: ''
 					"
 					class="q-mt-sm"
@@ -96,7 +96,7 @@
 					:model-value="
 						'Rp' +
 						digitSeparator(
-							Number(input.qty) * Number(input.nominal)
+							Number(input.qty) * Number(input.nominal),
 						)
 					"
 				/>
@@ -158,7 +158,7 @@
 <script setup>
 import apiDelete from 'src/api/api-delete';
 import { digitSeparator } from 'src/utils/format-number';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 import CurrencyInput from 'src/components/CurrencyInput.vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import { getLists, getListsKey } from 'src/api/api-get-lists';
@@ -203,7 +203,7 @@ onMounted(async () => {
 
 const setNominal = (val) => {
 	const selectedOption = lists.value['iuran'].find(
-		(item) => item.val0 === val
+		(item) => item.val0 === val,
 	);
 	if (selectedOption) {
 		const val1 = selectedOption.val1;

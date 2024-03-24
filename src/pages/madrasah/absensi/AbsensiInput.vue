@@ -116,7 +116,7 @@
 								style="min-width: 50px"
 								@click="
 									$router.push(
-										`/madrasah/kelas/${abs.kelas_id}/riwayat`
+										`/madrasah/kelas/${abs.kelas_id}/riwayat`,
 									)
 								"
 								><small> {{ abs.kelas_id }}</small></q-btn
@@ -442,7 +442,8 @@ async function deleteAbsensi() {
 	const bulan_ujian = params.bulanUjian;
 	const deleted = await apiDelete({
 		endPoint: params.absensi,
-		message: `<span style="color:'red'">Hapus data absensi untuk kelas ini?</span>`,
+		message:
+			'<span style="color:\'red\'">Hapus data absensi untuk kelas ini?</span>',
 		params: {
 			bulan_ujian,
 			kelas_id,
@@ -463,7 +464,7 @@ async function submitAbsensi() {
 		endPoint: params.absensi,
 		data: data,
 		confirm: true,
-		message: `<span style="color:'blue'">Kirim data absensi?</span>`,
+		message: '<span style="color:\'blue\'">Kirim data absensi?</span>',
 		loading: spinner,
 	});
 
