@@ -29,7 +29,7 @@
 			@row-click="
 				(evt, row, index) =>
 					$router.push(
-						`/bendahara/iuran/santri/${row.santri_id}/${row.th_ajaran_h}`
+						`/bendahara/iuran/santri/${row.santri_id}/${row.th_ajaran_h}`,
 					)
 			"
 		>
@@ -68,7 +68,7 @@
 			@success-submit="
 				(val) =>
 					$router.push(
-						`/bendahara/iuran/santri/${val.santri_id}/${val.th_ajaran_h}`
+						`/bendahara/iuran/santri/${val.santri_id}/${val.th_ajaran_h}`,
 					)
 			"
 		/>
@@ -89,9 +89,13 @@ const crudShow = ref(false);
 const filter = ref();
 
 function calculateTotal() {
-	return props.data.reduce(function (acc, obj) {
-		return acc + obj.sub_total;
-	}, 0);
+	if (props.data) {
+		return props.data.reduce(function (acc, obj) {
+			return acc + obj.sub_total;
+		}, 0);
+	} else {
+		return 0;
+	}
 }
 
 const columns = [
