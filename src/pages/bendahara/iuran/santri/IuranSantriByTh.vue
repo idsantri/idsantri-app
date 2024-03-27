@@ -96,14 +96,11 @@
 					</q-item-section>
 					<q-item-section side class="">
 						<div class="flex flex-center">
-							<q-btn
-								label="Cetak"
-								no-caps
-								icon="print"
-								dense
-								color="green-11"
-								class="text-green-10 q-px-md"
-								@click="printIuran"
+							<DropDownPrint
+								:data="{
+									santri_id: santriId,
+									th_ajaran_h: thAjaranH,
+								}"
 							/>
 						</div>
 					</q-item-section>
@@ -141,6 +138,7 @@ import { formatHijri, m2h } from 'src/utils/hijri';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import IuranSantriCrud from 'src/pages/bendahara/iuran/santri/IuranSantriCrud.vue';
+import DropDownPrint from 'src/pages/bendahara/iuran/santri/DropDownPrint.vue';
 
 const route = useRoute();
 const thAjaranH = ref(route.params.thAjaranH);
@@ -182,11 +180,6 @@ async function toggleUpdate(val, evt, item, index) {
 	if (!updated) {
 		iuran.value[index].check = val == 1 ? 0 : 1;
 	}
-}
-
-function printIuran() {
-	console.log(iuran.value);
-	alert('belum siap');
 }
 
 function getTotalCheck() {
