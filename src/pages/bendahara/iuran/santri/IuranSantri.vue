@@ -8,6 +8,15 @@
 					>
 						Data Iuran Santri
 					</q-toolbar-title>
+					<q-btn
+						icon="sync"
+						round
+						class="q-mr-md"
+						flat
+						color="green-11"
+						dense
+						@click="keyIuran++"
+					/>
 				</q-toolbar>
 			</q-card-section>
 			<q-card-section class="q-pa-sm">
@@ -28,7 +37,7 @@
 							@click="crudShow = true"
 						/>
 					</q-card-section>
-					<q-card-section class="no-padding">
+					<q-card-section class="no-padding" :key="keyIuran">
 						<div v-if="loading && !route.params.thAjaranH">
 							<q-spinner-cube
 								color="green-12"
@@ -77,7 +86,7 @@
 										tambahkan data!
 									</div>
 								</div>
-								<div v-else :key="keyIuran">
+								<div v-else>
 									<iuran-santri-by-th />
 								</div>
 							</div>
@@ -91,8 +100,8 @@
 				:is-new="true"
 				title="Input Iuran"
 				:data="dataIuran"
-				@success-submit="keyIuran++"
-				@success-delete="null"
+				@success-submit="loadData"
+				@success-delete="loadData"
 				:disable-santri-id="true"
 			/>
 		</q-dialog>
