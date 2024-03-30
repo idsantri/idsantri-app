@@ -5,7 +5,7 @@
 		</div>
 		<div class="text-center" style="margin-top: 20px">
 			<q-avatar size="150px" square="">
-				<q-img src="logo-t.png" />
+				<q-img src="logo.png" />
 			</q-avatar>
 		</div>
 	</q-page>
