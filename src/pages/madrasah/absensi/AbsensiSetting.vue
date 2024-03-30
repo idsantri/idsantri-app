@@ -93,7 +93,7 @@
 										side
 										class="no-padding q-ml-sm"
 									>
-										<q-btn-group push>
+										<q-btn-group push class="q-mb-lg">
 											<q-btn
 												color="positive"
 												glossy
@@ -111,7 +111,10 @@
 								</q-item>
 							</q-form>
 						</div>
-						<q-form @submit.prevent="addSetting">
+						<q-form
+							@submit.prevent="addSetting"
+							@reset="newSetting = {}"
+						>
 							<q-item
 								class="no-padding"
 								style="justify-content: start"
@@ -169,7 +172,7 @@
 									</div>
 								</q-item-section>
 								<q-item-section side class="no-padding q-ml-sm">
-									<q-btn-group push>
+									<q-btn-group push class="q-mb-lg">
 										<q-btn
 											color="positive"
 											glossy
@@ -179,8 +182,8 @@
 										<q-btn
 											color="negative"
 											glossy
-											icon="delete"
-											disable=""
+											icon="undo"
+											type="reset"
 										/>
 									</q-btn-group>
 								</q-item-section>

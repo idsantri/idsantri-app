@@ -28,8 +28,10 @@
 						<q-list>
 							<!-- input -->
 							<q-item
-								v-if="
-									showButton(`madrasah/absensi-sekolah/input`)
+								:disable="
+									!showButton(
+										`madrasah/absensi-sekolah/input`,
+									)
 								"
 								clickable
 								v-close-popup
@@ -41,8 +43,8 @@
 								<q-item-section>Input Sekolah</q-item-section>
 							</q-item>
 							<q-item
-								v-if="
-									showButton(
+								:disable="
+									!showButton(
 										`madrasah/absensi-musyawarah/input`,
 									)
 								"
@@ -57,11 +59,45 @@
 									>Input Musyawarah</q-item-section
 								>
 							</q-item>
-
+							<q-separator />
+							<!-- rekap bulanan -->
+							<q-item
+								:disable="
+									!showButton(
+										`madrasah/absensi-sekolah/laporan`,
+									)
+								"
+								clickable
+								v-close-popup
+								to="/madrasah/absensi-sekolah/laporan"
+							>
+								<q-item-section avatar>
+									<q-icon color="green" name="summarize" />
+								</q-item-section>
+								<q-item-section>Laporan Sekolah</q-item-section>
+							</q-item>
+							<q-item
+								:disable="
+									!showButton(
+										`madrasah/absensi-musyawarah/laporan`,
+									)
+								"
+								clickable
+								v-close-popup
+								to="/madrasah/absensi-musyawarah/laporan"
+							>
+								<q-item-section avatar>
+									<q-icon color="green" name="summarize" />
+								</q-item-section>
+								<q-item-section
+									>Laporan Musyawarah</q-item-section
+								>
+							</q-item>
+							<q-separator />
 							<!-- rekap ujian -->
 							<q-item
-								v-if="
-									showButton(
+								:disable="
+									!showButton(
 										`madrasah/absensi-sekolah/rekap-ujian`,
 									)
 								"
@@ -72,11 +108,13 @@
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
 								</q-item-section>
-								<q-item-section>Rekap Sekolah</q-item-section>
+								<q-item-section
+									>Rekap Ujian Sekolah</q-item-section
+								>
 							</q-item>
 							<q-item
-								v-if="
-									showButton(
+								:disable="
+									!showButton(
 										`madrasah/absensi-musyawarah/rekap-ujian`,
 									)
 								"
@@ -88,13 +126,16 @@
 									<q-icon color="green" name="summarize" />
 								</q-item-section>
 								<q-item-section
-									>Rekap Musyawarah</q-item-section
+									>Rekap Ujian Musyawarah</q-item-section
 								>
 							</q-item>
+							<q-separator />
 
 							<!-- nomor absen -->
 							<q-item
-								v-if="showButton(`madrasah/absensi/penomoran`)"
+								:disable="
+									!showButton(`madrasah/absensi/penomoran`)
+								"
 								clickable
 								v-close-popup
 								to="/madrasah/absensi/penomoran"
@@ -112,7 +153,9 @@
 
 							<!-- setting -->
 							<q-item
-								v-if="showButton(`madrasah/absensi/setting`)"
+								:disable="
+									!showButton(`madrasah/absensi/setting`)
+								"
 								clickable
 								v-close-popup
 								to="/madrasah/absensi/setting"
