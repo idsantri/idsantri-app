@@ -1,6 +1,7 @@
 const config = {
-	APP_NAME: 'ID Santri',
-	APP_DESCRIPTION: 'Pondok Pesantren Syaichona Moh Cholil',
+	INS_DESC: 'Pondok Pesantren',
+	INS_NAME: 'Syaichona Moh Cholil',
+	INS_SHORT: 'Syaichona',
 	BASE_API: 'https://syaichona.idsantri.my.id/api',
 };
 export default config;

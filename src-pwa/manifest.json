@@ -1,7 +1,7 @@
 {
-	"name": "ID Santri",
-	"short_name": "ID Santri",
-	"description": "Aplikasi ID Santri",
+	"name": "Syaichona.id",
+	"short_name": "Syaichona",
+	"description": "Aplikasi Syaichona",
 	"display": "standalone",
 	"orientation": "portrait",
 	"background_color": "#ffffff",
