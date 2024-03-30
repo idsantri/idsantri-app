@@ -4,11 +4,24 @@
 			<q-page class="flex flex-center">
 				<q-card class="my-card q-pa-lg bg-green-5 text-green-1">
 					<q-card-section class="no-padding q-mb-md">
+						<div class="flex flex-center q-mb-sm">
+							<q-img
+								src="logo.png"
+								style="
+									width: 30%;
+									border: 2px solid darkgreen;
+									border-radius: 50%;
+									background-color: whitesmoke;
+								"
+							/>
+						</div>
 						<div class="container-title">
-							<h1 class="title">{{ config.APP_NAME }}</h1>
-							<h2 class="text-subtitle1 text-center q-ma-none">
-								{{ config.APP_DESCRIPTION }}
-							</h2>
+							<h1 class="title text-green-10">ID Santri</h1>
+							<p class="sub1">Sistem Informasi</p>
+							<p class="sub2">
+								{{ config.INS_DESC }}
+								{{ config.INS_NAME }}
+							</p>
 						</div>
 						<q-separator dark />
 						<h3 class="sub-title">{{ title }}</h3>
@@ -55,10 +68,23 @@ const handleErrors = (value) => (errors.value = value);
 	margin: 0 auto;
 	padding: 0;
 	text-align: center;
-	height: 40px;
-	line-height: 40px;
+	height: 35px;
+	line-height: 35px;
+	letter-spacing: 1px;
 }
-
+.sub1 {
+	text-align: center;
+	font-size: 1rem;
+	margin: 0;
+	font-weight: 300;
+	letter-spacing: 5px;
+}
+.sub2 {
+	text-align: center;
+	font-size: 1.1rem;
+	margin: 0;
+	font-weight: 300;
+}
 .sub-title {
 	font-size: 1.7em;
 	margin: 0 auto;

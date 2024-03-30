@@ -13,7 +13,7 @@
 				/>
 
 				<q-toolbar-title class="text-green-11">
-					{{ config.APP_NAME }}
+					ID Santri: {{ config.INS_SHORT }}
 				</q-toolbar-title>
 
 				<q-btn
