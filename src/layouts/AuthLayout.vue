@@ -6,7 +6,7 @@
 					<q-card-section class="no-padding q-mb-md">
 						<div class="flex flex-center q-mb-sm">
 							<q-img
-								src="logo-t.png"
+								src="logo.png"
 								style="
 									width: 30%;
 									border-radius: 50%;
