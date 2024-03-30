@@ -274,6 +274,14 @@ const routes: RouteRecordRaw[] = [
 								name: 'Rekap Ujian',
 							},
 							{
+								path: 'laporan/:thAjaranH?/:tingkatId?/:kelas?/:bulanUjian?',
+								component: () =>
+									import(
+										'src/pages/madrasah/absensi/AbsensiLaporan.vue'
+									),
+								name: 'Laporan',
+							},
+							{
 								path: 'print',
 								component: () =>
 									import(

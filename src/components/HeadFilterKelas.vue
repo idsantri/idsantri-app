@@ -105,6 +105,7 @@ const params = {
 	tingkatId: route.params.tingkatId,
 	kelas: route.params.kelas,
 	bulanUjian: route.params.bulanUjian,
+	absensi: route.params.absensi,
 };
 
 const thAjaranH = ref(params.thAjaranH);
@@ -123,10 +124,10 @@ onMounted(async () => {
 		key: 'th_ajaran',
 		loading,
 	});
-	sendEmit();
+	emitText();
 
 	// get tingkat
-	if (params.thAjaranH) {
+	if (params.thAjaranH && props.showTingkat) {
 		await getListsCustom({
 			url: `murid/lists-kelas/${params.thAjaranH}`,
 			lists,
@@ -134,10 +135,10 @@ onMounted(async () => {
 			loading,
 		});
 	}
-	sendEmit();
+	emitText();
 
 	// get kelas
-	if (params.thAjaranH && params.tingkatId) {
+	if (props.showKelas && params.thAjaranH && params.tingkatId) {
 		await getListsCustom({
 			url: `murid/lists-kelas/${params.thAjaranH}/${params.tingkatId}`,
 			lists,
@@ -145,14 +146,15 @@ onMounted(async () => {
 			loading,
 		});
 	}
-	sendEmit();
+	emitText();
 
-	// get bulan ujian
+	// get bulan ujian absen
 	if (
 		params.thAjaranH &&
 		params.tingkatId &&
 		params.kelas &&
-		props.showBulanUjian
+		props.showBulanUjian &&
+		!props.startUrl.includes('laporan')
 	) {
 		await getListsCustom({
 			url: `absensi-settings?tingkat_id=${tingkatId.value}`,
@@ -167,10 +169,28 @@ onMounted(async () => {
 			);
 		}
 	}
-	sendEmit();
+	emitText();
+
+	// get bulan ujian laporan
+	if (
+		!props.showKelas &&
+		params.tingkatId &&
+		props.startUrl.includes('laporan')
+	) {
+		await getListsCustom({
+			url: `${params.absensi}/lists/bulan-ujian?th_ajaran_h=${thAjaranH.value}&tingkat_id=${tingkatId.value}`,
+			lists,
+			key: 'bulan_ujian',
+			loading,
+		});
+		if (!lists.value['bulan_ujian'].length) {
+			notifyWarning('Tidak ada laporan untuk filter yang dipilih!');
+		}
+	}
+	emitText();
 });
 
-function sendEmit() {
+function emitText() {
 	const th = () =>
 		thAjaranH.value && lists.value.th_ajaran
 			? lists.value.th_ajaran.find(
@@ -272,13 +292,13 @@ watch(kelas, (newValue, oldValue) => {
 watch(bulanUjian, (newValue, oldValue) => {
 	if (!newValue) {
 		router.push(
-			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`,
+			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}/${params.kelas || '*'}`,
 		);
 		return;
 	}
 	if (newValue != oldValue) {
 		router.push(
-			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}/${params.kelas}/${newValue}`,
+			`${props.startUrl}/${params.thAjaranH}/${params.tingkatId}/${params.kelas || '*'}/${newValue}`,
 		);
 		return;
 	}

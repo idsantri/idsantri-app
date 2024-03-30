@@ -23,7 +23,7 @@
 					/>
 					<div class="text-caption q-mt-md">Catatan Kaki</div>
 					<q-editor
-						v-model="selectedFooter"
+						v-model="selectedFootnote"
 						min-height="5rem"
 						class="q-mt-sm"
 						paragraph-tag="p"
@@ -61,14 +61,14 @@ const reports = ref({});
 const loading = ref(false);
 const lists = ref([]);
 const selected = ref('');
-const selectedFooter = ref('');
+const selectedFootnote = ref('');
 
 function onUpdate(v) {
-	selectedFooter.value = v ? reports.value[v]?.footer : '';
+	selectedFootnote.value = v ? reports.value[v]?.footnote : '';
 }
 
 async function onSubmit() {
-	const data = { footer: selectedFooter.value };
+	const data = { footnote: selectedFootnote.value };
 	// console.log(data);
 	const res = await apiPost({
 		endPoint: `config/reports/${snakeToKebabCase(selected.value)}`,
