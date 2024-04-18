@@ -1,11 +1,13 @@
-import { apiTokened } from 'src/api';
+import api from '.';
+import getToken from './get-token';
 import { toArray } from 'src/utils/array-object';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 
 async function apiGet({ endPoint, loading, params, notify = false }) {
+	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	try {
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
-		const { data } = await apiTokened.get(endPoint, { params });
+		const { data } = await api.get(endPoint, { params });
 		if (notify) notifySuccess(data.message);
 		return data;
 	} catch (error) {

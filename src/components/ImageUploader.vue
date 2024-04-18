@@ -10,10 +10,10 @@
 		v-model="internalShowUploader"
 		:width="props.width"
 		:height="props.height"
-		:url="apiTokened.defaults.baseURL + props.url"
+		:url="api.defaults.baseURL + props.url"
 		:params="paramsImage"
 		:headers="{
-			Authorization: apiTokened.defaults.headers.common.Authorization,
+			Authorization: `Bearer ${getToken()}`,
 		}"
 		withCredentials
 		img-format="png"
@@ -23,7 +23,8 @@
 import myUpload from 'vue-image-crop-upload';
 import { notifySuccess } from 'src/utils/notify';
 import { onUpdated, ref, watch } from 'vue';
-import { apiTokened } from 'src/api';
+import api from 'src/api';
+import getToken from '@/api/get-token';
 
 /**
  * communicate parents children
@@ -101,3 +102,4 @@ const cropUploadFail = (status, field) => {
 	console.log('field: ' + field);
 };
 </script>
+@/api/get-token

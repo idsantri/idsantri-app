@@ -68,7 +68,6 @@
 				</div>
 			</q-card-section>
 		</q-card>
-
 		<!-- modal -->
 		<upload-image
 			:show-uploader="showUploader"

@@ -133,13 +133,13 @@
 	/>
 </template>
 <script setup>
-import { apiTokened } from 'src/api';
 import santriState from 'src/stores/santri-store';
 import { notifyError } from 'src/utils/notify';
 import { toArray } from 'src/utils/array-object';
 import { onMounted, reactive, ref, toRefs, watch } from 'vue';
 import dialogStore from 'src/stores/dialog-store';
 import { getLists } from 'src/api/api-get-lists';
+import apiGet from '@/api/api-get';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -163,7 +163,7 @@ onMounted(async () => {
 const check = async (param, id) => {
 	loading.value[param] = true;
 	try {
-		const { data } = await apiTokened.get(`${param}/${id}`);
+		const { data } = await apiGet({ endPoint: `${param}/${id}` });
 		// console.log(data);
 		if (param == 'ortu') santriState().setOrtu(data.ortu);
 		if (param == 'wali') santriState().setWali(data.wali);

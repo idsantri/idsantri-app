@@ -1,4 +1,5 @@
-import { apiTokened } from 'src/api';
+import api from '.';
+import getToken from './get-token';
 import { toArray } from 'src/utils/array-object';
 import { notifyError } from 'src/utils/notify';
 
@@ -7,10 +8,11 @@ import { notifyError } from 'src/utils/notify';
  * @returns array
  */
 async function getLists({ loading, lists, key, sort = null, url = '' }) {
+	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	loading.value[key] = true;
 	const endPoint = url?.length ? url : `lists/${key}`;
 	try {
-		const { data } = await apiTokened.get(endPoint);
+		const { data } = await api.get(endPoint);
 		let result = data.lists;
 		if (sort == 'asc' || sort == true) {
 			result.sort();
@@ -39,11 +41,12 @@ async function getLists({ loading, lists, key, sort = null, url = '' }) {
  * @returns array object
  */
 async function getListsKey({ loading, lists, key, sort = null, url = '' }) {
+	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	loading.value[key] = true;
 	const endPoint = url?.length ? url : `lists/${key}`;
 	const snakeCase = key.replace(/-/g, '_');
 	try {
-		const { data } = await apiTokened.get(endPoint);
+		const { data } = await api.get(endPoint);
 		let result = data[snakeCase];
 		if (sort == 'asc' || sort == true) {
 			result.sort((a, b) => {
@@ -89,9 +92,10 @@ function hasObject(array) {
  * @returns array object
  */
 async function getListsCustom({ loading, lists, key, url, sort = null }) {
+	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	loading.value[key] = true;
 	try {
-		const { data } = await apiTokened.get(url);
+		const { data } = await api.get(url);
 		// lists.value[key] = data[key];
 		let result = data[key];
 		if (!hasObject(result)) {

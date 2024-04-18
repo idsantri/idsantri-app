@@ -1,9 +1,7 @@
-import axios from 'axios';
 import { baseUrl } from 'src/boot/axios';
 import { notifyError } from 'src/utils/notify';
 
-const url = baseUrl.defaults.baseURL;
-const api = axios.create({ baseURL: url });
+const api = baseUrl;
 
 // Tambahkan interceptor untuk menangani kesalahan
 api.interceptors.response.use(
@@ -21,9 +19,4 @@ api.interceptors.response.use(
 	},
 );
 
-const apiTokened = api;
-const auth = JSON.parse(sessionStorage.getItem('auth') as string);
-const token = auth ? auth.token : 'FAIL TO GET TOKEN';
-apiTokened.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-export { api, apiTokened };
+export default api;

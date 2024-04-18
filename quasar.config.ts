@@ -6,12 +6,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import { configure } from 'quasar/wrappers';
-import config from 'src/config';
+// import config from 'src/config';
+import * as path from 'path';
 
-export default configure((ctx) => {
-	const env = ctx.dev ? 'development' : 'production';
-	const baseURL_API =
-		env === 'development' ? 'http://localhost:8000/api' : config.BASE_API;
+export default configure((/* ctx */) => {
+	// const env = ctx.dev ? 'development' : 'production';
+	// const baseURL_API =
+	// 	env === 'development' ? 'http://localhost:8000/api' : config.BASE_API;
 	return {
 		eslint: {
 			// fix: true,
@@ -51,7 +52,7 @@ export default configure((ctx) => {
 		// Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
 		build: {
 			// publicPath: '/',
-			env: { BASE_URL_API: baseURL_API },
+			// env: { BASE_URL_API: baseURL_API },
 			vueRouterMode: 'history', // available values: 'hash', 'history'
 
 			// webpackTranspile: false,
@@ -66,6 +67,14 @@ export default configure((ctx) => {
 				node: 'node20',
 			},
 
+			extendWebpack(cfg) {
+				// add alias @ to src
+				cfg.resolve = cfg.resolve || {};
+				cfg.resolve.alias = {
+					...cfg.resolve.alias,
+					'@': path.resolve(__dirname, './src'),
+				};
+			},
 			// rtl: true, // https://quasar.dev/options/rtl-support
 			// preloadChunks: true,
 			// showProgress: false,

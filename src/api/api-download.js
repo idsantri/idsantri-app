@@ -1,5 +1,6 @@
+import api from '.';
+import getToken from './get-token';
 import { notifyConfirm } from 'src/utils/notify';
-import { apiTokened } from '.';
 
 async function apiDownload({
 	message = 'Download data yang dicetak?',
@@ -15,8 +16,9 @@ async function apiDownload({
 	}
 
 	if (loading && typeof loading.value === 'boolean') loading.value = true;
+	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	try {
-		const response = await apiTokened.request({
+		const response = await api.request({
 			url: endPoint,
 			method: 'GET',
 			responseType: 'blob', // important

@@ -4,11 +4,12 @@
 			<q-page class="flex flex-center">
 				<q-card class="my-card q-pa-lg bg-green-5 text-green-1">
 					<q-card-section class="no-padding q-mb-md">
-						<div class="flex flex-center q-mb-sm">
+						<div class="q-mb-sm text-center">
 							<q-img
 								src="logo.png"
 								style="
-									width: 30%;
+									width: 100px;
+									height: 100px;
 									border-radius: 50%;
 									background-color: whitesmoke;
 								"
@@ -51,7 +52,7 @@
 </template>
 
 <script setup>
-import config from 'src/config';
+import config from '@/config';
 import { ref } from 'vue';
 
 const title = ref('Autentikasi');
