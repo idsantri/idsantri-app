@@ -1,8 +1,7 @@
-import { baseUrl } from 'src/boot/axios';
+import { baseUrl } from 'boot/axios';
 import { notifyError } from 'src/utils/notify';
 
 const api = baseUrl;
-
 // Tambahkan interceptor untuk menangani kesalahan
 api.interceptors.response.use(
 	(response) => response,
@@ -18,5 +17,4 @@ api.interceptors.response.use(
 		}
 	},
 );
-
 export default api;

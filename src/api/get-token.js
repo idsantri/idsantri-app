@@ -1,4 +1,4 @@
-import auth from '@/stores/auth-store';
+import auth from 'stores/auth-store';
 
 const getToken = () =>
 	auth().getToken && auth().getToken.length > 0

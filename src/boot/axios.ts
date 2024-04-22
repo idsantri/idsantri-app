@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
-import config from '@/config';
+import config from 'src/config';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {

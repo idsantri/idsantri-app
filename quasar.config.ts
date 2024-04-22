@@ -7,7 +7,7 @@
 
 import { configure } from 'quasar/wrappers';
 // import config from 'src/config';
-import * as path from 'path';
+// import * as path from 'path';
 
 export default configure((/* ctx */) => {
 	// const env = ctx.dev ? 'development' : 'production';
@@ -67,14 +67,14 @@ export default configure((/* ctx */) => {
 				node: 'node20',
 			},
 
-			extendWebpack(cfg) {
-				// add alias @ to src
-				cfg.resolve = cfg.resolve || {};
-				cfg.resolve.alias = {
-					...cfg.resolve.alias,
-					'@': path.resolve(__dirname, './src'),
-				};
-			},
+			// extendWebpack(cfg) {
+			// 	// add alias @ to src
+			// 	cfg.resolve = cfg.resolve || {};
+			// 	cfg.resolve.alias = {
+			// 		...cfg.resolve.alias,
+			// 		'@': path.resolve(__dirname, './src'),
+			// 	};
+			// },
 			// rtl: true, // https://quasar.dev/options/rtl-support
 			// preloadChunks: true,
 			// showProgress: false,

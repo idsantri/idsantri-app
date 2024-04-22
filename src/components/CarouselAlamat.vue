@@ -113,7 +113,7 @@
  * :alamat="input"
  * />
  */
-import apiGet from '@/api/api-get';
+import apiGet from 'src/api/api-get';
 import { onMounted, ref, watch, watchEffect } from 'vue';
 
 const props = defineProps({

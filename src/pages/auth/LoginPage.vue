@@ -68,12 +68,12 @@
 </template>
 
 <script setup>
-import api from '@/api';
+import api from 'src/api';
 import { useRouter } from 'vue-router';
 import { onUpdated, ref } from 'vue';
-import { toArray } from '@/utils/array-object';
-import authState from '@/stores/auth-store';
-import { notifyAlert, notifySuccess } from '@/utils/notify';
+import { toArray } from 'src/utils/array-object';
+import authState from 'stores/auth-store';
+import { notifyAlert, notifySuccess } from 'src/utils/notify';
 
 const router = useRouter();
 const login = ref('');

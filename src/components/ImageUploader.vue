@@ -24,7 +24,7 @@ import myUpload from 'vue-image-crop-upload';
 import { notifySuccess } from 'src/utils/notify';
 import { onUpdated, ref, watch } from 'vue';
 import api from 'src/api';
-import getToken from '@/api/get-token';
+import getToken from 'src/api/get-token';
 
 /**
  * communicate parents children

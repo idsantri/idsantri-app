@@ -52,7 +52,7 @@ import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
 import waliStore from 'src/stores/wali-store';
 import { toArray } from 'src/utils/array-object';
-import getToken from '@/api/get-token';
+import getToken from 'src/api/get-token';
 
 const dialog = dialogStore();
 const { searchWali, crudWali, crudSantri } = toRefs(dialog);

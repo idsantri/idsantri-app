@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import config from '@/config';
+import config from 'src/config';
 import { ref } from 'vue';
 
 const title = ref('Autentikasi');

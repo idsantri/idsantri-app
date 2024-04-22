@@ -139,7 +139,7 @@ import { toArray } from 'src/utils/array-object';
 import { onMounted, reactive, ref, toRefs, watch } from 'vue';
 import dialogStore from 'src/stores/dialog-store';
 import { getLists } from 'src/api/api-get-lists';
-import apiGet from '@/api/api-get';
+import apiGet from 'src/api/api-get';
 
 const props = defineProps({
 	title: { type: String, default: '' },
