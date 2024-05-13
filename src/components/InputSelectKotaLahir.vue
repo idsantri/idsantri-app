@@ -24,20 +24,20 @@
 <script setup>
 /**
  * @example
- * <input-select-kota-lahir
- * @emit-input="(val) => Object.assign(input, val)"
- * :tmp_lahir="input" />
+	<input-select-kota-lahir
+		@emit-input="(val) => (input.tmp_lahir = val.tmp_lahir)"
+		:data="input" />
  */
 
 import getData from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({
-	data: { type: Object },
+	data: { type: Object, required: true },
 });
 const emit = defineEmits(['emitInput']);
 
-const input = ref({});
+const input = ref(props.data);
 const options = ref([]);
 const loading = ref(false);
 
@@ -46,8 +46,12 @@ function onInput() {
 }
 
 onMounted(async () => {
+	/**
+	 * tak pakai Object.assign
+	 * karena telat baca pada input aparatur
+	 */
 	// console.log('props', props.tmp_lahir);
-	Object.assign(input.value, props.data);
+	// Object.assign(input.value, props.data);
 	// console.log('input', input.value);
 });
 

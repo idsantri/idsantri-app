@@ -8,7 +8,7 @@
 		:filter="filter"
 		no-data-label="Silakan tentukan Tahun ajaran dan tingkat pendidikan!"
 		no-results-label="Tidak ditemukan kata kunci yang sesuai dengan pencarian Anda!"
-		row-key="name"
+		row-key="id"
 		flat
 	>
 		<template v-slot:top-left>
@@ -59,8 +59,8 @@
 					{{
 						props.row.no_absen
 							? ' (' +
-							  String('0' + props.row.no_absen).slice(-2) +
-							  ')'
+								String('0' + props.row.no_absen).slice(-2) +
+								')'
 							: ''
 					}}
 				</q-td>

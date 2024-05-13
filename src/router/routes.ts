@@ -198,8 +198,19 @@ const routes: RouteRecordRaw[] = [
 			//sekretariat
 			{
 				path: 'sekretariat',
-				component: () => import('src/pages/sekretariat/IndexPage.vue'),
 				meta: { title: 'Sekretariat' },
+				children: [
+					{
+						path: '',
+						component: () =>
+							import('src/pages/sekretariat/IndexPage.vue'),
+					},
+					{
+						path: 'ekspor',
+						component: () =>
+							import('src/pages/sekretariat/ExportPage.vue'),
+					},
+				],
 			},
 
 			//madrasah
@@ -340,6 +351,21 @@ const routes: RouteRecordRaw[] = [
 									),
 							},
 						],
+					},
+
+					// madrasah/nilai-mapel
+					{
+						path: 'nilai-mapel/rerata/:thAjaranH?/:tingkatId?/:kelas?',
+						component: () =>
+							import(
+								'src/pages/madrasah/nilai-mapel/NilaiIndex.vue'
+							),
+					},
+					// madrasah/mapel
+					{
+						path: 'mapel',
+						component: () =>
+							import('src/pages/madrasah/mapel/MapelIndex.vue'),
 					},
 				],
 			},
