@@ -206,7 +206,7 @@ const routes: RouteRecordRaw[] = [
 							import('src/pages/sekretariat/IndexPage.vue'),
 					},
 					{
-						path: 'ekspor',
+						path: 'export',
 						component: () =>
 							import('src/pages/sekretariat/ExportPage.vue'),
 					},
@@ -376,6 +376,13 @@ const routes: RouteRecordRaw[] = [
 				meta: { title: 'Bendahara' },
 				redirect: () => '/bendahara/iuran/q/tanggal',
 				children: [
+					{
+						path: 'iuran/export',
+						component: () =>
+							import(
+								'src/pages/bendahara/iuran/export/ExportIndex.vue'
+							),
+					},
 					{
 						path: 'iuran/santri/:id/:thAjaranH?',
 						component: () =>

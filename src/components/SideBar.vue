@@ -29,17 +29,7 @@
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>Beranda</q-item-label>
-					<q-item-label caption>Beranda sekretariat</q-item-label>
-				</q-item-section>
-			</q-item>
-
-			<q-item clickable v-ripple to="/sekretariat/ekspor">
-				<q-item-section avatar>
-					<q-icon color="green-1" name="file_download" />
-				</q-item-section>
-				<q-item-section>
-					<q-item-label>Ekspor</q-item-label>
-					<q-item-label caption>Unduh File Excel</q-item-label>
+					<q-item-label caption>Beranda Sekretariat</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>

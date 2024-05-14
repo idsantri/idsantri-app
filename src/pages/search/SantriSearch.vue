@@ -8,7 +8,7 @@
 			<q-btn
 				label="Tambah"
 				color="green-12"
-				class="text-green-10"
+				class="text-green-10 q-px-sm"
 				icon="add"
 				no-caps=""
 				dense=""

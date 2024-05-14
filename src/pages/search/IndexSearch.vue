@@ -4,7 +4,16 @@
 			<!-- <q-btn flat label="Homepage" /> -->
 			<div class="text-subtitle1">Cari &hellip;</div>
 			<q-space />
-
+			<q-btn
+				label="Excel"
+				outline=""
+				class="q-px-md"
+				no-caps=""
+				icon="download"
+				dense
+				to="/sekretariat/export"
+			/>
+			<div class="q-px-sm"></div>
 			<q-tabs shrink stretch class="text-green-11">
 				<q-route-tab name="santri" label="Santri" to="santri" exact />
 				<q-route-tab name="wali" label="Wali" to="wali" exact />

@@ -1,4 +1,13 @@
 <template lang="">
+	<q-btn
+		to="/bendahara/iuran/export"
+		outline
+		dense
+		no-caps
+		label="Excel"
+		icon="download"
+		class="q-mr-sm q-px-md"
+	/>
 	<q-btn-dropdown
 		color="green-10"
 		label="Filter By"

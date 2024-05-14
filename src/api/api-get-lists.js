@@ -91,13 +91,20 @@ function hasObject(array) {
  * @param {*} object
  * @returns array object
  */
-async function getListsCustom({ loading, lists, key, url, sort = null }) {
+async function getListsCustom({
+	loading,
+	lists,
+	key,
+	url,
+	params,
+	sort = null,
+}) {
 	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	loading.value[key] = true;
 	try {
-		const { data } = await api.get(url);
+		const { data } = await api.get(url, { params });
 		// lists.value[key] = data[key];
-		let result = data[key];
+		let result = data[key].filter((el) => el != null);
 		if (!hasObject(result)) {
 			if (sort == 'asc' || sort == true) {
 				result.sort();
