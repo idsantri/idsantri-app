@@ -86,7 +86,9 @@
 							error-color="negative"
 						/>
 						<input-select-kota-lahir
-							@emit-input="(val) => Object.assign(input, val)"
+							@emit-input="
+								(val) => (input.tmp_lahir = val.tmp_lahir)
+							"
 							:data="input"
 						/>
 
@@ -265,13 +267,15 @@ const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const router = useRouter();
 const route = useRoute();
-const input = ref(props.dataAparatur);
+const input = ref({});
 
 const lists = ref([]);
 const loading = ref([]);
 const loadingCrud = ref(false);
 
 onMounted(async () => {
+	Object.assign(input.value, props.dataAparatur);
+	// console.log(input.value);
 	await getLists({
 		loading,
 		lists,

@@ -1,12 +1,14 @@
-import { apiTokened } from 'src/api';
+import api from '.';
+import getToken from './get-token';
 import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyError, notifySuccess, notifyConfirm } from 'src/utils/notify';
 
 async function deleteData({ endPoint, loading, notify, rerender, params }) {
+	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	try {
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
-		const response = await apiTokened.delete(endPoint, { params });
+		const response = await api.delete(endPoint, { params });
 		if (notify) notifySuccess(response.data.message);
 		if (rerender) forceRerender();
 		return true;

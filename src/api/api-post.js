@@ -1,4 +1,5 @@
-import { apiTokened } from 'src/api';
+import api from '.';
+import getToken from './get-token';
 import { toArray } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyError, notifySuccess } from 'src/utils/notify';
@@ -12,8 +13,9 @@ async function apiPost({
 	loading,
 }) {
 	try {
+		api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
-		const response = await apiTokened.post(endPoint, data);
+		const response = await api.post(endPoint, data);
 		if (needNotify) notifySuccess(response.data.message);
 		if (needResponse) return response.data;
 		if (rerender) forceRerender();

@@ -111,7 +111,7 @@ async function loadData() {
 		loading,
 	});
 	aparatur.value = data.aparatur;
-	// console.log(personalia.value);
+	// console.log(aparatur.value);
 
 	aparaturObj.value = {
 		Nama: `${aparatur.value.nama?.toUpperCase()} (${aparatur.value.sex?.toUpperCase()})`,

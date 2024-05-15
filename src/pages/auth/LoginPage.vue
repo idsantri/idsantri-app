@@ -68,11 +68,11 @@
 </template>
 
 <script setup>
-import { api, apiTokened } from 'src/api';
+import api from 'src/api';
 import { useRouter } from 'vue-router';
 import { onUpdated, ref } from 'vue';
 import { toArray } from 'src/utils/array-object';
-import authState from '../../stores/auth-store';
+import authState from 'stores/auth-store';
 import { notifyAlert, notifySuccess } from 'src/utils/notify';
 
 const router = useRouter();
@@ -96,9 +96,6 @@ const submitLogin = async () => {
 		authState().user = response.data.user;
 		authState().roles = response.data.roles;
 		authState().permissions = response.data.permissions;
-
-		apiTokened.defaults.headers.common['Authorization'] =
-			'Bearer ' + authState().getToken;
 
 		notifySuccess(response.data.message);
 

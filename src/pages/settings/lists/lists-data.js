@@ -33,6 +33,7 @@ const data = [
 	{ url: 'status', label: 'Status', mode: 'one' },
 	{ url: 'sifat-izin', label: 'Sifat Izin', mode: 'one' },
 	{ url: 'keperluan-izin', label: 'Keperluan Izin', mode: 'one' },
+	// { url: 'status-fan', label: 'Status Fan', mode: 'two' },
 
 	// { url: 'tingkat-pendidikan', label: 'Tingkat Pendidikan', mode: 'two' },
 	{ url: 'tahun-ajaran', label: 'Tahun Ajaran', mode: 'two' },

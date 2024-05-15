@@ -209,6 +209,7 @@
 										name="nilai"
 										label="Nilai"
 										:to="`/madrasah/kelas/${kelas.id}/nilai`"
+										disable
 									/>
 								</q-tabs>
 							</q-card-section>

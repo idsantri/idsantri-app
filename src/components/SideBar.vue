@@ -29,7 +29,7 @@
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>Beranda</q-item-label>
-					<q-item-label caption>Beranda sekretariat</q-item-label>
+					<q-item-label caption>Beranda Sekretariat</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>
@@ -94,6 +94,20 @@
 					>
 				</q-item-section>
 			</q-item> -->
+			<q-item
+				clickable
+				v-ripple
+				to="/madrasah/nilai-mapel/rerata"
+				v-show="false"
+			>
+				<q-item-section avatar>
+					<q-icon color="green-1" name="show_chart" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Nilai Mapel</q-item-label>
+					<q-item-label caption>Nilai Mata Pelajaran</q-item-label>
+				</q-item-section>
+			</q-item>
 			<q-item clickable v-ripple to="/madrasah/aparatur">
 				<q-item-section avatar>
 					<q-icon color="green-1" name="contact_emergency" />

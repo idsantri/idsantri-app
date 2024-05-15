@@ -1,5 +1,6 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
+import config from 'src/config';
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
@@ -14,7 +15,13 @@ declare module '@vue/runtime-core' {
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const baseUrl = axios.create({ baseURL: process.env.BASE_URL_API });
+
+const url =
+	process.env.NODE_ENV == 'development'
+		? 'http://localhost:8000/api'
+		: config.BASE_API;
+
+const baseUrl = axios.create({ baseURL: url });
 baseUrl.defaults.withCredentials = true;
 
 export default boot(({ app }) => {
