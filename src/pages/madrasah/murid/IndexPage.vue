@@ -55,7 +55,7 @@ async function downloadExcel() {
 	}
 
 	const data = await apiGet({
-		endPoint: 'kelas/export',
+		endPoint: 'export/kelas',
 		loading: loadingDownload,
 		params: {
 			th_ajaran_h: route.params.thAjaranH,

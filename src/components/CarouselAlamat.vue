@@ -113,7 +113,7 @@
  * :alamat="input"
  * />
  */
-import { apiTokened } from 'src/api';
+import apiGet from 'src/api/api-get';
 import { onMounted, ref, watch, watchEffect } from 'vue';
 
 const props = defineProps({
@@ -148,8 +148,8 @@ async function fetchAlamat(request) {
 
 	try {
 		loading.value[request] = true;
-		const response = await apiTokened.get('alamat', { params });
-		lists.value[request] = response.data[request];
+		const data = await apiGet({ endPoint: 'alamat', params });
+		lists.value[request] = data[request];
 	} catch (error) {
 		console.log(`Not Found list ${request}`, error);
 	} finally {
@@ -188,7 +188,7 @@ watch(
 			lists.value.desa = [];
 			await fetchAlamat('kabupaten');
 		}
-	}
+	},
 );
 
 watch(
@@ -201,7 +201,7 @@ watch(
 			lists.value.desa = [];
 			await fetchAlamat('kecamatan');
 		}
-	}
+	},
 );
 
 watch(
@@ -212,7 +212,7 @@ watch(
 			lists.value.desa = [];
 			await fetchAlamat('desa');
 		}
-	}
+	},
 );
 
 // watch(

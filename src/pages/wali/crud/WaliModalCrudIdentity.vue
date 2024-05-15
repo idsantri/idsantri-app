@@ -41,7 +41,7 @@
 		error-color="negative"
 	/>
 	<input-select-kota-lahir
-		@emit-input="(val) => Object.assign(wali, val)"
+		@emit-input="(val) => (wali.tmp_lahir = val.tmp_lahir)"
 		:data="wali"
 	/>
 

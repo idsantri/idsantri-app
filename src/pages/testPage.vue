@@ -15,10 +15,9 @@
 	</q-dialog>
 </template>
 <script setup>
-import { apiTokened } from 'src/api';
+import api from 'src/api';
 import { ref } from 'vue';
 const showPdf = ref(false);
-const srcPdf =
-	apiTokened.defaults.baseURL + '/reports/santri/registrasi/view?id=8000';
+const srcPdf = api.defaults.baseURL + '/reports/santri/registrasi/view?id=8000';
 </script>
 <style lang=""></style>
