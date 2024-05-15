@@ -16,7 +16,7 @@
 				/>
 			</div>
 			<div v-else>
-				<div class="row" v-for="(value, key) in props.data" :key="key">
+				<div class="row" v-for="(value, key) in data" :key="key">
 					<div class="col-4 text-caption">{{ key }}</div>
 					<div class="col">{{ value }}</div>
 				</div>
@@ -25,7 +25,7 @@
 	</q-card>
 </template>
 <script setup>
-const props = defineProps({
+defineProps({
 	title: String,
 	data: Object,
 	loading: Boolean,

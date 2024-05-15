@@ -2,13 +2,13 @@
 	<q-card>
 		<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
 			<div class="flex items-center">
-				<div class="text-subtitle2">{{ props.title }}</div>
+				<div class="text-subtitle2">{{ title }}</div>
 				<q-space />
 				<slot name="button" />
 			</div>
 		</q-card-section>
 		<q-card-section class="q-pa-sm">
-			<div v-if="props.loading">
+			<div v-if="loading">
 				<q-spinner-cube
 					color="green-12"
 					size="8em"
@@ -16,10 +16,10 @@
 				/>
 			</div>
 			<div v-else>
-				<div v-if="props.data?.length">
+				<div v-if="data?.length">
 					<q-list bordered separator>
 						<q-item
-							v-for="item in props.data"
+							v-for="item in data"
 							:key="item.id"
 							class=""
 							clickable
@@ -84,7 +84,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
 	title: String,
 	data: Object,
 	loading: Boolean,
