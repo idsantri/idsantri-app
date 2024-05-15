@@ -27,7 +27,7 @@
 					<slot name="button" />
 				</div>
 				<div class="col">
-					<div v-for="(value, key) in props.data" :key="key">
+					<div v-for="(value, key) in data" :key="key">
 						<div class="text-caption text-italic">{{ key }}</div>
 						<div class="q-mb-sm">{{ value }}</div>
 					</div>
@@ -37,7 +37,7 @@
 	</q-card>
 </template>
 <script setup>
-const props = defineProps({
+defineProps({
 	title: String,
 	data: Object,
 	image: String,
