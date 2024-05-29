@@ -2,7 +2,7 @@
 	<filter-kelas
 		:showBulanUjian="true"
 		:showKelas="false"
-		:start-url="`/madrasah/${params.absensi}/laporan`"
+		:start-url="`/madrasah/absensi/${params.absensi}/laporan`"
 		@dataFilter="dataEmit"
 	/>
 	<q-card class="q-mt-sm">
@@ -10,7 +10,7 @@
 			class="bg-green-7 text-green-1 text-subtitle1 q-px-sm q-py-xs"
 		>
 			<div class="text-subtitle1">
-				➡️ <strong> {{ kebabToTitleCase(params.absensi) }} </strong>
+				➡️ <strong> Absensi {{ titleCase(params.absensi) }} </strong>
 			</div>
 		</q-card-section>
 		<q-card-section class="bg-green-3 text-green-10 text-subtitle1 q-pa-sm">
@@ -234,7 +234,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import FilterKelas from 'src/components/HeadFilterKelas.vue';
 import apiGet from 'src/api/api-get';
-import { kebabToSnakeCase, kebabToTitleCase } from 'src/utils/format-text';
+import { titleCase } from 'src/utils/format-text';
 import { notifySuccess } from 'src/utils/notify';
 
 const spinner = ref(false);
@@ -255,7 +255,7 @@ function dataEmit(val) {
 async function fetchAbsensi() {
 	if (params.thAjaranH && params.tingkatId && params.bulanUjian) {
 		const data = await apiGet({
-			endPoint: params.absensi + '/laporan',
+			endPoint: 'absensi/' + params.absensi + '/laporan',
 			params: {
 				th_ajaran_h: params.thAjaranH,
 				tingkat_id: params.tingkatId,
@@ -264,8 +264,7 @@ async function fetchAbsensi() {
 			needNotify: false,
 			loading: spinner,
 		});
-		const abs = kebabToSnakeCase(params.absensi);
-		absensi.value = data[abs];
+		absensi.value = data['absensi_' + params.absensi];
 		// console.log(absensi.value);
 		if (!absensi.value.length) {
 			notifySuccess('Tidak ada murid absen pada filter yang dipilih!');

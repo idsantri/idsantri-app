@@ -3,7 +3,6 @@ import _auth from './_auth';
 import _bendahara from './_bendahara';
 import _cari from './_cari';
 import _keamanan from './_keamanan';
-import _madrasah from './_madrasah';
 import _ortu from './_ortu';
 import _personalia from './_personalia';
 import _santri from './_santri';
@@ -11,6 +10,8 @@ import _sekretariat from './_sekretariat';
 import _settings from './_settings';
 import _ugt from './_ugt';
 import _wali from './_wali';
+import _madrasah from './_madrasah';
+import _info from './_info';
 
 const routes: RouteRecordRaw[] = [
 	// layout auth
@@ -86,6 +87,11 @@ const routes: RouteRecordRaw[] = [
 				path: 'settings',
 				meta: { title: 'Setting' },
 				children: _settings,
+			},
+			{
+				path: 'info',
+				meta: { title: 'Info' },
+				children: _info,
 			},
 			{
 				path: 'profile',

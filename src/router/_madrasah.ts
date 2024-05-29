@@ -1,3 +1,5 @@
+import { RouteLocation } from 'vue-router';
+
 export default [
 	{
 		path: '',
@@ -14,6 +16,7 @@ export default [
 			},
 		],
 	},
+
 	{
 		path: 'kelas/:id',
 		component: () => import('src/pages/madrasah/kelas/KelasIndex.vue'),
@@ -35,28 +38,60 @@ export default [
 			},
 		],
 	},
+
 	{
-		path: ':absensi',
-		component: () => import('src/pages/madrasah/absensi/AbsensiIndex.vue'),
+		path: 'tingkat',
+		component: () => import('src/pages/madrasah/tingkat/IndexTingkat.vue'),
+		redirect: () => '/madrasah/tingkat/id-murid',
 		children: [
 			{
-				path: 'input/:thAjaranH?/:tingkatId?/:kelas?/:bulanUjian?',
+				path: 'id-murid',
 				component: () =>
-					import('src/pages/madrasah/absensi/AbsensiInput.vue'),
-				name: 'Input Data',
+					import('src/pages/madrasah/tingkat/IDMurid.vue'),
+				name: 'ID Murid',
+			},
+		],
+	},
+
+	{
+		path: 'aparatur',
+		component: () =>
+			import('src/pages/madrasah/aparatur/AparaturIndex.vue'),
+		children: [
+			{
+				path: ':thAjaranH/:tingkatId?',
+				component: () =>
+					import('src/pages/madrasah/aparatur/AparaturContent.vue'),
+			},
+		],
+	},
+
+	// madrasah/nilai-mapel
+	{
+		path: 'nilai-mapel',
+		children: [
+			{
+				path: '',
+				redirect: (path: RouteLocation) => `${path.fullPath}/rerata`,
 			},
 			{
-				path: 'rekap-ujian/:thAjaranH?/:tingkatId?/:kelas?',
+				path: 'rerata/:thAjaranH?/:tingkatId?/:kelas?',
 				component: () =>
-					import('src/pages/madrasah/absensi/AbsensiRekapUjian.vue'),
-				name: 'Rekap Ujian',
+					import('src/pages/madrasah/nilai-mapel/NilaiIndex.vue'),
 			},
-			{
-				path: 'laporan/:thAjaranH?/:tingkatId?/:kelas?/:bulanUjian?',
-				component: () =>
-					import('src/pages/madrasah/absensi/AbsensiLaporan.vue'),
-				name: 'Laporan',
-			},
+		],
+	},
+
+	// madrasah/mapel
+	{
+		path: 'mapel',
+		component: () => import('src/pages/madrasah/mapel/MapelIndex.vue'),
+	},
+
+	{
+		path: 'absensi',
+		component: () => import('src/pages/madrasah/absensi/AbsensiIndex.vue'),
+		children: [
 			{
 				path: 'print',
 				component: () =>
@@ -75,43 +110,24 @@ export default [
 					import('src/pages/madrasah/absensi/AbsensiPenomoran.vue'),
 				name: 'Atur Nomor Absen',
 			},
-		],
-	},
-	{
-		path: 'tingkat',
-		component: () => import('src/pages/madrasah/tingkat/IndexTingkat.vue'),
-		redirect: () => '/madrasah/tingkat/id-murid',
-		children: [
 			{
-				path: 'id-murid',
+				path: ':absensi/input/:thAjaranH?/:tingkatId?/:kelas?/:bulanUjian?',
 				component: () =>
-					import('src/pages/madrasah/tingkat/IDMurid.vue'),
-				name: 'ID Murid',
+					import('src/pages/madrasah/absensi/AbsensiInput.vue'),
+				name: 'Input Data',
+			},
+			{
+				path: ':absensi/rekap-ujian/:thAjaranH?/:tingkatId?/:kelas?',
+				component: () =>
+					import('src/pages/madrasah/absensi/AbsensiRekapUjian.vue'),
+				name: 'Rekap Ujian',
+			},
+			{
+				path: ':absensi/laporan/:thAjaranH?/:tingkatId?/:kelas?/:bulanUjian?',
+				component: () =>
+					import('src/pages/madrasah/absensi/AbsensiLaporan.vue'),
+				name: 'Laporan',
 			},
 		],
-	},
-	{
-		path: 'aparatur',
-		component: () =>
-			import('src/pages/madrasah/aparatur/AparaturIndex.vue'),
-		children: [
-			{
-				path: ':thAjaranH/:tingkatId?',
-				component: () =>
-					import('src/pages/madrasah/aparatur/AparaturContent.vue'),
-			},
-		],
-	},
-
-	// madrasah/nilai-mapel
-	{
-		path: 'nilai-mapel/rerata/:thAjaranH?/:tingkatId?/:kelas?',
-		component: () =>
-			import('src/pages/madrasah/nilai-mapel/NilaiIndex.vue'),
-	},
-	// madrasah/mapel
-	{
-		path: 'mapel',
-		component: () => import('src/pages/madrasah/mapel/MapelIndex.vue'),
 	},
 ];

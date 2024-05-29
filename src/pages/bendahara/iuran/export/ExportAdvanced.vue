@@ -91,7 +91,7 @@ onMounted(async () => {
 		loading,
 		lists,
 		key: 'th_ajaran_h',
-		url: 'iuran/real-lists',
+		url: 'iuran/lists',
 		sort: false,
 	});
 });
@@ -101,7 +101,7 @@ async function getList(th_ajaran_h, listKey) {
 		loading,
 		lists,
 		key: listKey,
-		url: 'iuran/real-lists',
+		url: 'iuran/lists',
 		params: { th_ajaran_h, key: listKey },
 		sort: true,
 	});
