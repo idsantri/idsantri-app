@@ -6,13 +6,15 @@ function formatAlamatLengkap(
 	kecamatan = '',
 	kabupaten = '',
 	provinsi = '',
-	kode_pos = ''
+	kode_pos = '',
 ) {
-	return `${jl || ' '} RT ${String(rt || 0).padStart(3, 0)} RW ${String(
-		rw || 0
-	).padStart(3, '0')} ${desa || ' '} ${kecamatan || ' '} ${
-		kabupaten || ' '
-	} ${provinsi || ' '} ${kode_pos || ' '}`.replace(/\s\s+/g, ' ');
+	const erte = rt > 0 ? `RT ${String(rt || 0).padStart(3, 0)}` : '';
+	const erwe = rt > 0 ? `RW ${String(rw || 0).padStart(3, 0)}` : '';
+
+	return `${jl || ' '} ${erte || ' '} ${erwe || ' '} ${desa || ' '} ${kecamatan || ' '} ${kabupaten || ' '} ${provinsi || ' '} ${kode_pos || ' '}`.replace(
+		/\s\s+/g,
+		' ',
+	);
 }
 
 function getInitials(str) {

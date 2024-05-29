@@ -227,7 +227,7 @@ const newSetting = ref({});
 async function addSetting() {
 	newSetting.value.tingkat_id = modelTingkatId.value.val0;
 	const post = await apiPost({
-		endPoint: 'absensi-settings',
+		endPoint: 'absensi/settings',
 		data: newSetting.value,
 	});
 	if (post) {
@@ -237,14 +237,14 @@ async function addSetting() {
 }
 async function deleteSetting(id) {
 	const deleted = await apiDelete({
-		endPoint: `absensi-settings/${id}`,
+		endPoint: `absensi/settings/${id}`,
 		loading: spinner,
 	});
 	if (deleted) return fetchSetting(modelTingkatId.value.val0);
 }
 async function submitUpdate(val) {
 	await apiUpdate({
-		endPoint: `absensi-settings/${val.id}`,
+		endPoint: `absensi/settings/${val.id}`,
 		data: {
 			bulan: val.bulan,
 			ujian: val.ujian,
@@ -273,10 +273,11 @@ async function fetchHijri() {
 
 async function fetchSetting(tingkatId) {
 	const data = await apiGet({
-		endPoint: `absensi-settings?tingkat_id=${tingkatId}`,
+		endPoint: `absensi/settings?tingkat_id=${tingkatId}`,
 		loading: spinner,
 	});
 	bulanUjian.value = data.bulan_ujian;
+	// console.log(data);
 }
 
 onMounted(async () => {

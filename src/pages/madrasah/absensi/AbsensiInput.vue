@@ -1,7 +1,7 @@
 <template lang="">
 	<filter-kelas
 		:showBulanUjian="true"
-		:start-url="`/madrasah/${params.absensi}/input`"
+		:start-url="`/madrasah/absensi/${params.absensi}/input`"
 		@dataFilter="dataEmit"
 	/>
 	<q-card class="q-mt-sm">
@@ -9,7 +9,7 @@
 			class="bg-green-7 text-green-1 text-subtitle1 q-px-sm q-py-xs"
 		>
 			<div class="text-subtitle1">
-				➡️ <strong> {{ kebabToTitleCase(params.absensi) }} </strong>
+				➡️ <strong> Absensi {{ titleCase(params.absensi) }} </strong>
 			</div>
 		</q-card-section>
 		<q-card-section class="bg-green-3 text-green-10 text-subtitle1 q-pa-sm">
@@ -418,7 +418,7 @@ import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import apiGet from 'src/api/api-get';
 import FilterKelas from 'src/components/HeadFilterKelas.vue';
-import { kebabToSnakeCase, kebabToTitleCase } from 'src/utils/format-text';
+import { titleCase } from 'src/utils/format-text';
 
 const spinner = ref(false);
 const route = useRoute();
@@ -441,7 +441,7 @@ async function deleteAbsensi() {
 	const kelas_id = absensi.value.map((abs) => abs.kelas_id);
 	const bulan_ujian = params.bulanUjian;
 	const deleted = await apiDelete({
-		endPoint: params.absensi,
+		endPoint: 'absensi/' + params.absensi,
 		message:
 			'<span style="color:\'red\'">Hapus data absensi untuk kelas ini?</span>',
 		params: {
@@ -453,24 +453,25 @@ async function deleteAbsensi() {
 
 	if (deleted) {
 		absensi.value = [];
-		const url = `/madrasah/${params.absensi}/input/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`;
+		const url = `/madrasah/absensi/${params.absensi}/input/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`;
 		router.push(url);
 	}
 }
 
 async function submitAbsensi() {
-	const data = JSON.parse(JSON.stringify(absensi.value));
+	const data = {
+		absensi: JSON.parse(JSON.stringify(absensi.value)),
+	};
 	const update = await apiUpdate({
-		endPoint: params.absensi,
-		data: data,
+		endPoint: `absensi/${params.absensi}`,
+		data,
 		confirm: true,
 		message: '<span style="color:\'blue\'">Kirim data absensi?</span>',
 		loading: spinner,
 	});
 
 	if (update) {
-		const abs = kebabToSnakeCase(params.absensi);
-		absensi.value = update[abs];
+		absensi.value = update['absensi_' + params.absensi];
 	}
 }
 
@@ -482,7 +483,7 @@ async function fetchAbsensi() {
 		params.bulanUjian
 	) {
 		const data = await apiGet({
-			endPoint: params.absensi,
+			endPoint: `absensi/${params.absensi}`,
 			params: {
 				th_ajaran_h: params.thAjaranH,
 				tingkat_id: params.tingkatId,
@@ -492,8 +493,7 @@ async function fetchAbsensi() {
 			needNotify: false,
 			loading: spinner,
 		});
-		const abs = kebabToSnakeCase(params.absensi);
-		absensi.value = data[abs];
+		absensi.value = data['absensi_' + params.absensi];
 	}
 }
 

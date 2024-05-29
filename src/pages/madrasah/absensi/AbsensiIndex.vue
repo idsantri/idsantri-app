@@ -30,104 +30,106 @@
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi-sekolah/input`,
+										`madrasah/absensi/sekolah/input`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi-sekolah/input"
+								to="/madrasah/absensi/sekolah/input"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="edit_square" />
 								</q-item-section>
-								<q-item-section>Input Sekolah</q-item-section>
+								<q-item-section> Input Sekolah </q-item-section>
 							</q-item>
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi-musyawarah/input`,
+										`madrasah/absensi/musyawarah/input`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi-musyawarah/input"
+								to="/madrasah/absensi/musyawarah/input"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="edit_square" />
 								</q-item-section>
-								<q-item-section
-									>Input Musyawarah</q-item-section
-								>
+								<q-item-section>
+									Input Musyawarah
+								</q-item-section>
 							</q-item>
 							<q-separator />
 							<!-- rekap bulanan -->
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi-sekolah/laporan`,
+										`madrasah/absensi/sekolah/laporan`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi-sekolah/laporan"
+								to="/madrasah/absensi/sekolah/laporan"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
 								</q-item-section>
-								<q-item-section>Laporan Sekolah</q-item-section>
+								<q-item-section>
+									Laporan Sekolah
+								</q-item-section>
 							</q-item>
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi-musyawarah/laporan`,
+										`madrasah/absensi/musyawarah/laporan`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi-musyawarah/laporan"
+								to="/madrasah/absensi/musyawarah/laporan"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
 								</q-item-section>
-								<q-item-section
-									>Laporan Musyawarah</q-item-section
-								>
+								<q-item-section>
+									Laporan Musyawarah
+								</q-item-section>
 							</q-item>
 							<q-separator />
 							<!-- rekap ujian -->
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi-sekolah/rekap-ujian`,
+										`madrasah/absensi/sekolah/rekap-ujian`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi-sekolah/rekap-ujian"
+								to="/madrasah/absensi/sekolah/rekap-ujian"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
 								</q-item-section>
-								<q-item-section
-									>Rekap Ujian Sekolah</q-item-section
-								>
+								<q-item-section>
+									Rekap Ujian Sekolah
+								</q-item-section>
 							</q-item>
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi-musyawarah/rekap-ujian`,
+										`madrasah/absensi/musyawarah/rekap-ujian`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi-musyawarah/rekap-ujian"
+								to="/madrasah/absensi/musyawarah/rekap-ujian"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
 								</q-item-section>
-								<q-item-section
-									>Rekap Ujian Musyawarah</q-item-section
-								>
+								<q-item-section>
+									Rekap Ujian Musyawarah
+								</q-item-section>
 							</q-item>
 							<q-separator />
 
@@ -146,9 +148,9 @@
 										name="format_list_numbered"
 									/>
 								</q-item-section>
-								<q-item-section
-									>Atur Nomor Absen</q-item-section
-								>
+								<q-item-section>
+									Atur Nomor Absen
+								</q-item-section>
 							</q-item>
 
 							<!-- setting -->
@@ -163,9 +165,9 @@
 								<q-item-section avatar>
 									<q-icon color="green" name="settings" />
 								</q-item-section>
-								<q-item-section
-									>Pengaturan Absensi</q-item-section
-								>
+								<q-item-section>
+									Pengaturan Absensi
+								</q-item-section>
 							</q-item>
 						</q-list>
 					</q-btn-dropdown>
