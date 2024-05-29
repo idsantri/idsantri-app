@@ -35,6 +35,7 @@
 						<th colspan="4" class="bg-green-1">Pekan-4</th>
 						<th colspan="4" class="bg-grey-1">Pekan-5</th>
 						<th colspan="4" class="bg-green-2">Sebulan</th>
+						<th colspan="4" class="bg-green-11">Setahun</th>
 					</tr>
 					<tr>
 						<!-- pekan-1 -->
@@ -72,6 +73,11 @@
 						<th class="bg-green-2">I</th>
 						<th class="bg-green-2">A</th>
 						<th class="bg-green-2">T</th>
+						<!-- setahun -->
+						<th class="bg-green-11">S</th>
+						<th class="bg-green-11">I</th>
+						<th class="bg-green-11">A</th>
+						<th class="bg-green-11">T</th>
 					</tr>
 				</thead>
 				<tbody
@@ -215,6 +221,20 @@
 						<td class="bg-green-2">
 							{{ abs.sum_t }}
 						</td>
+
+						<!-- setahun -->
+						<td class="bg-green-11">
+							{{ abs.all_s }}
+						</td>
+						<td class="bg-green-11">
+							{{ abs.all_i }}
+						</td>
+						<td class="bg-green-11">
+							{{ abs.all_a }}
+						</td>
+						<td class="bg-green-11">
+							{{ abs.all_t }}
+						</td>
 					</tr>
 				</tbody>
 				<tfoot></tfoot>
@@ -255,7 +275,7 @@ function dataEmit(val) {
 async function fetchAbsensi() {
 	if (params.thAjaranH && params.tingkatId && params.bulanUjian) {
 		const data = await apiGet({
-			endPoint: 'absensi/' + params.absensi + '/laporan',
+			endPoint: 'absensi/' + params.absensi + '/not-null',
 			params: {
 				th_ajaran_h: params.thAjaranH,
 				tingkat_id: params.tingkatId,

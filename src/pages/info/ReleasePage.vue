@@ -57,6 +57,13 @@ import config from 'src/config';
 
 const releases = [
 	{
+		ver: '1.0.1',
+		date: 'Mei 2024',
+		release: {
+			Absensi: ['Perbaikian dan penyempurnaan'],
+		},
+	},
+	{
 		ver: '1.0.0',
 		date: 'April 2024',
 		release: {
