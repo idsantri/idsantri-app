@@ -157,7 +157,7 @@ onMounted(async () => {
 		!props.startUrl.includes('laporan')
 	) {
 		await getListsCustom({
-			url: `absensi-settings?tingkat_id=${tingkatId.value}`,
+			url: `absensi/settings?tingkat_id=${tingkatId.value}`,
 			lists,
 			key: 'bulan_ujian',
 			loading,
@@ -178,7 +178,7 @@ onMounted(async () => {
 		props.startUrl.includes('laporan')
 	) {
 		await getListsCustom({
-			url: `${params.absensi}/lists/bulan-ujian?th_ajaran_h=${thAjaranH.value}&tingkat_id=${tingkatId.value}`,
+			url: `absensi/${params.absensi}/lists/bulan-ujian?th_ajaran_h=${thAjaranH.value}&tingkat_id=${tingkatId.value}`,
 			lists,
 			key: 'bulan_ujian',
 			loading,

@@ -7,6 +7,15 @@
 			<q-space />
 			<q-btn
 				dense=""
+				icon="print"
+				label="Cetak"
+				no-caps
+				color="green-11 q-px-md"
+				class="text-green-10 q-mr-sm"
+				to="/info/download"
+			/>
+			<q-btn
+				dense=""
 				icon="add"
 				label="Baru"
 				no-caps

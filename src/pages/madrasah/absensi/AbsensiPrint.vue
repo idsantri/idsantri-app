@@ -187,7 +187,17 @@
 					</div>
 				</div>
 			</q-card-section>
-			<q-card-actions align="right" class="bg-green-7">
+			<q-card-actions class="bg-green-7 flex">
+				<q-btn
+					label="Cetak dengan Access"
+					icon="print"
+					color="green-10"
+					class="q-px-md text-green-11"
+					dense
+					no-caps
+					to="/info/download"
+				/>
+				<q-space />
 				<q-btn
 					label="Print"
 					icon="print"

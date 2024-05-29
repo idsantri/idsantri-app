@@ -74,7 +74,7 @@
 				</q-item-section>
 			</q-item>
 
-			<q-item clickable v-ripple to="/madrasah/absensi-sekolah/input">
+			<q-item clickable v-ripple to="/madrasah/absensi/sekolah/input">
 				<q-item-section avatar>
 					<q-icon color="green-1" name="checklist" />
 				</q-item-section>
@@ -241,6 +241,37 @@
 				<q-item-section>
 					<q-item-label>Report</q-item-label>
 					<q-item-label caption>Print Out</q-item-label>
+				</q-item-section>
+			</q-item>
+		</q-expansion-item>
+
+		<!-- INFO -->
+		<q-separator dark />
+		<q-expansion-item
+			expand-separator
+			label="Info"
+			caption="Tentang Aplikasi"
+			header-class="text-body1 text-green-1"
+			expand-icon-class="text-green-1"
+		>
+			<!-- USER -->
+			<q-item clickable v-ripple to="/info/download">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="download" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Download</q-item-label>
+					<q-item-label caption>Unduh Aplikasi</q-item-label>
+				</q-item-section>
+			</q-item>
+
+			<q-item clickable v-ripple to="/info/release">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="new_releases" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Release</q-item-label>
+					<q-item-label caption>App Version</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>
