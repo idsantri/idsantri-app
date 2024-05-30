@@ -57,6 +57,13 @@ import config from 'src/config';
 
 const releases = [
 	{
+		ver: '1.0.2',
+		date: 'Mei 2024',
+		release: {
+			PJGT: ['Perbaikan input alamat PJGT'],
+		},
+	},
+	{
 		ver: '1.0.1',
 		date: 'Mei 2024',
 		release: {

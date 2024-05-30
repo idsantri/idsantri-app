@@ -232,7 +232,8 @@ const lists = ref([]);
 const loading = ref([]);
 onMounted(async () => {
 	Object.assign(input.value, props.data);
-
+	if (!input.value.provinsi) input.value.provinsi = 'Jawa Timur';
+	// console.log('i', input.value);
 	await getListsCustom({
 		url: 'ugt/pjgt/lists/jenis-lembaga',
 		lists,
