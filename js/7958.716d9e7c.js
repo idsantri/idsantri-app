@@ -1,0 +1,1 @@
+"use strict";(globalThis["webpackChunkidsantri_app"]=globalThis["webpackChunkidsantri_app"]||[]).push([[7958],{7958:(a,s,e)=>{e.r(s),e.d(s,{default:()=>c});var n=e(1347);const r={class:"flex flex-center q-pa-lg"};function t(a,s,e,t,i,l){return(0,n.uX)(),(0,n.CE)("div",r,"fitur belum siap")}const i={};var l=e(2968);const u=(0,l.A)(i,[["render",t]]),c=u}}]);
