@@ -84,17 +84,14 @@
 										</q-item-section>
 
 										<q-item-section>
-											<q-item-label overline
-												>Wali
+											<q-item-label overline>
+												Wali
 											</q-item-label>
-											<q-item-label
-												>{{ santri.wali_nama }} ({{
+											<q-item-label>
+												{{ santri.wali_nama }} ({{
 													santri.wali_sex
-												}};
-												{{
-													santri.wali_status
-												}})</q-item-label
-											>
+												}}; {{ santri.wali_status }})
+											</q-item-label>
 										</q-item-section>
 										<q-item-section avatar>
 											<q-btn
@@ -168,18 +165,36 @@
 								</div>
 
 								<div v-else>
-									<div
-										v-for="(value, key) in kelasObj"
-										:key="key"
-									>
-										<div class="row q-pa-sm">
-											<div class="col-4 text-caption">
-												{{ key }}
-											</div>
-											<div class="col">{{ value }}</div>
-										</div>
-										<q-separator />
-									</div>
+									<q-markup-table flat>
+										<tbody>
+											<tr
+												v-for="(
+													value, index
+												) in kelasObj"
+												:key="index"
+											>
+												<td>
+													{{ index }}
+												</td>
+												<td>
+													<span
+														v-if="index == 'Aktif'"
+													>
+														<q-toggle
+															v-model="kelasAktif"
+															color="green"
+															@update:model-value="
+																updateAktif
+															"
+														/>
+													</span>
+													<span v-else>
+														{{ value }}
+													</span>
+												</td>
+											</tr>
+										</tbody>
+									</q-markup-table>
 								</div>
 							</q-card-section>
 						</q-card>
@@ -237,6 +252,7 @@ import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import SantriKelasCrud from 'src/pages/santri/relations/kelas/SantriKelasCrud.vue';
+import apiUpdate from 'src/api/api-update';
 
 const keyRoute = ref(0);
 const route = useRoute();
@@ -247,6 +263,7 @@ const santri = ref({});
 const spinner = ref(false);
 const crudShow = ref(false);
 const dataObj = ref({});
+const kelasAktif = ref(false);
 
 function Submitted() {
 	crudShow.value = false;
@@ -261,6 +278,17 @@ function editKelas() {
 	crudShow.value = true;
 }
 
+async function updateAktif(val) {
+	const updated = await apiUpdate({
+		endPoint: `kelas/${id}/set-active`,
+		data: { aktif: val },
+		confirm: false,
+	});
+	if (!updated) {
+		val == true ? (kelasAktif.value = false) : (kelasAktif.value = true);
+	}
+}
+
 async function fetchData() {
 	const data = await apiGet({
 		endPoint: `kelas/${id}`,
@@ -269,6 +297,8 @@ async function fetchData() {
 	kelas.value = data.kelas;
 	santri.value = data.santri;
 	// console.log(santri.value);
+	// console.log(kelas.value);
+	kelasAktif.value = kelas.value.aktif ? true : false;
 
 	kelasObj.value = {
 		'Tahun Ajaran':
@@ -276,7 +306,7 @@ async function fetchData() {
 		Tingkat: kelas.value.tingkat,
 		Kelas: kelas.value.kelas,
 		'No. Absen': kelas.value.no_absen,
-		Aktif: kelas.value.aktif ? 'Ya' : 'Tidak',
+		Aktif: kelas.value.aktif,
 		Keterangan: kelas.value.keterangan || '-',
 	};
 
