@@ -57,22 +57,24 @@ import config from 'src/config';
 
 const releases = [
 	{
-		ver: '1.0.2',
-		date: 'Mei 2024',
+		ver: '1.1.0',
+		date: 'Juni 2024',
 		release: {
-			PJGT: ['Perbaikan input alamat PJGT'],
+			'Nilai Mapel': ['Release Nilai Mata Pelajaran'],
 		},
 	},
 	{
 		ver: '1.0.1',
-		date: 'Mei 2024',
+		date: 'April 2024',
 		release: {
+			PJGT: ['Perbaikan input alamat PJGT'],
 			Absensi: ['Perbaikian dan penyempurnaan'],
+			'Lists Auto Complete': ['Abaikan huruf besar kecil dalam sort'],
 		},
 	},
 	{
 		ver: '1.0.0',
-		date: 'April 2024',
+		date: 'Maret 2024',
 		release: {
 			'New Release': ['Semua fitur basic'],
 		},

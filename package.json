@@ -26,7 +26,8 @@
 		"vue": "^3.4.18",
 		"vue-currency-input": "^3.1.0",
 		"vue-image-crop-upload": "^3.0.3",
-		"vue-router": "^4.0.0"
+		"vue-router": "^4.0.0",
+		"xlsx": "^0.18.5"
 	},
 	"devDependencies": {
 		"@quasar/app-webpack": "^4.0.0-beta.15",

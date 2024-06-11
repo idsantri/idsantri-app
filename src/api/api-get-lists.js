@@ -14,11 +14,17 @@ async function getLists({ loading, lists, key, sort = null, url = '' }) {
 	try {
 		const { data } = await api.get(endPoint);
 		let result = data.lists;
-		if (sort == 'asc' || sort == true) {
-			result.sort();
-		} else if (sort == 'desc' || sort == false) {
-			result.reverse();
+		// abaikan huruf besar dan kecil
+		if (sort === 'asc' || sort === true) {
+			result.sort((a, b) =>
+				a.localeCompare(b, undefined, { sensitivity: 'base' }),
+			);
+		} else if (sort === 'desc' || sort === false) {
+			result.sort((a, b) =>
+				b.localeCompare(a, undefined, { sensitivity: 'base' }),
+			);
 		}
+
 		if (lists) {
 			lists.value[key] = result;
 		}
@@ -48,19 +54,20 @@ async function getListsKey({ loading, lists, key, sort = null, url = '' }) {
 	try {
 		const { data } = await api.get(endPoint);
 		let result = data[snakeCase];
-		if (sort == 'asc' || sort == true) {
+		if (sort === 'asc' || sort === true) {
 			result.sort((a, b) => {
-				if (a.val0 < b.val0) {
-					return -1;
-				}
+				return a.val0.localeCompare(b.val0, undefined, {
+					sensitivity: 'base',
+				});
 			});
-		} else if (sort == 'desc' || sort == false) {
+		} else if (sort === 'desc' || sort === false) {
 			result.sort((a, b) => {
-				if (a.val0 > b.val0) {
-					return -1;
-				}
+				return b.val0.localeCompare(a.val0, undefined, {
+					sensitivity: 'base',
+				});
 			});
 		}
+
 		if (lists) {
 			lists.value[key] = result;
 		}
@@ -106,13 +113,16 @@ async function getListsCustom({
 		// lists.value[key] = data[key];
 		let result = data[key].filter((el) => el != null);
 		if (!hasObject(result)) {
-			if (sort == 'asc' || sort == true) {
-				result.sort();
-			} else if (sort == 'desc' || sort == false) {
-				result.reverse();
+			if (sort === 'asc' || sort === true) {
+				result.sort((a, b) =>
+					a.localeCompare(b, undefined, { sensitivity: 'base' }),
+				);
+			} else if (sort === 'desc' || sort === false) {
+				result.sort((a, b) =>
+					b.localeCompare(a, undefined, { sensitivity: 'base' }),
+				);
 			}
 		}
-
 		if (lists) {
 			lists.value[key] = result;
 		}

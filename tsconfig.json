@@ -3,8 +3,9 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"noUnusedLocals": true,
-	    "noUnusedParameters": true
+	    "noUnusedParameters": true,
 	},
+	// "include": ["src/**/*.ts", "src/**/*.vue"],
 	"exclude": [
 		"./dist",
 		"./.quasar",
