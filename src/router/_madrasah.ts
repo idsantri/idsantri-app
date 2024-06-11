@@ -79,6 +79,16 @@ export default [
 				component: () =>
 					import('src/pages/madrasah/nilai-mapel/NilaiIndex.vue'),
 			},
+			{
+				path: 'upload',
+				component: () =>
+					import('src/pages/madrasah/nilai-mapel/UploadPage.vue'),
+			},
+			{
+				path: 'download',
+				component: () =>
+					import('src/pages/madrasah/nilai-mapel/DownloadPage.vue'),
+			},
 		],
 	},
 

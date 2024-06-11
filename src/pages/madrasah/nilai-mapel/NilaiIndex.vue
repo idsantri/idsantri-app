@@ -17,7 +17,7 @@
 					label="Excel"
 					no-caps=""
 					class="bg-green-11 text-green-10 q-px-md q-mr-sm"
-					disable
+					to="/madrasah/nilai-mapel/download"
 				/>
 				<q-btn
 					dense=""
@@ -25,7 +25,7 @@
 					label="Excel"
 					no-caps=""
 					class="bg-green-11 text-green-10 q-px-md q-mr-sm"
-					disable
+					to="/madrasah/nilai-mapel/upload"
 				/>
 
 				<q-btn-dropdown
@@ -66,8 +66,7 @@
 						:rows="nilai"
 						:columns="columns"
 						row-key="kelas_id"
-						:rows-per-page-options="[0]"
-						hide-pagination
+						:rows-per-page-options="[10, 25, 50, 100, 0]"
 						class="my-sticky-header-table"
 					>
 						<template v-slot:header="props">
@@ -429,7 +428,7 @@ async function expand(props) {
 			endPoint: 'nilai-mapel',
 			params: {
 				kelas_id: props.key,
-				status_nilai: 'ujian',
+				category: 'ujian',
 			},
 		});
 		// console.log('detail', data.nilai);
@@ -446,7 +445,7 @@ onMounted(async () => {
 				th_ajaran_h: params.thAjaranH,
 				tingkat_id: params.tingkatId,
 				kelas: params.kelas,
-				status_nilai: 'ujian',
+				category: 'ujian',
 			},
 			loading,
 		});

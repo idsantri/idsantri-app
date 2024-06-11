@@ -7,6 +7,15 @@
 						Daftar Mata Pelajaran
 					</q-toolbar-title>
 					<q-btn
+						label="Nilai Mapel"
+						to="/madrasah/nilai-mapel"
+						dense
+						outline
+						no-caps
+						icon="arrow_back"
+						class="q-px-sm q-mr-md"
+					/>
+					<q-btn
 						class="q-mr-sm text-green-10"
 						label="Baru"
 						icon="add"
@@ -35,6 +44,7 @@
 				<q-markup-table flat>
 					<thead>
 						<tr class="text-left">
+							<th>No</th>
 							<th>Kode/ID</th>
 							<th>Mapel</th>
 							<th>Mata Pelajaran</th>
@@ -61,10 +71,11 @@
 						</tr>
 
 						<tr v-else v-for="item in mapel" :key="item.id">
+							<td>{{ item.urut }}</td>
 							<td>{{ item.id }}</td>
 							<td>{{ item.mapel }}</td>
 							<td>{{ item.mata_pelajaran }}</td>
-							<td>{{ item.status_fan }}</td>
+							<td>{{ item.category }}</td>
 							<td>
 								<q-toggle
 									:model-value="item.show ? true : false"
