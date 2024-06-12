@@ -9,8 +9,12 @@
 							round
 							class="absolute-top-right text-green-11 bg-green-10"
 							glossy
-							v-if="config.DEV == true"
+							v-if="
+								config.DEV == true &&
+								$route.fullPath.includes('login')
+							"
 							@click="modalInfo = true"
+							title="Klik untuk mendapatkan info login"
 						/>
 						<div class="q-mb-sm text-center">
 							<q-img
@@ -146,7 +150,7 @@ const login = [
 	{
 		password: '112233',
 		username: 'bendahara',
-		description: 'Akses Bendahara (Iuran)',
+		description: 'Akses Kebendaharaan (Iuran)',
 	},
 	{
 		password: '112233',

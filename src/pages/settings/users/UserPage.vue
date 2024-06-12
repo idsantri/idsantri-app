@@ -63,6 +63,7 @@
 								"
 								label="Verifikasi"
 								disable=""
+								color="green"
 							/>
 							<div class="q-pl-md text-caption">
 								Verifikasi akun hanya bisa dilakukan oleh user
@@ -74,6 +75,7 @@
 								v-model="user.isConfirmed"
 								label="Konfirmasi"
 								@click="confirmUser(user.isConfirmed)"
+								color="green"
 							/>
 							<div class="q-pl-md text-caption">
 								Konfimasi bahwa Anda mengenal user ini.
@@ -92,9 +94,10 @@
 						>
 							<q-toggle
 								style="min-width: 150px"
-								:label="role"
+								:label="kebabToTitleCase(role)"
 								:model-value="value"
 								@click="setRole(user.id, role, !value)"
+								color="green"
 							/>
 						</div>
 					</div>
@@ -124,6 +127,7 @@
 import apiDelete from 'src/api/api-delete';
 import apiGet from 'src/api/api-get';
 import apiUpdate from 'src/api/api-update';
+import { kebabToTitleCase } from 'src/utils/format-text';
 import { onMounted, ref } from 'vue';
 
 const showUserModal = ref(false);

@@ -226,9 +226,13 @@
 														</td>
 														<td class="text-right">
 															{{
-																item.rerata.toFixed(
-																	2,
-																)
+																item.rerata
+																	? parseFloat(
+																			item.rerata,
+																		).toFixed(
+																			2,
+																		)
+																	: null
 															}}
 														</td>
 													</tr>

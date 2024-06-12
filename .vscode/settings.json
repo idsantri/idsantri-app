@@ -7,7 +7,7 @@
 	"eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"html-css-class-completion.remoteStyleSheets": [
-		"https://cdn.jsdelivr.net/npm/quasar@2.15.3/dist/quasar.prod.css"
+		"https://cdn.jsdelivr.net/npm/quasar@2.16.4/dist/quasar.prod.css"
 	],
 	"[vue]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"

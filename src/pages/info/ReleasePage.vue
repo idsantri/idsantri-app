@@ -68,7 +68,10 @@ const releases = [
 		date: 'April 2024',
 		release: {
 			PJGT: ['Perbaikan input alamat PJGT'],
-			Absensi: ['Perbaikian dan penyempurnaan'],
+			Absensi: [
+				'Perbaikian dan penyempurnaan',
+				'Print absensi di arahkan ke MS Access',
+			],
 			'Lists Auto Complete': ['Abaikan huruf besar kecil dalam sort'],
 		},
 	},
