@@ -4,6 +4,14 @@
 			<q-page class="flex flex-center">
 				<q-card class="my-card q-pa-lg bg-green-5 text-green-1">
 					<q-card-section class="no-padding q-mb-md">
+						<q-btn
+							icon="info"
+							round
+							class="absolute-top-right text-green-11 bg-green-10"
+							glossy
+							v-if="config.DEV == true"
+							@click="modalInfo = true"
+						/>
 						<div class="q-mb-sm text-center">
 							<q-img
 								src="logo.png"
@@ -47,6 +55,54 @@
 					</q-card-section>
 				</q-card>
 			</q-page>
+
+			<q-dialog v-model="modalInfo">
+				<q-card style="min-width: 300px">
+					<q-card-section class="q-pa-sm bg-green-6 text-green-11">
+						<div class="text-h6">Info Login</div>
+					</q-card-section>
+					<q-card-section class="q-pa-sm">
+						<q-markup-table flat bordered separator="horizontal">
+							<thead>
+								<tr>
+									<th class="text-left text-overline">
+										Username
+									</th>
+									<th class="text-left text-overline">
+										Password
+									</th>
+									<th class="text-left text-overline">
+										Dekskripsi
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="(item, index) in login" :key="index">
+									<td class="text-weight-light">
+										{{ item.username }}
+									</td>
+									<td class="text-weight-light">
+										{{ item.password }}
+									</td>
+									<td class="text-weight-light">
+										{{ item.description }}
+									</td>
+								</tr>
+							</tbody>
+						</q-markup-table>
+					</q-card-section>
+
+					<q-card-actions align="right" class="bg-green-5">
+						<q-btn
+							outline
+							no-caps
+							label="Tutup"
+							color="green-11"
+							v-close-popup
+						/>
+					</q-card-actions>
+				</q-card>
+			</q-dialog>
 		</q-page-container>
 	</q-layout>
 </template>
@@ -57,9 +113,52 @@ import { ref } from 'vue';
 
 const title = ref('Autentikasi');
 const handleTitle = (value) => (title.value = value);
-
 const errors = ref([]);
 const handleErrors = (value) => (errors.value = value);
+const modalInfo = ref(false);
+
+const login = [
+	{
+		password: '112233',
+		username: 'admin',
+		description: 'Akses Administrator',
+	},
+	{
+		password: '112233',
+		username: 'sekretariat',
+		description: 'Akses kesekretariatan',
+	},
+	{
+		password: '112233',
+		username: 'madrasah',
+		description: 'Akses Kemadrasahan',
+	},
+	{
+		password: '112233',
+		username: 'keamanan',
+		description: 'Akses Keamanan',
+	},
+	{
+		password: '112233',
+		username: 'ugt',
+		description: 'Akses Urusan Guru Tugas',
+	},
+	{
+		password: '112233',
+		username: 'bendahara',
+		description: 'Akses Bendahara (Iuran)',
+	},
+	{
+		password: '112233',
+		username: 'makhadiyah',
+		description: 'Akses Kedaerahan',
+	},
+	{
+		password: '112233',
+		username: 'panitia',
+		description: 'Akses Panitia Ujian',
+	},
+];
 </script>
 
 <style scoped>
