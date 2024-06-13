@@ -24,6 +24,7 @@
 					icon="pivot_table_chart"
 					label="Pivot"
 					no-caps
+					disable
 				/>
 			</q-tabs>
 

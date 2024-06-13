@@ -124,11 +124,6 @@ const modalInfo = ref(false);
 const login = [
 	{
 		password: '112233',
-		username: 'admin',
-		description: 'Akses Administrator',
-	},
-	{
-		password: '112233',
 		username: 'sekretariat',
 		description: 'Akses kesekretariatan',
 	},

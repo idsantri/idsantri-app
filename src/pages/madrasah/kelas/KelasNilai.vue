@@ -38,10 +38,18 @@
 					<tr>
 						<th class="text-left">Kode</th>
 						<th class="text-left">Mapel</th>
-						<th class="text-right">U-1</th>
-						<th class="text-right">U-2</th>
-						<th class="text-right">U-3</th>
-						<th class="text-right">U-4</th>
+						<th class="text-right">
+							{{ tab.substring(0, 1).toUpperCase() + '-1' }}
+						</th>
+						<th class="text-right">
+							{{ tab.substring(0, 1).toUpperCase() + '-2' }}
+						</th>
+						<th class="text-right">
+							{{ tab.substring(0, 1).toUpperCase() + '-3' }}
+						</th>
+						<th class="text-right">
+							{{ tab.substring(0, 1).toUpperCase() + '-4' }}
+						</th>
 						<th class="text-right">Rerata</th>
 					</tr>
 				</thead>
@@ -49,16 +57,28 @@
 					<tr v-for="(item, index) in nilai" :key="index">
 						<td class="text-left">{{ item.id }}</td>
 						<td class="text-left">{{ item.mapel }}</td>
-						<td title="Nilai pada ujian ke-1" class="text-right">
+						<td
+							:title="'Nilai ' + tab + ' pada ujian ke-1'"
+							class="text-right"
+						>
 							{{ item.nilai_1 }}
 						</td>
-						<td title="Nilai pada ujian ke-2" class="text-right">
+						<td
+							:title="'Nilai ' + tab + ' pada ujian ke-2'"
+							class="text-right"
+						>
 							{{ item.nilai_2 }}
 						</td>
-						<td title="Nilai pada ujian ke-3" class="text-right">
+						<td
+							:title="'Nilai ' + tab + ' pada ujian ke-3'"
+							class="text-right"
+						>
 							{{ item.nilai_3 }}
 						</td>
-						<td title="Nilai pada ujian ke-4" class="text-right">
+						<td
+							:title="'Nilai ' + tab + ' pada ujian ke-4'"
+							class="text-right"
+						>
 							{{ item.nilai_4 }}
 						</td>
 						<td title="Nilai rata-rata" class="text-right">

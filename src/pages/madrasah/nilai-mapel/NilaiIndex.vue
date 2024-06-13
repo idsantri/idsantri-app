@@ -173,7 +173,7 @@
 												separator="cell"
 											>
 												<thead
-													class="bg-green-2 text-weight-bold text-right"
+													class="bg-green-2 text-weight-medium text-right"
 												>
 													<tr>
 														<td
@@ -186,16 +186,16 @@
 															Mata Pelajaran
 														</td>
 														<td style="width: 50px">
-															U-1
+															N-1
 														</td>
 														<td style="width: 50px">
-															U-2
+															N-2
 														</td>
 														<td style="width: 50px">
-															U-3
+															N-3
 														</td>
 														<td style="width: 50px">
-															U-4
+															N-4
 														</td>
 														<td style="width: 65px">
 															Rerata
@@ -243,7 +243,7 @@
 													</tr>
 												</tbody>
 												<tfoot
-													class="bg-green-2 text-weight-bold text-right"
+													class="bg-green-2 text-weight-bold text-right text-green-10"
 												>
 													<tr>
 														<td

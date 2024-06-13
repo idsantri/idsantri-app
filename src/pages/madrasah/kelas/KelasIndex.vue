@@ -13,7 +13,9 @@
 							<!-- santri -->
 							<q-card-section class="q-pa-sm">
 								<q-toolbar class="bg-green-1">
-									<q-toolbar-title>Identitas</q-toolbar-title>
+									<q-toolbar-title class="text-subtitle1">
+										Identitas
+									</q-toolbar-title>
 									<q-btn
 										round
 										dense
@@ -64,11 +66,7 @@
 											<q-btn
 												outline
 												color="green"
-												@click="
-													$router.push(
-														`/santri/${santri.id}`,
-													)
-												"
+												:to="`/santri/${santri.id}`"
 											>
 												<small>
 													{{ santri.id }}
@@ -97,11 +95,7 @@
 											<q-btn
 												outline
 												color="green"
-												@click="
-													$router.push(
-														`/wali/${santri.wali_id}`,
-													)
-												"
+												:to="`/wali/${santri.wali_id}`"
 											>
 												<small>
 													{{ santri.wali_id }}
@@ -128,11 +122,7 @@
 											<q-btn
 												outline
 												color="green"
-												@click="
-													$router.push(
-														`/ortu/${santri.ortu_id}`,
-													)
-												"
+												:to="`/ortu/${santri.ortu_id}`"
 											>
 												<small>
 													{{ santri.ortu_id }}
@@ -147,13 +137,17 @@
 							<!-- kelas -->
 							<q-card-section class="q-pa-sm">
 								<q-toolbar class="bg-green-1">
-									<q-toolbar-title>Kelas</q-toolbar-title>
+									<q-toolbar-title class="text-subtitle1">
+										Kelas
+									</q-toolbar-title>
 									<q-btn
-										flat
-										round
+										class="q-px-md"
+										outline
 										dense
-										icon="edit"
+										icon-right="edit"
 										@click="editKelas"
+										label="Edit"
+										no-caps
 									/>
 								</q-toolbar>
 								<div v-if="spinner" class="q-pa-md">
@@ -208,7 +202,9 @@
 									no-caps
 									outside-arrows
 									mobile-arrows
-									class="bg-green-7 text-green-11"
+									class="bg-green-7 text-green-3"
+									indicator-color="green-11"
+									active-color="green-11"
 								>
 									<q-route-tab
 										name="riwayat"
@@ -227,7 +223,7 @@
 									/>
 								</q-tabs>
 							</q-card-section>
-							<q-card-section class="q-pa-sm">
+							<q-card-section class="q-px-sm q-pb-sm q-pt-none">
 								<router-view />
 							</q-card-section>
 						</q-card>
