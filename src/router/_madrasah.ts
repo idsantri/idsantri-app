@@ -32,7 +32,7 @@ export default [
 					import('src/pages/madrasah/kelas/KelasIzin.vue'),
 			},
 			{
-				path: 'nilai',
+				path: 'nilai-mapel',
 				component: () =>
 					import('src/pages/madrasah/kelas/KelasNilai.vue'),
 			},

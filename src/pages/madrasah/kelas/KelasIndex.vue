@@ -7,7 +7,7 @@
 				</div>
 			</q-card-section>
 			<q-card-section class="no-padding">
-				<div class="row" style="max-width: 1200px">
+				<div class="row" style="max-width: 1400px">
 					<div class="col-12 col-md-6 q-pa-sm">
 						<q-card>
 							<!-- santri -->
@@ -222,9 +222,8 @@
 									/>
 									<q-route-tab
 										name="nilai"
-										label="Nilai"
-										:to="`/madrasah/kelas/${kelas.id}/nilai`"
-										disable
+										label="Nilai Mapel"
+										:to="`/madrasah/kelas/${kelas.id}/nilai-mapel`"
 									/>
 								</q-tabs>
 							</q-card-section>

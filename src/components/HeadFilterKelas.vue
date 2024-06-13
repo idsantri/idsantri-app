@@ -231,7 +231,7 @@ function emitText() {
 
 		return (
 			text ||
-			'<div class="text-green-13 text-italic">Tentukan filter!</div>'
+			'<span class="text-green-13 text-italic">Tentukan filter!</span>'
 		);
 	};
 

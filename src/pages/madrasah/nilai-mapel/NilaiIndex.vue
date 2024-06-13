@@ -9,7 +9,12 @@
 			<q-card-section
 				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
 			>
-				<span v-html="dataFilter.display || ''"></span>
+				<span
+					v-html="
+						dataFilter.display +
+							' ➡️ Nilai <strong>Rapor</strong>' || ''
+					"
+				></span>
 				<q-space />
 				<q-btn
 					dense=""
@@ -126,7 +131,7 @@
 											dense
 											outline
 											class="q-px-md text-green-10"
-											:to="`/madrasah/kelas/${col.value}/riwayat`"
+											:to="`/madrasah/kelas/${col.value}/nilai-mapel`"
 										/>
 									</span>
 									<span v-else-if="col.name == 'santri_id'">
@@ -181,16 +186,16 @@
 															Mata Pelajaran
 														</td>
 														<td style="width: 50px">
-															N-1
+															U-1
 														</td>
 														<td style="width: 50px">
-															N-2
+															U-2
 														</td>
 														<td style="width: 50px">
-															N-3
+															U-3
 														</td>
 														<td style="width: 50px">
-															N-4
+															U-4
 														</td>
 														<td style="width: 65px">
 															Rerata
@@ -230,7 +235,7 @@
 																	? parseFloat(
 																			item.rerata,
 																		).toFixed(
-																			2,
+																			1,
 																		)
 																	: null
 															}}
@@ -381,7 +386,7 @@ const columns = [
 		label: 'Rerata-1',
 		align: 'right',
 		field: (row) =>
-			row.rerata_1 ? parseFloat(row.rerata_1).toFixed(2) : null,
+			row.rerata_1 ? parseFloat(row.rerata_1).toFixed(1) : null,
 		// format: (val) => `${val}`,
 		sortable: true,
 	},
@@ -390,7 +395,7 @@ const columns = [
 		label: 'Rerata-2',
 		align: 'right',
 		field: (row) =>
-			row.rerata_2 ? parseFloat(row.rerata_2).toFixed(2) : null,
+			row.rerata_2 ? parseFloat(row.rerata_2).toFixed(1) : null,
 		// format: (val) => `${val}`,
 		sortable: true,
 	},
@@ -399,7 +404,7 @@ const columns = [
 		label: 'Rerata-3',
 		align: 'right',
 		field: (row) =>
-			row.rerata_3 ? parseFloat(row.rerata_3).toFixed(2) : null,
+			row.rerata_3 ? parseFloat(row.rerata_3).toFixed(1) : null,
 		// format: (val) => `${val}`,
 		sortable: true,
 	},
@@ -408,7 +413,7 @@ const columns = [
 		label: 'Rerata-4',
 		align: 'right',
 		field: (row) =>
-			row.rerata_4 ? parseFloat(row.rerata_4).toFixed(2) : null,
+			row.rerata_4 ? parseFloat(row.rerata_4).toFixed(1) : null,
 		// format: (val) => `${val}`,
 		sortable: true,
 	},
@@ -417,8 +422,8 @@ const columns = [
 		label: 'R. Akhir',
 		align: 'right',
 		field: (row) =>
-			row.rerata_akhir ? parseFloat(row.rerata_akhir).toFixed(2) : null,
-		// format: (val) => `${val.toFixed(2)}`,
+			row.rerata_akhir ? parseFloat(row.rerata_akhir).toFixed(1) : null,
+		// format: (val) => `${val.toFixed(1)}`,
 		sortable: true,
 	},
 ];
@@ -432,7 +437,7 @@ async function expand(props) {
 			endPoint: 'nilai-mapel',
 			params: {
 				kelas_id: props.key,
-				category: 'ujian',
+				category: 'rapor',
 			},
 		});
 		// console.log('detail', data.nilai);
@@ -449,7 +454,7 @@ onMounted(async () => {
 				th_ajaran_h: params.thAjaranH,
 				tingkat_id: params.tingkatId,
 				kelas: params.kelas,
-				category: 'ujian',
+				category: 'rapor',
 			},
 			loading,
 		});
@@ -471,7 +476,7 @@ function hitungRataRata(data, n) {
 			}
 		});
 		const rerata = totalNilai / jumlahData;
-		return !isNaN(rerata) ? rerata.toFixed(2) : null;
+		return !isNaN(rerata) ? rerata.toFixed(1) : null;
 	}
 }
 </script>
