@@ -8,14 +8,13 @@
 					</q-toolbar-title>
 
 					<q-btn
-						v-if="showButton(`madrasah/absensi/print`)"
 						dense
 						class="q-px-md q-mr-sm text-green-10"
 						label="Cetak"
 						no-caps=""
 						icon="print"
-						@click="$router.push(`/madrasah/absensi/print`)"
 						color="green-2"
+						to="/info/download"
 					/>
 					<q-btn-dropdown
 						flat

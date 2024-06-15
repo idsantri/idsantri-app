@@ -51,7 +51,7 @@
 								style="min-width: 50px"
 								@click="
 									$router.push(
-										`/madrasah/kelas/${props.row.id}/riwayat`
+										`/madrasah/kelas/${props.row.id}/riwayat`,
 									)
 								"
 								><small> {{ props.row.id }}</small></q-btn
@@ -85,7 +85,7 @@
 							{{
 								props.row.alamat_pendek.length > 30
 									? props.row.alamat_pendek.substr(0, 30) +
-									  '&mldr;'
+										'&mldr;'
 									: props.row.alamat_pendek
 							}}
 						</q-td>
@@ -117,14 +117,9 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const loading = ref(false);
-const route = useRoute();
+const { params } = useRoute();
 const murid = ref([]);
 const dataFilter = ref({});
-const params = {
-	thAjaranH: route.params.thAjaranH,
-	tingkatId: route.params.tingkatId,
-	kelas: route.params.kelas,
-};
 
 function dataEmit(val) {
 	dataFilter.value = val;
@@ -146,7 +141,7 @@ async function automate() {
 	});
 
 	notifyWarning(
-		'Isi otomatis berhasil! <br/>Data belum diupdate sampai Anda menekan tombol kirim!'
+		'Isi otomatis berhasil! <br/>Data belum diupdate sampai Anda menekan tombol kirim!',
 	);
 }
 
@@ -172,7 +167,12 @@ async function updateNoAbsen() {
 onMounted(async () => {
 	if (params.thAjaranH && params.tingkatId && params.kelas) {
 		const data = await apiGet({
-			endPoint: `murid/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`,
+			endPoint: 'kelas',
+			params: {
+				th_ajaran_h: params.thAjaranH,
+				tingkat_id: params.tingkatId,
+				kelas: params.kelas,
+			},
 			loading,
 		});
 		murid.value = data.murid;

@@ -49,12 +49,10 @@
 					outlined
 					label="Kelas"
 					v-model="kelas"
-					:options="lists['kelas_detail']"
-					option-value="kelas"
-					option-label="kelas"
+					:options="lists['kelas']"
 					emit-value
 					map-options
-					:loading="loading['kelas_detail']"
+					:loading="loading['kelas']"
 					clearable=""
 					behavior="menu"
 				/>
@@ -119,17 +117,21 @@ const lists = ref([]);
 onMounted(async () => {
 	// get tahun ajaran
 	await getListsCustom({
-		url: 'murid/lists-kelas',
+		url: 'kelas/lists',
 		lists,
 		key: 'th_ajaran',
 		loading,
+		sort: 'asc',
 	});
 	emitText();
 
 	// get tingkat
 	if (params.thAjaranH && props.showTingkat) {
 		await getListsCustom({
-			url: `murid/lists-kelas/${params.thAjaranH}`,
+			url: 'kelas/lists',
+			params: {
+				th_ajaran_h: params.thAjaranH,
+			},
 			lists,
 			key: 'tingkat',
 			loading,
@@ -140,9 +142,13 @@ onMounted(async () => {
 	// get kelas
 	if (props.showKelas && params.thAjaranH && params.tingkatId) {
 		await getListsCustom({
-			url: `murid/lists-kelas/${params.thAjaranH}/${params.tingkatId}`,
+			url: 'kelas/lists',
+			params: {
+				th_ajaran_h: params.thAjaranH,
+				tingkat_id: params.tingkatId,
+			},
 			lists,
-			key: 'kelas_detail',
+			key: 'kelas',
 			loading,
 		});
 	}
