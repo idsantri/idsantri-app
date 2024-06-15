@@ -82,15 +82,10 @@ import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const spinner = ref(false);
-const route = useRoute();
+const { params } = useRoute();
 const router = useRouter();
 const murid = ref([]);
 const filter = ref('');
-const params = {
-	thAjaranH: route.params.thAjaranH,
-	tingkatId: route.params.tingkatId,
-	kelas: route.params.kelas,
-};
 
 function rowClick(row) {
 	router.push(`/madrasah/kelas/${row.id}/riwayat`);
@@ -99,12 +94,22 @@ function rowClick(row) {
 onMounted(async () => {
 	if (params.thAjaranH && params.tingkatId && params.kelas) {
 		const data = await apiGet({
-			endPoint: `murid/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`,
+			endPoint: 'kelas',
+			params: {
+				th_ajaran_h: params.thAjaranH,
+				tingkat_id: params.tingkatId,
+				kelas: params.kelas,
+			},
+			loading: spinner,
 		});
 		murid.value = data.murid;
 	} else if (params.thAjaranH && params.tingkatId) {
 		const data = await apiGet({
-			endPoint: `murid/${params.thAjaranH}/${params.tingkatId}`,
+			endPoint: 'kelas',
+			params: {
+				th_ajaran_h: params.thAjaranH,
+				tingkat_id: params.tingkatId,
+			},
 			loading: spinner,
 		});
 		murid.value = data.murid;
