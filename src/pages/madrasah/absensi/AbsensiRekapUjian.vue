@@ -1,8 +1,8 @@
 <template lang="">
 	<filter-kelas
-		:showBulanUjian="false"
-		:start-url="`/madrasah/absensi/${params.absensi}/rekap-ujian`"
-		@dataFilter="dataEmit"
+		:show-ujian-ke="false"
+		:start-url="`/madrasah/absensi/rekap-ujian/${params.absensi}`"
+		@data-filter="(v) => (textFilter = v)"
 	/>
 	<q-card class="q-mt-sm">
 		<q-card-section
@@ -14,7 +14,7 @@
 		</q-card-section>
 		<q-card-section class="bg-green-3 text-green-10 text-subtitle1 q-pa-sm">
 			<div>
-				<span v-html="dataFilter.display || 'Tentukan filter!'"></span>
+				<span v-html="textFilter || 'Tentukan filter!'"></span>
 			</div>
 		</q-card-section>
 		<q-card-section class="no-padding">
@@ -59,7 +59,9 @@
 				</thead>
 				<tbody
 					v-if="
-						!params.thAjaranH || !params.tingkatId || !params.kelas
+						!params.th_ajaran_h ||
+						!params.tingkat_id ||
+						!params.kelas
 					"
 				>
 					<tr>
@@ -89,7 +91,6 @@
 									: ''
 							}}
 						</td>
-						<td class="text-center">{{ abs.santri_id }}</td>
 						<td class="text-center">
 							<q-btn
 								flat
@@ -97,13 +98,22 @@
 								no-caps
 								class="text-green-10 bg-green-11 q-px-sm"
 								style="min-width: 50px"
-								@click="
-									$router.push(
-										`/madrasah/kelas/${abs.kelas_id}/riwayat`,
-									)
-								"
-								><small> {{ abs.kelas_id }}</small></q-btn
+								:to="`/santri/${abs.santri_id}`"
 							>
+								<small> {{ abs.santri_id }}</small>
+							</q-btn>
+						</td>
+						<td class="text-center">
+							<q-btn
+								flat
+								dense
+								no-caps
+								class="text-green-10 bg-green-11 q-px-sm"
+								style="min-width: 50px"
+								:to="`/madrasah/kelas/${abs.kelas_id}`"
+							>
+								<small> {{ abs.kelas_id }}</small>
+							</q-btn>
 						</td>
 						<td class="text-left td-nama">{{ abs.nama }}</td>
 
@@ -189,25 +199,22 @@ const route = useRoute();
 const absensi = ref([]);
 const params = {
 	absensi: route.params.absensi,
-	thAjaranH: route.params.thAjaranH,
-	tingkatId: route.params.tingkatId,
+	th_ajaran_h: route.params.th_ajaran_h,
+	tingkat_id: route.params.tingkat_id,
 	kelas: route.params.kelas,
 };
 
-const dataFilter = ref({});
-function dataEmit(val) {
-	dataFilter.value = val;
-}
+const textFilter = ref('');
 
 async function getAbsensi() {
 	// console.log(params);
-	if (params.thAjaranH && params.tingkatId && params.kelas) {
+	if (params.th_ajaran_h && params.tingkat_id && params.kelas) {
 		const data = await apiGet({
 			endPoint: `absensi/${params.absensi}/rekap-ujian`,
 			loading: spinner,
 			params: {
-				th_ajaran_h: params.thAjaranH,
-				tingkat_id: params.tingkatId,
+				th_ajaran_h: params.th_ajaran_h,
+				tingkat_id: params.tingkat_id,
 				kelas: params.kelas,
 			},
 		});

@@ -92,23 +92,23 @@ function rowClick(row) {
 }
 
 onMounted(async () => {
-	if (params.thAjaranH && params.tingkatId && params.kelas) {
+	if (params.th_ajaran_h && params.tingkat_id && params.kelas) {
 		const data = await apiGet({
 			endPoint: 'kelas',
 			params: {
-				th_ajaran_h: params.thAjaranH,
-				tingkat_id: params.tingkatId,
+				th_ajaran_h: params.th_ajaran_h,
+				tingkat_id: params.tingkat_id,
 				kelas: params.kelas,
 			},
 			loading: spinner,
 		});
 		murid.value = data.murid;
-	} else if (params.thAjaranH && params.tingkatId) {
+	} else if (params.th_ajaran_h && params.tingkat_id) {
 		const data = await apiGet({
 			endPoint: 'kelas',
 			params: {
-				th_ajaran_h: params.thAjaranH,
-				tingkat_id: params.tingkatId,
+				th_ajaran_h: params.th_ajaran_h,
+				tingkat_id: params.tingkat_id,
 			},
 			loading: spinner,
 		});

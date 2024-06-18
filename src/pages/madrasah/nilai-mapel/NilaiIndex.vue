@@ -1,9 +1,10 @@
 <template>
 	<q-page class="q-pa-sm">
 		<filter-kelas
-			:showBulanUjian="false"
+			:show-ujian-ke="false"
 			start-url="/madrasah/nilai-mapel/rerata"
-			@dataFilter="dataEmit"
+			@data-filter="(v) => (textFilter = v)"
+			title="Filter Data: <span class='text-weight-medium'>Nilai Mapel (Rerata)</span>"
 		/>
 		<q-card class="q-mt-sm">
 			<q-card-section
@@ -11,8 +12,9 @@
 			>
 				<span
 					v-html="
-						dataFilter.display +
-							' ➡️ Nilai <strong>Rapor</strong>' || ''
+						textFilter +
+							' ➡️ <em class=\'text-weight-light\'>Kategori: </em> <strong>Nilai Rapor</strong>' ||
+						''
 					"
 				></span>
 				<q-space />
@@ -50,11 +52,29 @@
 								<q-icon name="settings" />
 							</q-item-section>
 						</q-item>
+						<q-item v-close-popup to="/madrasah/nilai-ahwal">
+							<q-item-section>
+								<q-item-label> Nilai Ahwal </q-item-label>
+							</q-item-section>
+							<q-item-section avatar>
+								<q-icon name="settings_accessibility" />
+							</q-item-section>
+						</q-item>
+						<q-item v-close-popup to="/madrasah/nilai-unlock">
+							<q-item-section>
+								<q-item-label>Unlock Nilai</q-item-label>
+							</q-item-section>
+							<q-item-section avatar>
+								<q-icon name="lock_open" />
+							</q-item-section>
+						</q-item>
 					</q-list>
 				</q-btn-dropdown>
 			</q-card-section>
 			<q-card-section
-				v-if="!params.thAjaranH || !params.tingkatId || !params.kelas"
+				v-if="
+					!params.th_ajaran_h || !params.tingkat_id || !params.kelas
+				"
 				class="q-pa-sm"
 			>
 				<div class="text-center q-pa-lg text-negative text-italic">
@@ -328,26 +348,16 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import FilterKelas from 'src/components/HeadFilterKelas.vue';
 import { useRoute } from 'vue-router';
 import apiGet from 'src/api/api-get';
+import FilterKelas from 'components/HeadFilterKelas.vue';
 
-const dataFilter = ref({});
-const route = useRoute();
-const params = {
-	thAjaranH: route.params.thAjaranH,
-	tingkatId: route.params.tingkatId,
-	kelas: route.params.kelas,
-};
+const { params } = useRoute();
 const nilai = ref([{}]);
 const loading = ref(false);
-
+const textFilter = ref('');
 const nilaiDetail = ref([{}]);
 const loadingDetail = ref([]);
-
-function dataEmit(val) {
-	dataFilter.value = val;
-}
 
 const columns = [
 	{
@@ -447,12 +457,12 @@ async function expand(props) {
 }
 
 onMounted(async () => {
-	if (params.thAjaranH && params.tingkatId && params.kelas) {
+	if (params.th_ajaran_h && params.tingkat_id && params.kelas) {
 		const data = await apiGet({
 			endPoint: 'nilai-mapel/rerata',
 			params: {
-				th_ajaran_h: params.thAjaranH,
-				tingkat_id: params.tingkatId,
+				th_ajaran_h: params.th_ajaran_h,
+				tingkat_id: params.tingkat_id,
 				kelas: params.kelas,
 				category: 'rapor',
 			},
