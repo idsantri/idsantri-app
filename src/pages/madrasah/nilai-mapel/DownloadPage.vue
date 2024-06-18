@@ -35,8 +35,9 @@
 								emit-value
 								map-options
 								v-model="input.th_ajaran_h"
-								:options="lists['th_ajaran_h']"
-								:loading="loading['th_ajaran_h']"
+								:options="lists['th_ajaran']"
+								option-value="th_ajaran_h"
+								option-label="th_ajaran_h"
 								clearable=""
 								behavior="menu"
 								required
@@ -122,10 +123,11 @@
 	</q-page>
 </template>
 <script setup>
+import { onMounted, ref, toRefs, watch } from 'vue';
 import apiGet from 'src/api/api-get';
 import { getListsCustom } from 'src/api/api-get-lists';
+import listsMadrasahStore from 'src/stores/lists-madrasah-store';
 import loadingStore from 'src/stores/loading-store';
-import { onMounted, ref, toRefs, watch } from 'vue';
 
 const { loadingMain } = toRefs(loadingStore());
 const input = ref({});
@@ -150,14 +152,24 @@ const listsCategory = [
 	},
 ];
 
+const th = listsMadrasahStore().getThAjaran;
+lists.value['th_ajaran'] = th;
 onMounted(async () => {
-	await getListsCustom({
-		loading,
-		lists,
-		key: 'th_ajaran_h',
-		url: 'kelas/lists',
-		sort: 'desc',
-	});
+	const th = listsMadrasahStore().getThAjaran;
+	lists.value['th_ajaran'] = th;
+	if (th.length == 0) {
+		const data = await getListsCustom({
+			url: 'kelas/lists',
+			lists,
+			key: 'th_ajaran',
+			loading,
+		});
+		listsMadrasahStore().setThAjaran(data);
+		lists.value['th_ajaran'] = data;
+	} else {
+		lists.value['th_ajaran'] = th;
+	}
+	// console.log('t', lists.value['th_ajaran']);
 });
 
 async function onSubmit() {
@@ -182,14 +194,20 @@ watch(
 		input.value.tingkat_id = '';
 		input.value.kelas = '';
 		if (newModel) {
-			await getListsCustom({
-				loading,
-				lists,
-				key: 'tingkat',
-				url: 'kelas/lists',
-				sort: 'asc',
-				params: { th_ajaran_h: newModel },
-			});
+			const cekTingkat = listsMadrasahStore().getTingkatByTahun(newModel);
+			if (cekTingkat.length) {
+				lists.value['tingkat'] = cekTingkat;
+			} else {
+				const data = await getListsCustom({
+					url: 'kelas/lists',
+					params: { th_ajaran_h: newModel },
+					key: 'tingkat',
+					loading,
+					sort: 'asc',
+				});
+				listsMadrasahStore().addTingkatToTahun(data, newModel);
+				lists.value['tingkat'] = data;
+			}
 		} else {
 			lists.value['tingkat'] = [];
 		}
@@ -202,17 +220,31 @@ watch(
 	async (newModel) => {
 		input.value.kelas = '';
 		if (newModel) {
-			await getListsCustom({
-				loading,
-				lists,
-				key: 'kelas',
-				url: 'kelas/lists',
-				sort: 'asc',
-				params: {
-					th_ajaran_h: input.value.th_ajaran_h,
-					tingkat_id: newModel,
-				},
-			});
+			const cekKelas = listsMadrasahStore().getKelasByTingkatAndTahun(
+				newModel,
+				input.value.th_ajaran_h,
+			);
+			if (cekKelas.length) {
+				lists.value['kelas'] = cekKelas;
+			} else {
+				const data = await getListsCustom({
+					url: 'kelas/lists',
+					params: {
+						th_ajaran_h: input.value.th_ajaran_h,
+						tingkat_id: newModel,
+					},
+					key: 'kelas',
+					loading,
+					sort: 'asc',
+				});
+
+				listsMadrasahStore().addKelasToTingkatByTahun(
+					data,
+					newModel,
+					input.value.th_ajaran_h,
+				);
+				lists.value['kelas'] = data;
+			}
 		} else {
 			lists.value['kelas'] = [];
 		}

@@ -74,7 +74,7 @@
 				</q-item-section>
 			</q-item>
 
-			<q-item clickable v-ripple to="/madrasah/absensi/sekolah/input">
+			<q-item clickable v-ripple to="/madrasah/absensi/input/sekolah">
 				<q-item-section avatar>
 					<q-icon color="green-1" name="checklist" />
 				</q-item-section>

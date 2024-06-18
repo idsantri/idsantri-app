@@ -1,16 +1,16 @@
 <template lang="">
 	<q-page class="q-pa-sm">
 		<filter-kelas
-			:showBulanUjian="false"
-			:showKelas="false"
+			:show-ujian-ke="false"
+			:show-kelas="false"
 			start-url="/madrasah/aparatur"
-			@dataFilter="dataEmit"
+			@data-filter="(v) => (textFilter = v)"
 		/>
 		<q-card class="q-mt-sm">
 			<q-card-section
 				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
 			>
-				<span v-html="dataFilter.display || ''"></span>
+				<span v-html="textFilter || ''"></span>
 				<q-space />
 				<q-btn
 					dense=""
@@ -32,9 +32,6 @@
 import FilterKelas from 'src/components/HeadFilterKelas.vue';
 import { ref } from 'vue';
 
-const dataFilter = ref({});
-function dataEmit(val) {
-	dataFilter.value = val;
-}
+const textFilter = ref('');
 </script>
 <style lang=""></style>

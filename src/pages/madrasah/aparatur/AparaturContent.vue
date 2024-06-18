@@ -11,6 +11,7 @@
 		no-data-label="Silakan tentukan filter!"
 		no-results-label="Tidak ditemukan kata kunci yang sesuai dengan pencarian Anda!"
 		row-key="name"
+		:loading="loading"
 	>
 		<template v-slot:top-left>
 			<div class="text-subtitle1 text-green-10">
@@ -44,23 +45,19 @@ import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-const route = useRoute();
+const { params } = useRoute();
 const filter = ref('');
-const params = {
-	thAjaranH: route.params.thAjaranH,
-	tingkatId: route.params.tingkatId,
-};
-
 const aparatur = ref([]);
-
+const loading = ref(false);
 onMounted(async () => {
-	if (params.thAjaranH && params.tingkatId) {
+	if (params.th_ajaran_h && params.tingkat_id) {
 		const data = await apiGet({
 			endPoint: 'aparatur-madrasah',
 			params: {
-				th_ajaran_h: params.thAjaranH,
-				tingkat_id: params.tingkatId,
+				th_ajaran_h: params.th_ajaran_h,
+				tingkat_id: params.tingkat_id,
 			},
+			loading,
 		});
 		aparatur.value = data.aparatur_madrasah;
 	} else {
