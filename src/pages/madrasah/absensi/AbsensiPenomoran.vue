@@ -1,14 +1,13 @@
 <template lang="">
 	<filter-kelas
-		:showBulanUjian="false"
 		start-url="/madrasah/absensi/penomoran"
-		@dataFilter="dataEmit"
+		@data-filter="(v) => (textFilter = v)"
 	/>
 	<q-card class="q-mt-sm">
 		<q-card-section
 			class="bg-green-7 text-green-1 text-subtitle1 q-pa-sm flex"
 		>
-			<span v-html="dataFilter.display || 'Tentukan filter!'"></span>
+			<span v-html="textFilter || 'Tentukan filter!'"></span>
 			<!-- <q-space />
 			<q-btn flat="" dense icon="cached" disable /> -->
 		</q-card-section>
@@ -51,7 +50,7 @@
 								style="min-width: 50px"
 								@click="
 									$router.push(
-										`/madrasah/kelas/${props.row.id}/riwayat`
+										`/madrasah/kelas/${props.row.id}/riwayat`,
 									)
 								"
 								><small> {{ props.row.id }}</small></q-btn
@@ -85,7 +84,7 @@
 							{{
 								props.row.alamat_pendek.length > 30
 									? props.row.alamat_pendek.substr(0, 30) +
-									  '&mldr;'
+										'&mldr;'
 									: props.row.alamat_pendek
 							}}
 						</q-td>
@@ -99,10 +98,11 @@
 		>
 			<q-btn
 				dense
-				label="Kirim"
+				label="Kirim/Simpan"
 				no-caps
 				color="green-11"
 				class="text-green-10 q-px-md"
+				icon="save"
 				@click="updateNoAbsen"
 			/>
 		</q-card-actions>
@@ -117,18 +117,9 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const loading = ref(false);
-const route = useRoute();
+const { params } = useRoute();
 const murid = ref([]);
-const dataFilter = ref({});
-const params = {
-	thAjaranH: route.params.thAjaranH,
-	tingkatId: route.params.tingkatId,
-	kelas: route.params.kelas,
-};
-
-function dataEmit(val) {
-	dataFilter.value = val;
-}
+const textFilter = ref('');
 
 async function automate() {
 	const confirm = await notifyConfirm('Isi nomor Absen secara otomatis');
@@ -146,7 +137,7 @@ async function automate() {
 	});
 
 	notifyWarning(
-		'Isi otomatis berhasil! <br/>Data belum diupdate sampai Anda menekan tombol kirim!'
+		'Isi otomatis berhasil! <br/>Data belum diupdate sampai Anda menekan tombol kirim/simpan!',
 	);
 }
 
@@ -170,9 +161,14 @@ async function updateNoAbsen() {
 }
 
 onMounted(async () => {
-	if (params.thAjaranH && params.tingkatId && params.kelas) {
+	if (params.th_ajaran_h && params.tingkat_id && params.kelas) {
 		const data = await apiGet({
-			endPoint: `murid/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`,
+			endPoint: 'kelas',
+			params: {
+				th_ajaran_h: params.th_ajaran_h,
+				tingkat_id: params.tingkat_id,
+				kelas: params.kelas,
+			},
 			loading,
 		});
 		murid.value = data.murid;

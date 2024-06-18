@@ -1,9 +1,9 @@
 <template lang="">
 	<filter-kelas
-		:showBulanUjian="true"
+		:show-list-bulan-ujian="true"
 		:showKelas="false"
-		:start-url="`/madrasah/absensi/${params.absensi}/laporan`"
-		@dataFilter="dataEmit"
+		:start-url="`/madrasah/absensi/laporan/${params.absensi}`"
+		@data-filter="(v) => (textFilter = v)"
 	/>
 	<q-card class="q-mt-sm">
 		<q-card-section
@@ -15,7 +15,7 @@
 		</q-card-section>
 		<q-card-section class="bg-green-3 text-green-10 text-subtitle1 q-pa-sm">
 			<div>
-				<span v-html="dataFilter.display || 'Tentukan filter!'"></span>
+				<span v-html="textFilter || 'Tentukan filter!'"></span>
 			</div>
 		</q-card-section>
 		<q-card-section class="no-padding">
@@ -82,9 +82,9 @@
 				</thead>
 				<tbody
 					v-if="
-						!params.thAjaranH ||
-						!params.tingkatId ||
-						!params.bulanUjian
+						!params.th_ajaran_h ||
+						!params.tingkat_id ||
+						!params.list_bulan_ujian
 					"
 				>
 					<tr>
@@ -258,34 +258,25 @@ import { titleCase } from 'src/utils/format-text';
 import { notifySuccess } from 'src/utils/notify';
 
 const spinner = ref(false);
-const route = useRoute();
+const { params } = useRoute();
+const textFilter = ref('');
 
 const absensi = ref([]);
-const params = {
-	absensi: route.params.absensi,
-	thAjaranH: route.params.thAjaranH,
-	tingkatId: route.params.tingkatId,
-	bulanUjian: route.params.bulanUjian,
-};
-const dataFilter = ref({});
-function dataEmit(val) {
-	dataFilter.value = val;
-}
 
 async function fetchAbsensi() {
-	if (params.thAjaranH && params.tingkatId && params.bulanUjian) {
+	if (params.th_ajaran_h && params.tingkat_id && params.list_bulan_ujian) {
 		const data = await apiGet({
 			endPoint: 'absensi/' + params.absensi + '/not-null',
 			params: {
-				th_ajaran_h: params.thAjaranH,
-				tingkat_id: params.tingkatId,
-				bulan_ujian: params.bulanUjian,
+				th_ajaran_h: params.th_ajaran_h,
+				tingkat_id: params.tingkat_id,
+				bulan_ujian: params.list_bulan_ujian,
 			},
 			needNotify: false,
 			loading: spinner,
 		});
 		absensi.value = data['absensi_' + params.absensi];
-		// console.log(absensi.value);
+		console.log(absensi.value);
 		if (!absensi.value.length) {
 			notifySuccess('Tidak ada murid absen pada filter yang dipilih!');
 		}

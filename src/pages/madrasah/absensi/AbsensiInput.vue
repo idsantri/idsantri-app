@@ -1,8 +1,8 @@
 <template lang="">
 	<filter-kelas
-		:showBulanUjian="true"
-		:start-url="`/madrasah/absensi/${params.absensi}/input`"
-		@dataFilter="dataEmit"
+		:show-set-bulan-ujian="true"
+		:start-url="`/madrasah/absensi/input/${params.absensi}`"
+		@data-filter="(v) => (textFilter = v)"
 	/>
 	<q-card class="q-mt-sm">
 		<q-card-section
@@ -14,7 +14,7 @@
 		</q-card-section>
 		<q-card-section class="bg-green-3 text-green-10 text-subtitle1 q-pa-sm">
 			<div>
-				<span v-html="dataFilter.display || 'Tentukan filter!'"></span>
+				<span v-html="textFilter || 'Tentukan filter!'"></span>
 			</div>
 		</q-card-section>
 		<q-card-section class="no-padding">
@@ -73,10 +73,10 @@
 				</thead>
 				<tbody
 					v-if="
-						!params.thAjaranH ||
-						!params.tingkatId ||
+						!params.th_ajaran_h ||
+						!params.tingkat_id ||
 						!params.kelas ||
-						!params.bulanUjian
+						!params.set_bulan_ujian
 					"
 				>
 					<tr>
@@ -419,31 +419,29 @@ import apiDelete from 'src/api/api-delete';
 import apiGet from 'src/api/api-get';
 import FilterKelas from 'src/components/HeadFilterKelas.vue';
 import { titleCase } from 'src/utils/format-text';
+import apiPost from 'src/api/api-post';
 
 const spinner = ref(false);
 const route = useRoute();
 const router = useRouter();
+const textFilter = ref('');
 
 const absensi = ref([]);
 const params = {
 	absensi: route.params.absensi,
-	thAjaranH: route.params.thAjaranH,
-	tingkatId: route.params.tingkatId,
+	th_ajaran_h: route.params.th_ajaran_h,
+	tingkat_id: route.params.tingkat_id,
 	kelas: route.params.kelas,
-	bulanUjian: route.params.bulanUjian,
+	set_bulan_ujian: route.params.set_bulan_ujian,
 };
 
-const dataFilter = ref({});
-function dataEmit(val) {
-	dataFilter.value = val;
-}
 async function deleteAbsensi() {
 	const kelas_id = absensi.value.map((abs) => abs.kelas_id);
-	const bulan_ujian = params.bulanUjian;
+	const bulan_ujian = params.set_bulan_ujian;
 	const deleted = await apiDelete({
 		endPoint: 'absensi/' + params.absensi,
 		message:
-			'<span style="color:\'red\'">Hapus data absensi untuk kelas ini?</span>',
+			'<span style="color:red">Hapus data absensi untuk kelas ini?</span>',
 		params: {
 			bulan_ujian,
 			kelas_id,
@@ -453,20 +451,23 @@ async function deleteAbsensi() {
 
 	if (deleted) {
 		absensi.value = [];
-		const url = `/madrasah/absensi/${params.absensi}/input/${params.thAjaranH}/${params.tingkatId}/${params.kelas}`;
+		const url = `/madrasah/absensi/input/${params.absensi}/${params.th_ajaran_h}/${params.tingkat_id}/${params.kelas}`;
 		router.push(url);
 	}
 }
 
-async function submitAbsensi() {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function submitAbsensiUpdate() {
 	const data = {
 		absensi: JSON.parse(JSON.stringify(absensi.value)),
 	};
+	console.log(data);
+	return;
 	const update = await apiUpdate({
 		endPoint: `absensi/${params.absensi}`,
 		data,
 		confirm: true,
-		message: '<span style="color:\'blue\'">Kirim data absensi?</span>',
+		message: '<span style="color:blue">Kirim data absensi?</span>',
 		loading: spinner,
 	});
 
@@ -475,20 +476,40 @@ async function submitAbsensi() {
 	}
 }
 
+async function submitAbsensi() {
+	const data = {
+		absensi: JSON.parse(JSON.stringify(absensi.value)),
+	};
+
+	const post = await apiPost({
+		endPoint: `absensi/${params.absensi}`,
+		data,
+		confirm: true,
+		message: '<span style="color:blue">Kirim data absensi?</span>',
+		loading: spinner,
+	});
+
+	if (post) {
+		absensi.value = post['absensi_' + params.absensi];
+	} else {
+		await fetchAbsensi();
+	}
+}
+
 async function fetchAbsensi() {
 	if (
-		params.thAjaranH &&
-		params.tingkatId &&
+		params.th_ajaran_h &&
+		params.tingkat_id &&
 		params.kelas &&
-		params.bulanUjian
+		params.set_bulan_ujian
 	) {
 		const data = await apiGet({
 			endPoint: `absensi/${params.absensi}`,
 			params: {
-				th_ajaran_h: params.thAjaranH,
-				tingkat_id: params.tingkatId,
+				th_ajaran_h: params.th_ajaran_h,
+				tingkat_id: params.tingkat_id,
 				kelas: params.kelas,
-				bulan_ujian: params.bulanUjian,
+				bulan_ujian: params.set_bulan_ujian,
 			},
 			needNotify: false,
 			loading: spinner,

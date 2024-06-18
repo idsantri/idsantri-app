@@ -8,14 +8,13 @@
 					</q-toolbar-title>
 
 					<q-btn
-						v-if="showButton(`madrasah/absensi/print`)"
 						dense
 						class="q-px-md q-mr-sm text-green-10"
 						label="Cetak"
 						no-caps=""
 						icon="print"
-						@click="$router.push(`/madrasah/absensi/print`)"
 						color="green-2"
+						to="/info/download"
 					/>
 					<q-btn-dropdown
 						flat
@@ -30,12 +29,12 @@
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi/sekolah/input`,
+										`madrasah/absensi/input/sekolah`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi/sekolah/input"
+								to="/madrasah/absensi/input/sekolah"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="edit_square" />
@@ -45,12 +44,12 @@
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi/musyawarah/input`,
+										`madrasah/absensi/input/musyawarah`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi/musyawarah/input"
+								to="/madrasah/absensi/input/musyawarah"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="edit_square" />
@@ -64,12 +63,12 @@
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi/sekolah/laporan`,
+										`madrasah/absensi/laporan/sekolah`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi/sekolah/laporan"
+								to="/madrasah/absensi/laporan/sekolah"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
@@ -81,12 +80,12 @@
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi/musyawarah/laporan`,
+										`madrasah/absensi/laporan/musyawarah`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi/musyawarah/laporan"
+								to="/madrasah/absensi/laporan/musyawarah"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
@@ -100,12 +99,12 @@
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi/sekolah/rekap-ujian`,
+										`madrasah/absensi/rekap-ujian/sekolah`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi/sekolah/rekap-ujian"
+								to="/madrasah/absensi/rekap-ujian/sekolah"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />
@@ -117,12 +116,12 @@
 							<q-item
 								:disable="
 									!showButton(
-										`madrasah/absensi/musyawarah/rekap-ujian`,
+										`madrasah/absensi/rekap-ujian/musyawarah`,
 									)
 								"
 								clickable
 								v-close-popup
-								to="/madrasah/absensi/musyawarah/rekap-ujian"
+								to="/madrasah/absensi/rekap-ujian/musyawarah"
 							>
 								<q-item-section avatar>
 									<q-icon color="green" name="summarize" />

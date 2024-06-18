@@ -28,7 +28,7 @@ async function deleteData({ endPoint, loading, notify, rerender, params }) {
 
 async function apiDelete({
 	endPoint,
-	message = '<span style="color:\'red\'">Hapus data ini?</span>',
+	message = '<span style="color: red">Hapus data ini?</span>',
 	rerender,
 	params,
 	loading,

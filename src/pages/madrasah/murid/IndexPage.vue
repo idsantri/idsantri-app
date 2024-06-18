@@ -1,15 +1,15 @@
 <template>
 	<q-page class="q-pa-sm">
 		<filter-kelas
-			:showBulanUjian="false"
+			:show-ujian-ke="false"
 			start-url="/madrasah/murid"
-			@dataFilter="dataEmit"
+			@data-filter="(v) => (textFilter = v)"
 		/>
 		<q-card class="q-mt-sm">
 			<q-card-section
 				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
 			>
-				<span v-html="dataFilter.display || ''"></span>
+				<span v-html="textFilter || ''"></span>
 				<q-space />
 				<q-btn
 					dense=""
@@ -40,16 +40,12 @@ import { useRoute } from 'vue-router';
 import { notifyWarning } from 'src/utils/notify';
 import apiGet from 'src/api/api-get';
 
-const dataFilter = ref({});
-const route = useRoute();
+const { params } = useRoute();
 const loadingDownload = ref(false);
-
-function dataEmit(val) {
-	dataFilter.value = val;
-}
+const textFilter = ref('');
 
 async function downloadExcel() {
-	if (!route.params.thAjaranH || !route.params.tingkatId) {
+	if (!params.th_ajaran_h || !params.tingkat_id) {
 		notifyWarning('Tentukan tahun ajaran dan tingkat pendidikan!');
 		return;
 	}
@@ -58,8 +54,8 @@ async function downloadExcel() {
 		endPoint: 'export/kelas',
 		loading: loadingDownload,
 		params: {
-			th_ajaran_h: route.params.thAjaranH,
-			tingkat_id: route.params.tingkatId,
+			th_ajaran_h: params.th_ajaran_h,
+			tingkat_id: params.tingkat_id,
 		},
 	});
 	// console.log(data.url);

@@ -1,15 +1,22 @@
 <template>
 	<q-page class="q-pa-sm">
 		<filter-kelas
-			:showBulanUjian="false"
+			:show-ujian-ke="false"
 			start-url="/madrasah/nilai-mapel/rerata"
-			@dataFilter="dataEmit"
+			@data-filter="(v) => (textFilter = v)"
+			title="Filter Data: <span class='text-weight-medium'>Nilai Mapel (Rerata)</span>"
 		/>
 		<q-card class="q-mt-sm">
 			<q-card-section
 				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
 			>
-				<span v-html="dataFilter.display || ''"></span>
+				<span
+					v-html="
+						textFilter +
+							' ➡️ <em class=\'text-weight-light\'>Kategori: </em> <strong>Nilai Rapor</strong>' ||
+						''
+					"
+				></span>
 				<q-space />
 				<q-btn
 					dense=""
@@ -17,7 +24,7 @@
 					label="Excel"
 					no-caps=""
 					class="bg-green-11 text-green-10 q-px-md q-mr-sm"
-					disable
+					to="/madrasah/nilai-mapel/download"
 				/>
 				<q-btn
 					dense=""
@@ -25,7 +32,7 @@
 					label="Excel"
 					no-caps=""
 					class="bg-green-11 text-green-10 q-px-md q-mr-sm"
-					disable
+					to="/madrasah/nilai-mapel/upload"
 				/>
 
 				<q-btn-dropdown
@@ -45,11 +52,29 @@
 								<q-icon name="settings" />
 							</q-item-section>
 						</q-item>
+						<q-item v-close-popup to="/madrasah/nilai-ahwal">
+							<q-item-section>
+								<q-item-label> Nilai Ahwal </q-item-label>
+							</q-item-section>
+							<q-item-section avatar>
+								<q-icon name="settings_accessibility" />
+							</q-item-section>
+						</q-item>
+						<q-item v-close-popup to="/madrasah/nilai-unlock">
+							<q-item-section>
+								<q-item-label>Unlock Nilai</q-item-label>
+							</q-item-section>
+							<q-item-section avatar>
+								<q-icon name="lock_open" />
+							</q-item-section>
+						</q-item>
 					</q-list>
 				</q-btn-dropdown>
 			</q-card-section>
 			<q-card-section
-				v-if="!params.thAjaranH || !params.tingkatId || !params.kelas"
+				v-if="
+					!params.th_ajaran_h || !params.tingkat_id || !params.kelas
+				"
 				class="q-pa-sm"
 			>
 				<div class="text-center q-pa-lg text-negative text-italic">
@@ -66,8 +91,7 @@
 						:rows="nilai"
 						:columns="columns"
 						row-key="kelas_id"
-						:rows-per-page-options="[0]"
-						hide-pagination
+						:rows-per-page-options="[10, 25, 50, 100, 0]"
 						class="my-sticky-header-table"
 					>
 						<template v-slot:header="props">
@@ -127,7 +151,7 @@
 											dense
 											outline
 											class="q-px-md text-green-10"
-											:to="`/madrasah/kelas/${col.value}/riwayat`"
+											:to="`/madrasah/kelas/${col.value}/nilai-mapel`"
 										/>
 									</span>
 									<span v-else-if="col.name == 'santri_id'">
@@ -169,7 +193,7 @@
 												separator="cell"
 											>
 												<thead
-													class="bg-green-2 text-weight-bold text-right"
+													class="bg-green-2 text-weight-medium text-right"
 												>
 													<tr>
 														<td
@@ -227,15 +251,19 @@
 														</td>
 														<td class="text-right">
 															{{
-																item.rerata.toFixed(
-																	2,
-																)
+																item.rerata
+																	? parseFloat(
+																			item.rerata,
+																		).toFixed(
+																			1,
+																		)
+																	: null
 															}}
 														</td>
 													</tr>
 												</tbody>
 												<tfoot
-													class="bg-green-2 text-weight-bold text-right"
+													class="bg-green-2 text-weight-bold text-right text-green-10"
 												>
 													<tr>
 														<td
@@ -320,26 +348,16 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import FilterKelas from 'src/components/HeadFilterKelas.vue';
 import { useRoute } from 'vue-router';
 import apiGet from 'src/api/api-get';
+import FilterKelas from 'components/HeadFilterKelas.vue';
 
-const dataFilter = ref({});
-const route = useRoute();
-const params = {
-	thAjaranH: route.params.thAjaranH,
-	tingkatId: route.params.tingkatId,
-	kelas: route.params.kelas,
-};
+const { params } = useRoute();
 const nilai = ref([{}]);
 const loading = ref(false);
-
+const textFilter = ref('');
 const nilaiDetail = ref([{}]);
 const loadingDetail = ref([]);
-
-function dataEmit(val) {
-	dataFilter.value = val;
-}
 
 const columns = [
 	{
@@ -378,7 +396,7 @@ const columns = [
 		label: 'Rerata-1',
 		align: 'right',
 		field: (row) =>
-			row.rerata_1 ? parseFloat(row.rerata_1).toFixed(2) : null,
+			row.rerata_1 ? parseFloat(row.rerata_1).toFixed(1) : null,
 		// format: (val) => `${val}`,
 		sortable: true,
 	},
@@ -387,7 +405,7 @@ const columns = [
 		label: 'Rerata-2',
 		align: 'right',
 		field: (row) =>
-			row.rerata_2 ? parseFloat(row.rerata_2).toFixed(2) : null,
+			row.rerata_2 ? parseFloat(row.rerata_2).toFixed(1) : null,
 		// format: (val) => `${val}`,
 		sortable: true,
 	},
@@ -396,7 +414,7 @@ const columns = [
 		label: 'Rerata-3',
 		align: 'right',
 		field: (row) =>
-			row.rerata_3 ? parseFloat(row.rerata_3).toFixed(2) : null,
+			row.rerata_3 ? parseFloat(row.rerata_3).toFixed(1) : null,
 		// format: (val) => `${val}`,
 		sortable: true,
 	},
@@ -405,7 +423,7 @@ const columns = [
 		label: 'Rerata-4',
 		align: 'right',
 		field: (row) =>
-			row.rerata_4 ? parseFloat(row.rerata_4).toFixed(2) : null,
+			row.rerata_4 ? parseFloat(row.rerata_4).toFixed(1) : null,
 		// format: (val) => `${val}`,
 		sortable: true,
 	},
@@ -414,8 +432,8 @@ const columns = [
 		label: 'R. Akhir',
 		align: 'right',
 		field: (row) =>
-			row.rerata_akhir ? parseFloat(row.rerata_akhir).toFixed(2) : null,
-		// format: (val) => `${val.toFixed(2)}`,
+			row.rerata_akhir ? parseFloat(row.rerata_akhir).toFixed(1) : null,
+		// format: (val) => `${val.toFixed(1)}`,
 		sortable: true,
 	},
 ];
@@ -429,7 +447,7 @@ async function expand(props) {
 			endPoint: 'nilai-mapel',
 			params: {
 				kelas_id: props.key,
-				status_nilai: 'ujian',
+				category: 'rapor',
 			},
 		});
 		// console.log('detail', data.nilai);
@@ -439,14 +457,14 @@ async function expand(props) {
 }
 
 onMounted(async () => {
-	if (params.thAjaranH && params.tingkatId && params.kelas) {
+	if (params.th_ajaran_h && params.tingkat_id && params.kelas) {
 		const data = await apiGet({
 			endPoint: 'nilai-mapel/rerata',
 			params: {
-				th_ajaran_h: params.thAjaranH,
-				tingkat_id: params.tingkatId,
+				th_ajaran_h: params.th_ajaran_h,
+				tingkat_id: params.tingkat_id,
 				kelas: params.kelas,
-				status_nilai: 'ujian',
+				category: 'rapor',
 			},
 			loading,
 		});
@@ -468,7 +486,7 @@ function hitungRataRata(data, n) {
 			}
 		});
 		const rerata = totalNilai / jumlahData;
-		return !isNaN(rerata) ? rerata.toFixed(2) : null;
+		return !isNaN(rerata) ? rerata.toFixed(1) : null;
 	}
 }
 </script>

@@ -129,8 +129,7 @@ import apiDelete from 'src/api/api-delete';
 import CurrencyInput from 'src/components/CurrencyInput.vue';
 import loadingStore from 'src/stores/loading-store';
 
-const loadingState = loadingStore();
-const { loadingMain } = toRefs(loadingState);
+const { loadingMain } = toRefs(loadingStore());
 const props = defineProps({
 	data: Object,
 	isNew: Boolean,

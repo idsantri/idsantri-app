@@ -20,8 +20,17 @@
 				<q-input
 					dense
 					outlined
+					label="Urut"
+					v-model="input.urut"
+					hint="Nomor urut tampil"
+				/>
+				<q-input
+					class="q-mt-sm"
+					dense
+					outlined
 					label="Kode/ID Mapel"
 					v-model="input.id"
+					hint="Format: tingkat_id—kode_mapel (ibt-qur)"
 				/>
 				<q-select
 					dense
@@ -44,6 +53,7 @@
 					outlined
 					label="Mata Pelajaran"
 					v-model="input.mapel"
+					hint="Hanya huruf dan spasi"
 				/>
 				<q-input
 					dense
@@ -56,10 +66,10 @@
 					dense
 					class="q-mt-sm"
 					outlined
-					label="Tingkat Pendidikan"
+					label="Kategori Fan"
 					emit-value
 					map-options
-					v-model="input.status_fan"
+					v-model="input.category"
 					:options="['Fan Pokok', 'Fan Dasar', 'Fan Tambahan']"
 					behavior="menu"
 				/>
@@ -114,7 +124,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
-const input = ref({ status_fan: 'Fan Dasar', show: 1 });
+const input = ref({ category: 'Fan Dasar', show: 1 });
 const lists = ref([]);
 const loading = ref([]);
 const loadingCrud = ref(false);
@@ -134,11 +144,12 @@ const onSubmit = async () => {
 	// console.log(input.value.id);
 	// return;
 	const data = {
-		id: input.value.id,
+		urut: input.value.urut,
+		id: input.value.id.toLowerCase(),
 		tingkat_id: input.value.tingkat_id,
 		mapel: input.value.mapel,
 		mata_pelajaran: input.value.mata_pelajaran,
-		status_fan: input.value.status_fan,
+		category: input.value.category,
 		show: input.value.show,
 	};
 	// console.log(data);

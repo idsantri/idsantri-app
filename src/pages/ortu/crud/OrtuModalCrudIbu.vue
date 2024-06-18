@@ -50,14 +50,15 @@
 		v-model="i_tgl_lahir"
 		type="date"
 	/>
-	<q-toggle
-		v-model="i_hidup"
-		color="green"
-		label="Hidup"
-		:true-value="1"
-		:false-value="0"
-	/>
-
+	<q-card bordered flat class="q-px-sm q-mt-sm">
+		<q-toggle
+			v-model="i_hidup"
+			color="green"
+			:true-value="1"
+			:false-value="0"
+			label="Hidup"
+		/>
+	</q-card>
 	<q-select
 		dense
 		hint=""
