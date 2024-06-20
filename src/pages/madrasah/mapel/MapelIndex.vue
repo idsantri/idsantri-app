@@ -16,35 +16,24 @@
 						class="q-px-sm q-mr-md"
 					/>
 					<q-btn
-						class="q-mr-sm text-green-10"
+						class="text-green-10"
 						label="Baru"
 						icon="add"
 						no-caps
 						color="green-11"
 						@click="addNew"
 					/>
-					<select-tingkat-pendidikan
-						style="width: 250px"
-						bg-color="green-1"
-						v-model="tingkatId"
-					/>
-					<!-- <q-select
-						style="width: 200px"
-						dense
-						bg-color="green-1"
-						outlined
-						label="Tingkat Pendidikan"
-						v-model="tingkatId"
-						:options="lists['tingkat-pendidikan']"
-						option-value="val0"
-						option-label="val1"
-						emit-value
-						map-options
-						:loading="loadingLists['tingkat-pendidikan']"
-						behavior="menu"
-					/> -->
 				</q-toolbar>
 			</q-card-section>
+			<q-card-actions align="right" class="bg-green-1">
+				<InputSelectTingkatPendidikan
+					style="width: 300px"
+					v-model="tingkatId"
+					label="Tingkat Pendidikan"
+					:selected="tingkatId"
+					class=""
+				/>
+			</q-card-actions>
 			<q-card-section class="q-pa-sm">
 				<q-markup-table flat>
 					<thead>
@@ -113,10 +102,10 @@
 	</q-page>
 </template>
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import apiGet from 'src/api/api-get';
 import MapelCrud from 'pages/madrasah/mapel/MapelCrud.vue';
-import SelectTingkatPendidikan from 'src/components/select-list/SelectTingkatPendidikan.vue';
+import InputSelectTingkatPendidikan from 'src/components/inputs/InputSelectTingkatPendidikan.vue';
 
 const mapel = ref([]);
 const tingkatId = ref('');
@@ -132,8 +121,6 @@ async function loadData(id) {
 	});
 	mapel.value = data.mapel;
 }
-
-onMounted(async () => {});
 
 watch(tingkatId, async (newVal) => {
 	if (newVal) {

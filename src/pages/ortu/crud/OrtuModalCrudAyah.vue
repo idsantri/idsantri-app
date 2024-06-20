@@ -59,8 +59,9 @@
 			label="Hidup"
 		/>
 	</q-card>
-	<select-p-a-formal
+	<input-select-array
 		v-model="a_pa_formal_tingkat"
+		url="pendidikan-akhir-diniyah"
 		label="Pendidikan Akhir Formal"
 		class="q-mt-sm"
 		hint=""
@@ -68,8 +69,9 @@
 		new-value-mode="add"
 	/>
 
-	<select-p-a-diniyah
+	<input-select-array
 		v-model="a_pa_diniyah_tingkat"
+		url="pendidikan-akhir-diniyah"
 		label="Pendidikan Akhir Diniyah"
 		class="q-mt-sm"
 		use-input=""
@@ -77,8 +79,10 @@
 		hint=""
 	/>
 
-	<select-pekerjaan
+	<input-select-array
 		v-model="a_pekerjaan"
+		url="pekerjaan"
+		label="Pekerjaan"
 		class="q-mt-sm"
 		use-input=""
 		new-value-mode="add"
@@ -90,10 +94,8 @@ import { onMounted, ref, toRefs } from 'vue';
 import ortuState from 'src/stores/ortu-store.js';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
-import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
-import SelectPekerjaan from 'src/components/select-list/SelectPekerjaan.vue';
-import SelectPADiniyah from 'src/components/select-list/SelectPADiniyah.vue';
-import SelectPAFormal from 'src/components/select-list/SelectPAFormal.vue';
+import InputSelectKotaLahir from 'src/components/inputs/InputSelectKotaLahir.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -117,3 +119,4 @@ const input = ref({
 
 onMounted(async () => {});
 </script>
+src/components/inputs/InputSelectKotaLahir.vue

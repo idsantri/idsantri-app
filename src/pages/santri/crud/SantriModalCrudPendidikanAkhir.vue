@@ -5,15 +5,19 @@
 	<div class="text-italic">Sebelum masuk ke lembaga ini</div>
 	<div class="text-overline q-mt-sm">Formal</div>
 
-	<select-p-a-formal
+	<input-select-array
 		v-model="pa_formal_tingkat"
+		url="pendidikan-akhir-formal"
+		label="Pendidikan Akhir Formal"
 		class="q-mt-sm"
 		hint=""
 		use-input=""
 		new-value-mode="add"
 	/>
-	<select-kelas
+	<input-select-array
 		v-model="pa_formal_kelas"
+		url="kelas"
+		label="Kelas"
 		class="q-mt-sm"
 		hint=""
 		use-input=""
@@ -31,16 +35,20 @@
 	/>
 
 	<div class="text-overline q-mt-sm">Diniyah</div>
-	<select-p-a-diniyah
+	<input-select-array
 		v-model="pa_diniyah_tingkat"
+		url="pendidikan-akhir-diniyah"
+		label="Pendidikan Akhir Diniyah"
 		class="q-mt-sm"
 		hint=""
 		use-input=""
 		new-value-mode="add"
 	/>
 
-	<select-kelas
+	<input-select-array
 		v-model="pa_diniyah_kelas"
+		url="kelas"
+		label="Kelas"
 		class="q-mt-sm"
 		hint=""
 		use-input=""
@@ -61,9 +69,7 @@
 <script setup>
 import { onMounted, toRefs } from 'vue';
 import santriState from 'src/stores/santri-store';
-import SelectKelas from 'src/components/select-list/SelectKelas.vue';
-import SelectPADiniyah from 'src/components/select-list/SelectPADiniyah.vue';
-import SelectPAFormal from 'src/components/select-list/SelectPAFormal.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },

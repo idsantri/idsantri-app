@@ -2,20 +2,22 @@
 	<q-select
 		dense
 		outlined
-		label="Iuran"
+		label="Tingkat Pendidikan *"
 		emit-value
 		map-options
 		option-value="val0"
-		option-label="val0"
+		option-label="val1"
 		:options="options"
 		:loading="loading"
 		behavior="menu"
 		clearable
+		:hint="textHint()"
 	>
 		<template v-slot:after>
 			<drop-down-after
-				route-to="/settings/lists/iuran"
+				route-to=""
 				@reload="fetchList"
+				:disableRoute="true"
 			/>
 		</template>
 	</q-select>
@@ -28,24 +30,44 @@ import DropDownAfter from './DropDownAfter.vue';
 
 const loading = ref(false);
 const options = ref([]);
+const store = listsStore();
+const url = 'tingkat-pendidikan';
+
+const props = defineProps({
+	selected: {
+		type: String,
+		default: '',
+	},
+});
+
+function textHint() {
+	if (props.selected) {
+		const tingkat = options.value?.find(
+			(tk) => tk?.val0 === props.selected,
+		);
+		return 'Tingkat ID: ' + tingkat?.val0 || '';
+	} else {
+		return 'Pilih tingkat pendidikan';
+	}
+}
 
 onMounted(async () => {
-	const store = listsStore().iuranGet();
-	if (store.length) {
-		options.value = store;
+	const data = store.getByStateName(url);
+	if (data.length) {
+		options.value = data;
 	} else {
 		await fetchList();
+		options.value = store.getByStateName(url);
 	}
 });
 
 async function fetchList() {
 	const data = await getListsArrayObject({
-		key: 'iuran',
+		key: url,
 		loading,
 		sort: 'asc',
 	});
-	options.value = data;
-	listsStore().iuranSet(data);
+	store.$patch({ [url]: data });
 }
 </script>
 <style lang=""></style>

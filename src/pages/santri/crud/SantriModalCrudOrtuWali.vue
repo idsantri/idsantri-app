@@ -117,11 +117,12 @@
 				@click="check('wali', wali_id)"
 		/></template>
 	</q-input>
-	<select-hubungan-wali
+	<input-select-array
 		v-model="wali_status"
+		url="hubungan-wali"
+		label="Status Wali*"
 		class="q-mt-sm"
 		hint="Hubungan dengan wali"
-		label="Status Wali*"
 		:rules="[(val) => !!val || 'Harus diisi!']"
 	/>
 </template>
@@ -132,7 +133,7 @@ import santriState from 'src/stores/santri-store';
 import { notifyError } from 'src/utils/notify';
 import { toArray } from 'src/utils/array-object';
 import apiGet from 'src/api/api-get';
-import SelectHubunganWali from 'src/components/select-list/SelectHubunganWali.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },

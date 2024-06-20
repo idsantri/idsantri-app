@@ -149,14 +149,16 @@
 						<div class="text-subtitle2">
 							{{ carousel.others.title }}
 						</div>
-						<select-p-a-formal
+						<input-select-array
 							v-model="input.pa_formal"
+							url="pendidikan-akhir-formal"
 							label="Pendidikan Akhir Formal"
 							class="q-mt-sm"
 							hint=""
 						/>
-						<select-p-a-diniyah
+						<input-select-array
 							v-model="input.pa_diniyah"
+							url="pendidikan-akhir-diniyah"
 							label="Pendidikan Akhir Diniyah"
 							class="q-mt-sm"
 							hint=""
@@ -235,9 +237,8 @@ import { formatDateFull, isDate } from 'src/utils/format-date';
 import { bacaHijri, m2h } from 'src/utils/hijri';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
-import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
-import SelectPADiniyah from 'src/components/select-list/SelectPADiniyah.vue';
-import SelectPAFormal from 'src/components/select-list/SelectPAFormal.vue';
+import InputSelectKotaLahir from 'src/components/inputs/InputSelectKotaLahir.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	dataAparatur: Object,
@@ -322,3 +323,4 @@ const toggleOptions = [
 	},
 ];
 </script>
+src/components/inputs/InputSelectKotaLahir.vue

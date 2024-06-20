@@ -2,29 +2,27 @@
 	<div class="text-subtitle2">
 		{{ props.title }}
 	</div>
-	<select-p-a-formal
+	<InputSelectArray
 		v-model="pa_formal_tingkat"
-		class="q-mt-sm"
+		url="pendidikan-akhir-formal"
 		label="Pendidikan Akhir Formal"
+		class="q-mt-sm"
 		hint=""
-		use-input=""
-		new-value-mode="add"
 	/>
 
-	<select-p-a-diniyah
+	<InputSelectArray
 		v-model="pa_diniyah_tingkat"
+		url="pendidikan-akhir-diniyah"
 		label="Pendidikan Akhir Diniyah"
 		class="q-mt-sm"
 		hint=""
-		use-input=""
-		new-value-mode="add"
 	/>
-	<select-pekerjaan
+	<InputSelectArray
 		v-model="pekerjaan"
+		url="pekerjaan"
+		label="Pekerjaan"
 		class="q-mt-sm"
 		hint=""
-		use-input=""
-		new-value-mode="add"
 	/>
 	<q-input
 		dense
@@ -58,9 +56,7 @@
 <script setup>
 import { onMounted, toRefs } from 'vue';
 import waliState from 'src/stores/wali-store';
-import SelectPAFormal from 'src/components/select-list/SelectPAFormal.vue';
-import SelectPADiniyah from 'src/components/select-list/SelectPADiniyah.vue';
-import SelectPekerjaan from 'src/components/select-list/SelectPekerjaan.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },

@@ -67,14 +67,17 @@
 					]"
 					error-color="negative"
 				/>
-				<select-keperluan-izin
+				<input-select-array
 					v-model="input.keperluan"
+					url="keperluan-izin"
+					label="Keperluan *"
 					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
-					label="Keperluan *"
 				/>
-				<select-keterangan-izin
+				<input-select-array
 					v-model="input.keterangan"
+					url="keterangan-izin"
+					label="Keterangan"
 					class="q-mt-sm"
 				/>
 				<q-input
@@ -120,8 +123,7 @@ import { formatDateFull, isDate } from 'src/utils/format-date';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
 import apiDelete from 'src/api/api-delete';
-import SelectKeperluanIzin from 'src/components/select-list/SelectKeperluanIzin.vue';
-import SelectKeteranganIzin from 'src/components/select-list/SelectKeteranganIzin.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },

@@ -83,13 +83,13 @@ async function fetchData() {
 	});
 	listGet.value = data;
 
-	// TODO: add to lists store
-	// const dataArray = data.map((v) => v.val0);
-	// console.log(selected.state);
-	// listsStore().setData(selected.state, data);
-
-	// const store = listsStore();
-	// store.$patch({ [selected.url]: data });
+	const store = listsStore();
+	const checkState = store.checkState(selected.url);
+	if (checkState) {
+		store.$patch({ [selected.url]: data });
+	}
+	// const a = store.getByStateName_arr(selected.url);
+	// console.log(a);
 }
 
 function setInput() {

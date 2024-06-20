@@ -25,25 +25,35 @@
 					filled=""
 				/>
 
-				<select-jabatan-madrasah
+				<input-select-array
 					v-model="input.jabatan"
+					url="jabatan-madrasiyah"
+					label="Jabatan"
 					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
-				<select-tahun-ajaran
+				<InputSelectArray
 					v-model="input.th_ajaran_h"
+					url="tahun-ajaran"
+					label="Tahun Ajaran *"
+					sort="desc"
 					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
-					:hint="hintTahun()"
+					:selected="input.th_ajaran_h"
 				/>
 
-				<select-tingkat-pendidikan
+				<InputSelectTingkatPendidikan
 					v-model="input.tingkat_id"
 					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
-					:hint="hintTingkat()"
+					:selected="input.tingkat_id"
 				/>
-				<select-kelas v-model="input.kelas" class="q-mt-sm" />
+				<input-select-array
+					v-model="input.kelas"
+					url="kelas"
+					label="Kelas"
+					class="q-mt-sm"
+				/>
 
 				<q-input
 					dense
@@ -95,10 +105,8 @@ import apiDelete from 'src/api/api-delete';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import SelectJabatanMadrasah from 'src/components/select-list/SelectJabatanMadrasah.vue';
-import SelectTahunAjaran from 'src/components/select-list/SelectTahunAjaran.vue';
-import SelectTingkatPendidikan from 'src/components/select-list/SelectTingkatPendidikan.vue';
-import SelectKelas from 'src/components/select-list/SelectKelas.vue';
+import InputSelectTingkatPendidikan from 'src/components/inputs/InputSelectTingkatPendidikan.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -115,26 +123,9 @@ const tahunAjaran = ref([]);
 onMounted(async () => {
 	// input.value = props.data;  // menjadi reactive
 	Object.assign(input.value, props.data);
-	tahunAjaran.value = listsStore().tahunAjaranGet();
-	tingkat.value = listsStore().tingkatPendidikanGet();
+	tahunAjaran.value = listsStore().getByStateName('tahun-ajaran');
+	tingkat.value = listsStore().getByStateName('tingkat-pendidikan');
 });
-
-const hintTahun = () =>
-	input.value.th_ajaran_h?.length == 9
-		? tahunAjaran.value?.find((th) => th.val0 === input.value.th_ajaran_h)
-				?.val1
-		: '';
-
-const hintTingkat = () => {
-	if (input.value.tingkat_id) {
-		const t = tingkat.value?.find(
-			(tk) => tk?.val0 === input.value.tingkat_id,
-		);
-		return 'Tingkat ID: ' + t.val0 || '';
-	} else {
-		return 'Tingkat Pendidikan';
-	}
-};
 
 const submit = async () => {
 	const data = {

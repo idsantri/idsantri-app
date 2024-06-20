@@ -17,7 +17,7 @@
 				label="Setting"
 				flat
 				icon="toc"
-				:to="routeTo"
+				:to="'/settings/lists/' + routeTo"
 				v-close-popup
 				class="block"
 				:disable="disableRoute"

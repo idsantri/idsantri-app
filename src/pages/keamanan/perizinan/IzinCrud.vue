@@ -23,8 +23,10 @@
 						@emit-input="(val) => Object.assign(input, val)"
 						:data="props.data"
 					/>
-					<select-sifat-izin
+					<input-select-array
 						v-model="input.sifat"
+						url="sifat-izin"
+						label="Sifat"
 						class="q-mt-sm"
 						:rules="[(val) => !!val || 'Harus diisi!']"
 					/>
@@ -56,15 +58,18 @@
 						]"
 						error-color="negative"
 					/>
-					<select-keperluan-izin
+					<input-select-array
 						v-model="input.keperluan"
-						class="q-mt-sm"
+						url="keperluan-izin"
 						label="Keperluan *"
+						class="q-mt-sm"
 						:rules="[(val) => !!val || 'Harus diisi!']"
 					/>
 
-					<select-keterangan-izin
+					<input-select-array
 						v-model="input.keterangan"
+						url="keterangan-izin"
+						label="Keterangan"
 						class="q-mt-sm"
 					/>
 
@@ -121,10 +126,8 @@ import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import { isDate, formatDateFull } from 'src/utils/format-date';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
-import SelectSifatIzin from 'src/components/select-list/SelectSifatIzin.vue';
-import SelectKeperluanIzin from 'src/components/select-list/SelectKeperluanIzin.vue';
-import SelectKeteranganIzin from 'src/components/select-list/SelectKeteranganIzin.vue';
+import InputSelectSantriId from 'src/components/inputs/InputSelectSantriId.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	isNew: Boolean,
@@ -185,3 +188,4 @@ onMounted(async () => {
 });
 </script>
 <style lang=""></style>
+src/components/inputs/InputSelectSantriId.vue

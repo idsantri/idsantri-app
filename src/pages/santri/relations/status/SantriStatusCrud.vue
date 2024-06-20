@@ -26,16 +26,18 @@
 					filled=""
 				/>
 
-				<select-status
-					class="q-mt-sm"
+				<input-select-array
 					v-model="input.status"
+					url="status"
+					label="Status"
+					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
-				<select-keterangan-status
-					class="q-mt-sm"
+				<input-select-array
 					v-model="input.keterangan"
-					use-input=""
-					new-value-mode="add"
+					url="keterangan-status"
+					label="Keterangan"
+					class="q-mt-sm"
 				/>
 			</q-card-section>
 			<q-card-actions class="flex bg-green-6">
@@ -71,8 +73,7 @@ import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import SelectStatus from 'src/components/select-list/SelectStatus.vue';
-import SelectKeteranganStatus from 'src/components/select-list/SelectKeteranganStatus.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },

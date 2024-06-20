@@ -59,10 +59,11 @@
 					new-value-mode="add"
 					behavior="menu"
 				/>
-				<select-keterangan-status
+				<input-select-array
+					v-model="input.alasan"
+					url="keterangan-status"
 					label="Alasan*"
 					class="q-mt-sm"
-					v-model="input.alasan"
 					use-input=""
 					new-value-mode="add"
 				/>
@@ -116,10 +117,11 @@
 							new-value-mode="add"
 							behavior="menu"
 						/>
-						<select-hubungan-wali
+						<input-select-array
 							v-model="input.wali_hubungan"
-							class="q-mt-sm"
+							url="hubungan-wali"
 							label="Hubungan*"
+							class="q-mt-sm"
 							use-input=""
 							new-value-mode="add"
 						/>
@@ -153,8 +155,7 @@ import { onMounted, reactive, ref } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import santriStore from 'src/stores/santri-store';
 import { notifyError } from 'src/utils/notify';
-import SelectKeteranganStatus from 'src/components/select-list/SelectKeteranganStatus.vue';
-import SelectHubunganWali from 'src/components/select-list/SelectHubunganWali.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const input = ref({ jenis_permohonan: 'Berhenti', tunggakan: 'Lunas' });
 const { santri } = reactive(santriStore());

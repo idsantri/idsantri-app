@@ -55,12 +55,14 @@
 					disable
 					filled
 				/>
-				<select-tahun-ajaran
+				<InputSelectArray
 					v-model="input.th_ajaran_h"
-					class="q-mt-sm"
+					url="tahun-ajaran"
 					label="Tahun Ajaran *"
+					sort="desc"
+					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
-					:hint="hintTahun()"
+					:selected="input.th_ajaran_h"
 				/>
 
 				<q-input
@@ -126,8 +128,8 @@ import apiDelete from 'src/api/api-delete';
 import loadingStore from 'src/stores/loading-store';
 import listsStore from 'src/stores/lists-store';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
-import SelectTahunAjaran from 'src/components/select-list/SelectTahunAjaran.vue';
+import InputSelectSantriId from 'src/components/inputs/InputSelectSantriId.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const { loadingMain } = toRefs(loadingStore());
 
@@ -205,11 +207,6 @@ onMounted(async () => {
 	pjgtList.value = data.pjgt;
 	// console.log(pjgtList.value);
 });
-
-const hintTahun = () =>
-	input.value.th_ajaran_h?.length == 9
-		? tahunAjaran.value?.find((th) => th.val0 === input.value.th_ajaran_h)
-				?.val1
-		: '';
 </script>
 <style lang=""></style>
+src/components/inputs/InputSelectSantriId.vue

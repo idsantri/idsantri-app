@@ -90,7 +90,7 @@ import { toRefs } from 'vue';
 import santriState from 'src/stores/santri-store';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
-import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
+import InputSelectKotaLahir from 'src/components/inputs/InputSelectKotaLahir.vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -99,3 +99,4 @@ const props = defineProps({
 const { santri } = santriState();
 const { nama, nisn, nkk, nik, tgl_lahir, sex } = toRefs(santri);
 </script>
+src/components/inputs/InputSelectKotaLahir.vue

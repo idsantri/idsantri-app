@@ -8,7 +8,7 @@
 						outlined
 						label="Pilih List"
 						v-model="listModel"
-						:options="listData"
+						:options="options"
 						emit-value
 						map-options
 						@update:model-value="(v) => routerPush(v)"
@@ -26,7 +26,7 @@
 	</q-page>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import listData from './lists-data';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -35,6 +35,17 @@ const route = useRoute();
 
 const listKey = route.params.listKey;
 const listModel = ref(listData.find(({ url }) => url == listKey));
+const options = ref([]);
+
+/**
+ * JANGAN tampilkan tingkat pendidikan
+ * filter lists
+ **/
+onMounted(() => {
+	options.value = listData.filter(
+		(item) => item.url !== 'tingkat-pendidikan',
+	);
+});
 
 function routerPush(list) {
 	router.push(`/settings/lists/${list.url}`);

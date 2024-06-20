@@ -25,9 +25,11 @@
 					disable=""
 					filled=""
 				/>
-				<select-domisili
-					class="q-mt-sm"
+				<input-select-array
 					v-model="input.domisili"
+					url="domisili"
+					label="Domisili *"
+					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
 				<q-input
@@ -72,7 +74,7 @@ import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import SelectDomisili from 'src/components/select-list/SelectDomisili.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },

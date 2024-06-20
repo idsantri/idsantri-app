@@ -24,11 +24,11 @@
 					v-model="input.urut"
 					hint="Nomor urut tampil"
 				/>
-				<select-tingkat-pendidikan
+				<InputSelectTingkatPendidikan
 					v-model="input.tingkat_id"
 					class="q-mt-sm"
-					:hint="hintTingkat()"
 					:rules="[(val) => !!val || 'Harus diisi!']"
+					:selected="input.tingkat_id"
 				/>
 
 				<q-input
@@ -109,7 +109,7 @@ import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import SelectTingkatPendidikan from 'src/components/select-list/SelectTingkatPendidikan.vue';
+import InputSelectTingkatPendidikan from 'src/components/inputs/InputSelectTingkatPendidikan.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -123,19 +123,8 @@ const tingkat = ref([]);
 
 onMounted(async () => {
 	Object.assign(input.value, props.data);
-	tingkat.value = listsStore().tingkatPendidikanGet();
+	tingkat.value = listsStore().getByStateName('tingkat-pendidikan');
 });
-
-const hintTingkat = () => {
-	if (input.value.tingkat_id) {
-		const t = tingkat.value?.find(
-			(tk) => tk?.val0 === input.value.tingkat_id,
-		);
-		return 'Tingkat ID: ' + t.val0 || '';
-	} else {
-		return 'Tingkat Pendidikan';
-	}
-};
 
 const onSubmit = async () => {
 	// console.log(input.value.id);

@@ -84,11 +84,11 @@
 							/>
 						</template>
 					</q-select>
-					<select-tatib-santri
-						hint=""
+					<input-select-tatib-santri
 						class="q-mt-sm"
 						v-model="input.pasal"
 						:rules="[(val) => !!val || 'Harus diisi!']"
+						:selected="input.pasal ? input.pasal.join('; ') : ''"
 					/>
 					<q-input
 						dense
@@ -114,9 +114,12 @@
 						label="Saksi"
 						v-model="input.saksi"
 					/>
-					<select-takzir-santri
-						class="q-mt-sm"
+					<input-select-array
 						v-model="input.takzir"
+						url="takzir-santri"
+						label="Takzir"
+						class="q-mt-sm"
+						multiple
 					/>
 					<q-input
 						dense
@@ -164,9 +167,9 @@ import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
-import SelectTakzirSantri from 'src/components/select-list/SelectTakzirSantri.vue';
-import SelectTatibSantri from 'src/components/select-list/SelectTatibSantri.vue';
+import InputSelectSantriId from 'src/components/inputs/InputSelectSantriId.vue';
+import InputSelectTatibSantri from 'src/components/inputs/InputSelectTatibSantri.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	isNew: Boolean,

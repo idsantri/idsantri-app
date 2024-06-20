@@ -23,18 +23,23 @@
 					:data="props.data"
 					:disable-select="$props.disableSantriId"
 				/>
-				<select-tahun-ajaran
+				<InputSelectArray
 					v-model="input.th_ajaran_h"
+					url="tahun-ajaran"
+					label="Tahun Ajaran"
+					sort="desc"
 					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
-					:hint="hintTahun()"
+					:selected="input.th_ajaran_h"
 				/>
-				<select-iuran
+				<InputSelectArray
 					v-model="input.iuran"
+					url="iuran"
+					label="Iuran"
 					class="q-mt-sm"
 					@update:model-value="setNominal"
 				/>
-				<currency-input
+				<InputCurrency
 					dense
 					class="q-mt-sm"
 					outlined
@@ -71,9 +76,16 @@
 						)
 					"
 				/>
-				<select-metode-pembayaran v-model="input.via" class="q-mt-sm" />
-				<select-keterangan-iuran
+				<InputSelectArray
+					v-model="input.via"
+					url="metode-pembayaran"
+					label="Via"
+					class="q-mt-sm"
+				/>
+				<InputSelectArray
 					v-model="input.keterangan"
+					url="keterangan-iuran"
+					label="Keterangan"
 					class="q-mt-sm"
 				/>
 			</q-card-section>
@@ -111,13 +123,10 @@ import apiDelete from 'src/api/api-delete';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
 import { digitSeparator } from 'src/utils/format-number';
-import CurrencyInput from 'src/components/CurrencyInput.vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
-import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
-import SelectTahunAjaran from 'src/components/select-list/SelectTahunAjaran.vue';
-import SelectIuran from 'src/components/select-list/SelectIuran.vue';
-import SelectKeteranganIuran from 'src/components/select-list/SelectKeteranganIuran.vue';
-import SelectMetodePembayaran from 'src/components/select-list/SelectMetodePembayaran.vue';
+import InputCurrency from 'src/components/inputs/InputCurrency.vue';
+import InputSelectSantriId from 'src/components/inputs/InputSelectSantriId.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	data: { type: Object, required: false, default: () => {} },
@@ -135,15 +144,9 @@ const iuran = ref([]);
 
 onMounted(async () => {
 	Object.assign(input.value, props.data);
-	tahunAjaran.value = listsStore().tahunAjaranGet();
-	iuran.value = listsStore().iuranGet();
+	tahunAjaran.value = listsStore().getByStateName('tahun-ajaran');
+	iuran.value = listsStore().getByStateName('iuran');
 });
-
-const hintTahun = () =>
-	input.value.th_ajaran_h?.length == 9
-		? tahunAjaran.value?.find((th) => th.val0 === input.value.th_ajaran_h)
-				?.val1
-		: '';
 
 const setNominal = (val) => {
 	const selectedOption = iuran.value.find((item) => item.val0 === val);
@@ -195,3 +198,4 @@ const del = async (id) => {
 	}
 };
 </script>
+src/components/inputs/InputSelectSantriId.vuesrc/components/inputs/CurrencyInput.vue

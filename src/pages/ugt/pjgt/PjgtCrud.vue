@@ -78,8 +78,10 @@
 							error-color="negative"
 							behavior="menu"
 						/>
-						<select-jenis-lembaga
+						<select-input-array
 							v-model="input.jenis_lembaga"
+							url="jenis-lembaga-pendidikan"
+							label="Jenis Lembaga"
 							hint=""
 							class="q-mt-sm"
 						/>
@@ -116,11 +118,12 @@
 							{{ carousel.others.title }}
 						</div>
 
-						<select-wilayah-ugt
-							hint=""
-							class="q-mt-sm"
-							label="Wilayah PJGT"
+						<input-select-array
 							v-model="input.wilayah"
+							url="wilayah-ugt"
+							label="Wilayah PJGT"
+							class="q-mt-sm"
+							hint=""
 						/>
 
 						<q-input
@@ -195,8 +198,7 @@ import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
-import SelectJenisLembaga from 'src/components/select-list/SelectJenisLembagaPendidikan.vue';
-import SelectWilayahUgt from 'src/components/select-list/SelectWilayahUgt.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const loadingState = loadingStore();
 const { loadingMain } = toRefs(loadingState);
