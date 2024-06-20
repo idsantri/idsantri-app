@@ -55,28 +55,14 @@
 					disable
 					filled
 				/>
-				<q-select
-					dense
-					:hint="
-						input.th_ajaran_h?.length == 9
-							? lists['tahun-ajaran']?.find(
-									(item) => item.val0 === input.th_ajaran_h,
-								)?.val1
-							: ''
-					"
-					class="q-mt-sm"
-					outlined
-					label="Tahun Ajaran*"
+				<InputSelectArray
 					v-model="input.th_ajaran_h"
-					:options="lists['tahun-ajaran']"
-					option-value="val0"
-					option-label="val0"
-					emit-value
-					map-options
+					url="tahun-ajaran"
+					label="Tahun Ajaran *"
+					sort="desc"
+					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
-					error-color="negative"
-					:loading="loading['tahun-ajaran']"
-					behavior="menu"
+					:selected="input.th_ajaran_h"
 				/>
 
 				<q-input
@@ -134,15 +120,16 @@
 	</q-card>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { onMounted, ref, toRefs } from 'vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
-import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
+import apiGet from 'src/api/api-get';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
-import { getListsKey } from 'src/api/api-get-lists';
 import loadingStore from 'src/stores/loading-store';
+import listsStore from 'src/stores/lists-store';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import InputSelectSantriId from 'src/components/inputs/InputSelectSantriId.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const { loadingMain } = toRefs(loadingStore());
 
@@ -153,10 +140,9 @@ const props = defineProps({
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const input = ref({});
-const lists = ref([]);
-const loading = ref([]);
 const pjgtList = ref([]);
 const pjgtLoading = ref(false);
+const tahunAjaran = ref([]);
 
 function onInputPjgt() {
 	input.value.pjgt_nama = pjgtList.value.find(
@@ -216,15 +202,11 @@ const handleDelete = async () => {
 onMounted(async () => {
 	// console.log(props.data);
 	Object.assign(input.value, props.data);
-	await getListsKey({
-		key: 'tahun-ajaran',
-		loading,
-		lists,
-		sort: false,
-	});
+	tahunAjaran.value = listsStore().tahunAjaranGet();
 	const data = await apiGet({ endPoint: 'ugt/pjgt', loading: pjgtLoading });
 	pjgtList.value = data.pjgt;
 	// console.log(pjgtList.value);
 });
 </script>
 <style lang=""></style>
+src/components/inputs/InputSelectSantriId.vue

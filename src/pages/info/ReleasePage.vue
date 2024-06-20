@@ -61,6 +61,11 @@ const releases = [
 		date: 'Juni 2024',
 		release: {
 			'Nilai Mapel': ['Release Nilai Mata Pelajaran'],
+			'Nilai Ahwal': ['Release Nilai Ahwal (Kepribadian)'],
+			Improve: [
+				'Filter Madrasah: session storage',
+				'All Lists: local storage',
+			],
 		},
 	},
 	{

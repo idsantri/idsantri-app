@@ -53,6 +53,7 @@ const listKey = route.params.listKey;
 const selected = listData.find(({ url }) => url == listKey);
 const spinner = ref(false);
 const listGet = ref([]);
+
 async function fetchData() {
 	const data = await apiGet({
 		endPoint: `lists/${selected.url}`,

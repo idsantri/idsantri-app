@@ -12,53 +12,29 @@
 		</q-card-section>
 		<q-card-section class="no-padding">
 			<div class="row" style="max-width: 1000px; width: 100%">
-				<q-select
+				<select-tahun-ajaran
 					class="col-12 col-md-3 q-pa-sm"
-					dense
-					outlined
-					label="Tahun Ajaran"
 					v-model="thAjaranH"
-					:options="lists['tahun-ajaran']"
-					option-value="val0"
-					option-label="val0"
-					emit-value
-					map-options
-					:loading="loading['tahun-ajaran']"
-					behavior="menu"
 				/>
 			</div>
 		</q-card-section>
 	</q-card>
 </template>
 <script setup>
-import { getListsKey } from 'src/api/api-get-lists';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import SelectTahunAjaran from './SelectTahunAjaran.vue';
 
 const props = defineProps({
 	startUrl: String,
 });
 const emit = defineEmits(['dataFilter']);
 
-const route = useRoute();
+const { params } = useRoute();
 const router = useRouter();
-const params = {
-	thAjaranH: route.params.thAjaranH,
-};
-
 const thAjaranH = ref(params.thAjaranH);
 
-const loading = ref([]);
-const lists = ref([]);
-
 onMounted(async () => {
-	await getListsKey({
-		key: 'tahun-ajaran',
-		loading,
-		lists,
-		sort: false,
-	});
-	// console.log(lists.value);
 	sendEmit();
 });
 

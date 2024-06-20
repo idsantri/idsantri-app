@@ -65,10 +65,10 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import apiGet from 'src/api/api-get';
-import FilterTanggal from 'src/components/HeadFilterTanggal';
 import { useRoute } from 'vue-router';
+import apiGet from 'src/api/api-get';
 import { isDate } from 'src/utils/format-date';
+import FilterTanggal from 'src/components/HeadFilterTanggal';
 import IzinCrud from 'src/pages/keamanan/perizinan/IzinCrud.vue';
 
 const izin = ref([{}]);

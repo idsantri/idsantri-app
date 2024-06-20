@@ -46,8 +46,8 @@
 								emit-value
 								map-options
 								v-model="thAjaranH"
-								:options="lists['th_ajaran_h']"
-								:loading="loadingList['th_ajaran_h']"
+								:options="optionsThAjaran"
+								:loading="loadingThAjaran"
 								clearable
 								@update:model-value="(v) => filterThAjaranH(v)"
 								behavior="menu"
@@ -92,12 +92,12 @@ import GtCrud from 'src/pages/ugt/gt/GtCrud.vue';
 
 const gt = ref([]);
 const gtFiltered = ref([]);
-const lists = ref([]);
 const loading = ref(false);
 const filter = ref('');
-const loadingList = ref([]);
 const thAjaranH = ref('');
 const crudShow = ref(false);
+const loadingThAjaran = ref(false);
+const optionsThAjaran = ref([]);
 
 async function loadData() {
 	const data = await apiGet({ endPoint: 'ugt/gt', loading });
@@ -115,13 +115,12 @@ function filterThAjaranH(v) {
 
 onMounted(async () => {
 	await loadData();
-	await getListsCustom({
+	const data = await getListsCustom({
 		url: 'ugt/gt/lists/th-ajaran-h',
-		lists,
 		key: 'th_ajaran_h',
-		loading: loadingList,
+		loading: loadingThAjaran,
 	});
-	// console.log(lists.value['th_ajaran_h']);
+	optionsThAjaran.value = data;
 });
 
 const columns = [

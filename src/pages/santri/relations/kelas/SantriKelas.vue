@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<template-array
+		<temp-array
 			:data="dataMap"
 			:spinner="spinner"
 			@add="handleAdd"
@@ -20,7 +20,7 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import TemplateArray from 'src/pages/santri/relations/TemplateArray.vue';
+import TempArray from 'src/pages/santri/relations/TemplateArray.vue';
 import { getObjectById } from 'src/utils/array-object';
 import SantriKelasCrud from './SantriKelasCrud.vue';
 import { useRoute } from 'vue-router';

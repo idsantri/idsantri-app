@@ -41,10 +41,10 @@
 	/>
 </template>
 <script setup>
+import { onMounted, toRefs, watch } from 'vue';
 import santriState from 'src/stores/santri-store';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
-import { onMounted, toRefs, watch } from 'vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },

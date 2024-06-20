@@ -72,11 +72,11 @@
 	</q-dialog>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import ModalPersonaliaMadrasah from 'src/pages/personalia/PersonaliaMadrasahModal.vue';
+import apiGet from 'src/api/api-get';
 import { getObjectById } from 'src/utils/array-object';
+import ModalPersonaliaMadrasah from 'src/pages/personalia/PersonaliaMadrasahModal.vue';
 
 const route = useRoute();
 const loading = ref(false);

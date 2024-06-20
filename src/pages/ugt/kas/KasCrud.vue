@@ -74,7 +74,7 @@
 					error-color="negative"
 					behavior="menu"
 				/>
-				<currency-input
+				<input-currency
 					dense
 					class="q-mt-sm"
 					outlined
@@ -120,14 +120,14 @@
 	</q-card>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { onMounted, ref, toRefs, watch } from 'vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
+import loadingStore from 'src/stores/loading-store';
+import apiGet from 'src/api/api-get';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
-import CurrencyInput from 'src/components/CurrencyInput.vue';
-import loadingStore from 'src/stores/loading-store';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import InputCurrency from 'src/components/inputs/InputCurrency.vue';
 
 const { loadingMain } = toRefs(loadingStore());
 const props = defineProps({
@@ -224,3 +224,4 @@ watch(
 );
 </script>
 <style lang=""></style>
+src/components/inputs/CurrencyInput.vue

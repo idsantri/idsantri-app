@@ -8,18 +8,8 @@
 			</q-card-section>
 
 			<q-card-section class="q-pa-sm">
-				<q-select
-					dense
-					class=""
-					outlined
-					label="Tahun Ajaran*"
-					emit-value
-					map-options
+				<select-tahun-ajaran
 					v-model="input.th_ajaran_h"
-					:options="lists['th_ajaran_h']"
-					:loading="loading['th_ajaran_h']"
-					clearable=""
-					behavior="menu"
 					required
 					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
@@ -76,35 +66,35 @@
 	</q-form>
 </template>
 <script setup>
+import { onMounted, ref, toRefs, watch } from 'vue';
+import loadingStore from 'src/stores/loading-store';
+import listsIuranStore from 'src/stores/lists-iuran-store';
 import apiGet from 'src/api/api-get';
 import { getListsCustom } from 'src/api/api-get-lists';
-import loadingStore from 'src/stores/loading-store';
-import { onMounted, ref, toRefs, watch } from 'vue';
+import SelectTahunAjaran from 'pages/bendahara/SelectTahunAjaran.vue';
 
 const { loadingMain } = toRefs(loadingStore());
 const input = ref({});
 const lists = ref([]);
 const loading = ref([]);
 
-onMounted(async () => {
-	await getListsCustom({
-		loading,
-		lists,
-		key: 'th_ajaran_h',
-		url: 'iuran/lists',
-		sort: false,
-	});
-});
+onMounted(async () => {});
 
 async function getList(th_ajaran_h, listKey) {
-	await getListsCustom({
-		loading,
-		lists,
-		key: listKey,
-		url: 'iuran/lists',
-		params: { th_ajaran_h, key: listKey },
-		sort: true,
-	});
+	const checkLists = listsIuranStore().getItemByTahun(listKey, th_ajaran_h);
+	if (checkLists.length > 0) {
+		lists.value[listKey] = checkLists;
+	} else {
+		const data = await getListsCustom({
+			loadingArray: loading,
+			key: listKey,
+			url: 'iuran/lists',
+			params: { th_ajaran_h, key: listKey },
+			sort: true,
+		});
+		listsIuranStore().addItemToTahun(data, listKey, th_ajaran_h);
+		lists.value[listKey] = data;
+	}
 }
 
 async function onSubmit() {

@@ -160,9 +160,8 @@ onMounted(async () => {
 	if (th.length == 0) {
 		const data = await getListsCustom({
 			url: 'kelas/lists',
-			lists,
 			key: 'th_ajaran',
-			loading,
+			loadingArray: loading,
 		});
 		listsMadrasahStore().setThAjaran(data);
 		lists.value['th_ajaran'] = data;
@@ -202,7 +201,7 @@ watch(
 					url: 'kelas/lists',
 					params: { th_ajaran_h: newModel },
 					key: 'tingkat',
-					loading,
+					loadingArray: loading,
 					sort: 'asc',
 				});
 				listsMadrasahStore().addTingkatToTahun(data, newModel);
@@ -234,7 +233,7 @@ watch(
 						tingkat_id: newModel,
 					},
 					key: 'kelas',
-					loading,
+					loadingArray: loading,
 					sort: 'asc',
 				});
 

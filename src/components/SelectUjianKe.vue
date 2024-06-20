@@ -16,7 +16,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import listsStore from 'stores/lists-madrasah-store';
+import listsMadrasahStore from 'stores/lists-madrasah-store';
 
 const props = defineProps({
 	startUrl: {
@@ -41,7 +41,7 @@ const url = `${props.startUrl}/${params.th_ajaran_h}/${params.tingkat_id}/${para
 
 onMounted(() => {
 	if (params.th_ajaran_h && params.tingkat_id && params.kelas) {
-		lists.value['ujian_ke'] = listsStore().getUjian.filter((u) =>
+		lists.value['ujian_ke'] = listsMadrasahStore().getUjian.filter((u) =>
 			props.arrUjian.includes(u.value),
 		);
 	}

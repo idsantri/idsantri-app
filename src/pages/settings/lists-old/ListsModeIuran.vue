@@ -105,3 +105,4 @@ const props = defineProps({
 const newList = ref({});
 </script>
 <style lang=""></style>
+src/components/inputs/CurrencyInput.vue

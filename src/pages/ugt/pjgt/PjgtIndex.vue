@@ -26,7 +26,7 @@
 					:rows="pjgtFiltered"
 					:loading="loading"
 					:rows-per-page-options="[10, 25, 50, 100, 0]"
-					class="dt"
+					class="dt q-px-sm"
 					:columns="columns"
 					:filter="filter"
 					no-data-label="Tidak ada data untuk ditampilkan!"
@@ -46,8 +46,8 @@
 								emit-value
 								map-options
 								v-model="wilayah"
-								:options="lists['wilayah']"
-								:loading="loadingList['wilayah']"
+								:options="optionsWilayah"
+								:loading="loadingWilayah"
 								clearable
 								@update:model-value="(v) => filterWilayah(v)"
 								behavior="menu"
@@ -91,13 +91,13 @@ import { getListsCustom } from 'src/api/api-get-lists.js';
 import ModalPjgt from 'src/pages/ugt/pjgt/PjgtCrud.vue';
 
 const pjgt = ref([]);
-const lists = ref([]);
 const loading = ref(false);
 const filter = ref('');
-const loadingList = ref([]);
 const wilayah = ref('');
 const pjgtFiltered = ref([]);
 const crudShow = ref(false);
+const loadingWilayah = ref(false);
+const optionsWilayah = ref([]);
 
 async function loadData() {
 	const data = await apiGet({ endPoint: 'ugt/pjgt', loading });
@@ -115,13 +115,12 @@ function filterWilayah(v) {
 
 onMounted(async () => {
 	await loadData();
-	await getListsCustom({
+	const data = await getListsCustom({
 		url: 'ugt/pjgt/lists/wilayah',
-		lists,
 		key: 'wilayah',
-		loading: loadingList,
+		loading: loadingWilayah,
 	});
-	// console.log(lists.value['wilayah']);
+	optionsWilayah.value = data;
 });
 
 const columns = [

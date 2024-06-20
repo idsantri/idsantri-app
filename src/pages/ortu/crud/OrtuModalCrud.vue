@@ -94,17 +94,17 @@
 </template>
 <script setup>
 import { reactive, ref, toRefs } from 'vue';
-import InputIdentity from './OrtuModalCrudIdentity.vue';
-import InputAyah from './OrtuModalCrudAyah.vue';
-import InputIbu from './OrtuModalCrudIbu.vue';
-import ortuStore from 'src/stores/ortu-store.js';
 import { useRouter } from 'vue-router';
+import ortuStore from 'src/stores/ortu-store.js';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import apiPost from 'src/api/api-post';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import InputIdentity from './OrtuModalCrudIdentity.vue';
+import InputAyah from './OrtuModalCrudAyah.vue';
+import InputIbu from './OrtuModalCrudIbu.vue';
 
 const router = useRouter();
 const { ortu } = reactive(ortuStore());

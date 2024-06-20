@@ -74,11 +74,11 @@
 	/>
 </template>
 <script setup>
+import { toRefs } from 'vue';
 import waliState from 'src/stores/wali-store';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
-import { toRefs } from 'vue';
-import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
+import InputSelectKotaLahir from 'src/components/inputs/InputSelectKotaLahir.vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -87,3 +87,4 @@ const props = defineProps({
 const { wali } = waliState();
 const { id, nama, tgl_lahir, nik, sex } = toRefs(wali);
 </script>
+src/components/inputs/InputSelectKotaLahir.vue
