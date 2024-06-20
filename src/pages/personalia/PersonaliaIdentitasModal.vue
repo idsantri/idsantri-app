@@ -149,38 +149,17 @@
 						<div class="text-subtitle2">
 							{{ carousel.others.title }}
 						</div>
-						<q-select
-							dense
-							hint=""
-							class="q-mt-sm"
-							outlined
-							label="Pendidikan Akhir Formal"
-							emit-value
-							map-options
+						<select-p-a-formal
 							v-model="input.pa_formal"
-							:options="lists['pendidikan-akhir-formal']"
-							:loading="loading['pendidikan-akhir-formal']"
-							use-input=""
-							new-value-mode="add"
-							clearable
-							behavior="menu"
-						/>
-
-						<q-select
-							dense
-							hint=""
+							label="Pendidikan Akhir Formal"
 							class="q-mt-sm"
-							outlined
-							label="Pendidikan Akhir Diniyah"
-							emit-value
-							map-options
+							hint=""
+						/>
+						<select-p-a-diniyah
 							v-model="input.pa_diniyah"
-							:options="lists['pendidikan-akhir-diniyah']"
-							:loading="loading['pendidikan-akhir-diniyah']"
-							use-input=""
-							new-value-mode="add"
-							clearable
-							behavior="menu"
+							label="Pendidikan Akhir Diniyah"
+							class="q-mt-sm"
+							hint=""
 						/>
 
 						<q-input
@@ -249,15 +228,16 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import apiDelete from 'src/api/api-delete';
+import apiUpdate from 'src/api/api-update';
+import apiPost from 'src/api/api-post';
 import { formatDateFull, isDate } from 'src/utils/format-date';
 import { bacaHijri, m2h } from 'src/utils/hijri';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
-import apiDelete from 'src/api/api-delete';
-import apiUpdate from 'src/api/api-update';
-import apiPost from 'src/api/api-post';
 import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
-import { getLists } from 'src/api/api-get-lists';
+import SelectPADiniyah from 'src/components/select-list/SelectPADiniyah.vue';
+import SelectPAFormal from 'src/components/select-list/SelectPAFormal.vue';
 
 const props = defineProps({
 	dataAparatur: Object,
@@ -269,25 +249,10 @@ const router = useRouter();
 const route = useRoute();
 const input = ref({});
 
-const lists = ref([]);
-const loading = ref([]);
 const loadingCrud = ref(false);
 
 onMounted(async () => {
 	Object.assign(input.value, props.dataAparatur);
-	// console.log(input.value);
-	await getLists({
-		loading,
-		lists,
-		sort: true,
-		key: 'pendidikan-akhir-formal',
-	});
-	await getLists({
-		loading,
-		lists,
-		sort: true,
-		key: 'pendidikan-akhir-diniyah',
-	});
 });
 
 const onSubmit = async () => {

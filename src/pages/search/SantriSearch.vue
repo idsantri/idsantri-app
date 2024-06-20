@@ -25,7 +25,11 @@
 		</q-card-section>
 		<q-card-actions class="bg-green-7">
 			<div class="text-body2 text-green-11 text-italic">
-				Cari berdsarkan ID, Nama Santri, NIK, atau alamat
+				<div>
+					▪️ Cari berdsarkan ID, nama santri, NIK, alamat, atau data
+					akhir
+				</div>
+				<div>▪️ simbol % = karakter apapun</div>
 			</div>
 			<q-space />
 			<q-btn
@@ -42,16 +46,16 @@
 </template>
 
 <script setup>
-import DataTable from 'datatables.net-vue3';
-import DataTablesLib from 'datatables.net-dt';
 import { ref, onMounted, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
+import DataTable from 'datatables.net-vue3';
+import DataTablesLib from 'datatables.net-dt';
 import api from 'src/api';
-import { notifyError, notifySuccess } from 'src/utils/notify';
+import getToken from 'src/api/get-token';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
+import { notifyError, notifySuccess } from 'src/utils/notify';
 import { toArray } from 'src/utils/array-object';
-import getToken from 'src/api/get-token';
 
 const dialog = dialogStore();
 const { searchSantri, crudSantri } = toRefs(dialog);

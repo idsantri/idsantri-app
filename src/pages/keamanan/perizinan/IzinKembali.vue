@@ -59,13 +59,13 @@
 	</q-card>
 </template>
 <script setup>
+import { onMounted, ref, watch } from 'vue';
 import apiUpdate from 'src/api/api-update';
 import {
 	formatDateFull,
 	isDate,
 	formatDateTimeHtmlToSql,
 } from 'src/utils/format-date';
-import { onMounted, ref, watch } from 'vue';
 
 const props = defineProps({
 	data: Object,

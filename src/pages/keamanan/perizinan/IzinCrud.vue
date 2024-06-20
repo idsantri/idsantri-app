@@ -23,18 +23,10 @@
 						@emit-input="(val) => Object.assign(input, val)"
 						:data="props.data"
 					/>
-					<q-select
-						dense
-						class="q-mt-sm"
-						outlined
-						label="Sifat Izin*"
-						emit-value
-						map-options
+					<select-sifat-izin
 						v-model="input.sifat"
-						:options="lists['sifat-izin']"
-						:loading="loading['sifat-izin']"
+						class="q-mt-sm"
 						:rules="[(val) => !!val || 'Harus diisi!']"
-						behavior="menu"
 					/>
 					<q-input
 						dense
@@ -64,32 +56,18 @@
 						]"
 						error-color="negative"
 					/>
-					<q-select
-						dense
-						class="q-mt-sm"
-						outlined
-						label="Keperluan*"
-						emit-value
-						map-options
+					<select-keperluan-izin
 						v-model="input.keperluan"
-						:options="lists['keperluan-izin']"
-						:loading="loading['keperluan-izin']"
-						:rules="[(val) => !!val || 'Harus diisi!']"
-						behavior="menu"
-					/>
-					<q-select
-						dense
 						class="q-mt-sm"
-						outlined
-						label="Keterangan"
-						emit-value
-						map-options
-						v-model="input.keterangan"
-						:options="lists['keterangan-izin']"
-						:loading="loading['keterangan-izin']"
-						clearable
-						behavior="menu"
+						label="Keperluan *"
+						:rules="[(val) => !!val || 'Harus diisi!']"
 					/>
+
+					<select-keterangan-izin
+						v-model="input.keterangan"
+						class="q-mt-sm"
+					/>
+
 					<q-input
 						dense
 						class="q-mt-sm"
@@ -137,14 +115,16 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
-import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
-import { isDate, formatDateFull } from 'src/utils/format-date';
+import { useRouter } from 'vue-router';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
-import { useRouter } from 'vue-router';
-import { getLists } from 'src/api/api-get-lists';
+import { isDate, formatDateFull } from 'src/utils/format-date';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
+import SelectSifatIzin from 'src/components/select-list/SelectSifatIzin.vue';
+import SelectKeperluanIzin from 'src/components/select-list/SelectKeperluanIzin.vue';
+import SelectKeteranganIzin from 'src/components/select-list/SelectKeteranganIzin.vue';
 
 const props = defineProps({
 	isNew: Boolean,
@@ -153,8 +133,6 @@ const props = defineProps({
 const router = useRouter();
 const input = ref({ tujuan: 'Sesuai alamat rumah' });
 const loadingCrud = ref(false);
-const lists = ref([]);
-const loading = ref([]);
 async function onSubmit() {
 	const data = {
 		santri_id: input.value.santri_id,
@@ -203,12 +181,7 @@ const handleDelete = async () => {
 };
 
 onMounted(async () => {
-	// input.value = props.data;
-	// console.log(props.data);
 	Object.assign(input.value, props.data);
-	await getLists({ key: 'sifat-izin', loading, lists, sort: true });
-	await getLists({ key: 'keperluan-izin', loading, lists, sort: true });
-	await getLists({ key: 'keterangan-izin', loading, lists, sort: true });
 });
 </script>
 <style lang=""></style>

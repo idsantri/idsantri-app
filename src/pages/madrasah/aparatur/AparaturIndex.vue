@@ -29,8 +29,8 @@
 	</q-page>
 </template>
 <script setup>
-import FilterKelas from 'src/components/HeadFilterKelas.vue';
 import { ref } from 'vue';
+import FilterKelas from 'src/components/HeadFilterKelas.vue';
 
 const textFilter = ref('');
 </script>

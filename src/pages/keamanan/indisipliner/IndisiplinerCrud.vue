@@ -84,22 +84,12 @@
 							/>
 						</template>
 					</q-select>
-					<q-select
-						dense
+					<select-tatib-santri
 						hint=""
 						class="q-mt-sm"
-						outlined
-						label="Pasal dilanggar"
 						v-model="input.pasal"
 						:rules="[(val) => !!val || 'Harus diisi!']"
-						error-color="negative"
-						:options="optionsTatib"
-						:loading="loading['tatib-santri']"
-						multiple
-						behavior="menu"
-						clearable
-					>
-					</q-select>
+					/>
 					<q-input
 						dense
 						class="q-mt-sm"
@@ -124,18 +114,9 @@
 						label="Saksi"
 						v-model="input.saksi"
 					/>
-
-					<q-select
-						dense
+					<select-takzir-santri
 						class="q-mt-sm"
-						outlined
-						label="Takzir"
 						v-model="input.takzir"
-						:options="lists['takzir-santri']"
-						:loading="loading['takzir-santri']"
-						multiple
-						behavior="menu"
-						clearable
 					/>
 					<q-input
 						dense
@@ -176,15 +157,16 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
-import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
+import { useRouter } from 'vue-router';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
-import { useRouter } from 'vue-router';
-import { getLists, getListsKey } from 'src/api/api-get-lists';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
+import SelectTakzirSantri from 'src/components/select-list/SelectTakzirSantri.vue';
+import SelectTatibSantri from 'src/components/select-list/SelectTatibSantri.vue';
 
 const props = defineProps({
 	isNew: Boolean,
@@ -193,9 +175,6 @@ const props = defineProps({
 const router = useRouter();
 const input = ref({ kategori: 3 });
 const loadingCrud = ref(false);
-const lists = ref([]);
-const loading = ref([]);
-const optionsTatib = ref([]);
 
 async function onSubmit() {
 	// console.log('input', input.value);
@@ -257,19 +236,6 @@ onMounted(async () => {
 	if (input.value.takzir) {
 		input.value.takzir = input.value.takzir.split(',');
 	}
-
-	await getListsKey({
-		key: 'tatib-santri',
-		loading,
-		lists,
-		sort: true,
-	});
-	optionsTatib.value = lists.value['tatib-santri']
-		.filter((d) => d.val0.length != 1)
-		.map((d) => `[${d.val0}] ${d.val1}`);
-	// console.log(optionsTatib.value);
-
-	await getLists({ key: 'takzir-santri', loading, lists, sort: true });
 });
 
 const categoryOptions = [

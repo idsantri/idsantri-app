@@ -59,64 +59,41 @@
 			label="Hidup"
 		/>
 	</q-card>
-	<q-select
-		dense
-		hint=""
-		class="q-mt-sm"
-		outlined
-		label="Pendidikan Akhir Formal"
-		emit-value
-		map-options
+	<select-p-a-formal
 		v-model="i_pa_formal_tingkat"
-		:options="lists['pendidikan-akhir-formal']"
-		:loading="loading['pendidikan-akhir-formal']"
+		label="Pendidikan Akhir Formal"
+		class="q-mt-sm"
+		hint=""
 		use-input=""
 		new-value-mode="add"
-		clearable
-		behavior="menu"
 	/>
 
-	<q-select
-		dense
-		hint=""
-		class="q-mt-sm"
-		outlined
-		label="Pendidikan Akhir Diniyah"
-		emit-value
-		map-options
+	<select-p-a-diniyah
 		v-model="i_pa_diniyah_tingkat"
-		:options="lists['pendidikan-akhir-diniyah']"
-		:loading="loading['pendidikan-akhir-diniyah']"
+		label="Pendidikan Akhir Diniyah"
+		class="q-mt-sm"
 		use-input=""
 		new-value-mode="add"
-		clearable
-		behavior="menu"
+		hint=""
 	/>
 
-	<q-select
-		dense
-		hint=""
-		class="q-mt-sm"
-		outlined
-		label="Pekerjaan"
-		emit-value
-		map-options
+	<select-pekerjaan
 		v-model="i_pekerjaan"
-		:options="lists['pekerjaan']"
-		:loading="loading['pekerjaan']"
+		class="q-mt-sm"
 		use-input=""
 		new-value-mode="add"
-		clearable
-		behavior="menu"
+		hint=""
 	/>
 </template>
 <script setup>
+import { onMounted, ref, toRefs } from 'vue';
 import ortuState from 'src/stores/ortu-store.js';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
-import { onMounted, ref, toRefs } from 'vue';
 import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
-import { getLists } from 'src/api/api-get-lists';
+import SelectPekerjaan from 'src/components/select-list/SelectPekerjaan.vue';
+import SelectPADiniyah from 'src/components/select-list/SelectPADiniyah.vue';
+import SelectPAFormal from 'src/components/select-list/SelectPAFormal.vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -138,22 +115,5 @@ const input = ref({
 	tmp_lahir: i_tmp_lahir,
 });
 
-const lists = ref([]);
-const loading = ref([]);
-
-onMounted(async () => {
-	await getLists({
-		loading,
-		lists,
-		sort: true,
-		key: 'pendidikan-akhir-formal',
-	});
-	await getLists({
-		loading,
-		lists,
-		sort: true,
-		key: 'pendidikan-akhir-diniyah',
-	});
-	await getLists({ loading, lists, sort: true, key: 'pekerjaan' });
-});
+onMounted(async () => {});
 </script>

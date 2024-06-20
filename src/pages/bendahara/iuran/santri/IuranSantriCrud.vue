@@ -23,46 +23,17 @@
 					:data="props.data"
 					:disable-select="$props.disableSantriId"
 				/>
-
-				<q-select
-					dense
-					:hint="
-						input.th_ajaran_h?.length == 9
-							? lists['tahun-ajaran']?.find(
-									(item) => item.val0 === input.th_ajaran_h,
-								)?.val1
-							: ''
-					"
-					class="q-mt-sm"
-					outlined
-					label="Tahun Ajaran"
+				<select-tahun-ajaran
 					v-model="input.th_ajaran_h"
-					:options="lists['tahun-ajaran']"
-					option-value="val0"
-					option-label="val0"
-					emit-value
-					map-options
-					:rules="[(val) => !!val || 'Harus diisi!']"
-					error-color="negative"
-					:loading="loading['tahun-ajaran']"
-					behavior="menu"
-				/>
-				<q-select
-					dense
 					class="q-mt-sm"
-					outlined
-					label="Iuran"
-					emit-value
-					map-options
-					v-model="input.iuran"
-					:options="lists['iuran']"
-					:loading="loading['iuran']"
-					option-value="val0"
-					option-label="val0"
-					@update:model-value="setNominal"
-					behavior="menu"
+					:rules="[(val) => !!val || 'Harus diisi!']"
+					:hint="hintTahun()"
 				/>
-
+				<select-iuran
+					v-model="input.iuran"
+					class="q-mt-sm"
+					@update:model-value="setNominal"
+				/>
 				<currency-input
 					dense
 					class="q-mt-sm"
@@ -100,33 +71,11 @@
 						)
 					"
 				/>
-				<q-select
-					dense
-					class="q-mt-sm"
-					outlined
-					label="Via"
-					emit-value
-					map-options
-					v-model="input.via"
-					:options="lists['metode-pembayaran']"
-					:loading="loading['metode-pembayaran']"
-					behavior="menu"
-				/>
-				<q-select
-					dense
-					class="q-mt-sm"
-					outlined
-					label="Keterangan"
-					emit-value
-					map-options
+				<select-metode-pembayaran v-model="input.via" class="q-mt-sm" />
+				<select-keterangan-iuran
 					v-model="input.keterangan"
-					:options="lists['keterangan-iuran']"
-					:loading="loading['keterangan-iuran']"
-					behavior="menu"
+					class="q-mt-sm"
 				/>
-				<!-- <pre>{{ lists['iuran'] }}</pre> -->
-				<!-- <pre>{{ lists['keterangan-iuran'] }}</pre> -->
-				<!-- <pre>{{ input }}</pre> -->
 			</q-card-section>
 			<q-card-actions class="flex bg-green-6">
 				<q-btn
@@ -156,15 +105,19 @@
 	</q-card>
 </template>
 <script setup>
-import apiDelete from 'src/api/api-delete';
-import { digitSeparator } from 'src/utils/format-number';
 import { onMounted, ref } from 'vue';
-import CurrencyInput from 'src/components/CurrencyInput.vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
-import { getLists, getListsKey } from 'src/api/api-get-lists';
+import listsStore from 'src/stores/lists-store';
+import apiDelete from 'src/api/api-delete';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
+import { digitSeparator } from 'src/utils/format-number';
+import CurrencyInput from 'src/components/CurrencyInput.vue';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputSelectSantriId from 'src/components/InputSelectSantriId.vue';
+import SelectTahunAjaran from 'src/components/select-list/SelectTahunAjaran.vue';
+import SelectIuran from 'src/components/select-list/SelectIuran.vue';
+import SelectKeteranganIuran from 'src/components/select-list/SelectKeteranganIuran.vue';
+import SelectMetodePembayaran from 'src/components/select-list/SelectMetodePembayaran.vue';
 
 const props = defineProps({
 	data: { type: Object, required: false, default: () => {} },
@@ -176,38 +129,26 @@ const props = defineProps({
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const input = ref({ qty: 1 });
-const lists = ref([]);
-const loading = ref([]);
 const loadingCrud = ref(false);
+const tahunAjaran = ref([]);
+const iuran = ref([]);
 
 onMounted(async () => {
 	Object.assign(input.value, props.data);
-	// console.log(input.value);
-
-	await getListsKey({
-		key: 'tahun-ajaran',
-		loading,
-		lists,
-		sort: false,
-	});
-
-	await getListsKey({
-		key: 'iuran',
-		loading,
-		lists,
-		sort: true,
-	});
-	await getLists({ key: 'keterangan-iuran', sort: true, loading, lists });
-	await getLists({ key: 'metode-pembayaran', sort: true, loading, lists });
+	tahunAjaran.value = listsStore().tahunAjaranGet();
+	iuran.value = listsStore().iuranGet();
 });
 
+const hintTahun = () =>
+	input.value.th_ajaran_h?.length == 9
+		? tahunAjaran.value?.find((th) => th.val0 === input.value.th_ajaran_h)
+				?.val1
+		: '';
+
 const setNominal = (val) => {
-	const selectedOption = lists.value['iuran'].find(
-		(item) => item.val0 === val,
-	);
+	const selectedOption = iuran.value.find((item) => item.val0 === val);
 	if (selectedOption) {
-		const val1 = selectedOption.val1;
-		input.value.nominal = val1;
+		input.value.nominal = selectedOption.val1;
 	}
 };
 

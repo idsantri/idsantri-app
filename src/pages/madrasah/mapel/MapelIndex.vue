@@ -23,7 +23,12 @@
 						color="green-11"
 						@click="addNew"
 					/>
-					<q-select
+					<select-tingkat-pendidikan
+						style="width: 250px"
+						bg-color="green-1"
+						v-model="tingkatId"
+					/>
+					<!-- <q-select
 						style="width: 200px"
 						dense
 						bg-color="green-1"
@@ -37,7 +42,7 @@
 						map-options
 						:loading="loadingLists['tingkat-pendidikan']"
 						behavior="menu"
-					/>
+					/> -->
 				</q-toolbar>
 			</q-card-section>
 			<q-card-section class="q-pa-sm">
@@ -108,39 +113,34 @@
 	</q-page>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
-import { getListsKey } from 'src/api/api-get-lists';
 import { onMounted, ref, watch } from 'vue';
+import apiGet from 'src/api/api-get';
 import MapelCrud from 'pages/madrasah/mapel/MapelCrud.vue';
+import SelectTingkatPendidikan from 'src/components/select-list/SelectTingkatPendidikan.vue';
 
 const mapel = ref([]);
 const tingkatId = ref('');
 const loading = ref(false);
-const lists = ref([]);
-const loadingLists = ref([]);
 const mapelObj = ref({});
 const crudShow = ref(false);
 
-async function loadData() {
+async function loadData(id) {
 	const data = await apiGet({
 		endPoint: 'mapel',
 		loading,
-		params: { tingkat_id: tingkatId.value },
+		params: { tingkat_id: id },
 	});
 	mapel.value = data.mapel;
 }
 
-onMounted(async () => {
-	await getListsKey({
-		key: 'tingkat-pendidikan',
-		loading: loadingLists,
-		lists,
-		sort: true,
-	});
-});
+onMounted(async () => {});
 
-watch(tingkatId, async () => {
-	await loadData();
+watch(tingkatId, async (newVal) => {
+	if (newVal) {
+		await loadData(newVal);
+	} else {
+		mapel.value = [];
+	}
 });
 
 function onEdit(item) {

@@ -51,7 +51,9 @@
 </template>
 <script setup>
 import { useRoute } from 'vue-router';
+
 const route = useRoute();
+
 function showButton(param) {
 	return route.fullPath.search(param) > 0 ? false : true;
 }

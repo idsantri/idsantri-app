@@ -41,9 +41,9 @@
 </pre> -->
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import apiGet from 'src/api/api-get';
 
 const { params } = useRoute();
 const filter = ref('');

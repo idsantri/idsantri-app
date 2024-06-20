@@ -24,81 +24,26 @@
 					disable=""
 					filled=""
 				/>
-				<q-select
-					dense
-					class="q-mt-sm"
-					outlined
-					label="Jabatan"
+
+				<select-jabatan-madrasah
 					v-model="input.jabatan"
-					:options="lists['jabatan-madrasah']"
-					option-value="val0"
-					option-label="val0"
-					emit-value
-					map-options
-					:rules="[(val) => !!val || 'Harus diisi!']"
-					error-color="negative"
-					:loading="loading['jabatan-madrasah']"
-					behavior="menu"
-				/>
-				<q-select
-					dense
-					:hint="
-						input.th_ajaran_h?.length == 9
-							? lists['tahun-ajaran']?.find(
-									(item) => item.val0 === input.th_ajaran_h,
-								)?.val1
-							: ''
-					"
 					class="q-mt-sm"
-					outlined
-					label="Tahun Ajaran"
+					:rules="[(val) => !!val || 'Harus diisi!']"
+				/>
+				<select-tahun-ajaran
 					v-model="input.th_ajaran_h"
-					:options="lists['tahun-ajaran']"
-					option-value="val0"
-					option-label="val0"
-					emit-value
-					map-options
-					:rules="[(val) => !!val || 'Harus diisi!']"
-					error-color="negative"
-					:loading="loading['tahun-ajaran']"
-					behavior="menu"
-				/>
-				<q-select
-					dense
-					:hint="
-						!isNaN(input.tingkat_id)
-							? lists['tingkat-pendidikan']?.find(
-									(item) => item.val0 == input.tingkat_id,
-								)?.val1
-							: 'Jenjang Pendidikan'
-					"
 					class="q-mt-sm"
-					outlined
-					label="Tingkat Pendidikan"
+					:rules="[(val) => !!val || 'Harus diisi!']"
+					:hint="hintTahun()"
+				/>
+
+				<select-tingkat-pendidikan
 					v-model="input.tingkat_id"
-					:options="lists['tingkat-pendidikan']"
-					option-value="val0"
-					option-label="val1"
-					emit-value
-					map-options
-					:rules="[(val) => !!val || 'Harus diisi!']"
-					error-color="negative"
-					:loading="loading['tingkat-pendidikan']"
-					behavior="menu"
-				/>
-				<q-select
-					dense
 					class="q-mt-sm"
-					outlined
-					label="Kelas"
-					emit-value
-					map-options
-					v-model="input.kelas"
-					:options="lists['kelas']"
-					:loading="loading['kelas']"
-					clearable=""
-					behavior="menu"
+					:rules="[(val) => !!val || 'Harus diisi!']"
+					:hint="hintTingkat()"
 				/>
+				<select-kelas v-model="input.kelas" class="q-mt-sm" />
 
 				<q-input
 					dense
@@ -144,12 +89,16 @@
 	</q-card>
 </template>
 <script setup>
-import ToolbarForm from 'src/components/ToolbarForm.vue';
 import { onMounted, ref } from 'vue';
+import listsStore from 'src/stores/lists-store';
 import apiDelete from 'src/api/api-delete';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
-import { getLists, getListsKey } from 'src/api/api-get-lists';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import SelectJabatanMadrasah from 'src/components/select-list/SelectJabatanMadrasah.vue';
+import SelectTahunAjaran from 'src/components/select-list/SelectTahunAjaran.vue';
+import SelectTingkatPendidikan from 'src/components/select-list/SelectTingkatPendidikan.vue';
+import SelectKelas from 'src/components/select-list/SelectKelas.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -159,33 +108,33 @@ const props = defineProps({
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const input = ref({});
-const lists = ref([]);
-const loading = ref([]);
 const loadingCrud = ref(false);
+const tingkat = ref([]);
+const tahunAjaran = ref([]);
+
 onMounted(async () => {
 	// input.value = props.data;  // menjadi reactive
 	Object.assign(input.value, props.data);
-
-	await getListsKey({
-		key: 'tahun-ajaran',
-		loading,
-		lists,
-		sort: false,
-	});
-	await getListsKey({
-		key: 'tingkat-pendidikan',
-		loading,
-		lists,
-		sort: true,
-	});
-	await getLists({ key: 'kelas', loading, lists, sort: true });
-	await getLists({
-		key: 'jabatan-madrasah',
-		loading,
-		lists,
-		sort: true,
-	});
+	tahunAjaran.value = listsStore().tahunAjaranGet();
+	tingkat.value = listsStore().tingkatPendidikanGet();
 });
+
+const hintTahun = () =>
+	input.value.th_ajaran_h?.length == 9
+		? tahunAjaran.value?.find((th) => th.val0 === input.value.th_ajaran_h)
+				?.val1
+		: '';
+
+const hintTingkat = () => {
+	if (input.value.tingkat_id) {
+		const t = tingkat.value?.find(
+			(tk) => tk?.val0 === input.value.tingkat_id,
+		);
+		return 'Tingkat ID: ' + t.val0 || '';
+	} else {
+		return 'Tingkat Pendidikan';
+	}
+};
 
 const submit = async () => {
 	const data = {

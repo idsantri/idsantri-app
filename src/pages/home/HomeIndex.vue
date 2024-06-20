@@ -11,22 +11,9 @@
 	</q-page>
 </template>
 <script setup>
-import { getListsKey } from 'src/api/api-get-lists';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 
-const lists = ref([]);
-const loading = ref([]);
-const key = 'tahun-ajaran';
-onMounted(async () => {
-	const data = await getListsKey({
-		loading,
-		lists,
-		key,
-	});
-	console.log('loading', loading.value);
-	console.log('lists', lists.value);
-	console.log('data', data);
-});
+onMounted(async () => {});
 </script>
 
 <style lang="scss" scoped></style>

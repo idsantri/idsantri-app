@@ -117,29 +117,22 @@
 				@click="check('wali', wali_id)"
 		/></template>
 	</q-input>
-
-	<q-select
-		dense
-		hint="Hubungan dengan wali"
-		class="q-mt-sm"
-		outlined
-		label="Status Wali*"
-		emit-value
-		map-options
+	<select-hubungan-wali
 		v-model="wali_status"
-		:options="lists['hubungan-wali']"
-		:loading="loading['hubungan-wali']"
-		behavior="menu"
+		class="q-mt-sm"
+		hint="Hubungan dengan wali"
+		label="Status Wali*"
+		:rules="[(val) => !!val || 'Harus diisi!']"
 	/>
 </template>
 <script setup>
+import { onMounted, reactive, ref, toRefs, watch } from 'vue';
+import dialogStore from 'src/stores/dialog-store';
 import santriState from 'src/stores/santri-store';
 import { notifyError } from 'src/utils/notify';
 import { toArray } from 'src/utils/array-object';
-import { onMounted, reactive, ref, toRefs, watch } from 'vue';
-import dialogStore from 'src/stores/dialog-store';
-import { getLists } from 'src/api/api-get-lists';
 import apiGet from 'src/api/api-get';
+import SelectHubunganWali from 'src/components/select-list/SelectHubunganWali.vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -153,12 +146,9 @@ const { searchOrtu, searchWali } = toRefs(dialog);
 const ortu = reactive(santriState().ortu);
 const wali = reactive(santriState().wali);
 
-const lists = ref([]);
 const loading = ref([]);
 
-onMounted(async () => {
-	await getLists({ key: 'hubungan-wali', loading, lists, sort: true });
-});
+onMounted(async () => {});
 
 const check = async (param, id) => {
 	loading.value[param] = true;

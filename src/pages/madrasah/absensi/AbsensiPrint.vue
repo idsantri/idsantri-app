@@ -355,12 +355,12 @@ function inputDay(val) {
 }
 
 onMounted(async () => {
-	await getListsCustom({
+	const data = await getListsCustom({
 		url: 'murid/lists-kelas',
-		lists,
 		key: 'th_ajaran',
-		loading,
+		loadingArray: loading,
 	});
+	lists.value['th_ajaran'] = data;
 });
 
 // watch th ajaran
@@ -373,12 +373,12 @@ watch(
 			input.value.tingkat_id = '';
 			input.value.kelas = '';
 			input.value.tahun = '';
-			await getListsCustom({
+			const data = await getListsCustom({
 				url: `murid/lists-kelas/${newValue}`,
-				lists,
 				key: 'tingkat',
-				loading,
+				loadingArray: loading,
 			});
+			lists.value['tingkat'] = data;
 			// console.log(newValue.substring(0, 4));
 			// console.log(newValue.substring(5));
 			optionsTahun.value = [
@@ -397,12 +397,12 @@ watch(
 		if (newValue != oldValue) {
 			input.value.kelas = '';
 			if (newValue && input.value.th_ajaran_h) {
-				await getListsCustom({
+				const data = await getListsCustom({
 					url: `murid/lists-kelas/${input.value.th_ajaran_h}/${newValue}`,
-					lists,
 					key: 'kelas',
-					loading,
+					loadingArray: loading,
 				});
+				lists.value['kelas'] = data;
 			}
 			// console.log(lists.value);
 		}

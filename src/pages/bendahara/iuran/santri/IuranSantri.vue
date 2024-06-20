@@ -108,12 +108,13 @@
 	</q-page>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import apiGet from 'src/api/api-get';
 import CardHeadSantri from 'src/components/CardHeadSantri.vue';
 import IuranSantriByTh from 'src/pages/bendahara/iuran/santri/IuranSantriByTh.vue';
 import IuranSantriCrud from 'src/pages/bendahara/iuran/santri/IuranSantriCrud.vue';
+
 const santri = ref({});
 const iuran = ref([]);
 const loading = ref(false);

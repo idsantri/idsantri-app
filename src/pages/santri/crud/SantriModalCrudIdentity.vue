@@ -86,10 +86,10 @@
 	/>
 </template>
 <script setup>
+import { toRefs } from 'vue';
 import santriState from 'src/stores/santri-store';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
-import { toRefs } from 'vue';
 import InputSelectKotaLahir from 'src/components/InputSelectKotaLahir.vue';
 
 const props = defineProps({

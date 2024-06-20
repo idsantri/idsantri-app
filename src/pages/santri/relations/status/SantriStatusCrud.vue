@@ -25,32 +25,17 @@
 					disable=""
 					filled=""
 				/>
-				<q-select
-					dense
+
+				<select-status
 					class="q-mt-sm"
-					outlined
-					label="Status"
-					emit-value
-					map-options
 					v-model="input.status"
-					:options="lists['status']"
-					:loading="loading['status']"
-					behavior="menu"
+					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
-				<q-select
-					dense
+				<select-keterangan-status
 					class="q-mt-sm"
-					outlined
-					label="Keterangan"
-					emit-value
-					map-options
 					v-model="input.keterangan"
-					:options="lists['keterangan-status']"
-					:loading="loading['keterangan-status']"
 					use-input=""
 					new-value-mode="add"
-					clearable
-					behavior="menu"
 				/>
 			</q-card-section>
 			<q-card-actions class="flex bg-green-6">
@@ -82,11 +67,12 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
-import { getLists } from 'src/api/api-get-lists';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import SelectStatus from 'src/components/select-list/SelectStatus.vue';
+import SelectKeteranganStatus from 'src/components/select-list/SelectKeteranganStatus.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -96,14 +82,10 @@ const props = defineProps({
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const input = ref({});
-const lists = ref([]);
-const loading = ref([]);
 const loadingCrud = ref(false);
 
 onMounted(async () => {
 	Object.assign(input.value, props.data);
-	await getLists({ key: 'status', loading, lists, sort: true });
-	await getLists({ key: 'keterangan-status', loading, lists, sort: true });
 });
 
 const submit = async () => {

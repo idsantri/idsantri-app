@@ -59,22 +59,13 @@
 					new-value-mode="add"
 					behavior="menu"
 				/>
-				<q-select
-					dense
-					class="q-mt-sm"
-					outlined
+				<select-keterangan-status
 					label="Alasan*"
-					emit-value
-					map-options
+					class="q-mt-sm"
 					v-model="input.alasan"
-					:options="lists['keterangan-status']"
-					:loading="loading['keterangan-status']"
 					use-input=""
 					new-value-mode="add"
-					clearable
-					behavior="menu"
 				/>
-
 				<q-card class="q-mt-sm" flat bordered>
 					<q-card-section class="q-pa-sm">
 						<div class="text-subtitle2">
@@ -125,20 +116,12 @@
 							new-value-mode="add"
 							behavior="menu"
 						/>
-						<q-select
-							dense
-							class="q-mt-sm"
-							outlined
-							label="Hubungan*"
-							emit-value
-							map-options
+						<select-hubungan-wali
 							v-model="input.wali_hubungan"
-							:options="lists['hubungan-wali']"
-							:loading="loading['hubungan-wali']"
+							class="q-mt-sm"
+							label="Hubungan*"
 							use-input=""
 							new-value-mode="add"
-							clearable
-							behavior="menu"
 						/>
 					</q-card-section>
 				</q-card>
@@ -169,30 +152,16 @@
 import { onMounted, reactive, ref } from 'vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import santriStore from 'src/stores/santri-store';
-import { getLists } from 'src/api/api-get-lists';
 import { notifyError } from 'src/utils/notify';
+import SelectKeteranganStatus from 'src/components/select-list/SelectKeteranganStatus.vue';
+import SelectHubunganWali from 'src/components/select-list/SelectHubunganWali.vue';
 
 const input = ref({ jenis_permohonan: 'Berhenti', tunggakan: 'Lunas' });
 const { santri } = reactive(santriStore());
-const lists = ref([]);
-const loading = ref([]);
 const loadingForm = ref(false);
 const emit = defineEmits(['submitted']);
 
-onMounted(async () => {
-	await getLists({
-		loading,
-		lists,
-		sort: true,
-		key: 'keterangan-status',
-	});
-	await getLists({
-		loading,
-		lists,
-		sort: true,
-		key: 'hubungan-wali',
-	});
-});
+onMounted(async () => {});
 async function onSubmit() {
 	const obj = JSON.parse(JSON.stringify(input.value));
 	if (

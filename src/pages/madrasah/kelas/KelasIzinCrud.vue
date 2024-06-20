@@ -67,31 +67,15 @@
 					]"
 					error-color="negative"
 				/>
-				<q-select
-					dense
-					class="q-mt-sm"
-					outlined
-					label="Keperluan*"
-					emit-value
-					map-options
+				<select-keperluan-izin
 					v-model="input.keperluan"
-					:options="lists['keperluan-izin']"
-					:loading="loading['keperluan-izin']"
-					:rules="[(val) => !!val || 'Harus diisi!']"
-					behavior="menu"
-				/>
-				<q-select
-					dense
 					class="q-mt-sm"
-					outlined
-					label="Keterangan"
-					emit-value
-					map-options
+					:rules="[(val) => !!val || 'Harus diisi!']"
+					label="Keperluan *"
+				/>
+				<select-keterangan-izin
 					v-model="input.keterangan"
-					:options="lists['keterangan-izin']"
-					:loading="loading['keterangan-izin']"
-					clearable
-					behavior="menu"
+					class="q-mt-sm"
 				/>
 				<q-input
 					dense
@@ -136,7 +120,8 @@ import { formatDateFull, isDate } from 'src/utils/format-date';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
 import apiDelete from 'src/api/api-delete';
-import { getLists } from 'src/api/api-get-lists';
+import SelectKeperluanIzin from 'src/components/select-list/SelectKeperluanIzin.vue';
+import SelectKeteranganIzin from 'src/components/select-list/SelectKeteranganIzin.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -146,14 +131,10 @@ const props = defineProps({
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const input = ref({ keperluan: 'Sakit', durasi: 1 });
-const lists = ref([]);
-const loading = ref([]);
 const loadingCrud = ref(false);
 
 onMounted(async () => {
 	Object.assign(input.value, props.data);
-	await getLists({ key: 'keperluan-izin', loading, lists, sort: true });
-	await getLists({ key: 'keterangan-izin', loading, lists, sort: true });
 });
 
 const onSubmit = async () => {

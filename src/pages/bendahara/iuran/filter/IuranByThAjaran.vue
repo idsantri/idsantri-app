@@ -16,9 +16,9 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import apiGet from 'src/api/api-get';
 import { useRoute } from 'vue-router';
-import FilterThAjaran from 'src/components/HeadFilterThAjaran.vue';
+import apiGet from 'src/api/api-get';
+import FilterThAjaran from 'pages/bendahara/HeadFilterThAjaran.vue';
 import DropDownMenu from './DropDownMenu.vue';
 import IuranTable from './IuranTable.vue';
 

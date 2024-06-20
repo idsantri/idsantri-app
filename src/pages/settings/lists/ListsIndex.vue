@@ -17,22 +17,7 @@
 				</q-card-section>
 			</q-card>
 			<q-card class="q-mt-sm" v-if="listModel">
-				<q-card-section
-					class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
-				>
-					List {{ listModel.label }}
-					<q-space />
-					<q-btn flat="" icon="cached" @click="keyReload++" />
-				</q-card-section>
-				<q-card-section class="q-pa-sm" :key="keyReload">
-					<router-view :key="$route.fullPath" />
-					<!-- <suspense>
-					<template #default>
-						<router-view :key="$route.fullPath" />
-					</template>
-					<template #fallback> loading... </template>
-				</suspense> -->
-				</q-card-section>
+				<router-view :key="$route.fullPath" />
 			</q-card>
 		</div>
 
@@ -45,7 +30,6 @@ import { ref } from 'vue';
 import listData from './lists-data';
 import { useRoute, useRouter } from 'vue-router';
 
-const keyReload = ref(0);
 const router = useRouter();
 const route = useRoute();
 

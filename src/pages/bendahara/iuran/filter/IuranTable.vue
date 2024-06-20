@@ -84,10 +84,10 @@
 	</q-dialog>
 </template>
 <script setup>
+import { ref } from 'vue';
 import { formatDateShort } from 'src/utils/format-date';
 import { digitSeparator } from 'src/utils/format-number';
 import IuranSantriCrud from 'src/pages/bendahara/iuran/santri/IuranSantriCrud.vue';
-import { ref } from 'vue';
 
 const props = defineProps({
 	data: Array,

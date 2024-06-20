@@ -73,12 +73,12 @@
 	/>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
-import { formatDateFull } from 'src/utils/format-date';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import PersonaliaModal from 'src/pages/personalia/PersonaliaIdentitasModal.vue';
+import apiGet from 'src/api/api-get';
+import { formatDateFull } from 'src/utils/format-date';
 import UploadImage from 'src/components/ImageUploader.vue';
+import PersonaliaModal from 'src/pages/personalia/PersonaliaIdentitasModal.vue';
 
 const route = useRoute();
 const router = useRouter();

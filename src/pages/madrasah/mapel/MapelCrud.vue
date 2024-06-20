@@ -24,28 +24,20 @@
 					v-model="input.urut"
 					hint="Nomor urut tampil"
 				/>
+				<select-tingkat-pendidikan
+					v-model="input.tingkat_id"
+					class="q-mt-sm"
+					:hint="hintTingkat()"
+					:rules="[(val) => !!val || 'Harus diisi!']"
+				/>
+
 				<q-input
 					class="q-mt-sm"
 					dense
 					outlined
 					label="Kode/ID Mapel"
 					v-model="input.id"
-					hint="Format: tingkat_id—kode_mapel (ibt-qur)"
-				/>
-				<q-select
-					dense
-					class="q-mt-sm"
-					outlined
-					label="Tingkat Pendidikan"
-					emit-value
-					map-options
-					v-model="input.tingkat_id"
-					:options="lists['tingkat-pendidikan']"
-					:loading="loading['tingkat-pendidikan']"
-					clearable
-					behavior="menu"
-					option-value="val0"
-					option-label="val1"
+					hint="Format: tingkat_id—kode_mapel (ibt-qur; ts-taj; aly-tau)"
 				/>
 				<q-input
 					dense
@@ -112,11 +104,12 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
-import apiUpdate from 'src/api/api-update';
+import listsStore from 'src/stores/lists-store';
 import apiPost from 'src/api/api-post';
+import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
-import { getListsKey } from 'src/api/api-get-lists';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import SelectTingkatPendidikan from 'src/components/select-list/SelectTingkatPendidikan.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -125,20 +118,24 @@ const props = defineProps({
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const input = ref({ category: 'Fan Dasar', show: 1 });
-const lists = ref([]);
-const loading = ref([]);
 const loadingCrud = ref(false);
+const tingkat = ref([]);
 
 onMounted(async () => {
 	Object.assign(input.value, props.data);
-	await getListsKey({
-		key: 'tingkat-pendidikan',
-		loading,
-		lists,
-		sort: true,
-	});
-	// console.log(input.value);
+	tingkat.value = listsStore().tingkatPendidikanGet();
 });
+
+const hintTingkat = () => {
+	if (input.value.tingkat_id) {
+		const t = tingkat.value?.find(
+			(tk) => tk?.val0 === input.value.tingkat_id,
+		);
+		return 'Tingkat ID: ' + t.val0 || '';
+	} else {
+		return 'Tingkat Pendidikan';
+	}
+};
 
 const onSubmit = async () => {
 	// console.log(input.value.id);

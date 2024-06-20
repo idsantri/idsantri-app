@@ -41,11 +41,11 @@
 				label="Domisili"
 				:to="'/santri/' + props.santriId + '/domisili'"
 			/>
-			<q-route-tab
+			<!-- <q-route-tab
 				name="iuran-total"
 				label="Iuran"
 				:to="'/santri/' + props.santriId + '/iuran-total'"
-			/>
+			/> -->
 		</q-tabs>
 		<q-card-section class="q-pa-sm">
 			<!-- swipe tak jalan -->

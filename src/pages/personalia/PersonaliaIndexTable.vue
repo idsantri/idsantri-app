@@ -63,10 +63,10 @@
 	</q-page>
 </template>
 <script setup>
-import PersonaliaModal from 'src/pages/personalia/PersonaliaIdentitasModal.vue';
-import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import apiGet from 'src/api/api-get';
+import PersonaliaModal from 'src/pages/personalia/PersonaliaIdentitasModal.vue';
 
 const loading = ref(false);
 const personalia = ref([]);

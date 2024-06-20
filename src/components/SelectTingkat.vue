@@ -18,7 +18,7 @@
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getListsCustom } from 'src/api/api-get-lists';
-import listsStore from 'stores/lists-madrasah-store';
+import listsMadrasahStore from 'stores/lists-madrasah-store';
 
 const props = defineProps({
 	startUrl: {
@@ -40,7 +40,9 @@ const url = `${props.startUrl}/${params.th_ajaran_h}`;
 
 onMounted(async () => {
 	if (params.th_ajaran_h) {
-		const cekData = listsStore().getTingkatByTahun(params.th_ajaran_h);
+		const cekData = listsMadrasahStore().getTingkatByTahun(
+			params.th_ajaran_h,
+		);
 		if (cekData.length) {
 			lists.value['tingkat'] = cekData;
 		} else {
@@ -48,10 +50,10 @@ onMounted(async () => {
 				url: 'kelas/lists',
 				params: { th_ajaran_h: params.th_ajaran_h },
 				key: 'tingkat',
-				loading,
+				loadingArray: loading,
 				sort: 'asc',
 			});
-			listsStore().addTingkatToTahun(data, params.th_ajaran_h);
+			listsMadrasahStore().addTingkatToTahun(data, params.th_ajaran_h);
 			lists.value['tingkat'] = data;
 		}
 	}

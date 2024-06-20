@@ -78,21 +78,10 @@
 							error-color="negative"
 							behavior="menu"
 						/>
-						<q-select
-							dense
+						<select-jenis-lembaga
+							v-model="input.jenis_lembaga"
 							hint=""
 							class="q-mt-sm"
-							outlined
-							label="Jenis Lembaga"
-							emit-value
-							map-options
-							v-model="input.jenis_lembaga"
-							:options="lists['jenis_lembaga']"
-							:loading="loading['jenis_lembaga']"
-							use-input=""
-							new-value-mode="add"
-							clearable
-							behavior="menu"
 						/>
 						<q-input
 							dense
@@ -126,22 +115,14 @@
 						<div class="text-subtitle2">
 							{{ carousel.others.title }}
 						</div>
-						<q-select
-							dense
+
+						<select-wilayah-ugt
 							hint=""
 							class="q-mt-sm"
-							outlined
 							label="Wilayah PJGT"
-							emit-value
-							map-options
 							v-model="input.wilayah"
-							:options="lists['wilayah']"
-							:loading="loading['wilayah']"
-							use-input=""
-							new-value-mode="add"
-							clearable
-							behavior="menu"
 						/>
+
 						<q-input
 							dense
 							hint="08123456789"
@@ -208,13 +189,14 @@
 <script setup>
 import { onMounted, ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
-import CarouselAlamat from 'src/components/CarouselAlamat.vue';
+import loadingStore from 'src/stores/loading-store';
 import apiDelete from 'src/api/api-delete';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
-import { getListsCustom } from 'src/api/api-get-lists';
-import loadingStore from 'src/stores/loading-store';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import CarouselAlamat from 'src/components/CarouselAlamat.vue';
+import SelectJenisLembaga from 'src/components/select-list/SelectJenisLembagaPendidikan.vue';
+import SelectWilayahUgt from 'src/components/select-list/SelectWilayahUgt.vue';
 
 const loadingState = loadingStore();
 const { loadingMain } = toRefs(loadingState);
@@ -228,25 +210,9 @@ const emit = defineEmits(['successSubmit', 'successDelete']);
 const route = useRoute();
 const input = ref({});
 
-const lists = ref([]);
-const loading = ref([]);
 onMounted(async () => {
 	Object.assign(input.value, props.data);
 	if (!input.value.provinsi) input.value.provinsi = 'Jawa Timur';
-	// console.log('i', input.value);
-	await getListsCustom({
-		url: 'ugt/pjgt/lists/jenis-lembaga',
-		lists,
-		key: 'jenis_lembaga',
-		loading,
-	});
-	await getListsCustom({
-		url: 'ugt/pjgt/lists/wilayah',
-		lists,
-		key: 'wilayah',
-		loading,
-	});
-	// console.log(lists.value);
 });
 
 const onSubmit = async () => {

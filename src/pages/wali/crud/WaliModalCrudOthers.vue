@@ -2,58 +2,30 @@
 	<div class="text-subtitle2">
 		{{ props.title }}
 	</div>
-
-	<q-select
-		dense
-		hint=""
-		class="q-mt-sm"
-		outlined
-		label="Pendidikan Akhir Formal"
-		emit-value
-		map-options
+	<select-p-a-formal
 		v-model="pa_formal_tingkat"
-		:options="lists['pendidikan-akhir-formal']"
-		:loading="loading['pendidikan-akhir-formal']"
+		class="q-mt-sm"
+		label="Pendidikan Akhir Formal"
+		hint=""
 		use-input=""
 		new-value-mode="add"
-		clearable
-		behavior="menu"
 	/>
 
-	<q-select
-		dense
-		hint=""
-		class="q-mt-sm"
-		outlined
-		label="Pendidikan Akhir Diniyah"
-		emit-value
-		map-options
+	<select-p-a-diniyah
 		v-model="pa_diniyah_tingkat"
-		:options="lists['pendidikan-akhir-diniyah']"
-		:loading="loading['pendidikan-akhir-diniyah']"
-		use-input=""
-		new-value-mode="add"
-		clearable
-		behavior="menu"
-	/>
-
-	<q-select
-		dense
-		hint=""
+		label="Pendidikan Akhir Diniyah"
 		class="q-mt-sm"
-		outlined
-		label="Pekerjaan"
-		emit-value
-		map-options
-		v-model="pekerjaan"
-		:options="lists['pekerjaan']"
-		:loading="loading['pekerjaan']"
+		hint=""
 		use-input=""
 		new-value-mode="add"
-		clearable
-		behavior="menu"
 	/>
-
+	<select-pekerjaan
+		v-model="pekerjaan"
+		class="q-mt-sm"
+		hint=""
+		use-input=""
+		new-value-mode="add"
+	/>
 	<q-input
 		dense
 		hint="08123456789"
@@ -84,9 +56,11 @@
 	/>
 </template>
 <script setup>
+import { onMounted, toRefs } from 'vue';
 import waliState from 'src/stores/wali-store';
-import { onMounted, ref, toRefs } from 'vue';
-import { getLists } from 'src/api/api-get-lists';
+import SelectPAFormal from 'src/components/select-list/SelectPAFormal.vue';
+import SelectPADiniyah from 'src/components/select-list/SelectPADiniyah.vue';
+import SelectPekerjaan from 'src/components/select-list/SelectPekerjaan.vue';
 
 const props = defineProps({
 	title: { type: String, default: '' },
@@ -101,23 +75,6 @@ const {
 	penghasilan,
 } = toRefs(wali);
 
-const lists = ref([]);
-const loading = ref([]);
-
-onMounted(async () => {
-	await getLists({
-		loading,
-		lists,
-		sort: true,
-		key: 'pendidikan-akhir-formal',
-	});
-	await getLists({
-		loading,
-		lists,
-		sort: true,
-		key: 'pendidikan-akhir-diniyah',
-	});
-	await getLists({ loading, lists, sort: true, key: 'pekerjaan' });
-});
+onMounted(async () => {});
 </script>
 <style></style>
