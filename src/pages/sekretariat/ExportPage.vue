@@ -35,6 +35,7 @@
 import { ref, toRefs } from 'vue';
 import apiGet from 'src/api/api-get.js';
 import loadingStore from 'src/stores/loading-store';
+import { notifyWarning } from 'src/utils/notify';
 
 const isActive = ref(true);
 const { loadingMain } = toRefs(loadingStore());
@@ -48,7 +49,10 @@ async function download() {
 			aktif: isActive.value,
 		},
 	});
-	// console.log(data.url);
+
+	if (!data) return;
+	if (!data.url) return notifyWarning('Url tidak ditemukan');
+
 	let link = document.createElement('a');
 	link.href = data.url;
 	link.click();

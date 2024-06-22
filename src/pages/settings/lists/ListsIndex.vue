@@ -16,8 +16,15 @@
 					/>
 				</q-card-section>
 			</q-card>
-			<q-card class="q-mt-sm" v-if="listModel">
+			<q-card v-if="listModel" class="q-mt-sm">
 				<router-view :key="$route.fullPath" />
+			</q-card>
+			<q-card v-else class="q-mt-sm">
+				<q-card-section
+					class="bg-green-11 text-center text-italic text-subtitle1 q-pa-lg"
+				>
+					Silakan pilih lists yang tersedia!
+				</q-card-section>
 			</q-card>
 		</div>
 
@@ -31,9 +38,9 @@ import listData from './lists-data';
 import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
-const route = useRoute();
+const { params } = useRoute();
 
-const listKey = route.params.listKey;
+const listKey = params.listKey;
 const listModel = ref(listData.find(({ url }) => url == listKey));
 const options = ref([]);
 
@@ -42,9 +49,7 @@ const options = ref([]);
  * filter lists
  **/
 onMounted(() => {
-	options.value = listData.filter(
-		(item) => item.url !== 'tingkat-pendidikan',
-	);
+	options.value = listData.filter((item) => item.protected == false);
 });
 
 function routerPush(list) {

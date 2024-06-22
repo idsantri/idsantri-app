@@ -37,8 +37,8 @@
 							</div>
 						</q-item-label>
 
-						<q-item-label
-							><span class="text-bold">
+						<q-item-label>
+							<span class="text-bold">
 								Rp{{ digitSeparator(item.sub_total) }}</span
 							>
 							(Rp{{ digitSeparator(item.nominal) }} x
@@ -73,11 +73,12 @@
 							/>
 							<q-btn
 								icon="edit"
+								glossy
+								outline
 								dense
 								round=""
-								color="green"
+								color="green-8"
 								unelevated=""
-								class="text-green-11"
 								@click="editIuran(item)"
 							/>
 						</div>
@@ -119,6 +120,7 @@
 	</div>
 
 	<q-dialog v-model="crudShow">
+		<!-- edit -->
 		<iuran-santri-crud
 			:is-new="false"
 			title="Input Iuran"
@@ -126,6 +128,7 @@
 			@success-delete="loadData"
 			@success-submit="loadData"
 			:disable-santri-id="true"
+			:disable-th-ajaran="true"
 		/>
 	</q-dialog>
 </template>
@@ -146,19 +149,20 @@ const santriId = ref(route.params.id);
 const loading = ref(false);
 const iuran = ref([]);
 const total = ref(0);
-const santri = ref({});
+// const santri = ref({});
 const crudShow = ref(false);
 const dataIuran = ref({});
 
 async function loadData() {
 	if (thAjaranH.value && santriId.value) {
 		const data = await apiGet({
-			endPoint: `iuran/santri/${santriId.value}/${thAjaranH.value}`,
+			endPoint: `iuran/santri/${santriId.value}`,
+			params: { th_ajaran_h: thAjaranH.value },
 			loading,
 		});
 		// console.log(data);
-		santri.value = data.santri;
-		iuran.value = data.iuran;
+		// santri.value = data.santri;
+		iuran.value = data.iuran_by_th;
 		total.value = iuran.value.reduce((sum, item) => {
 			return sum + item.sub_total;
 		}, 0);

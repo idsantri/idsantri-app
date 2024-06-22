@@ -35,10 +35,10 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import FilterKelas from 'src/components/HeadFilterKelas.vue';
 import { useRoute } from 'vue-router';
 import { notifyWarning } from 'src/utils/notify';
 import apiGet from 'src/api/api-get';
+import FilterKelas from 'src/components/HeadFilterKelas.vue';
 
 const { params } = useRoute();
 const loadingDownload = ref(false);
@@ -58,7 +58,10 @@ async function downloadExcel() {
 			tingkat_id: params.tingkat_id,
 		},
 	});
-	// console.log(data.url);
+
+	if (!data) return;
+	if (!data.url) return notifyWarning('Url tidak ditemukan');
+
 	let link = document.createElement('a');
 	link.href = data.url;
 	link.click();

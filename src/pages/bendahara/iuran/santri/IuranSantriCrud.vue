@@ -21,7 +21,7 @@
 					:active-only="true"
 					@emit-input="(val) => Object.assign(input, val)"
 					:data="props.data"
-					:disable-select="$props.disableSantriId"
+					:disable-select="props.disableSantriId"
 				/>
 				<InputSelectArray
 					v-model="input.th_ajaran_h"
@@ -31,6 +31,7 @@
 					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
 					:selected="input.th_ajaran_h"
+					:disable="props.disableThAjaran"
 				/>
 				<InputSelectArray
 					v-model="input.iuran"
@@ -133,6 +134,7 @@ const props = defineProps({
 	isNew: { type: Boolean, default: true },
 	title: { type: String, default: () => 'Input' },
 	disableSantriId: { type: Boolean, default: false },
+	disableThAjaran: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['successSubmit', 'successDelete']);
@@ -183,6 +185,7 @@ const submit = async () => {
 	}
 	if (response) {
 		document.getElementById('btn-close').click();
+		// console.log(response.iuran);
 		emit('successSubmit', response?.iuran);
 	}
 };

@@ -71,6 +71,7 @@ import loadingStore from 'src/stores/loading-store';
 import listsIuranStore from 'src/stores/lists-iuran-store';
 import apiGet from 'src/api/api-get';
 import { getListsCustom } from 'src/api/api-get-lists';
+import { notifyWarning } from 'src/utils/notify';
 import SelectTahunAjaran from 'pages/bendahara/SelectTahunAjaran.vue';
 
 const { loadingMain } = toRefs(loadingStore());
@@ -80,7 +81,7 @@ const loading = ref([]);
 
 onMounted(async () => {});
 
-async function getList(th_ajaran_h, listKey) {
+async function fetchList(th_ajaran_h, listKey) {
 	const checkLists = listsIuranStore().getItemByTahun(listKey, th_ajaran_h);
 	if (checkLists.length > 0) {
 		lists.value[listKey] = checkLists;
@@ -104,7 +105,10 @@ async function onSubmit() {
 		loading: loadingMain,
 		params,
 	});
-	// console.log(data.url);
+
+	if (!data) return;
+	if (!data.url) return notifyWarning('Url tidak ditemukan');
+
 	let link = document.createElement('a');
 	link.href = data.url;
 	link.click();
@@ -116,13 +120,13 @@ watch(
 	async (newValue, oldValue) => {
 		if (newValue && newValue != oldValue) {
 			input.value.iuran = '';
-			await getList(newValue, 'iuran');
+			await fetchList(newValue, 'iuran');
 
 			input.value.kasir = '';
-			await getList(newValue, 'kasir');
+			await fetchList(newValue, 'kasir');
 
 			input.value.via = '';
-			await getList(newValue, 'via');
+			await fetchList(newValue, 'via');
 		}
 	},
 );
