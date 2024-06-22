@@ -60,7 +60,7 @@ import loadingStore from 'src/stores/loading-store';
 import apiGet from 'src/api/api-get';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
-import { notifyError } from 'src/utils/notify';
+import { notifyError, notifyWarning } from 'src/utils/notify';
 
 const input = ref({});
 const { loadingMain } = toRefs(loadingStore());
@@ -77,7 +77,10 @@ async function onSubmit() {
 		loading: loadingMain,
 		params,
 	});
-	// console.log(data.url);
+
+	if (!data) return;
+	if (!data.url) return notifyWarning('Url tidak ditemukan');
+
 	let link = document.createElement('a');
 	link.href = data.url;
 	link.click();

@@ -8,7 +8,7 @@ import { notifyError } from 'src/utils/notify';
  * @param {*} object
  * @returns array
  */
-async function getLists({ loading, lists, key, sort = null, url = '' }) {
+async function getLists_({ loading, lists, key, sort = null, url = '' }) {
 	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	loading.value[key] = true;
 	const endPoint = url?.length ? url : `lists/${key}`;
@@ -48,7 +48,7 @@ async function getLists({ loading, lists, key, sort = null, url = '' }) {
  * @param {*} object
  * @returns array object
  */
-async function getListsKey({ loading, lists, key, sort = null, url = '' }) {
+async function getListsKey_({ loading, lists, key, sort = null, url = '' }) {
 	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	loading.value[key] = true;
 	const endPoint = url?.length ? url : `lists/${key}`;
@@ -87,20 +87,12 @@ async function getListsKey({ loading, lists, key, sort = null, url = '' }) {
 	}
 }
 
-function hasObject(array) {
-	for (let i = 0; i < array.length; i++) {
-		if (typeof array[i] === 'object') {
-			return true;
-		}
-	}
-	return false;
-}
-
 /**
+ * @deprecated
  * @param {*} object
  * @returns array object
  */
-async function getListsArray({
+async function getListsArray_({
 	loadingArray,
 	loading,
 	key,
@@ -145,13 +137,7 @@ async function getListsArray({
  * @param {*} object
  * @returns array object
  */
-async function getListsArrayObject({
-	loadingArray,
-	loading,
-	key,
-	sort = null,
-	url = '',
-}) {
+async function getLists({ loadingArray, loading, key, sort = null, url = '' }) {
 	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 
 	if (loadingArray) loadingArray.value[key] = true;
@@ -189,6 +175,15 @@ async function getListsArrayObject({
 		if (loadingArray) loadingArray.value[key] = false;
 		if (loading) loading.value = false;
 	}
+}
+
+function hasObject(array) {
+	for (let i = 0; i < array.length; i++) {
+		if (typeof array[i] === 'object') {
+			return true;
+		}
+	}
+	return false;
 }
 
 /**
@@ -238,10 +233,4 @@ async function getListsCustom({
 	}
 }
 
-export {
-	getLists,
-	getListsKey,
-	getListsArray,
-	getListsArrayObject,
-	getListsCustom,
-};
+export { getLists_, getListsKey_, getListsArray_, getLists, getListsCustom };

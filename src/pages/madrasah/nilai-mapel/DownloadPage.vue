@@ -128,6 +128,7 @@ import apiGet from 'src/api/api-get';
 import { getListsCustom } from 'src/api/api-get-lists';
 import listsMadrasahStore from 'src/stores/lists-madrasah-store';
 import loadingStore from 'src/stores/loading-store';
+import { notifyWarning } from 'src/utils/notify';
 
 const { loadingMain } = toRefs(loadingStore());
 const input = ref({});
@@ -154,6 +155,7 @@ const listsCategory = [
 
 const th = listsMadrasahStore().getThAjaran;
 lists.value['th_ajaran'] = th;
+
 onMounted(async () => {
 	const th = listsMadrasahStore().getThAjaran;
 	lists.value['th_ajaran'] = th;
@@ -178,13 +180,14 @@ async function onSubmit() {
 		loading: loadingMain,
 		params,
 	});
-	if (data) {
-		let link = document.createElement('a');
-		link.href = data.url;
-		link.click();
-		link.remove();
-	}
-	// console.log(data.url);
+
+	if (!data) return;
+	if (!data.url) return notifyWarning('Url tidak ditemukan');
+
+	let link = document.createElement('a');
+	link.href = data.url;
+	link.click();
+	link.remove();
 }
 
 watch(

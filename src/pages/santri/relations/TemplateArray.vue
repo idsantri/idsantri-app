@@ -12,6 +12,8 @@
 						glossy=""
 						icon="edit"
 						round=""
+						outline
+						color="green-8"
 						@click="$emit('edit', item)"
 					/>
 					<q-btn

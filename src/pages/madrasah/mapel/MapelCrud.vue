@@ -158,7 +158,8 @@ const onSubmit = async () => {
 	}
 	if (response) {
 		document.getElementById('btn-close-crud').click();
-		emit('successSubmit');
+		// console.log(response.mapel);
+		emit('successSubmit', response.mapel);
 	}
 };
 
@@ -170,7 +171,7 @@ const handleDelete = async () => {
 	});
 	if (result) {
 		document.getElementById('btn-close-crud').click();
-		emit('successDelete');
+		emit('successDelete', props.data);
 	}
 };
 </script>

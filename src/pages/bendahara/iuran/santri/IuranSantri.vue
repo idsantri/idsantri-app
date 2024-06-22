@@ -38,7 +38,7 @@
 						/>
 					</q-card-section>
 					<q-card-section class="no-padding" :key="keyIuran">
-						<div v-if="loading && !route.params.thAjaranH">
+						<div v-if="loading && !params.thAjaranH">
 							<q-spinner-cube
 								color="green-12"
 								size="8em"
@@ -70,17 +70,14 @@
 										<q-route-tab
 											:name="th"
 											:label="th"
-											:to="`/bendahara/iuran/santri/${route.params.id}/${th}`"
+											:to="`/bendahara/iuran/santri/${params.id}/${th}`"
 										/>
 									</div>
 								</q-tabs>
 							</div>
 
 							<div class="col">
-								<div
-									v-if="!route.params.thAjaranH"
-									class="q-ma-lg"
-								>
+								<div v-if="!params.thAjaranH" class="q-ma-lg">
 									<div class="text-italic text-center">
 										Klik angka tahun disamping, atau
 										tambahkan data!
@@ -96,12 +93,13 @@
 			</q-card-section>
 		</q-card>
 		<q-dialog v-model="crudShow">
+			<!-- add new -->
 			<iuran-santri-crud
 				:is-new="true"
 				title="Input Iuran"
 				:data="dataIuran"
-				@success-submit="loadData"
-				@success-delete="loadData"
+				@success-submit="successSubmit"
+				@success-delete="null"
 				:disable-santri-id="true"
 			/>
 		</q-dialog>
@@ -109,7 +107,7 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import apiGet from 'src/api/api-get';
 import CardHeadSantri from 'src/components/CardHeadSantri.vue';
 import IuranSantriByTh from 'src/pages/bendahara/iuran/santri/IuranSantriByTh.vue';
@@ -118,31 +116,42 @@ import IuranSantriCrud from 'src/pages/bendahara/iuran/santri/IuranSantriCrud.vu
 const santri = ref({});
 const iuran = ref([]);
 const loading = ref(false);
-const route = useRoute();
+const { params } = useRoute();
 const tahunIuran = ref([]);
 const crudShow = ref(false);
 const dataIuran = ref({});
 const keyIuran = ref(0);
+const router = useRouter();
+
+function successSubmit(val) {
+	if (val.th_ajaran_h == params.thAjaranH) {
+		keyIuran.value++;
+	} else {
+		router.push(
+			`/bendahara/iuran/santri/${val.santri_id}/${val.th_ajaran_h}`,
+		);
+	}
+}
 
 async function loadData() {
 	const data = await apiGet({
-		endPoint: `iuran/santri/${route.params.id}`,
+		endPoint: `iuran/santri/${params.id}`,
 		loading,
 	});
 	santri.value = data.santri;
 	santri.value.santri_id = data.santri.id;
-	iuran.value = data.iuran;
+	iuran.value = data.iuran_total;
 	tahunIuran.value = iuran.value.map((v) => v.th_ajaran_h);
 
 	const img = await apiGet({
-		endPoint: `images/santri/${route.params.id}`,
+		endPoint: `images/santri/${params.id}`,
 	});
 	santri.value.image = img.image_url;
 }
 onMounted(async () => {
 	await loadData();
 	dataIuran.value = {
-		th_ajaran_h: route.params.thAjaranH || '',
+		th_ajaran_h: params.thAjaranH || '',
 		santri_id: santri.value.id,
 		nama: santri.value.nama,
 		data_akhir: santri.value.data_akhir,

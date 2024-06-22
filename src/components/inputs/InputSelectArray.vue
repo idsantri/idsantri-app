@@ -16,7 +16,7 @@
 	</q-select>
 </template>
 <script setup>
-import { getListsArrayObject } from 'src/api/api-get-lists';
+import { getLists } from 'src/api/api-get-lists';
 import listsStore from 'src/stores/lists-store';
 import { onMounted, ref } from 'vue';
 import DropDownAfter from './DropDownAfter.vue';
@@ -60,7 +60,7 @@ onMounted(async () => {
 });
 
 async function fetchList() {
-	const data = await getListsArrayObject({
+	const data = await getLists({
 		key: props.url,
 		loading: loading,
 		sort: props.sort,

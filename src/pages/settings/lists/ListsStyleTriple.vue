@@ -20,9 +20,12 @@
 				<q-td :props="props" key="id">
 					<q-btn
 						icon="edit"
-						flat
-						@click="() => emit('handleEdit', props.row)"
+						outline
+						round
+						dense
+						glossy
 						color="green-10"
+						@click="() => emit('handleEdit', props.row)"
 					/>
 				</q-td>
 			</q-tr>

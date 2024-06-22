@@ -95,8 +95,8 @@
 			<mapel-crud
 				:data="mapelObj"
 				title="Input Mata Pelajaran"
-				@success-submit="loadData"
-				@success-delete="loadData"
+				@success-submit="(val) => loadData(val.tingkat_id)"
+				@success-delete="(val) => loadData(val.tingkat_id)"
 			/>
 		</q-dialog>
 	</q-page>
