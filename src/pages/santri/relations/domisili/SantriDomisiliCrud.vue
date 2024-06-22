@@ -25,17 +25,12 @@
 					disable=""
 					filled=""
 				/>
-				<q-select
-					dense
-					class="q-mt-sm"
-					outlined
-					label="Domisili"
-					emit-value
-					map-options
+				<input-select-array
 					v-model="input.domisili"
-					:options="lists['domisili']"
-					:loading="loading['domisili']"
-					behavior="menu"
+					url="domisili"
+					label="Domisili *"
+					class="q-mt-sm"
+					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
 				<q-input
 					dense
@@ -75,11 +70,11 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
-import { getLists } from 'src/api/api-get-lists';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -89,13 +84,10 @@ const props = defineProps({
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const input = ref({});
-const lists = ref([]);
-const loading = ref([]);
 const loadingCrud = ref(false);
 
 onMounted(async () => {
 	Object.assign(input.value, props.data);
-	await getLists({ key: 'domisili', loading, lists, sort: true });
 });
 
 const submit = async () => {

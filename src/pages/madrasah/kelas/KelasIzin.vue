@@ -1,5 +1,5 @@
 <template lang="">
-	<template-array
+	<temp-array
 		:data="izinMap"
 		:spinner="loading"
 		:btn-print="true"
@@ -23,14 +23,14 @@
 	<!-- <pre>{{ izin }}	</pre> -->
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import TemplateArray from 'src/pages/santri/relations/TemplateArray.vue';
 import { formatDateShort } from 'src/utils/format-date';
 import { formatHijri, m2h } from 'src/utils/hijri';
-import KelasIzinCrud from 'src/pages/madrasah/kelas/KelasIzinCrud.vue';
 import { getObjectById } from 'src/utils/array-object';
+import apiGet from 'src/api/api-get';
+import TempArray from 'src/pages/santri/relations/TemplateArray.vue';
+import KelasIzinCrud from 'src/pages/madrasah/kelas/KelasIzinCrud.vue';
 import ReportViewer from 'src/components/ReportViewer.vue';
 
 const route = useRoute();

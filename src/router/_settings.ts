@@ -7,7 +7,7 @@ export default [
 			{
 				path: ':listKey',
 				component: () =>
-					import('src/pages/settings/lists/ListsContainer.vue'),
+					import('src/pages/settings/lists/ListsByKey.vue'),
 			},
 		],
 	},

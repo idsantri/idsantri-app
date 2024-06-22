@@ -4,12 +4,12 @@
 		outlined
 		label="Bulan (Ujian)"
 		v-model="bulanUjian"
-		:options="lists['bulan_ujian']"
+		:options="lists"
 		option-value="bu"
 		option-label="bulan_ujian"
 		emit-value
 		map-options
-		:loading="loading['bulan_ujian']"
+		:loading="loading"
 		clearable=""
 		behavior="menu"
 	/>
@@ -49,7 +49,7 @@ onMounted(async () => {
 				params.tingkat_id,
 			);
 		if (cekData.length) {
-			lists.value['bulan_ujian'] = cekData;
+			lists.value = cekData;
 		} else {
 			const data = await getListsCustom({
 				url: `absensi/${params.absensi}/lists/bulan-ujian`,
@@ -65,7 +65,7 @@ onMounted(async () => {
 				return;
 			}
 			listsMadrasahStore().addBulanUjianList(data);
-			lists.value['bulan_ujian'] = data;
+			lists.value = data;
 		}
 	}
 });

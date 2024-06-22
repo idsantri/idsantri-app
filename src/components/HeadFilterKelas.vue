@@ -53,8 +53,7 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import listsStore from 'stores/lists-madrasah-store';
-
+import listsMadrasahStore from 'src/stores/lists-madrasah-store';
 import SelectTahunAjaran from 'components/SelectTahunAjaran.vue';
 import SelectTingkat from 'components/SelectTingkat.vue';
 import SelectKelas from 'components/SelectKelas.vue';
@@ -110,7 +109,7 @@ function displayFilter() {
 	}
 
 	if (params.tingkat_id) {
-		const allTingkat = listsStore().getAllTingkat();
+		const allTingkat = listsMadrasahStore().getAllTingkat();
 		if (allTingkat.length) {
 			const tingkat = allTingkat.find(
 				(t) => t.tingkat_id == params.tingkat_id,
@@ -130,7 +129,9 @@ function displayFilter() {
 	}
 
 	if (params.ujian_ke) {
-		const u = listsStore().getUjian.find((u) => u.value == params.ujian_ke);
+		const u = listsMadrasahStore().getUjian.find(
+			(u) => u.value == params.ujian_ke,
+		);
 		text +=
 			' ➡️ <em class="text-weight-light">Ujian Ke: </em><strong>' +
 			u.label +
@@ -138,7 +139,7 @@ function displayFilter() {
 	}
 
 	if (params.set_bulan_ujian) {
-		const tk = listsStore().getBulanUjianSettingByTingkatId(
+		const tk = listsMadrasahStore().getBulanUjianSettingByTingkatId(
 			params.tingkat_id,
 		);
 		const bu = tk.find((b) => b.bu == params.set_bulan_ujian);
@@ -149,7 +150,7 @@ function displayFilter() {
 	}
 
 	if (params.list_bulan_ujian) {
-		const tk = listsStore().getBulanUjianListByTahunAndTingkatId(
+		const tk = listsMadrasahStore().getBulanUjianListByTahunAndTingkatId(
 			params.th_ajaran_h,
 			params.tingkat_id,
 		);

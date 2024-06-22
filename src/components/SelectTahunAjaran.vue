@@ -17,7 +17,7 @@
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getListsCustom } from 'src/api/api-get-lists';
-import listsStore from 'stores/lists-madrasah-store';
+import listsMadrasahStore from 'stores/lists-madrasah-store';
 
 const props = defineProps({
 	startUrl: {
@@ -37,16 +37,16 @@ const loading = ref([]);
 const router = useRouter();
 
 onMounted(async () => {
-	const cekData = listsStore().getThAjaran;
+	const cekData = listsMadrasahStore().getThAjaran;
 	if (cekData.length) {
 		lists.value['th_ajaran'] = cekData;
 	} else {
 		const data = await getListsCustom({
 			url: 'kelas/lists',
 			key: 'th_ajaran',
-			loading,
+			loadingArray: loading,
 		});
-		listsStore().setThAjaran(data);
+		listsMadrasahStore().setThAjaran(data);
 		lists.value['th_ajaran'] = data;
 	}
 });

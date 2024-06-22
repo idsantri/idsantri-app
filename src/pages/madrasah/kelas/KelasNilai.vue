@@ -157,9 +157,9 @@
 	</q-card>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import apiGet from 'src/api/api-get';
 
 const tab = ref('ujian');
 const route = useRoute();

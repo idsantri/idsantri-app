@@ -7,12 +7,12 @@
 			<q-space />
 			<q-btn
 				round
-				flat
 				dense
+				glossy
 				icon="info"
 				no-caps
-				color="green-12"
-				class="q-px-sm bg-green-8"
+				color="green-8"
+				class="q-px-sm"
 				:to="`/santri/${data.santri_id}`"
 			/>
 		</q-card-section>

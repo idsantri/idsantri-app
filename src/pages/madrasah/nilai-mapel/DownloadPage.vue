@@ -128,6 +128,7 @@ import apiGet from 'src/api/api-get';
 import { getListsCustom } from 'src/api/api-get-lists';
 import listsMadrasahStore from 'src/stores/lists-madrasah-store';
 import loadingStore from 'src/stores/loading-store';
+import { notifyWarning } from 'src/utils/notify';
 
 const { loadingMain } = toRefs(loadingStore());
 const input = ref({});
@@ -154,15 +155,15 @@ const listsCategory = [
 
 const th = listsMadrasahStore().getThAjaran;
 lists.value['th_ajaran'] = th;
+
 onMounted(async () => {
 	const th = listsMadrasahStore().getThAjaran;
 	lists.value['th_ajaran'] = th;
 	if (th.length == 0) {
 		const data = await getListsCustom({
 			url: 'kelas/lists',
-			lists,
 			key: 'th_ajaran',
-			loading,
+			loadingArray: loading,
 		});
 		listsMadrasahStore().setThAjaran(data);
 		lists.value['th_ajaran'] = data;
@@ -179,13 +180,14 @@ async function onSubmit() {
 		loading: loadingMain,
 		params,
 	});
-	if (data) {
-		let link = document.createElement('a');
-		link.href = data.url;
-		link.click();
-		link.remove();
-	}
-	// console.log(data.url);
+
+	if (!data) return;
+	if (!data.url) return notifyWarning('Url tidak ditemukan');
+
+	let link = document.createElement('a');
+	link.href = data.url;
+	link.click();
+	link.remove();
 }
 
 watch(
@@ -202,7 +204,7 @@ watch(
 					url: 'kelas/lists',
 					params: { th_ajaran_h: newModel },
 					key: 'tingkat',
-					loading,
+					loadingArray: loading,
 					sort: 'asc',
 				});
 				listsMadrasahStore().addTingkatToTahun(data, newModel);
@@ -234,7 +236,7 @@ watch(
 						tingkat_id: newModel,
 					},
 					key: 'kelas',
-					loading,
+					loadingArray: loading,
 					sort: 'asc',
 				});
 

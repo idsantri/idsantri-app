@@ -9,7 +9,7 @@
 		option-label="bulan_ujian"
 		emit-value
 		map-options
-		:loading="loading['bulan_ujian']"
+		:loading="loading"
 		clearable=""
 		behavior="menu"
 	/>
@@ -37,7 +37,7 @@ const router = useRouter();
 
 const bulanUjian = ref(params.set_bulan_ujian);
 
-const loading = ref([]);
+const loading = ref(false);
 const lists = ref([]);
 const url = `${props.startUrl}/${params.th_ajaran_h}/${params.tingkat_id}/${params.kelas || '*'}`;
 

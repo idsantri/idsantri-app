@@ -24,80 +24,35 @@
 					disable=""
 					filled=""
 				/>
-				<q-select
-					dense
-					class="q-mt-sm"
-					outlined
-					label="Jabatan"
+
+				<input-select-array
 					v-model="input.jabatan"
-					:options="lists['jabatan-madrasah']"
-					option-value="val0"
-					option-label="val0"
-					emit-value
-					map-options
-					:rules="[(val) => !!val || 'Harus diisi!']"
-					error-color="negative"
-					:loading="loading['jabatan-madrasah']"
-					behavior="menu"
-				/>
-				<q-select
-					dense
-					:hint="
-						input.th_ajaran_h?.length == 9
-							? lists['tahun-ajaran']?.find(
-									(item) => item.val0 === input.th_ajaran_h,
-								)?.val1
-							: ''
-					"
+					url="jabatan-madrasiyah"
+					label="Jabatan"
 					class="q-mt-sm"
-					outlined
-					label="Tahun Ajaran"
+					:rules="[(val) => !!val || 'Harus diisi!']"
+				/>
+				<InputSelectArray
 					v-model="input.th_ajaran_h"
-					:options="lists['tahun-ajaran']"
-					option-value="val0"
-					option-label="val0"
-					emit-value
-					map-options
-					:rules="[(val) => !!val || 'Harus diisi!']"
-					error-color="negative"
-					:loading="loading['tahun-ajaran']"
-					behavior="menu"
-				/>
-				<q-select
-					dense
-					:hint="
-						!isNaN(input.tingkat_id)
-							? lists['tingkat-pendidikan']?.find(
-									(item) => item.val0 == input.tingkat_id,
-								)?.val1
-							: 'Jenjang Pendidikan'
-					"
+					url="tahun-ajaran"
+					label="Tahun Ajaran *"
+					sort="desc"
 					class="q-mt-sm"
-					outlined
-					label="Tingkat Pendidikan"
+					:rules="[(val) => !!val || 'Harus diisi!']"
+					:selected="input.th_ajaran_h"
+				/>
+
+				<InputSelectTingkatPendidikan
 					v-model="input.tingkat_id"
-					:options="lists['tingkat-pendidikan']"
-					option-value="val0"
-					option-label="val1"
-					emit-value
-					map-options
-					:rules="[(val) => !!val || 'Harus diisi!']"
-					error-color="negative"
-					:loading="loading['tingkat-pendidikan']"
-					behavior="menu"
-				/>
-				<q-select
-					dense
 					class="q-mt-sm"
-					outlined
-					label="Kelas"
-					emit-value
-					map-options
+					:rules="[(val) => !!val || 'Harus diisi!']"
+					:selected="input.tingkat_id"
+				/>
+				<input-select-array
 					v-model="input.kelas"
-					:options="lists['kelas']"
-					:loading="loading['kelas']"
-					clearable=""
-					behavior="menu"
+					url="kelas"
+					label="Kelas"
+					class="q-mt-sm"
 				/>
 
 				<q-input
@@ -144,12 +99,14 @@
 	</q-card>
 </template>
 <script setup>
-import ToolbarForm from 'src/components/ToolbarForm.vue';
 import { onMounted, ref } from 'vue';
+import listsStore from 'src/stores/lists-store';
 import apiDelete from 'src/api/api-delete';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
-import { getLists, getListsKey } from 'src/api/api-get-lists';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import InputSelectTingkatPendidikan from 'src/components/inputs/InputSelectTingkatPendidikan.vue';
+import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },
@@ -159,32 +116,15 @@ const props = defineProps({
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const input = ref({});
-const lists = ref([]);
-const loading = ref([]);
 const loadingCrud = ref(false);
+const tingkat = ref([]);
+const tahunAjaran = ref([]);
+
 onMounted(async () => {
 	// input.value = props.data;  // menjadi reactive
 	Object.assign(input.value, props.data);
-
-	await getListsKey({
-		key: 'tahun-ajaran',
-		loading,
-		lists,
-		sort: false,
-	});
-	await getListsKey({
-		key: 'tingkat-pendidikan',
-		loading,
-		lists,
-		sort: true,
-	});
-	await getLists({ key: 'kelas', loading, lists, sort: true });
-	await getLists({
-		key: 'jabatan-madrasah',
-		loading,
-		lists,
-		sort: true,
-	});
+	tahunAjaran.value = listsStore().getByStateName('tahun-ajaran');
+	tingkat.value = listsStore().getByStateName('tingkat-pendidikan');
 });
 
 const submit = async () => {

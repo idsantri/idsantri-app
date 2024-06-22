@@ -115,13 +115,13 @@
 </template>
 <script setup>
 import { reactive, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import dialogStore from 'src/stores/dialog-store';
+import santriStore from 'src/stores/santri-store';
 import InputRegister from './SantriModalCrudRegister.vue';
 import InputIdentity from './SantriModalCrudIdentity.vue';
 import InputPendidikanAkhir from './SantriModalCrudPendidikanAkhir.vue';
 import InputOrtuWali from './SantriModalCrudOrtuWali.vue';
-import { useRoute, useRouter } from 'vue-router';
-import dialogStore from 'src/stores/dialog-store';
-import santriStore from 'src/stores/santri-store';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import apiDelete from 'src/api/api-delete';

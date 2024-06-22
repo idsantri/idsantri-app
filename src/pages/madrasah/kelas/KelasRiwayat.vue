@@ -36,8 +36,8 @@
 						{{
 							kelas.no_absen
 								? '(' +
-								  String('0' + kelas.no_absen).slice(-2) +
-								  ')'
+									String('0' + kelas.no_absen).slice(-2) +
+									')'
 								: ''
 						}}
 					</q-item-label>
@@ -72,10 +72,10 @@
 	</q-dialog>
 </template>
 <script setup>
-import SantriKelasCrud from 'src/pages/santri/relations/kelas/SantriKelasCrud.vue';
-import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import apiGet from 'src/api/api-get';
+import SantriKelasCrud from 'src/pages/santri/relations/kelas/SantriKelasCrud.vue';
 
 const crudShow = ref(false);
 const route = useRoute();

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<template-array
+		<temp-array
 			:data="dataMap"
 			:spinner="spinner"
 			@add="handleAdd"
@@ -10,10 +10,14 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import TemplateArray from 'src/pages/santri/relations/TemplateArray.vue';
+import TempArray from 'src/pages/santri/relations/TemplateArray.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { digitSeparator } from 'src/utils/format-number';
 import apiGet from 'src/api/api-get';
+
+/**
+ * TODO: BUANG FITUR INI
+ */
 
 const spinner = ref(false);
 const dataMap = ref([]);

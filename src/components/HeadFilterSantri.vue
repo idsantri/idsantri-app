@@ -77,6 +77,7 @@ const id = ref(params.id);
 const loading = ref(false);
 const options = ref([]);
 const notFound = ref(false);
+
 onMounted(async () => {
 	emit('dataFilter', {
 		display:
@@ -127,7 +128,7 @@ async function filterFunction(val, update) {
 				menuRef.setOptionIndex(-1);
 				menuRef.moveOptionSelection(1, true);
 			}
-		}
+		},
 	);
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-	<template-object
+	<temp-object
 		:data="dataObj"
 		:route="'/ortu/' + dataObj['ID Ortu']"
 		:spinner="spinner"
@@ -8,7 +8,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import TemplateObject from 'src/pages/santri/relations/TemplateObject.vue';
+import TempObject from 'src/pages/santri/relations/TemplateObject.vue';
 import { useRoute } from 'vue-router';
 import apiGet from 'src/api/api-get';
 

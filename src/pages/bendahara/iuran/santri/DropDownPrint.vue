@@ -51,10 +51,10 @@
 	</q-dialog>
 </template>
 <script setup>
-import apiDownload from 'src/api/api-download';
 import { onMounted, ref, toRefs } from 'vue';
-import ReportViewer from 'src/components/ReportViewer.vue';
+import apiDownload from 'src/api/api-download';
 import loadingStore from 'src/stores/loading-store';
+import ReportViewer from 'src/components/ReportViewer.vue';
 
 const { loadingMain } = toRefs(loadingStore());
 const urlReport = ref('');

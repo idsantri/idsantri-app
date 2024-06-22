@@ -99,17 +99,17 @@
 </template>
 <script setup>
 import { reactive, ref, toRefs } from 'vue';
-import InputIdentity from './WaliModalCrudIdentity.vue';
-import InputOthers from './WaliModalCrudOthers.vue';
-import waliStore from 'src/stores/wali-store';
 import { useRouter } from 'vue-router';
+import waliStore from 'src/stores/wali-store';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
-import CarouselAlamat from 'src/components/CarouselAlamat.vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
 import apiDelete from 'src/api/api-delete';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
+import CarouselAlamat from 'src/components/CarouselAlamat.vue';
+import ToolbarForm from 'src/components/ToolbarForm.vue';
+import InputIdentity from './WaliModalCrudIdentity.vue';
+import InputOthers from './WaliModalCrudOthers.vue';
 
 const router = useRouter();
 const { wali } = reactive(waliStore());

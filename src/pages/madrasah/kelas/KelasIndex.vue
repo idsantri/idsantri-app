@@ -35,12 +35,13 @@
 									<q-item>
 										<q-item-section avatar>
 											<q-avatar class="d-flex">
-												<img
+												<q-img
 													:src="
 														santri?.image ||
 														'/user-default.png'
 													"
-													:ratio="3 / 4"
+													:ratio="1"
+													cover
 												/>
 											</q-avatar>
 										</q-item-section>
@@ -243,11 +244,11 @@
 	</q-page>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import SantriKelasCrud from 'src/pages/santri/relations/kelas/SantriKelasCrud.vue';
+import apiGet from 'src/api/api-get';
 import apiUpdate from 'src/api/api-update';
+import SantriKelasCrud from 'src/pages/santri/relations/kelas/SantriKelasCrud.vue';
 
 const keyRoute = ref(0);
 const route = useRoute();

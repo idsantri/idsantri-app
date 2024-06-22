@@ -16,30 +16,24 @@
 						class="q-px-sm q-mr-md"
 					/>
 					<q-btn
-						class="q-mr-sm text-green-10"
+						class="text-green-10"
 						label="Baru"
 						icon="add"
 						no-caps
 						color="green-11"
 						@click="addNew"
 					/>
-					<q-select
-						style="width: 200px"
-						dense
-						bg-color="green-1"
-						outlined
-						label="Tingkat Pendidikan"
-						v-model="tingkatId"
-						:options="lists['tingkat-pendidikan']"
-						option-value="val0"
-						option-label="val1"
-						emit-value
-						map-options
-						:loading="loadingLists['tingkat-pendidikan']"
-						behavior="menu"
-					/>
 				</q-toolbar>
 			</q-card-section>
+			<q-card-actions align="right" class="bg-green-1">
+				<InputSelectTingkatPendidikan
+					style="width: 300px"
+					v-model="tingkatId"
+					label="Tingkat Pendidikan"
+					:selected="tingkatId"
+					class=""
+				/>
+			</q-card-actions>
 			<q-card-section class="q-pa-sm">
 				<q-markup-table flat>
 					<thead>
@@ -101,46 +95,39 @@
 			<mapel-crud
 				:data="mapelObj"
 				title="Input Mata Pelajaran"
-				@success-submit="loadData"
-				@success-delete="loadData"
+				@success-submit="(val) => loadData(val.tingkat_id)"
+				@success-delete="(val) => loadData(val.tingkat_id)"
 			/>
 		</q-dialog>
 	</q-page>
 </template>
 <script setup>
+import { ref, watch } from 'vue';
 import apiGet from 'src/api/api-get';
-import { getListsKey } from 'src/api/api-get-lists';
-import { onMounted, ref, watch } from 'vue';
 import MapelCrud from 'pages/madrasah/mapel/MapelCrud.vue';
+import InputSelectTingkatPendidikan from 'src/components/inputs/InputSelectTingkatPendidikan.vue';
 
 const mapel = ref([]);
 const tingkatId = ref('');
 const loading = ref(false);
-const lists = ref([]);
-const loadingLists = ref([]);
 const mapelObj = ref({});
 const crudShow = ref(false);
 
-async function loadData() {
+async function loadData(id) {
 	const data = await apiGet({
 		endPoint: 'mapel',
 		loading,
-		params: { tingkat_id: tingkatId.value },
+		params: { tingkat_id: id },
 	});
 	mapel.value = data.mapel;
 }
 
-onMounted(async () => {
-	await getListsKey({
-		key: 'tingkat-pendidikan',
-		loading: loadingLists,
-		lists,
-		sort: true,
-	});
-});
-
-watch(tingkatId, async () => {
-	await loadData();
+watch(tingkatId, async (newVal) => {
+	if (newVal) {
+		await loadData(newVal);
+	} else {
+		mapel.value = [];
+	}
 });
 
 function onEdit(item) {

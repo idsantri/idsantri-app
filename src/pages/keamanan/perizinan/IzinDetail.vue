@@ -153,11 +153,11 @@
 	</q-page>
 </template>
 <script setup>
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import apiGet from 'src/api/api-get';
 import { formatDateFull } from 'src/utils/format-date';
 import { bacaHijri, m2h } from 'src/utils/hijri';
-import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
 import IzinCrud from 'src/pages/keamanan/perizinan/IzinCrud.vue';
 import IzinKembali from 'src/pages/keamanan/perizinan/IzinKembali.vue';
 import CardHeadSantri from 'src/components/CardHeadSantri.vue';

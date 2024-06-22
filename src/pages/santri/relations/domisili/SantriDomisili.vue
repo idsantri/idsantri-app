@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<template-array
+		<temp-array
 			:data="dataMap"
 			:spinner="spinner"
 			@add="handleAdd"
@@ -20,7 +20,7 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import TemplateArray from 'src/pages/santri/relations/TemplateArray.vue';
+import TempArray from 'src/pages/santri/relations/TemplateArray.vue';
 import { formatDateShort } from 'src/utils/format-date.js';
 import { m2hFormat } from 'src/utils/hijri.js';
 import { getObjectById } from 'src/utils/array-object';
