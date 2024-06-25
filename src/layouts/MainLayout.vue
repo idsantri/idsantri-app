@@ -120,10 +120,7 @@
 		</div>
 
 		<q-footer bordered class="bg-green-6 text-green-12">
-			<p class="text-center no-margin q-pa-xs">
-				by idsantri {{ m2h('2023-08-01')?.substring(0, 4) }} &mdash; v.
-				{{ app.version }}
-			</p>
+			<p class="text-center no-margin q-pa-xs">© by idsantri</p>
 			<!-- <q-btn
 				label="loading"
 				icon="user"
@@ -138,11 +135,9 @@ import { ref, watchEffect, onMounted, computed, toRefs } from 'vue';
 import SideBar from 'components/SideBar.vue';
 import ordersStore from 'stores/orders-store';
 import config from 'src/config';
-import { m2h } from 'src/utils/hijri';
 import ModalsMain from 'components/ModalsMain.vue';
 const leftDrawerOpen = ref(false);
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
-import app from '../../package.json';
 import loadingStore from 'stores/loading-store';
 
 const componentKey = ref(0);

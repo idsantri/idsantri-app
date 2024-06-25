@@ -8,9 +8,12 @@
 					v-model="login"
 					required
 					label="Login"
+					hint="Username atau email Anda!"
 					autocomplete="off"
 					autocapitalize="none"
-					hint="Username atau email Anda!"
+					readonly
+					onfocus="this.removeAttribute('readonly');"
+					onblur="this.setAttribute('readonly','true');"
 				/>
 				<q-input
 					id="password"
@@ -119,7 +122,8 @@ const submitLogin = async () => {
 };
 
 onUpdated(() => {
-	const resend = document.querySelector('ul > li > span > a');
+	const resend = document.getElementById('resend-email');
+	// console.log(resend);
 	if (!resend) return;
 	resend.addEventListener('click', async (e) => {
 		// console.log('anchor clicked');
