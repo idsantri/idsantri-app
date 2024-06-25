@@ -20,10 +20,13 @@
 					type="email"
 					required
 					label="Email"
+					hint="Kami tidak akan membagikan email Anda"
 					autocapitalize="none"
 					autocomplete="off"
 					autocorrect="off"
-					hint="Kami tidak akan membagikan email Anda"
+					readonly
+					onfocus="this.removeAttribute('readonly');"
+					onblur="this.setAttribute('readonly','true');"
 				/>
 				<q-input
 					bg-color="green-1"

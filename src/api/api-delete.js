@@ -1,6 +1,6 @@
 import api from '.';
 import getToken from './get-token';
-import { toArray } from 'src/utils/array-object';
+import { buildTextError } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyError, notifySuccess, notifyConfirm } from 'src/utils/notify';
 
@@ -15,7 +15,7 @@ async function deleteData({ endPoint, loading, notify, rerender, params }) {
 	} catch (error) {
 		const message = error?.response?.data?.message;
 		if (message) {
-			toArray(message).forEach((msg) => notifyError(msg));
+			notifyError(buildTextError(message));
 		} else {
 			console.log(`Error during delete ${endPoint}`, error);
 		}

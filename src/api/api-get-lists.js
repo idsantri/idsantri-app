@@ -1,6 +1,6 @@
 import api from '.';
 import getToken from './get-token';
-import { toArray } from 'src/utils/array-object';
+import { buildTextError } from 'src/utils/array-object';
 import { notifyError } from 'src/utils/notify';
 
 /**
@@ -33,7 +33,7 @@ async function getLists_({ loading, lists, key, sort = null, url = '' }) {
 	} catch (error) {
 		const message = error?.response?.data?.message;
 		if (message) {
-			toArray(message).forEach((msg) => notifyError(msg));
+			notifyError(buildTextError(message));
 		} else {
 			console.log(`Not Found lists: ${key} `, error);
 		}
@@ -77,7 +77,7 @@ async function getListsKey_({ loading, lists, key, sort = null, url = '' }) {
 	} catch (error) {
 		const message = error?.response?.data?.message;
 		if (message) {
-			toArray(message).forEach((msg) => notifyError(msg));
+			notifyError(buildTextError(message));
 		} else {
 			console.log(`Not Found lists: ${key} `, error);
 		}
@@ -122,7 +122,7 @@ async function getListsArray_({
 	} catch (error) {
 		const message = error?.response?.data?.message;
 		if (message) {
-			toArray(message).forEach((msg) => notifyError(msg));
+			notifyError(buildTextError(message));
 		} else {
 			console.log(`Not Found lists: ${key} `, error);
 		}
@@ -166,7 +166,7 @@ async function getLists({ loadingArray, loading, key, sort = null, url = '' }) {
 	} catch (error) {
 		const message = error?.response?.data?.message;
 		if (message) {
-			toArray(message).forEach((msg) => notifyError(msg));
+			notifyError(buildTextError(message));
 		} else {
 			console.log(`Not Found lists: ${key} `, error);
 		}
@@ -222,7 +222,7 @@ async function getListsCustom({
 	} catch (error) {
 		const message = error?.response?.data?.message;
 		if (message) {
-			toArray(message).forEach((msg) => notifyError(msg));
+			notifyError(buildTextError(message));
 		} else {
 			console.log(`Not Found lists: ${key} `, error);
 		}

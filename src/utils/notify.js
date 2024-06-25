@@ -7,12 +7,14 @@ const notifySuccess = (message) => {
 		message: message,
 		color: 'green-5',
 		textColor: 'green-11',
+		html: true,
 	});
 };
 const notifyError = (message) => {
 	Notify.create({
 		type: 'negative',
 		message: message,
+		html: true,
 	});
 };
 const notifyWarning = (message) => {
