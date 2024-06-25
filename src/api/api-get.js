@@ -1,6 +1,6 @@
 import api from '.';
 import getToken from './get-token';
-import { toArray } from 'src/utils/array-object';
+import { buildTextError } from 'src/utils/array-object';
 import { notifyError, notifySuccess } from 'src/utils/notify';
 
 async function apiGet({ endPoint, loading, params, notify = false }) {
@@ -13,7 +13,7 @@ async function apiGet({ endPoint, loading, params, notify = false }) {
 	} catch (error) {
 		const message = error?.response?.data?.message;
 		if (message) {
-			toArray(message).forEach((msg) => notifyError(msg));
+			notifyError(buildTextError(message));
 		} else {
 			console.log(`Error during get ${endPoint}`, error);
 		}

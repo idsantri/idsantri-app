@@ -130,8 +130,6 @@
 import { onMounted, reactive, ref, toRefs, watch } from 'vue';
 import dialogStore from 'src/stores/dialog-store';
 import santriState from 'src/stores/santri-store';
-import { notifyError } from 'src/utils/notify';
-import { toArray } from 'src/utils/array-object';
 import apiGet from 'src/api/api-get';
 import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
@@ -152,24 +150,24 @@ const loading = ref([]);
 onMounted(async () => {});
 
 const check = async (param, id) => {
+	if (!id) return;
 	loading.value[param] = true;
-	try {
-		const { data } = await apiGet({ endPoint: `${param}/${id}` });
-		// console.log(data);
+	const data = await apiGet({ endPoint: `${param}/${id}` });
+	// console.log(data);
+	if (data) {
 		if (param == 'ortu') santriState().setOrtu(data.ortu);
 		if (param == 'wali') santriState().setWali(data.wali);
-	} catch (error) {
-		toArray(error.response.data.message).forEach((message) => {
-			notifyError(message);
-		});
-	} finally {
-		loading.value[param] = false;
+	} else {
+		if (param == 'ortu') santriState().setOrtu({ ayah: null, ibu: null });
+		if (param == 'wali') santriState().setWali({ nama: null, sex: null });
 	}
+	loading.value[param] = false;
 };
 
 async function pasteOrtu() {
 	ortu_id.value = await navigator.clipboard.readText();
 }
+
 async function pasteWali() {
 	wali_id.value = await navigator.clipboard.readText();
 }
