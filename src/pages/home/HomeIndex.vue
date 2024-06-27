@@ -3,15 +3,12 @@
 		<div style="margin-top: 50px">
 			<div class="text-subtitle1 text-center">Selamat Datang</div>
 		</div>
-		<div class="text-center" style="margin-top: 20px">
-			<q-avatar size="150px" square="">
-				<q-img src="logo.png" />
-			</q-avatar>
-		</div>
+		<logo-circle :size="150" class="q-mx-auto" />
 	</q-page>
 </template>
 <script setup>
 import { onMounted } from 'vue';
+import LogoCircle from 'components/LogoCircle.vue';
 
 onMounted(async () => {});
 </script>
