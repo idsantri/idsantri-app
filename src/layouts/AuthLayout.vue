@@ -16,17 +16,8 @@
 							@click="modalInfo = true"
 							title="Klik untuk mendapatkan info login"
 						/>
-						<div class="q-mb-sm text-center">
-							<q-img
-								src="logo.png"
-								style="
-									width: 100px;
-									height: 100px;
-									border-radius: 50%;
-									background-color: whitesmoke;
-								"
-							/>
-						</div>
+						<logo-circle :size="100" class="q-mx-auto" />
+
 						<div class="container-title">
 							<h1 class="title text-green-10">ID Santri</h1>
 							<p class="sub1">Sistem Informasi</p>
@@ -114,13 +105,13 @@
 <script setup>
 import config from 'src/config';
 import { ref } from 'vue';
+import LogoCircle from 'components/LogoCircle.vue';
 
 const title = ref('Autentikasi');
 const handleTitle = (value) => (title.value = value);
 const errors = ref([]);
 const handleErrors = (value) => (errors.value = value);
 const modalInfo = ref(false);
-
 const login = [
 	{
 		password: '112233',
