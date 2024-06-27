@@ -6,9 +6,9 @@
 				<p
 					class="q-pa-sm no-margin text-green-10 text-justify bg-green-2 rounded-borders"
 				>
-					Tidak masalah. Masukkan email Anda di bawah ini dan kami
-					akan mengirimkan instruksi untuk mengatur ulang kata sandi
-					Anda.
+					Tidak masalah. Masukkan email/surel Anda di bawah ini dan
+					kami akan mengirimkan instruksi untuk mengatur ulang kata
+					sandi Anda.
 				</p>
 			</q-card-section>
 		</q-card>
@@ -20,8 +20,8 @@
 					outlined
 					v-model="email"
 					required
-					label="Email"
-					placeholder="Masukkan email Anda!"
+					label="Email/Surel"
+					placeholder="Masukkan email/surel Anda!"
 					type="email"
 				/>
 				<q-btn

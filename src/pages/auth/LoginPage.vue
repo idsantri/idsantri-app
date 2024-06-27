@@ -8,7 +8,7 @@
 					v-model="login"
 					required
 					label="Login"
-					hint="Username atau email Anda!"
+					hint="Username atau email/surel Anda!"
 					autocomplete="off"
 					autocapitalize="none"
 					readonly
