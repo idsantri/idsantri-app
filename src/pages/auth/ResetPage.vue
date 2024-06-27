@@ -9,7 +9,7 @@
 					required
 					label="Token"
 					placeholder="Masukkan token!"
-					hint="Token yang Anda dapatkan dari email"
+					hint="Token yang Anda dapatkan dari email/surel"
 					autocomplete="off"
 				/>
 				<q-input
@@ -18,8 +18,8 @@
 					v-model="email"
 					type="email"
 					required
-					label="Email"
-					placeholder="Masukkan email!"
+					label="Email/Surel"
+					placeholder="Masukkan email/surel!"
 					autocomplete="off"
 				/>
 				<q-input

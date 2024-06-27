@@ -19,8 +19,8 @@
 					v-model="email"
 					type="email"
 					required
-					label="Email"
-					hint="Kami tidak akan membagikan email Anda"
+					label="Email/Surel"
+					hint="Kami tidak akan membagikan email/surel Anda"
 					autocapitalize="none"
 					autocomplete="off"
 					autocorrect="off"
