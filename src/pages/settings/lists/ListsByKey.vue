@@ -75,7 +75,7 @@ async function fetchData() {
 	const data = await getLists({
 		loading,
 		key: selected.url,
-		sort: true,
+		sort: selected.sort,
 	});
 	listGet.value = data;
 
