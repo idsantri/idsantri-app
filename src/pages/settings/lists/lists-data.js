@@ -5,6 +5,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'hubungan-wali',
@@ -12,6 +13,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'jabatan-madrasiyah',
@@ -19,6 +21,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'kelas',
@@ -26,6 +29,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'keterangan-iuran',
@@ -33,6 +37,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'keterangan-izin',
@@ -40,6 +45,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'keterangan-status',
@@ -47,6 +53,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'metode-pembayaran',
@@ -54,6 +61,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'pekerjaan',
@@ -61,6 +69,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'jenis-lembaga-pendidikan',
@@ -68,6 +77,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'wilayah-ugt',
@@ -75,6 +85,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'pendidikan-akhir-diniyah',
@@ -82,6 +93,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'pendidikan-akhir-formal',
@@ -89,6 +101,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'takzir-santri',
@@ -96,6 +109,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'status',
@@ -103,6 +117,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'sifat-izin',
@@ -110,6 +125,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'keperluan-izin',
@@ -117,6 +133,7 @@ const data = [
 		style: 'single',
 		column: 1,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'tatib-santri',
@@ -124,6 +141,7 @@ const data = [
 		style: 'double',
 		column: 2,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'tahun-ajaran',
@@ -131,6 +149,7 @@ const data = [
 		style: 'double',
 		column: 2,
 		protected: false,
+		sort: 'desc',
 	},
 	{
 		url: 'iuran',
@@ -138,6 +157,7 @@ const data = [
 		style: 'double',
 		column: 2,
 		protected: false,
+		sort: 'asc',
 	},
 	{
 		url: 'tingkat-pendidikan',
@@ -145,6 +165,7 @@ const data = [
 		style: 'double',
 		column: 2,
 		protected: true,
+		sort: 'asc',
 	},
 ];
 

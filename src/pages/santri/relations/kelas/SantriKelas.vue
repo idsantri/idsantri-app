@@ -3,6 +3,7 @@
 		<temp-array
 			:data="dataMap"
 			:spinner="spinner"
+			link="/madrasah/kelas"
 			@add="handleAdd"
 			@edit="handleEdit"
 		/>

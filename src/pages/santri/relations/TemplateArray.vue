@@ -1,5 +1,5 @@
 <template>
-	<div v-if="props.spinner">
+	<div v-if="spinner">
 		<q-spinner-cube color="green-12" size="8em" class="flex q-mx-auto" />
 	</div>
 	<div v-else>
@@ -25,6 +25,17 @@
 						icon="print"
 						round=""
 						@click="$emit('print', item)"
+					/>
+					<q-btn
+						v-if="link"
+						class="q-ma-xs"
+						size="sm"
+						glossy
+						icon="info"
+						round
+						outline
+						color="green-8"
+						:to="`${link}/${item.id}`"
 					/>
 				</q-item-section>
 				<q-item-section>
@@ -57,13 +68,18 @@
 			@click="$emit('add')"
 		/>
 	</div>
-	<!-- <pre>{{ props.spinner }}</pre> -->
+	<!-- <pre>{{ data }}</pre> -->
 </template>
 <script setup>
 // const props = defineProps(['data', 'spinner', 'btnPrint']);
-const props = defineProps({
+defineProps({
 	data: Object,
 	spinner: Boolean,
 	btnPrint: Boolean,
+	link: {
+		type: String,
+		default: '',
+		required: false,
+	},
 });
 </script>

@@ -46,6 +46,15 @@
 				label="Iuran"
 				:to="'/santri/' + props.santriId + '/iuran-total'"
 			/> -->
+			<q-space />
+			<q-btn
+				label="Iuran"
+				no-caps
+				dense
+				flat
+				class="q-px-md"
+				:to="'/bendahara/iuran/santri/' + props.santriId"
+			/>
 		</q-tabs>
 		<q-card-section class="q-pa-sm">
 			<!-- swipe tak jalan -->

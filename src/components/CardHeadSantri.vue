@@ -1,20 +1,7 @@
 <template>
 	<q-card bordered flat>
-		<q-card-section
-			class="q-pa-sm text-subtitle1 bg-green-11 flex flex-center"
-		>
+		<q-card-section class="q-pa-sm text-subtitle1 bg-green-11">
 			Data Santri
-			<q-space />
-			<q-btn
-				round
-				dense
-				glossy
-				icon="info"
-				no-caps
-				color="green-8"
-				class="q-px-sm"
-				:to="`/santri/${data.santri_id}`"
-			/>
 		</q-card-section>
 
 		<q-card-section class="q-pa-sm">
@@ -45,6 +32,17 @@
 						<q-item-label caption>
 							{{ data.alamat_pendek }}
 						</q-item-label>
+					</q-item-section>
+					<q-item-section side>
+						<q-btn
+							round
+							dense
+							glossy
+							icon="info"
+							no-caps
+							class="q-px-sm bg-green-8 text-green-11"
+							:to="`/santri/${data.santri_id}`"
+						/>
 					</q-item-section>
 				</q-item>
 			</q-list>
