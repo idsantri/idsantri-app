@@ -1,5 +1,15 @@
-import { baseUrl } from 'boot/axios';
+// import { baseUrl } from 'boot/axios';
+import axios from 'axios';
+import config from 'src/config';
 import { notifyError } from 'src/utils/notify';
+
+const url =
+	process.env.NODE_ENV == 'development'
+		? 'http://localhost:8000/api'
+		: config.BASE_API;
+
+const baseUrl = axios.create({ baseURL: url });
+baseUrl.defaults.withCredentials = true;
 
 const api = baseUrl;
 // Tambahkan interceptor untuk menangani kesalahan
