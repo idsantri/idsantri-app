@@ -21,6 +21,9 @@ const url =
 		? 'http://localhost:8000/api'
 		: config.BASE_API;
 
+/**
+ * @deprecated
+ */
 const baseUrl = axios.create({ baseURL: url });
 baseUrl.defaults.withCredentials = true;
 

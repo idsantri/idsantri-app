@@ -276,7 +276,7 @@ async function fetchAbsensi() {
 			loading: spinner,
 		});
 		absensi.value = data['absensi_' + params.absensi];
-		console.log(absensi.value);
+		// console.log(absensi.value);
 		if (!absensi.value.length) {
 			notifySuccess('Tidak ada murid absen pada filter yang dipilih!');
 		}

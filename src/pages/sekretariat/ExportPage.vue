@@ -6,39 +6,63 @@
 			>
 				Ekspor Data Santri
 			</q-card-section>
+
 			<q-card-section class="q-pa-sm">
-				<div class="q-gutter-sm flex flex-center">
-					<label>Ekspor Santri</label>
-					<q-radio v-model="isActive" :val="true" label="Aktif" />
-					<q-radio
-						v-model="isActive"
-						:val="false"
-						label="Non Aktif"
-					/>
-					<q-btn
-						label="Unduh"
-						no-caps
-						class="q-px-md q-ml-lg"
-						outline
-						color="green-6"
-						icon="file_download"
-						@click="download"
-					/>
+				<h2 class="text-subtitle1 text-italic q-pl-md">
+					Tentukan Status Santri yang Ingin Didownload
+				</h2>
+				<div class="row">
+					<div
+						v-for="(item, index) in status"
+						:key="index"
+						class="col-6"
+					>
+						<q-checkbox
+							v-model="selectedStatus"
+							:val="item"
+							:label="item"
+						/>
+					</div>
 				</div>
+				<!-- <div class="q-px-sm">
+					The model data: <strong>{{ selectedStatus }}</strong>
+				</div> -->
 			</q-card-section>
 			<q-card-actions align="right" class="bg-green-6 q-pa-sm">
+				<q-btn
+					label="Unduh"
+					no-caps
+					class="q-px-md"
+					outline
+					color="green-11"
+					icon="file_download"
+					@click="download"
+				/>
 			</q-card-actions>
 		</q-card>
 	</q-page>
 </template>
 <script setup>
-import { ref, toRefs } from 'vue';
+import { onMounted, ref, toRefs } from 'vue';
 import apiGet from 'src/api/api-get.js';
 import loadingStore from 'src/stores/loading-store';
 import { notifyWarning } from 'src/utils/notify';
 
-const isActive = ref(true);
 const { loadingMain } = toRefs(loadingStore());
+const status = ref([]);
+const selectedStatus = ref([]);
+
+async function loadData() {
+	const data = await apiGet({
+		endPoint: 'status/lists',
+		loading: loadingMain,
+	});
+	// console.log(data);
+	status.value = data.status;
+}
+onMounted(async () => {
+	await loadData();
+});
 
 async function download() {
 	// console.log(isActive.value);
@@ -46,7 +70,7 @@ async function download() {
 		endPoint: 'export/santri',
 		loading: loadingMain,
 		params: {
-			aktif: isActive.value,
+			status: selectedStatus.value,
 		},
 	});
 
