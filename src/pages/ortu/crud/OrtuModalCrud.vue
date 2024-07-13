@@ -55,7 +55,7 @@
 				</q-carousel>
 			</q-card-section>
 
-			<q-card-section class="q-pa-sm">
+			<q-card-section class="q-pa-sm bg-green-2">
 				<div class="row justify-center">
 					<q-btn-toggle
 						toggle-color="green-10"

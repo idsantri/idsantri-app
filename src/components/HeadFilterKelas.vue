@@ -7,10 +7,11 @@
 						<span v-html="title"></span>
 					</div>
 				</q-toolbar-title>
+				<q-btn icon="sync" dense flat class="q-mr-xs" @click="reload" />
 				<slot></slot>
 			</q-toolbar>
 		</q-card-section>
-		<q-card-section class="no-padding flex flex-center">
+		<q-card-section class="no-padding flex flex-center" :key="keyReload">
 			<div class="row" style="max-width: 1000px; width: 100%">
 				<select-tahun-ajaran
 					class="col-12 col-md-3 q-pa-sm"
@@ -51,7 +52,7 @@
 	</q-card>
 </template>
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import listsMadrasahStore from 'src/stores/lists-madrasah-store';
 import SelectTahunAjaran from 'components/SelectTahunAjaran.vue';
@@ -94,6 +95,12 @@ defineProps({
 });
 
 const { params } = useRoute();
+const keyReload = ref(0);
+
+function reload() {
+	listsMadrasahStore().$reset();
+	keyReload.value++;
+}
 
 onMounted(() => {
 	emit('dataFilter', displayFilter());

@@ -4,7 +4,7 @@
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
 				<toolbar-form @emit-button="null">
 					Input Izin Santri &mdash;
-					<em> {{ $props.isNew ? 'baru' : 'edit' }}</em>
+					<em> {{ input.id ? 'edit' : 'baru' }}</em>
 				</toolbar-form>
 			</q-card-section>
 			<q-card-section class="q-pa-sm">
@@ -30,6 +30,20 @@
 						class="q-mt-sm"
 						:rules="[(val) => !!val || 'Harus diisi!']"
 					/>
+					<q-select
+						label="Pengajuan"
+						v-model="input.pengajuan"
+						dense
+						outlined
+						class="q-mt-sm"
+						:options="[
+							'Baru',
+							'Perpanjangan ke-1',
+							'Perpanjangan ke-2',
+						]"
+						:disable="input.sifat == 'Pulang' ? false : true"
+					/>
+
 					<q-input
 						dense
 						:hint="
@@ -106,6 +120,7 @@
 					v-close-popup
 					class="bg-green-11"
 					no-caps=""
+					id="btn-close-crud"
 				/>
 				<q-btn
 					type="submit"
@@ -120,7 +135,6 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
@@ -130,16 +144,19 @@ import InputSelectSantriId from 'src/components/inputs/InputSelectSantriId.vue';
 import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
-	isNew: Boolean,
 	data: Object,
+	// santri: Object,
 });
-const router = useRouter();
-const input = ref({ tujuan: 'Sesuai alamat rumah' });
+const emit = defineEmits(['successSubmit', 'successDelete']);
+
+const input = ref({ pengajuan: 'Baru', tujuan: 'Sesuai alamat rumah' });
 const loadingCrud = ref(false);
+
 async function onSubmit() {
 	const data = {
 		santri_id: input.value.santri_id,
 		sifat: input.value.sifat,
+		pengajuan: input.value.pengajuan,
 		dari_tgl: input.value.dari_tgl,
 		durasi: input.value.durasi,
 		keperluan: input.value.keperluan,
@@ -150,24 +167,24 @@ async function onSubmit() {
 	// console.log(data);
 	// return;
 	let response = null;
-	if (props.isNew) {
-		response = await apiPost({
-			endPoint: 'izin-pesantren',
-			data,
-			loading: loadingCrud,
-		});
-	} else {
+	if (input.value.id) {
 		response = await apiUpdate({
 			endPoint: `izin-pesantren/${input.value.id}`,
 			data,
 			confirm: true,
 			notify: true,
 			loading: loadingCrud,
-			rerender: true,
+		});
+	} else {
+		response = await apiPost({
+			endPoint: 'izin-pesantren',
+			data,
+			loading: loadingCrud,
 		});
 	}
 	if (response) {
-		router.push(`/keamanan/izin-pesantren/${response.izin_pesantren.id}`);
+		document.getElementById('btn-close-crud').click();
+		emit('successSubmit', response?.izin_pesantren);
 	}
 }
 
@@ -178,14 +195,14 @@ const handleDelete = async () => {
 		rerender: false,
 	});
 	if (result) {
-		// router.push('/keamanan/izin-pesantren');
-		router.go(-1);
+		emit('successDelete');
+		// router.go(-1);
 	}
 };
 
 onMounted(async () => {
 	Object.assign(input.value, props.data);
+	// console.log(props.santri);
 });
 </script>
 <style lang=""></style>
-src/components/inputs/InputSelectSantriId.vue

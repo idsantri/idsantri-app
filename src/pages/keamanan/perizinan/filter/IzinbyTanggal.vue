@@ -4,7 +4,9 @@
 			:showBulanUjian="true"
 			start-url="/keamanan/izin-pesantren"
 			@dataFilter="dataEmit"
-		/>
+		>
+			<DropDownMenu />
+		</filter-tanggal>
 		<q-card class="q-mt-sm">
 			<q-card-section
 				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
@@ -59,7 +61,13 @@
 		</q-card>
 
 		<q-dialog v-model="crudShow">
-			<izin-crud :is-new="true" />
+			<izin-crud
+				:data="{}"
+				@success-delete="null"
+				@success-submit="
+					(v) => $router.push(`/keamanan/izin-pesantren/${v.id}`)
+				"
+			/>
 		</q-dialog>
 	</q-page>
 </template>
@@ -70,6 +78,7 @@ import apiGet from 'src/api/api-get';
 import { isDate } from 'src/utils/format-date';
 import FilterTanggal from 'src/components/HeadFilterTanggal';
 import IzinCrud from 'src/pages/keamanan/perizinan/IzinCrud.vue';
+import DropDownMenu from './DropDownMenu.vue';
 
 const izin = ref([{}]);
 const loading = ref(false);
@@ -122,11 +131,19 @@ const columns = [
 		field: 'data_akhir',
 		sortable: true,
 	},
+	// {
+	// 	name: 'sifat',
+	// 	label: 'Sifat Izin',
+	// 	align: 'left',
+	// 	field: 'sifat',
+	// 	sortable: true,
+	// },
 	{
-		name: 'sifat',
-		label: 'Sifat Izin',
+		name: 'pengajuan',
+		label: 'Sifat | Durasi | Pengajuan',
 		align: 'left',
-		field: 'sifat',
+		field: (val) =>
+			`${val.sifat ?? ''} ${val.durasi ? ' | ' + val.durasi + ' hari' : ''} ${val.pengajuan ? ' | ' + val.pengajuan : ''} `,
 		sortable: true,
 	},
 	{

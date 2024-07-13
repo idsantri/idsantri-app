@@ -60,7 +60,8 @@
 				</q-carousel>
 			</q-card-section>
 
-			<q-card-section class="q-pa-sm">
+			<!-- page -->
+			<q-card-section class="q-pa-sm bg-green-11">
 				<div class="row justify-center">
 					<q-btn-toggle
 						toggle-color="green-10"
@@ -72,6 +73,8 @@
 					/>
 				</div>
 			</q-card-section>
+
+			<!-- action -->
 			<q-card-actions class="flex bg-green-6">
 				<q-btn
 					:label="isNew ? 'Reset' : 'Hapus'"
@@ -98,7 +101,7 @@
 	</q-card>
 </template>
 <script setup>
-import { reactive, ref, toRefs } from 'vue';
+import { onMounted, reactive, ref, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import waliStore from 'src/stores/wali-store';
 import dialogStore from 'src/stores/dialog-store';
@@ -110,13 +113,44 @@ import CarouselAlamat from 'src/components/CarouselAlamat.vue';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputIdentity from './WaliModalCrudIdentity.vue';
 import InputOthers from './WaliModalCrudOthers.vue';
+import { notifyWarning } from 'src/utils/notify';
+import ortuStore from 'src/stores/ortu-store';
 
 const router = useRouter();
 const { wali } = reactive(waliStore());
 const { isNew } = reactive(waliStore());
-const { santri } = santriStore();
+const { ortu, isNew: newOrtu } = reactive(ortuStore());
+const { santri, isNew: newSantri, ortu: ortuSantri } = santriStore();
 const { wali_id } = toRefs(santri);
 const loadingCrud = ref(false);
+
+onMounted(() => {
+	if (isNew && newSantri && newOrtu && ortuSantri.ayah == ortu.ayah) {
+		if (ortu.a_hidup) {
+			wali.nama = ortu.ayah;
+			wali.nik = ortu.a_nik;
+			wali.tmp_lahir = ortu.a_tmp_lahir;
+			wali.tgl_lahir = ortu.a_tgl_lahir;
+			wali.pa_formal_tingkat = ortu.a_pa_formal_tingkat;
+			wali.pa_diniyah_tingkat = ortu.a_pa_diniyah_tingkat;
+			wali.pekerjaan = ortu.a_pekerjaan;
+		}
+		wali.provinsi = santri.provinsi;
+		wali.kabupaten = santri.kabupaten;
+		wali.kecamatan = santri.kecamatan;
+		wali.desa = santri.desa;
+		wali.rt = santri.rt;
+		wali.rw = santri.rw;
+		wali.jl = santri.jl;
+		wali.kode_pos = santri.kode_pos;
+
+		let message = ortu.a_hidup
+			? 'Data default diambilkan dari data santri dan ortu (ayah).'
+			: 'Data alamat diambilkan dari data santri.';
+		message += '<br/><strong>Harap disesuaikan!</strong>';
+		notifyWarning(message);
+	}
+});
 
 function handleEmitToolbar() {
 	dialogStore().toggleCrudSantri(false);

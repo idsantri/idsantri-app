@@ -21,7 +21,6 @@
 					:active-only="true"
 					@emit-input="(val) => Object.assign(input, val)"
 					:data="props.data"
-					:disable-select="props.disableSantriId"
 				/>
 				<InputSelectArray
 					v-model="input.th_ajaran_h"
@@ -201,4 +200,3 @@ const del = async (id) => {
 	}
 };
 </script>
-src/components/inputs/InputSelectSantriId.vuesrc/components/inputs/CurrencyInput.vue

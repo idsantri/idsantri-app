@@ -45,6 +45,7 @@
 					class="q-px-sm"
 					color="green-4"
 					v-close-popup
+					id="btn-close-crud"
 				/>
 				<q-btn
 					label="Simpan"
@@ -84,7 +85,10 @@ async function setBack() {
 		},
 		message: 'Tetapkan sudah kembali ke pesantren pada tanggal ini?',
 	});
-	if (updated) emit('successSubmit');
+	if (updated) {
+		document.getElementById('btn-close-crud').click();
+		emit('successSubmit');
+	}
 	// console.log('back');
 }
 
@@ -97,7 +101,10 @@ async function setNotBack() {
 		},
 		message: 'Tetapkan belum kembali ke pesantren?',
 	});
-	if (updated) emit('successSubmit');
+	if (updated) {
+		document.getElementById('btn-close-crud').click();
+		emit('successSubmit');
+	}
 	// console.log('not back');
 }
 

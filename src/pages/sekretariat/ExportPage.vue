@@ -9,7 +9,7 @@
 
 			<q-card-section class="q-pa-sm">
 				<h2 class="text-subtitle1 text-italic q-pl-md">
-					Tentukan Status Santri yang Ingin Didownload
+					Tentukan status akhir santri yang ingin didownload
 				</h2>
 				<div class="row">
 					<div

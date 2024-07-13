@@ -126,7 +126,7 @@ import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import loadingStore from 'src/stores/loading-store';
-import listsStore from 'src/stores/lists-store';
+// import listsStore from 'src/stores/lists-store';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputSelectSantriId from 'src/components/inputs/InputSelectSantriId.vue';
 import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
@@ -142,7 +142,7 @@ const emit = defineEmits(['successSubmit', 'successDelete']);
 const input = ref({});
 const pjgtList = ref([]);
 const pjgtLoading = ref(false);
-const tahunAjaran = ref([]);
+// const tahunAjaran = ref([]);
 
 function onInputPjgt() {
 	input.value.pjgt_nama = pjgtList.value.find(
@@ -202,11 +202,10 @@ const handleDelete = async () => {
 onMounted(async () => {
 	// console.log(props.data);
 	Object.assign(input.value, props.data);
-	tahunAjaran.value = listsStore().tahunAjaranGet();
+	// tahunAjaran.value = listsStore().tahunAjaranGet();
 	const data = await apiGet({ endPoint: 'ugt/pjgt', loading: pjgtLoading });
 	pjgtList.value = data.pjgt;
 	// console.log(pjgtList.value);
 });
 </script>
 <style lang=""></style>
-src/components/inputs/InputSelectSantriId.vue

@@ -11,7 +11,7 @@ export default [
 		children: [
 			{
 				path: '',
-				redirect: (to: RouteLocation) => to.fullPath + '/kelas',
+				redirect: (to: RouteLocation) => to.fullPath + '/status',
 			},
 			{
 				path: 'status',
