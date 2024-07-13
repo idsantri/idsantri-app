@@ -23,7 +23,7 @@
 				clearable=""
 				@filter="filterFunction"
 				@update:model-value="onInput"
-				:disable="$props.disableSelect"
+				:disable="input.santri_id ? true : false"
 				behavior="menu"
 			>
 				<template v-slot:option="scope">
@@ -60,7 +60,7 @@ import { onMounted, ref } from 'vue';
 const props = defineProps({
 	activeOnly: { type: Boolean },
 	data: { type: Object },
-	disableSelect: { type: Boolean, default: false },
+	// disableSelect: { type: Boolean, default: false },
 });
 const emit = defineEmits(['emitInput']);
 

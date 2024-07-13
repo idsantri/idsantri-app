@@ -47,14 +47,49 @@
 				:to="'/santri/' + props.santriId + '/iuran-total'"
 			/> -->
 			<q-space />
-			<q-btn
+			<!-- <q-btn
 				label="Iuran"
 				no-caps
 				dense
 				flat
 				class="q-px-md"
 				:to="'/bendahara/iuran/santri/' + props.santriId"
-			/>
+			/> -->
+
+			<q-btn-dropdown
+				flat
+				dense
+				dropdown-icon="more_vert"
+				class="q-pl-md"
+				color="green-11"
+			>
+				<q-list>
+					<q-item
+						v-close-popup
+						:to="'/bendahara/iuran/santri/' + props.santriId"
+					>
+						<q-item-section>
+							<q-item-label>Iuran</q-item-label>
+						</q-item-section>
+						<q-item-section avatar>
+							<q-icon name="payments" flat />
+						</q-item-section>
+					</q-item>
+					<q-item
+						v-close-popup
+						:to="
+							'/keamanan/izin-pesantren/santri/' + props.santriId
+						"
+					>
+						<q-item-section>
+							<q-item-label>Izin Pesantren</q-item-label>
+						</q-item-section>
+						<q-item-section avatar>
+							<q-icon name="transfer_within_a_station" flat />
+						</q-item-section>
+					</q-item>
+				</q-list>
+			</q-btn-dropdown>
 		</q-tabs>
 		<q-card-section class="q-pa-sm">
 			<!-- swipe tak jalan -->

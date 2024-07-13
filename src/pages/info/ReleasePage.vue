@@ -57,6 +57,18 @@ import config from 'src/config';
 
 const releases = [
 	{
+		ver: '1.1.1',
+		date: 'Juli 2024',
+		release: {
+			'Izin Pesantren': [
+				'Riwayat Izin Santri',
+				'Filter by ID Santri',
+				'Tambah field pengajuan (baru/perpanjangan)',
+			],
+			Improve: ['Nilai default pada input Wali'],
+		},
+	},
+	{
 		ver: '1.1.0',
 		date: 'Juni 2024',
 		release: {

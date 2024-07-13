@@ -76,7 +76,7 @@
 					</q-carousel-slide>
 				</q-carousel>
 			</q-card-section>
-			<q-card-section class="q-pa-sm">
+			<q-card-section class="q-pa-sm q-ma-sm">
 				<div class="row justify-center">
 					<q-btn-toggle
 						toggle-color="green-10"

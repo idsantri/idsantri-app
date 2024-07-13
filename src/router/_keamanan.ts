@@ -1,17 +1,30 @@
+import { RouteLocation } from 'vue-router';
+
 export default [
 	{
 		path: '',
-		redirect: () => '/keamanan/izin-pesantren',
+		redirect: (to: RouteLocation) => `${to.fullPath}/izin-pesantren`,
+	},
+
+	// izin-pesantren
+	{
+		path: 'izin-pesantren/:startDate?/:endDate?',
+		component: () =>
+			import('src/pages/keamanan/perizinan/filter/IzinbyTanggal.vue'),
+	},
+
+	{
+		path: 'izin-pesantren/santri/:santri_id',
+		component: () =>
+			import('src/pages/keamanan/perizinan/IzinBySantri.vue'),
 	},
 	{
 		// /:id -> matches only numbers
 		path: 'izin-pesantren/:id(\\d+)',
-		component: () => import('src/pages/keamanan/perizinan/IzinDetail.vue'),
+		component: () => import('src/pages/keamanan/perizinan/IzinById.vue'),
 	},
-	{
-		path: 'izin-pesantren/:startDate?/:endDate?',
-		component: () => import('src/pages/keamanan/perizinan/IndexPage.vue'),
-	},
+
+	// indisipliner
 	{
 		// /:id -> matches only numbers
 		path: 'indisipliner/:id(\\d+)',
