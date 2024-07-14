@@ -16,9 +16,7 @@
 						glossy
 						color="green-6"
 						icon="play_arrow"
-						@click="
-							$router.push(`/madrasah/kelas/${kelas.id}/riwayat`)
-						"
+						:to="`/madrasah/kelas/${kelas.id}/riwayat`"
 					/>
 				</q-item-section>
 				<q-item-section>

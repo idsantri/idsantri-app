@@ -4,7 +4,7 @@
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
 				<toolbar-form @emit-button="null">
 					Input Santri Indisipliner &mdash;
-					<em> {{ $props.isNew ? 'baru' : 'edit' }}</em>
+					<em> {{ input.id ? 'edit' : 'baru' }}</em>
 				</toolbar-form>
 			</q-card-section>
 			<q-card-section class="q-pa-sm">
@@ -134,7 +134,7 @@
 
 			<q-card-actions class="flex bg-green-6">
 				<q-btn
-					v-show="!$props.isNew"
+					v-show="input.id"
 					label="Hapus"
 					class="bg-red text-red-1"
 					no-caps=""
@@ -146,6 +146,7 @@
 					v-close-popup
 					class="bg-green-11"
 					no-caps=""
+					id="btn-close-crud"
 				/>
 				<q-btn
 					type="submit"
@@ -160,7 +161,6 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { m2h, bacaHijri } from 'src/utils/hijri';
 import { isDate, formatDateFull } from 'src/utils/format-date';
 import apiPost from 'src/api/api-post';
@@ -172,10 +172,9 @@ import InputSelectTatibSantri from 'src/components/inputs/InputSelectTatibSantri
 import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
-	isNew: Boolean,
 	data: Object,
 });
-const router = useRouter();
+const emit = defineEmits(['successSubmit', 'successDelete']);
 const input = ref({ kategori: 3 });
 const loadingCrud = ref(false);
 
@@ -198,24 +197,24 @@ async function onSubmit() {
 	// console.log(data);
 	// return;
 	let response = null;
-	if (props.isNew) {
-		response = await apiPost({
-			endPoint: 'indisipliner',
-			data,
-			loading: loadingCrud,
-		});
-	} else {
+	if (input.value.id) {
 		response = await apiUpdate({
 			endPoint: `indisipliner/${input.value.id}`,
 			data,
 			confirm: true,
 			notify: true,
 			loading: loadingCrud,
-			rerender: true,
+		});
+	} else {
+		response = await apiPost({
+			endPoint: 'indisipliner',
+			data,
+			loading: loadingCrud,
 		});
 	}
 	if (response) {
-		router.push(`/keamanan/indisipliner/${response.indisipliner.id}`);
+		document.getElementById('btn-close-crud').click();
+		emit('successSubmit', response?.indisipliner);
 	}
 }
 
@@ -223,10 +222,9 @@ const handleDelete = async () => {
 	const result = await apiDelete({
 		endPoint: `indisipliner/${input.value.id}`,
 		loading: loadingCrud,
-		rerender: false,
 	});
 	if (result) {
-		router.go(-1);
+		emit('successDelete');
 	}
 };
 
