@@ -4,7 +4,7 @@
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
 				<toolbar-form @emit-button="null">
 					{{ props.title }} &mdash;
-					<em>{{ isNew ? 'baru' : 'edit' }}</em>
+					<em> {{ input.id ? 'edit' : 'baru' }}</em>
 				</toolbar-form>
 			</q-card-section>
 			<q-card-section>
@@ -68,7 +68,7 @@
 			</q-card-section>
 			<q-card-actions class="flex bg-green-6">
 				<q-btn
-					v-show="!props.isNew"
+					v-show="input.id"
 					label="Hapus"
 					class="bg-red text-red-1"
 					no-caps=""
@@ -105,7 +105,6 @@ import InputSelectTingkatPendidikan from 'src/components/inputs/InputSelectTingk
 
 const props = defineProps({
 	data: { type: Object, required: true },
-	isNew: { type: Boolean, default: true },
 	title: { type: String, default: () => 'Input' },
 });
 
@@ -133,18 +132,18 @@ const submit = async () => {
 	};
 
 	let response = null;
-	if (props.isNew) {
-		response = await apiPost({
-			endPoint: 'kelas',
-			data,
-			loading: loadingCrud,
-		});
-	} else {
+	if (input.value.id) {
 		response = await apiUpdate({
 			endPoint: `kelas/${input.value.id}`,
 			data,
 			confirm: true,
 			notify: true,
+			loading: loadingCrud,
+		});
+	} else {
+		response = await apiPost({
+			endPoint: 'kelas',
+			data,
 			loading: loadingCrud,
 		});
 	}
@@ -155,11 +154,10 @@ const submit = async () => {
 };
 
 const deleteData = async (id) => {
-	const data = {
+	const del = await apiDelete({
 		endPoint: `kelas/${id}`,
 		loading: loadingCrud,
-	};
-	const del = await apiDelete(data);
+	});
 	if (del) {
 		document.getElementById('btn-close').click();
 		emit('successDelete');

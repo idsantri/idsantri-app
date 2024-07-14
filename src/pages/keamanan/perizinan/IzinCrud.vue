@@ -108,7 +108,7 @@
 
 			<q-card-actions class="flex bg-green-6">
 				<q-btn
-					v-show="!$props.isNew"
+					v-show="input.id"
 					label="Hapus"
 					class="bg-red text-red-1"
 					no-caps=""
@@ -145,7 +145,6 @@ import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 
 const props = defineProps({
 	data: Object,
-	// santri: Object,
 });
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
@@ -192,7 +191,6 @@ const handleDelete = async () => {
 	const result = await apiDelete({
 		endPoint: `izin-pesantren/${input.value.id}`,
 		loading: loadingCrud,
-		rerender: false,
 	});
 	if (result) {
 		emit('successDelete');

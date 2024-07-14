@@ -61,9 +61,13 @@ const releases = [
 		date: 'Juli 2024',
 		release: {
 			'Izin Pesantren': [
-				'Riwayat Izin Santri',
+				'Riwayat izin santri',
 				'Filter by ID Santri',
 				'Tambah field pengajuan (baru/perpanjangan)',
+			],
+			Indisipliner: [
+				'Riwayat indisipliner santri',
+				'Filter by ID Santri',
 			],
 			Improve: ['Nilai default pada input Wali'],
 		},

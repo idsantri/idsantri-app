@@ -10,9 +10,8 @@ export default [
 	{
 		path: 'izin-pesantren/:startDate?/:endDate?',
 		component: () =>
-			import('src/pages/keamanan/perizinan/filter/IzinbyTanggal.vue'),
+			import('src/pages/keamanan/perizinan/filter/IzinbyDate.vue'),
 	},
-
 	{
 		path: 'izin-pesantren/santri/:santri_id',
 		component: () =>
@@ -26,14 +25,21 @@ export default [
 
 	// indisipliner
 	{
+		path: 'indisipliner/:startDate?/:endDate?',
+		component: () =>
+			import(
+				'src/pages/keamanan/indisipliner/filter/IndisiplinerByDate.vue'
+			),
+	},
+	{
+		path: 'indisipliner/santri/:santri_id',
+		component: () =>
+			import('src/pages/keamanan/indisipliner/IndisiplinerBySantri.vue'),
+	},
+	{
 		// /:id -> matches only numbers
 		path: 'indisipliner/:id(\\d+)',
 		component: () =>
-			import('src/pages/keamanan/indisipliner/IndisiplinerDetail.vue'),
-	},
-	{
-		path: 'indisipliner/:startDate?/:endDate?',
-		component: () =>
-			import('src/pages/keamanan/indisipliner/IndexPage.vue'),
+			import('src/pages/keamanan/indisipliner/IndisiplinerById.vue'),
 	},
 ];

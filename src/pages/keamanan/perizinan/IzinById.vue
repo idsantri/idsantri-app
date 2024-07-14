@@ -30,9 +30,6 @@
 							/>
 						</q-toolbar>
 					</q-card-section>
-					<!-- TODO:
-			if not izin
-			-->
 					<q-card-section class="q-pa-sm" v-if="izin">
 						<card-head-santri :data="izin" :loading="loading" />
 						<q-card bordered flat class="q-mt-sm">

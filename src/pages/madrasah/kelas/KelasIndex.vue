@@ -11,142 +11,21 @@
 					<div class="col-12 col-md-6 q-pa-sm">
 						<q-card>
 							<!-- santri -->
-							<q-card-section class="q-pa-sm">
-								<q-toolbar class="bg-green-1">
-									<q-toolbar-title class="text-subtitle1">
-										Identitas
-									</q-toolbar-title>
-									<q-btn
-										round
-										dense
-										flat
-										icon="sync"
-										@click="fetchData"
-									/>
-								</q-toolbar>
-								<div v-if="spinner" class="q-pa-md">
-									<q-spinner-cube
-										color="green-12"
-										size="8em"
-										class="flex q-mx-auto"
-									/>
-								</div>
-								<q-list v-else dense>
-									<q-item>
-										<q-item-section avatar>
-											<q-avatar class="d-flex">
-												<q-img
-													:src="
-														santri?.image ||
-														'/user-default.png'
-													"
-													:ratio="1"
-													cover
-												/>
-											</q-avatar>
-										</q-item-section>
-
-										<q-item-section>
-											<q-item-label overline>
-												Santri
-											</q-item-label>
-											<q-item-label>
-												{{ santri.nama }} ({{
-													santri.sex
-												}})
-											</q-item-label>
-											<q-item-label
-												caption
-												lines="1"
-												class="text-italic"
-											>
-												{{ santri.data_akhir }}
-											</q-item-label>
-										</q-item-section>
-										<q-item-section avatar>
-											<q-btn
-												outline
-												color="green"
-												:to="`/santri/${santri.id}`"
-											>
-												<small>
-													{{ santri.id }}
-												</small>
-											</q-btn>
-										</q-item-section>
-									</q-item>
-									<q-separator inset="item" />
-
-									<q-item>
-										<q-item-section top avatar>
-											<q-avatar> </q-avatar>
-										</q-item-section>
-
-										<q-item-section>
-											<q-item-label overline>
-												Wali
-											</q-item-label>
-											<q-item-label>
-												{{ santri.wali_nama }} ({{
-													santri.wali_sex
-												}}; {{ santri.wali_status }})
-											</q-item-label>
-										</q-item-section>
-										<q-item-section avatar>
-											<q-btn
-												outline
-												color="green"
-												:to="`/wali/${santri.wali_id}`"
-											>
-												<small>
-													{{ santri.wali_id }}
-												</small>
-											</q-btn>
-										</q-item-section>
-									</q-item>
-									<q-separator inset="item" />
-									<q-item>
-										<q-item-section top avatar>
-											<q-avatar> </q-avatar>
-										</q-item-section>
-
-										<q-item-section>
-											<q-item-label overline>
-												Orang Tua
-											</q-item-label>
-											<q-item-label>
-												{{ santri.ayah }} |
-												{{ santri.ibu }}
-											</q-item-label>
-										</q-item-section>
-										<q-item-section avatar>
-											<q-btn
-												outline
-												color="green"
-												:to="`/ortu/${santri.ortu_id}`"
-											>
-												<small>
-													{{ santri.ortu_id }}
-												</small>
-											</q-btn>
-										</q-item-section>
-									</q-item>
-								</q-list>
-							</q-card-section>
+							<CardSantri class="" :id="kelas?.santri_id" />
 							<q-separator />
 
 							<!-- kelas -->
 							<q-card-section class="q-pa-sm">
 								<q-toolbar class="bg-green-1">
 									<q-toolbar-title class="text-subtitle1">
-										Kelas
+										Data Kelas
 									</q-toolbar-title>
 									<q-btn
 										class="q-px-md"
 										outline
 										dense
 										icon-right="edit"
-										@click="editKelas"
+										@click="crudShow = true"
 										label="Edit"
 										no-caps
 									/>
@@ -162,31 +41,45 @@
 								<div v-else>
 									<q-markup-table flat>
 										<tbody>
-											<tr
-												v-for="(
-													value, index
-												) in kelasObj"
-												:key="index"
-											>
+											<tr>
+												<td>Tahun Ajaran</td>
 												<td>
-													{{ index }}
+													{{
+														kelas.th_ajaran_h +
+														' | ' +
+														kelas.th_ajaran_m
+													}}
 												</td>
+											</tr>
+											<tr>
+												<td>Tingkat</td>
+												<td>{{ kelas.tingkat }}</td>
+											</tr>
+											<tr>
+												<td>Kelas</td>
+												<td>{{ kelas.kelas }}</td>
+											</tr>
+											<tr>
+												<td>Nomor Absen</td>
+												<td>{{ kelas.no_absen }}</td>
+											</tr>
+											<tr>
+												<td>Aktif</td>
 												<td>
-													<span
-														v-if="index == 'Aktif'"
-													>
-														<q-toggle
-															v-model="kelasAktif"
-															color="green"
-															@update:model-value="
-																updateAktif
-															"
-														/>
-													</span>
-													<span v-else>
-														{{ value }}
-													</span>
+													<q-toggle
+														v-model="kelas.aktif"
+														color="green"
+														@update:model-value="
+															updateAktif
+														"
+														:true-value="1"
+														:false-value="0"
+													/>
 												</td>
+											</tr>
+											<tr>
+												<td>Keterangan</td>
+												<td>{{ kelas.keterangan }}</td>
 											</tr>
 										</tbody>
 									</q-markup-table>
@@ -234,10 +127,10 @@
 		</q-card>
 		<q-dialog v-model="crudShow">
 			<santri-kelas-crud
-				:data="dataObj"
+				:data="kelas"
 				:is-new="false"
 				title="Input Kelas"
-				@success-submit="Submitted"
+				@success-submit="fetchData"
 				@success-delete="$router.go(-1)"
 			/>
 		</q-dialog>
@@ -249,67 +142,38 @@ import { useRoute } from 'vue-router';
 import apiGet from 'src/api/api-get';
 import apiUpdate from 'src/api/api-update';
 import SantriKelasCrud from 'src/pages/santri/relations/kelas/SantriKelasCrud.vue';
+import CardSantri from 'src/components/CardSantri.vue';
 
 const keyRoute = ref(0);
 const route = useRoute();
 const id = route.params.id;
 const kelas = ref({});
-const kelasObj = ref({});
-const santri = ref({});
 const spinner = ref(false);
 const crudShow = ref(false);
-const dataObj = ref({});
-const kelasAktif = ref(false);
-
-function Submitted() {
-	crudShow.value = false;
-	fetchData();
-	keyRoute.value++;
-}
-
-function editKelas() {
-	dataObj.value = kelas.value;
-	dataObj.value.santri_id = santri.value.id;
-	dataObj.value.nama = santri.value.nama;
-	crudShow.value = true;
-}
 
 async function updateAktif(val) {
+	// console.log(val);
+	// return;
+	const aktif = val == 1 ? true : false;
+	const before = val == 1 ? 0 : 1;
 	const updated = await apiUpdate({
 		endPoint: `kelas/${id}/set-active`,
-		data: { aktif: val },
+		data: { aktif: aktif },
 		confirm: false,
 	});
 	if (!updated) {
-		val == true ? (kelasAktif.value = false) : (kelasAktif.value = true);
+		kelas.value.aktif = before;
 	}
 }
 
 async function fetchData() {
+	keyRoute.value++;
+	kelas.value = {};
 	const data = await apiGet({
 		endPoint: `kelas/${id}`,
 		loading: spinner,
 	});
 	kelas.value = data.kelas;
-	santri.value = data.santri;
-	// console.log(santri.value);
-	// console.log(kelas.value);
-	kelasAktif.value = kelas.value.aktif ? true : false;
-
-	kelasObj.value = {
-		'Tahun Ajaran':
-			kelas.value.th_ajaran_h + ' | ' + kelas.value.th_ajaran_m,
-		Tingkat: kelas.value.tingkat,
-		Kelas: kelas.value.kelas,
-		'No. Absen': kelas.value.no_absen,
-		Aktif: kelas.value.aktif,
-		Keterangan: kelas.value.keterangan || '-',
-	};
-
-	const img = await apiGet({
-		endPoint: `images/santri/${santri.value.id}`,
-	});
-	santri.value.image = img.image_url;
 }
 onMounted(async () => {
 	await fetchData();

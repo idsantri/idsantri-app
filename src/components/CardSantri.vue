@@ -5,13 +5,6 @@
 				<q-toolbar-title class="text-subtitle1">
 					Identitas Santri
 				</q-toolbar-title>
-				<!-- <q-btn
-					round
-					dense
-					flat
-					icon="sync"
-					@click="fetchData"
-				/> -->
 			</q-toolbar>
 			<div v-if="loading" class="q-pa-md">
 				<q-spinner-cube
@@ -35,20 +28,23 @@
 					<q-item-section>
 						<q-item-label overline> Santri </q-item-label>
 						<q-item-label>
-							{{ santri.nama }} ({{ santri.sex }})
+							{{ santri?.nama }} ({{ santri?.sex }})
+						</q-item-label>
+						<q-item-label caption lines="1">
+							{{ santri?.alamat_pendek }}
 						</q-item-label>
 						<q-item-label caption lines="1" class="text-italic">
-							{{ santri.data_akhir?.data_akhir }}
+							{{ santri?.data_akhir?.data_akhir }}
 						</q-item-label>
 					</q-item-section>
 					<q-item-section avatar>
 						<q-btn
 							outline
 							color="green"
-							:to="`/santri/${santri.id}`"
+							:to="`/santri/${santri?.id}`"
 						>
 							<small>
-								{{ santri.id }}
+								{{ santri?.id }}
 							</small>
 						</q-btn>
 					</q-item-section>
@@ -63,18 +59,18 @@
 					<q-item-section>
 						<q-item-label overline> Wali </q-item-label>
 						<q-item-label>
-							{{ santri.wali?.nama }} ({{ santri.wali?.sex }};
-							{{ santri.wali_status }})
+							{{ santri?.wali?.nama }} ({{ santri?.wali?.sex }};
+							{{ santri?.wali_status }})
 						</q-item-label>
 					</q-item-section>
 					<q-item-section avatar>
 						<q-btn
 							outline
 							color="green"
-							:to="`/wali/${santri.wali_id}`"
+							:to="`/wali/${santri?.wali_id}`"
 						>
 							<small>
-								{{ santri.wali_id }}
+								{{ santri?.wali_id }}
 							</small>
 						</q-btn>
 					</q-item-section>
@@ -88,18 +84,18 @@
 					<q-item-section>
 						<q-item-label overline> Orang Tua </q-item-label>
 						<q-item-label>
-							{{ santri.ortu?.ayah }} |
-							{{ santri.ortu?.ibu }}
+							{{ santri?.ortu?.ayah }} |
+							{{ santri?.ortu?.ibu }}
 						</q-item-label>
 					</q-item-section>
 					<q-item-section avatar>
 						<q-btn
 							outline
 							color="green"
-							:to="`/ortu/${santri.ortu_id}`"
+							:to="`/ortu/${santri?.ortu_id}`"
 						>
 							<small>
-								{{ santri.ortu_id }}
+								{{ santri?.ortu_id }}
 							</small>
 						</q-btn>
 					</q-item-section>
@@ -109,7 +105,7 @@
 	</q-card>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import apiGet from 'src/api/api-get';
 
 const props = defineProps({
@@ -117,6 +113,7 @@ const props = defineProps({
 		required: true,
 	},
 });
+const emit = defineEmits(['successGet']);
 
 const loading = ref(false);
 const santri = ref({});
@@ -127,16 +124,24 @@ async function fetchData() {
 		loading,
 	});
 	santri.value = data.santri;
-
+	// console.log(santri.value);
 	const img = await apiGet({
 		endPoint: `images/santri/${santri.value.id}`,
 	});
 	santri.value.image = img.image_url;
+	emit('successGet', santri.value);
 }
 
 onMounted(async () => {
-	// console.log(props.id);
-	await fetchData();
+	if (props.id) {
+		await fetchData();
+	}
+});
+
+onUpdated(async () => {
+	if (props.id) {
+		await fetchData();
+	}
 });
 </script>
 <style lang=""></style>

@@ -88,6 +88,17 @@
 							<q-icon name="transfer_within_a_station" flat />
 						</q-item-section>
 					</q-item>
+					<q-item
+						v-close-popup
+						:to="'/keamanan/indisipliner/santri/' + props.santriId"
+					>
+						<q-item-section>
+							<q-item-label>Indisipliner</q-item-label>
+						</q-item-section>
+						<q-item-section avatar>
+							<q-icon name="directions_run" flat />
+						</q-item-section>
+					</q-item>
 				</q-list>
 			</q-btn-dropdown>
 		</q-tabs>

@@ -4,7 +4,9 @@
 			:showBulanUjian="true"
 			start-url="/keamanan/indisipliner"
 			@dataFilter="dataEmit"
-		/>
+		>
+			<DropDownMenu />
+		</filter-tanggal>
 		<q-card class="q-mt-sm">
 			<q-card-section
 				class="bg-green-8 text-green-1 text-subtitle1 q-pa-sm flex flex-center"
@@ -60,7 +62,13 @@
 	</q-page>
 
 	<q-dialog v-model="crudShow">
-		<indisipliner-crud :is-new="true" />
+		<indisipliner-crud
+			:data="{}"
+			@success-delete="null"
+			@success-submit="
+				(v) => $router.push(`/keamanan/indisipliner/${v.id}`)
+			"
+		/>
 	</q-dialog>
 </template>
 <script setup>
@@ -70,6 +78,7 @@ import apiGet from 'src/api/api-get';
 import { formatDateShort, isDate } from 'src/utils/format-date';
 import FilterTanggal from 'src/components/HeadFilterTanggal';
 import IndisiplinerCrud from 'src/pages/keamanan/indisipliner/IndisiplinerCrud.vue';
+import DropDownMenu from './DropDownMenu.vue';
 
 const indisipliner = ref([{}]);
 const loading = ref(false);
