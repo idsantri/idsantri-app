@@ -15,6 +15,7 @@
 	>
 		<template v-slot:after>
 			<drop-down-after
+				v-if="btnSetting"
 				route-to=""
 				@reload="fetchList"
 				:disableRoute="true"
@@ -37,6 +38,10 @@ const props = defineProps({
 	selected: {
 		type: String,
 		default: '',
+	},
+	btnSetting: {
+		type: Boolean,
+		default: true,
 	},
 });
 

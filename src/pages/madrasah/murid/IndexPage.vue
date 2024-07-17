@@ -19,6 +19,29 @@
 					class="bg-green-11 text-green-10 q-px-md"
 					@click="downloadExcel"
 				/>
+
+				<q-btn-dropdown
+					flat
+					dense
+					dropdown-icon="more_vert"
+					class="q-ml-md"
+					color="green-11"
+				>
+					<q-list>
+						<q-item
+							v-close-popup
+							to="/madrasah/kelas/kenaikan"
+							disable
+						>
+							<q-item-section>
+								<q-item-label>Kenaikan Kelas</q-item-label>
+							</q-item-section>
+							<q-item-section avatar>
+								<q-icon name="trending_up" flat />
+							</q-item-section>
+						</q-item>
+					</q-list>
+				</q-btn-dropdown>
 			</q-card-section>
 			<q-card-section class="q-pa-sm">
 				<q-dialog v-model="loadingDownload" persistent="">

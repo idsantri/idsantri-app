@@ -11,7 +11,11 @@
 		:hint="textHint()"
 	>
 		<template v-slot:after>
-			<drop-down-after :route-to="url" @reload="fetchList" />
+			<drop-down-after
+				v-if="btnSetting"
+				:route-to="url"
+				@reload="fetchList"
+			/>
 		</template>
 	</q-select>
 </template>
@@ -33,6 +37,10 @@ const props = defineProps({
 	selected: {
 		type: String,
 		default: '',
+	},
+	btnSetting: {
+		type: Boolean,
+		default: true,
 	},
 });
 

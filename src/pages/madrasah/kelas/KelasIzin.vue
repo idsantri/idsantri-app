@@ -67,6 +67,7 @@ onMounted(async () => {
 
 const handleAdd = () => {
 	// console.log('add');
+	izinObj.value = {};
 	izinObj.value.santri_id = kelas.value.santri_id;
 	izinObj.value.nama = kelas.value.nama;
 	izinObj.value.th_ajaran_h = kelas.value.th_ajaran_h;
@@ -80,6 +81,7 @@ const handleAdd = () => {
 
 const handleEdit = ({ id }) => {
 	// console.log('edit');
+	izinObj.value = {};
 	izinObj.value = getObjectById(izin, id);
 	izinObj.value.santri_id = kelas.value.santri_id;
 	izinObj.value.nama = kelas.value.nama;

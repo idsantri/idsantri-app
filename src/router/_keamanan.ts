@@ -10,7 +10,7 @@ export default [
 	{
 		path: 'izin-pesantren/:startDate?/:endDate?',
 		component: () =>
-			import('src/pages/keamanan/perizinan/filter/IzinbyDate.vue'),
+			import('src/pages/keamanan/perizinan/filter/IzinByDate.vue'),
 	},
 	{
 		path: 'izin-pesantren/santri/:santri_id',
