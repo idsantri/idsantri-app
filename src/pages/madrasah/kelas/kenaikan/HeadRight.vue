@@ -11,7 +11,7 @@
 
 		<InputSelectTingkatPendidikan
 			v-model="filter.tingkat_id"
-			label="Tingkat Pendidikan"
+			label="Tingkat Pendidikan *"
 			class="q-mt-sm no-padding"
 			:hint="null"
 			:disable="filter.tingkat_id ? true : false"
@@ -19,7 +19,7 @@
 		<input-select-array
 			v-model="filter.kelas"
 			url="kelas"
-			label="Kelas"
+			label="Kelas *"
 			class="q-mt-sm no-padding"
 			:disable="filter.kelas ? true : false"
 		/>

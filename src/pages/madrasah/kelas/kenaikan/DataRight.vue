@@ -63,13 +63,19 @@
 						<td>{{ item.nama }}</td>
 						<td>{{ item.domisili }}</td>
 						<td>
-							{{ item.newTingkat }}
+							{{ item.new_tingkat_id }}
 						</td>
 						<td>
-							{{ item.newKelas }}
+							{{ item.new_kelas }}
 						</td>
 						<td class="text-right">
-							<q-btn icon="edit" dense flat color="green-10" />
+							<q-btn
+								icon="edit"
+								dense
+								flat
+								color="green-10"
+								@click="edit(item)"
+							/>
 						</td>
 					</tr>
 				</tbody>
@@ -94,19 +100,26 @@
 					color="green-10"
 					class="text-green-11"
 					:disable="!muridTrue.length > 0"
+					@click="onSubmit"
 				/>
 			</div>
 		</q-card-actions>
 	</q-card>
+	<q-dialog v-model="showEdit">
+		<EditNewMurid :data="muridItem" />
+	</q-dialog>
 </template>
 <script setup>
 import { computed, ref } from 'vue';
 import HeadRight from './HeadRight.vue';
 import kenaikanKelasStore from 'src/stores/kenaikan-kelas-store';
+import EditNewMurid from './EditNewMurid.vue';
 
 const kenaikan = kenaikanKelasStore();
 const muridTrue = computed(() => kenaikan.getMuridTrue());
 const loading = ref(false);
+const showEdit = ref(false);
+const muridItem = ref({});
 
 function addAll() {
 	loading.value = true;
@@ -114,6 +127,7 @@ function addAll() {
 	let arrCount = 0;
 
 	muridTrue.value.forEach((m) => {
+		// hanya animasi
 		setTimeout(() => {
 			kenaikan.prosesFalse(m.id);
 			arrCount++;
@@ -129,6 +143,26 @@ function addAll() {
 function resetRight() {
 	kenaikan.resetNewFilter();
 	addAll();
+}
+
+function edit(item) {
+	// console.log(item);
+	muridItem.value = item;
+	showEdit.value = true;
+}
+
+async function onSubmit() {
+	// console.log(muridTrue.value);
+	const murid = muridTrue.value.map((v) => {
+		return {
+			santri_id: v.santri_id,
+			th_ajaran_h: v.new_th_ajaran_h,
+			tingkat_id: v.new_tingkat_id,
+			kelas: v.new_kelas,
+			keterangan: v.new_keterangan,
+		};
+	});
+	console.log(murid);
 }
 </script>
 <style lang=""></style>

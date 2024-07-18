@@ -15,7 +15,7 @@
 			</q-toolbar>
 		</q-card-section>
 		<q-card-section class="q-pa-sm">
-			<HeadLeft :reload="reload" />
+			<HeadLeft :reload="reload" @on-loading="(v) => (loading = v)" />
 		</q-card-section>
 		<q-separator />
 		<q-card-section class="q-pa-sm">
@@ -69,32 +69,35 @@
 			</q-markup-table>
 		</q-card-section>
 		<q-separator />
-		<q-card-actions class="bg-green-1 text-caption text-italic">
-			Total: {{ muridFalse.length }} murid<br />
-			Hanya menampilkan murid dengan Kelas = Aktif dan Status = Aktif
+		<q-card-actions class="bg-green-1">
+			<div class="text-caption text-italic">
+				Total: {{ muridFalse.length }} murid<br />
+				Hanya menampilkan murid dengan Kelas = Aktif dan Status = Aktif
+			</div>
+			<q-space />
+			<div>
+				<q-btn
+					disabled
+					label="Reset"
+					no-caps
+					icon="history"
+					color="green-10"
+					class="text-green-11"
+					@click="onReset"
+					:disable="!muridFalse.length > 0"
+				/>
+			</div>
 		</q-card-actions>
-		<!-- <pre>
-			{{ muridFalse }}
-		</pre
-		>
-		<pre>
-			{{ dataFalse() }}
-		</pre
-		> -->
 	</q-card>
 </template>
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import HeadLeft from './HeadLeft.vue';
-import apiGet from 'src/api/api-get';
 import kenaikanKelasStore from 'src/stores/kenaikan-kelas-store';
-import { storeToRefs } from 'pinia';
 
 const reload = ref(false);
 const loading = ref(false);
 const kenaikan = kenaikanKelasStore();
-const { oldDataFilter } = storeToRefs(kenaikan);
-
 const muridFalse = computed(() => kenaikan.getMuridFalse());
 
 function addAll() {
@@ -103,6 +106,7 @@ function addAll() {
 	let arrCount = 0;
 
 	muridFalse.value.forEach((m) => {
+		// hanya animasi
 		setTimeout(() => {
 			kenaikan.prosesTrue(m.id);
 			arrCount++;
@@ -115,23 +119,8 @@ function addAll() {
 	});
 }
 
-watch(
-	oldDataFilter,
-	async (v) => {
-		// console.log(val);
-		kenaikan.resetMurid();
-		if (v.th_ajaran_h && v.tingkat_id && v.kelas) {
-			v.status = 'Aktif';
-			v.aktif = true;
-			const data = await apiGet({
-				endPoint: 'kelas',
-				params: v,
-				loading,
-			});
-			kenaikan.addMurid(data.murid);
-		}
-	},
-	{ deep: true },
-);
+function onReset() {
+	alert('Belum siap');
+}
 </script>
 <style lang=""></style>

@@ -13,6 +13,7 @@ export default defineStore('kenaikan-kelas', {
 				th_ajaran_h: '',
 				tingkat_id: '',
 				kelas: '',
+				catatan: '',
 			},
 		};
 	},
@@ -34,13 +35,17 @@ export default defineStore('kenaikan-kelas', {
 		},
 		addMurid(payload) {
 			this.resetMurid();
-			payload.forEach((element) => {
+			payload.forEach((i) => {
 				this.murid.push({
-					id: element.id,
-					santri_id: element.santri_id,
-					no_absen: element.no_absen,
-					nama: element.nama,
-					domisili: element.domisili,
+					id: i.id,
+					santri_id: i.santri_id,
+					th_ajaran_h: i.th_ajaran_h,
+					tingkat_id: i.tingkat_id,
+					tingkat: i.tingkat,
+					kelas: i.kelas,
+					no_absen: i.no_absen,
+					nama: i.nama,
+					domisili: i.domisili,
 					proses: false,
 				});
 			});
@@ -70,16 +75,19 @@ export default defineStore('kenaikan-kelas', {
 			const objIndex = this.murid.findIndex((obj) => obj.id === kelasId);
 			// console.log(this.newDataFilter);
 			this.murid[objIndex].proses = true;
-			this.murid[objIndex].newTahun = this.newDataFilter.th_ajaran_h;
-			this.murid[objIndex].newTingkat = this.newDataFilter.tingkat_id;
-			this.murid[objIndex].newKelas = this.newDataFilter.kelas;
+			this.murid[objIndex].new_th_ajaran_h =
+				this.newDataFilter.th_ajaran_h;
+			this.murid[objIndex].new_tingkat_id = this.newDataFilter.tingkat_id;
+			this.murid[objIndex].new_kelas = this.newDataFilter.kelas;
+			this.murid[objIndex].new_keterangan = null;
 		},
 		prosesFalse(kelasId) {
 			const objIndex = this.murid.findIndex((obj) => obj.id === kelasId);
 			this.murid[objIndex].proses = false;
-			delete this.murid[objIndex].newTahun;
-			delete this.murid[objIndex].newTingkat;
-			delete this.murid[objIndex].newKelas;
+			delete this.murid[objIndex].new_th_ajaran_h;
+			delete this.murid[objIndex].new_tingkat_id;
+			delete this.murid[objIndex].new_kelas;
+			delete this.murid[objIndex].new_keterangan;
 		},
 	},
 	// persist: true,

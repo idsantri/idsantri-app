@@ -35,6 +35,7 @@
 	</div>
 </template>
 <script setup>
+import apiGet from 'src/api/api-get';
 import { getListsCustom } from 'src/api/api-get-lists';
 import kenaikanKelasStore from 'src/stores/kenaikan-kelas-store';
 import listsMadrasahStore from 'src/stores/lists-madrasah-store';
@@ -47,6 +48,7 @@ const init = () => {
 };
 
 const filter = ref(init());
+const loading = ref(false);
 
 const props = defineProps({
 	reload: {
@@ -54,7 +56,7 @@ const props = defineProps({
 		default: false,
 	},
 });
-
+const emit = defineEmits(['onLoading']);
 const reloadRef = toRef(props, 'reload');
 
 onMounted(async () => {
@@ -156,15 +158,27 @@ watch(reloadRef, async () => {
 // add to store
 watch(
 	filter,
-	() => {
+	async () => {
 		const data = {
 			th_ajaran_h: filter.value.th_ajaran?.th_ajaran_h ?? '',
 			tingkat_id: filter.value.tingkat?.tingkat_id ?? '',
 			kelas: filter.value.kelas ?? '',
 		};
 		kenaikanKelasStore().addOldDataFilter(data);
-		// emit('onSelect', data);
-		// console.log(filter.value);
+
+		kenaikanKelasStore().resetMurid();
+		if (data.th_ajaran_h && data.tingkat_id && data.kelas) {
+			data.status = 'Aktif';
+			data.aktif = true;
+			emit('onLoading', true);
+			const res = await apiGet({
+				endPoint: 'kelas',
+				params: data,
+				loading,
+			});
+			kenaikanKelasStore().addMurid(res.murid);
+			emit('onLoading', false);
+		}
 	},
 	{ deep: true },
 );
