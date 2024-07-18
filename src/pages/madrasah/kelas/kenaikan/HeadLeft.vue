@@ -1,7 +1,8 @@
 <template lang="">
 	<div>
 		<q-select
-			v-model="filter.th_ajaran"
+			:model-value="filter.th_ajaran_h"
+			@update:model-value="(v) => (filter.th_ajaran_h = v.th_ajaran_h)"
 			:options="lists['th_ajaran']"
 			:loading="loadingArray['th_ajaran']"
 			option-value="th_ajaran_h"
@@ -13,7 +14,8 @@
 			hide-bottom-space
 		/>
 		<q-select
-			v-model="filter.tingkat"
+			:model-value="filter.tingkat_id"
+			@update:model-value="(v) => (filter.tingkat_id = v.tingkat_id)"
 			:options="lists['tingkat']"
 			:loading="loadingArray['tingkat']"
 			option-value="tingkat_id"
@@ -35,6 +37,7 @@
 	</div>
 </template>
 <script setup>
+import { storeToRefs } from 'pinia';
 import apiGet from 'src/api/api-get';
 import { getListsCustom } from 'src/api/api-get-lists';
 import kenaikanKelasStore from 'src/stores/kenaikan-kelas-store';
@@ -43,11 +46,8 @@ import { onMounted, ref, toRef, watch } from 'vue';
 
 const lists = ref([]);
 const loadingArray = ref([]);
-const init = () => {
-	return { th_ajaran: null, tingkat: null, kelas: null };
-};
 
-const filter = ref(init());
+const { oldDataFilter: filter } = storeToRefs(kenaikanKelasStore());
 const loading = ref(false);
 
 const props = defineProps({
@@ -82,6 +82,7 @@ async function loadTingkat(th_ajaran_h) {
 	const cekData = listsMadrasahStore().getTingkatByTahun(th_ajaran_h);
 	if (cekData.length) {
 		lists.value['tingkat'] = cekData;
+		// console.log(cekData);
 	} else {
 		const data = await getListsCustom({
 			url: 'kelas/lists',
@@ -122,12 +123,13 @@ async function loadKelas(tingkat_id, th_ajaran_h) {
 
 // tahun ajaran
 watch(
-	() => filter.value.th_ajaran,
+	() => filter.value.th_ajaran_h,
 	async (newValue) => {
-		if (newValue?.th_ajaran_h) {
-			filter.value.tingkat = null;
-			filter.value.kelas = null;
-			await loadTingkat(newValue.th_ajaran_h);
+		if (newValue) {
+			// console.log(newValue);
+			filter.value.tingkat_id = '';
+			filter.value.kelas = '';
+			await loadTingkat(newValue);
 			lists.value['kelas'] = null;
 		}
 	},
@@ -135,14 +137,11 @@ watch(
 
 // tingkat pendidikan
 watch(
-	() => filter.value.tingkat,
+	() => filter.value.tingkat_id,
 	async (newValue) => {
-		if (newValue?.tingkat_id) {
-			filter.value.kelas = null;
-			await loadKelas(
-				newValue.tingkat_id,
-				filter.value.th_ajaran.th_ajaran_h,
-			);
+		if (newValue) {
+			filter.value.kelas = '';
+			await loadKelas(newValue, filter.value.th_ajaran_h);
 		}
 	},
 );
@@ -150,7 +149,7 @@ watch(
 // reload
 watch(reloadRef, async () => {
 	lists.value = [];
-	filter.value = init();
+	kenaikanKelasStore().resetOldFilter();
 	listsMadrasahStore().$reset();
 	await loadTahun();
 });
@@ -158,25 +157,19 @@ watch(reloadRef, async () => {
 // add to store
 watch(
 	filter,
-	async () => {
-		const data = {
-			th_ajaran_h: filter.value.th_ajaran?.th_ajaran_h ?? '',
-			tingkat_id: filter.value.tingkat?.tingkat_id ?? '',
-			kelas: filter.value.kelas ?? '',
-		};
-		kenaikanKelasStore().addOldDataFilter(data);
-
+	async (value) => {
+		kenaikanKelasStore().addOldDataFilter(value);
 		kenaikanKelasStore().resetMurid();
-		if (data.th_ajaran_h && data.tingkat_id && data.kelas) {
-			data.status = 'Aktif';
-			data.aktif = true;
+		if (value.th_ajaran_h && value.tingkat_id && value.kelas) {
+			value.status = 'Aktif';
+			value.aktif = true;
 			emit('onLoading', true);
-			const res = await apiGet({
+			const data = await apiGet({
 				endPoint: 'kelas',
-				params: data,
+				params: value,
 				loading,
 			});
-			kenaikanKelasStore().addMurid(res.murid);
+			kenaikanKelasStore().addMurid(data.murid);
 			emit('onLoading', false);
 		}
 	},

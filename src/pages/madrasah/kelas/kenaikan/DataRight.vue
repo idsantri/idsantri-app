@@ -30,7 +30,7 @@
 								glossy
 								class="text-green-11"
 								:disable="!muridTrue.length"
-								@click="addAll"
+								@click="falseAll"
 							/>
 						</th>
 						<th class="text-left">Nama</th>
@@ -121,19 +121,20 @@ const loading = ref(false);
 const showEdit = ref(false);
 const muridItem = ref({});
 
-function addAll() {
-	loading.value = true;
+function falseAll() {
 	const arrLength = muridTrue.value.length;
-	let arrCount = 0;
+	if (!arrLength) return;
+	let counter = 0;
 
+	loading.value = true;
 	muridTrue.value.forEach((m) => {
 		// hanya animasi
 		setTimeout(() => {
 			kenaikan.prosesFalse(m.id);
-			arrCount++;
+			counter++;
 
 			// Cek apakah semua proses sudah selesai
-			if (arrCount === arrLength) {
+			if (counter === arrLength) {
 				loading.value = false;
 			}
 		}, 500);
@@ -142,7 +143,7 @@ function addAll() {
 
 function resetRight() {
 	kenaikan.resetNewFilter();
-	addAll();
+	falseAll();
 }
 
 function edit(item) {

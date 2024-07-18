@@ -32,7 +32,6 @@ import InputSelectTingkatPendidikan from 'src/components/inputs/InputSelectTingk
 import kenaikanKelasStore from 'src/stores/kenaikan-kelas-store';
 import { storeToRefs } from 'pinia';
 
-// const filter = ref({});
 const { newDataFilter: filter } = storeToRefs(kenaikanKelasStore());
 
 onMounted(async () => {

@@ -1,20 +1,18 @@
 import { defineStore } from 'pinia';
 import { notifyError } from 'src/utils/notify';
+
+const init = {
+	th_ajaran_h: '',
+	tingkat_id: '',
+	kelas: '',
+};
+
 export default defineStore('kenaikan-kelas', {
 	state: () => {
 		return {
 			murid: [],
-			oldDataFilter: {
-				th_ajaran_h: '',
-				tingkat_id: '',
-				kelas: '',
-			},
-			newDataFilter: {
-				th_ajaran_h: '',
-				tingkat_id: '',
-				kelas: '',
-				catatan: '',
-			},
+			oldDataFilter: JSON.parse(JSON.stringify(init)),
+			newDataFilter: JSON.parse(JSON.stringify(init)),
 		};
 	},
 
@@ -26,12 +24,11 @@ export default defineStore('kenaikan-kelas', {
 		resetMurid() {
 			this.murid = [];
 		},
+		resetOldFilter() {
+			this.oldDataFilter = JSON.parse(JSON.stringify(init));
+		},
 		resetNewFilter() {
-			this.newDataFilter = {
-				th_ajaran_h: '',
-				tingkat_id: '',
-				kelas: '',
-			};
+			this.newDataFilter = JSON.parse(JSON.stringify(init));
 		},
 		addMurid(payload) {
 			this.resetMurid();
@@ -47,6 +44,10 @@ export default defineStore('kenaikan-kelas', {
 					nama: i.nama,
 					domisili: i.domisili,
 					proses: false,
+					new_th_ajaran_h: '',
+					new_tingkat_id: '',
+					new_kelas: '',
+					new_keterangan: '',
 				});
 			});
 		},
@@ -74,20 +75,21 @@ export default defineStore('kenaikan-kelas', {
 			}
 			const objIndex = this.murid.findIndex((obj) => obj.id === kelasId);
 			// console.log(this.newDataFilter);
-			this.murid[objIndex].proses = true;
-			this.murid[objIndex].new_th_ajaran_h =
-				this.newDataFilter.th_ajaran_h;
-			this.murid[objIndex].new_tingkat_id = this.newDataFilter.tingkat_id;
-			this.murid[objIndex].new_kelas = this.newDataFilter.kelas;
-			this.murid[objIndex].new_keterangan = null;
+			const murid = this.murid[objIndex];
+			murid.proses = true;
+			murid.new_th_ajaran_h = this.newDataFilter.th_ajaran_h;
+			murid.new_tingkat_id = this.newDataFilter.tingkat_id;
+			murid.new_kelas = this.newDataFilter.kelas;
+			murid.new_keterangan = '';
 		},
 		prosesFalse(kelasId) {
 			const objIndex = this.murid.findIndex((obj) => obj.id === kelasId);
-			this.murid[objIndex].proses = false;
-			delete this.murid[objIndex].new_th_ajaran_h;
-			delete this.murid[objIndex].new_tingkat_id;
-			delete this.murid[objIndex].new_kelas;
-			delete this.murid[objIndex].new_keterangan;
+			const murid = this.murid[objIndex];
+			murid.proses = false;
+			murid.new_th_ajaran_h = '';
+			murid.new_tingkat_id = '';
+			murid.new_kelas = '';
+			murid.new_keterangan = '';
 		},
 	},
 	// persist: true,

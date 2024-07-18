@@ -33,7 +33,7 @@
 								glossy
 								class="text-green-11"
 								:disable="!muridFalse.length"
-								@click="addAll"
+								@click="trueAll"
 							/>
 						</th>
 					</tr>
@@ -100,19 +100,20 @@ const loading = ref(false);
 const kenaikan = kenaikanKelasStore();
 const muridFalse = computed(() => kenaikan.getMuridFalse());
 
-function addAll() {
-	loading.value = true;
+function trueAll() {
 	const arrLength = muridFalse.value.length;
-	let arrCount = 0;
+	if (!arrLength) return;
+	let counter = 0;
 
+	loading.value = true;
 	muridFalse.value.forEach((m) => {
 		// hanya animasi
 		setTimeout(() => {
 			kenaikan.prosesTrue(m.id);
-			arrCount++;
+			counter++;
 
 			// Cek apakah semua proses sudah selesai
-			if (arrCount === arrLength) {
+			if (counter === arrLength) {
 				loading.value = false;
 			}
 		}, 500);
