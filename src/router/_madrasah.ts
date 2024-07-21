@@ -16,6 +16,11 @@ export default [
 			},
 		],
 	},
+	{
+		path: 'kelas/kenaikan',
+		component: () =>
+			import('src/pages/madrasah/kelas/kenaikan/KenaikanKelas.vue'),
+	},
 
 	{
 		path: 'kelas/:id',

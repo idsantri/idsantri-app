@@ -37,7 +37,7 @@ const router = useRouter();
 
 const bulanUjian = ref(params.list_bulan_ujian);
 
-const loading = ref([]);
+const loading = ref(false);
 const lists = ref([]);
 const url = `${props.startUrl}/${params.th_ajaran_h}/${params.tingkat_id}`;
 

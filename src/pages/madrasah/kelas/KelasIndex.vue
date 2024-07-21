@@ -42,7 +42,9 @@
 									<q-markup-table flat>
 										<tbody>
 											<tr>
-												<td>Tahun Ajaran</td>
+												<td class="text-italic">
+													Tahun Ajaran
+												</td>
 												<td>
 													{{
 														kelas.th_ajaran_h +
@@ -52,19 +54,27 @@
 												</td>
 											</tr>
 											<tr>
-												<td>Tingkat</td>
+												<td class="text-italic">
+													Tingkat
+												</td>
 												<td>{{ kelas.tingkat }}</td>
 											</tr>
 											<tr>
-												<td>Kelas</td>
+												<td class="text-italic">
+													Kelas
+												</td>
 												<td>{{ kelas.kelas }}</td>
 											</tr>
 											<tr>
-												<td>Nomor Absen</td>
+												<td class="text-italic">
+													Nomor Absen
+												</td>
 												<td>{{ kelas.no_absen }}</td>
 											</tr>
 											<tr>
-												<td>Aktif</td>
+												<td class="text-italic">
+													Aktif
+												</td>
 												<td>
 													<q-toggle
 														v-model="kelas.aktif"
@@ -78,7 +88,9 @@
 												</td>
 											</tr>
 											<tr>
-												<td>Keterangan</td>
+												<td class="text-italic">
+													Keterangan
+												</td>
 												<td>{{ kelas.keterangan }}</td>
 											</tr>
 										</tbody>
