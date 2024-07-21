@@ -8,10 +8,10 @@
 			</q-card-section>
 			<q-card-section class="no-padding">
 				<div class="row">
-					<div class="col-12 col-md-6 q-pa-sm">
+					<div class="col-6 q-pa-sm">
 						<DataLeft />
 					</div>
-					<div class="col-12 col-md-6 q-pa-sm">
+					<div class="col-6 q-pa-sm">
 						<DataRight />
 					</div>
 				</div>
@@ -26,6 +26,8 @@ import DataRight from './DataRight.vue';
 
 onMounted(async () => {
 	// console.log(dataMurid.value);
+	const toggle = document.getElementById('toggle-drawer');
+	if (toggle) toggle.click();
 });
 </script>
 <style lang=""></style>

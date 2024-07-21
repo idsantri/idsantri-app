@@ -35,8 +35,9 @@
 						</th>
 						<th class="text-left">Nama</th>
 						<th class="text-left">Domisili</th>
-						<th class="text-left">Tingkat</th>
-						<th class="text-left">Kelas</th>
+						<th class="text-left">Tingkat*</th>
+						<th class="text-left">Kelas*</th>
+						<th class="text-left">Keterangan</th>
 						<th class="text-right">
 							<q-btn
 								icon="edit"
@@ -68,6 +69,9 @@
 						<td>
 							{{ item.new_kelas }}
 						</td>
+						<td>
+							{{ item.new_keterangan || '-' }}
+						</td>
 						<td class="text-right">
 							<q-btn
 								icon="edit"
@@ -94,7 +98,7 @@
 			<q-space />
 			<div>
 				<q-btn
-					label="Simpan"
+					label="Proses"
 					no-caps
 					icon="save"
 					color="green-10"
@@ -114,6 +118,8 @@ import { computed, ref } from 'vue';
 import HeadRight from './HeadRight.vue';
 import kenaikanKelasStore from 'src/stores/kenaikan-kelas-store';
 import EditNewMurid from './EditNewMurid.vue';
+import { notifyConfirm } from 'src/utils/notify';
+import apiPost from 'src/api/api-post';
 
 const kenaikan = kenaikanKelasStore();
 const muridTrue = computed(() => kenaikan.getMuridTrue());
@@ -154,7 +160,25 @@ function edit(item) {
 
 async function onSubmit() {
 	// console.log(muridTrue.value);
-	const murid = muridTrue.value.map((v) => {
+	let msg = '';
+	msg += '<hr/>';
+	msg +=
+		'<p style="margin:0">Tahun Ajaran Baru: <strong>' +
+		muridTrue.value[0].new_th_ajaran_h +
+		'</strong></p>';
+	msg += '<hr/>';
+	msg += 'Pastikan Anda sudah meneliti dengan seksama:';
+	msg += `<ul style="margin:0">
+		<li>Tingkat Pendidikan</li>
+		<li>Kelas</li>
+		</ul>
+		`;
+	msg += '<strong>Pada setiap barisnya!</strong>';
+	const confirm = await notifyConfirm(msg, true);
+	if (!confirm) {
+		return;
+	}
+	const data = muridTrue.value.map((v) => {
 		return {
 			santri_id: v.santri_id,
 			th_ajaran_h: v.new_th_ajaran_h,
@@ -163,7 +187,18 @@ async function onSubmit() {
 			keterangan: v.new_keterangan,
 		};
 	});
-	console.log(murid);
+	// console.log(murid);
+
+	const post = await apiPost({
+		endPoint: 'kelas/kenaikan',
+		loading,
+		data: { murid: data },
+	});
+	if (post) {
+		kenaikan.deleteTrueProses();
+		kenaikan.newDataFilter.tingkat_id = '';
+		kenaikan.newDataFilter.kelas = '';
+	}
 }
 </script>
 <style lang=""></style>

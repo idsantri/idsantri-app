@@ -3,7 +3,7 @@ on:
         branches:
             - syaichona
 
-name: 🚀 Deploy website on push
+name: 🚀 Deploy website on push (Syaichona)
 jobs:
     build:
         runs-on: ubuntu-latest

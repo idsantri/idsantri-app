@@ -76,7 +76,7 @@
 			</div>
 			<q-space />
 			<div>
-				<q-btn
+				<!-- <q-btn
 					disabled
 					label="Reset"
 					no-caps
@@ -85,7 +85,7 @@
 					class="text-green-11"
 					@click="onReset"
 					:disable="!muridFalse.length > 0"
-				/>
+				/>-->
 			</div>
 		</q-card-actions>
 	</q-card>
@@ -120,8 +120,8 @@ function trueAll() {
 	});
 }
 
-function onReset() {
-	alert('Belum siap');
-}
+// function onReset() {
+// 	alert('Belum siap');
+// }
 </script>
 <style lang=""></style>

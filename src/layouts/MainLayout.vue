@@ -10,6 +10,7 @@
 					aria-label="Menu"
 					@click="toggleLeftDrawer"
 					class="text-green-11"
+					id="toggle-drawer"
 				/>
 
 				<q-toolbar-title class="text-green-11">

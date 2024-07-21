@@ -44,10 +44,10 @@ export default defineStore('kenaikan-kelas', {
 					nama: i.nama,
 					domisili: i.domisili,
 					proses: false,
-					new_th_ajaran_h: '',
-					new_tingkat_id: '',
-					new_kelas: '',
-					new_keterangan: '',
+					new_th_ajaran_h: null,
+					new_tingkat_id: null,
+					new_kelas: null,
+					new_keterangan: null,
 				});
 			});
 		},
@@ -80,16 +80,27 @@ export default defineStore('kenaikan-kelas', {
 			murid.new_th_ajaran_h = this.newDataFilter.th_ajaran_h;
 			murid.new_tingkat_id = this.newDataFilter.tingkat_id;
 			murid.new_kelas = this.newDataFilter.kelas;
-			murid.new_keterangan = '';
+			murid.new_keterangan = null;
 		},
 		prosesFalse(kelasId) {
 			const objIndex = this.murid.findIndex((obj) => obj.id === kelasId);
 			const murid = this.murid[objIndex];
 			murid.proses = false;
-			murid.new_th_ajaran_h = '';
-			murid.new_tingkat_id = '';
-			murid.new_kelas = '';
-			murid.new_keterangan = '';
+			murid.new_th_ajaran_h = null;
+			murid.new_tingkat_id = null;
+			murid.new_kelas = null;
+			murid.new_keterangan = null;
+		},
+
+		deleteTrueProses() {
+			const muridBaru = [];
+
+			this.murid.forEach((item) => {
+				if (!item.proses) {
+					muridBaru.push(item);
+				}
+			});
+			this.murid = muridBaru;
 		},
 	},
 	// persist: true,

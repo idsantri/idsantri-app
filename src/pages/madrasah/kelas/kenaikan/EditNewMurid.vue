@@ -26,7 +26,7 @@
 				filled
 				dense
 				outlined
-				label="Tahun Ajaran (Baru)"
+				label="Tahun Ajaran (Baru) *"
 			/>
 			<InputSelectTingkatPendidikan
 				v-model="input.new_tingkat_id"
