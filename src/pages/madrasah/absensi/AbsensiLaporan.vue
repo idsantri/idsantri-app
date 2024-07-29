@@ -272,7 +272,7 @@ async function fetchAbsensi() {
 				tingkat_id: params.tingkat_id,
 				bulan_ujian: params.list_bulan_ujian,
 			},
-			needNotify: false,
+			notify: false,
 			loading: spinner,
 		});
 		absensi.value = data['absensi_' + params.absensi];

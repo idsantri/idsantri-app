@@ -34,6 +34,27 @@
 			</q-item>
 		</q-expansion-item>
 
+		<!-- MAKHADIYAH -->
+		<q-separator dark />
+		<q-expansion-item
+			expand-separator
+			label="Makhadiyah"
+			caption="Kedaerahan"
+			header-class="text-body1 text-green-1"
+			expand-icon-class="text-green-1"
+		>
+			<q-item clickable v-ripple to="/makhadiyah/mutasi">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="room_preferences" />
+					<!-- <q-icon color="green-1" name="digital_out_of_home" /> -->
+				</q-item-section>
+				<q-item-section>
+					<q-item-label> Mutasi </q-item-label>
+					<q-item-label caption>Mutasi dan Relokasi</q-item-label>
+				</q-item-section>
+			</q-item>
+		</q-expansion-item>
+
 		<!-- BENDAHARA -->
 		<q-separator dark />
 		<q-expansion-item
@@ -99,8 +120,8 @@
 					<q-icon color="green-1" name="show_chart" />
 				</q-item-section>
 				<q-item-section>
-					<q-item-label>Nilai Mapel</q-item-label>
-					<q-item-label caption>Nilai Mata Pelajaran</q-item-label>
+					<q-item-label>Nilai</q-item-label>
+					<q-item-label caption>Mata Pelajaran & Ahwal</q-item-label>
 				</q-item-section>
 			</q-item>
 			<q-item clickable v-ripple to="/madrasah/aparatur">

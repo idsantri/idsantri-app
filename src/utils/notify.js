@@ -41,10 +41,14 @@ const notifyAlert = (message, delay = 10) => {
 		});
 	});
 };
-async function notifyConfirm(message, persistent) {
+async function notifyConfirm(
+	message,
+	persistent = false,
+	title = 'Konfirmasi',
+) {
 	return new Promise((resolve) => {
 		Dialog.create({
-			title: 'Konfirmasi',
+			title: title,
 			message: message,
 			cancel: true,
 			persistent: persistent,

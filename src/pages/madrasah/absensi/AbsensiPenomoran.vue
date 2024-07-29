@@ -122,8 +122,8 @@ const murid = ref([]);
 const textFilter = ref('');
 
 async function automate() {
-	const confirm = await notifyConfirm('Isi nomor Absen secara otomatis');
-	if (!confirm) return;
+	const confirmed = await notifyConfirm('Isi nomor Absen secara otomatis');
+	if (!confirmed) return;
 
 	const td = document.getElementsByClassName('kelas-id');
 	const tdArray = [...td];

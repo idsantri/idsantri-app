@@ -12,6 +12,7 @@ import _ugt from './_ugt';
 import _wali from './_wali';
 import _madrasah from './_madrasah';
 import _info from './_info';
+import _makhadiyah from './_makhadiyah';
 
 const routes: RouteRecordRaw[] = [
 	// layout auth
@@ -62,6 +63,11 @@ const routes: RouteRecordRaw[] = [
 				path: 'madrasah',
 				meta: { title: 'Madrasah' },
 				children: _madrasah,
+			},
+			{
+				path: 'makhadiyah',
+				meta: { title: 'Makhadiyah' },
+				children: _makhadiyah,
 			},
 			{
 				path: 'bendahara',
