@@ -103,5 +103,5 @@ export default defineStore('kenaikan-kelas', {
 			this.murid = muridBaru;
 		},
 	},
-	// persist: true,
+	persist: true,
 });

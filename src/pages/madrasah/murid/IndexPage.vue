@@ -28,11 +28,7 @@
 					color="green-11"
 				>
 					<q-list>
-						<q-item
-							v-close-popup
-							to="/madrasah/kelas/kenaikan"
-							disable
-						>
+						<q-item v-close-popup to="/madrasah/kelas/kenaikan">
 							<q-item-section>
 								<q-item-label>Kenaikan Kelas</q-item-label>
 							</q-item-section>

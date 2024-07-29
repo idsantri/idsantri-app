@@ -21,7 +21,7 @@
 			</q-card>
 			<q-card v-else class="q-mt-sm">
 				<q-card-section
-					class="bg-green-11 text-center text-italic text-subtitle1 q-pa-lg"
+					class="bg-green-1 text-center text-italic text-subtitle1 q-pa-lg"
 				>
 					Silakan pilih lists yang tersedia!
 				</q-card-section>

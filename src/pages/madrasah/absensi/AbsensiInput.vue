@@ -511,7 +511,7 @@ async function fetchAbsensi() {
 				kelas: params.kelas,
 				bulan_ujian: params.set_bulan_ujian,
 			},
-			needNotify: false,
+			notify: false,
 			loading: spinner,
 		});
 		absensi.value = data['absensi_' + params.absensi];

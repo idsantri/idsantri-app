@@ -7,26 +7,33 @@
 					style="min-height: 0"
 				>
 					<q-toolbar-title class="text-subtitle1">
-						Modul Kenaikan Kelas
+						Modul Mutasi Domisili
 					</q-toolbar-title>
-					<!-- <q-btn
-						icon="check"
-						label="Hasil"
+					<q-btn
+						icon="visibility"
+						label="Hasil Mutasi"
 						dense
 						outline
 						no-caps
 						class="q-mr-xs q-px-sm"
-						@click="null"
+						to="/makhadiyah/mutasi/result"
+					/>
+					<q-btn
 						disable
-					/> -->
+						flat
+						dense
+						icon="more_vert"
+						class="q-ml-md"
+						color="green-11"
+					/>
 				</q-toolbar>
 			</q-card-section>
 			<q-card-section class="no-padding">
 				<div class="row">
-					<div class="col-6 q-pa-sm">
+					<div class="col q-pa-sm">
 						<DataLeft />
 					</div>
-					<div class="col-6 q-pa-sm">
+					<div class="col q-pa-sm">
 						<DataRight />
 					</div>
 				</div>
@@ -35,9 +42,9 @@
 	</q-page>
 </template>
 <script setup>
+import DataLeft from './LeftCard.vue';
+import DataRight from './RightCard.vue';
 import { onMounted } from 'vue';
-import DataLeft from './DataLeft.vue';
-import DataRight from './DataRight.vue';
 
 onMounted(() => {
 	// console.log(dataMurid.value);

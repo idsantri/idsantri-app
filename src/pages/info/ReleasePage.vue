@@ -57,7 +57,7 @@ import config from 'src/config';
 
 const releases = [
 	{
-		ver: '1.1.1',
+		ver: '1.2.0',
 		date: 'Juli 2024',
 		release: {
 			'Izin Pesantren': [
@@ -69,6 +69,7 @@ const releases = [
 				'Riwayat indisipliner santri',
 				'Filter by ID Santri',
 			],
+			'Fitur Baru': ['Kenaikan Kelas', 'Mutasi Domisili'],
 			Improve: ['Nilai default pada input Wali'],
 		},
 	},
@@ -76,8 +77,7 @@ const releases = [
 		ver: '1.1.0',
 		date: 'Juni 2024',
 		release: {
-			'Nilai Mapel': ['Release Nilai Mata Pelajaran'],
-			'Nilai Ahwal': ['Release Nilai Ahwal (Kepribadian)'],
+			'Fitur Baru': ['Nilai Mapel', 'Nilai Ahwal'],
 			Improve: [
 				'Filter Madrasah: session storage',
 				'All Lists: local storage',

@@ -44,7 +44,6 @@ export default defineStore('santri', {
 				domisili: null,
 				tingkat: null,
 				tingkat_alias: null,
-				kelas_tingkat: null,
 				data_akhir: '',
 			},
 		};

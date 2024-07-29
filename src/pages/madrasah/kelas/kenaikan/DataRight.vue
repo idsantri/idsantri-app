@@ -174,8 +174,8 @@ async function onSubmit() {
 		</ul>
 		`;
 	msg += '<strong>Pada setiap barisnya!</strong>';
-	const confirm = await notifyConfirm(msg, true);
-	if (!confirm) {
+	const confirmed = await notifyConfirm(msg, true);
+	if (!confirmed) {
 		return;
 	}
 	const data = muridTrue.value.map((v) => {

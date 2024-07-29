@@ -23,8 +23,8 @@ const showSpinner = ref(true);
 const router = useRouter();
 
 onMounted(async () => {
-	const confirm = await notifyConfirm('Keluar dari Aplikasi?', true);
-	if (confirm) {
+	const confirmed = await notifyConfirm('Keluar dari Aplikasi?', true);
+	if (confirmed) {
 		await apiPost({ endPoint: 'logout' });
 		authState().$reset();
 		router.push('/login');

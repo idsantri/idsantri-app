@@ -176,7 +176,7 @@ onMounted(async () => {
 async function onSubmit() {
 	const params = JSON.parse(JSON.stringify(input.value));
 	const data = await apiGet({
-		endPoint: 'nilai-mapel/export',
+		endPoint: 'export/nilai-mapel',
 		loading: loadingMain,
 		params,
 	});
