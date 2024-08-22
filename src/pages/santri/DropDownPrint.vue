@@ -68,6 +68,7 @@
 </template>
 <script setup>
 import apiDownload from 'src/api/api-download';
+import getToken from 'src/api/get-token';
 import { ref, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 import ReportViewer from 'src/components/ReportViewer.vue';
@@ -82,7 +83,7 @@ const showViewer = ref(false);
 
 async function downloadRegistrasi() {
 	await apiDownload({
-		endPoint: `reports/santri/registrasi/download?id=${route.params.id}`,
+		endPoint: `reports/santri/registrasi/download?id=${route.params.id}&token=${getToken()}`,
 		loading: loadingMain,
 		fileName: 'registrasi-' + route.params.id,
 		confirm: true,
@@ -92,7 +93,7 @@ async function downloadRegistrasi() {
 
 async function downloadStandbook() {
 	await apiDownload({
-		endPoint: `reports/santri/standbook/download?id=${route.params.id}`,
+		endPoint: `reports/santri/standbook/download?id=${route.params.id}&token=${getToken()}`,
 		loading: loadingMain,
 		fileName: 'standbook-' + route.params.id,
 		confirm: true,
@@ -102,7 +103,7 @@ async function downloadStandbook() {
 
 async function downloadKeterangan() {
 	await apiDownload({
-		endPoint: `reports/santri/keterangan-berhenti/download?id=${route.params.id}`,
+		endPoint: `reports/santri/keterangan-berhenti/download?id=${route.params.id}&token=${getToken()}`,
 		loading: loadingMain,
 		fileName: 'keterangan-berhenti-' + route.params.id,
 		confirm: true,
@@ -111,12 +112,12 @@ async function downloadKeterangan() {
 }
 
 function printRegistrasi() {
-	urlReport.value = `reports/santri/registrasi/view?id=${route.params.id}`;
+	urlReport.value = `reports/santri/registrasi/view?id=${route.params.id}&token=${getToken()}`;
 	showViewer.value = true;
 }
 
 function printStandbook() {
-	urlReport.value = `reports/santri/standbook/view?id=${route.params.id}`;
+	urlReport.value = `reports/santri/standbook/view?id=${route.params.id}&token=${getToken()}`;
 	showViewer.value = true;
 }
 
@@ -124,12 +125,12 @@ function printPermohonan(val) {
 	dialogPermohonan.value = false;
 	const queryString = new URLSearchParams(val).toString();
 
-	urlReport.value = `reports/santri/permohonan-berhenti/view?${queryString}`;
+	urlReport.value = `reports/santri/permohonan-berhenti/view?${queryString}&token=${getToken()}`;
 	showViewer.value = true;
 }
 
 function printKeterangan() {
-	urlReport.value = `reports/santri/keterangan-berhenti/view?id=${route.params.id}`;
+	urlReport.value = `reports/santri/keterangan-berhenti/view?id=${route.params.id}&token=${getToken()}`;
 	showViewer.value = true;
 }
 </script>

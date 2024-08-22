@@ -198,6 +198,7 @@
 </template>
 <script setup>
 import apiGet from 'src/api/api-get';
+import getToken from 'src/api/get-token';
 import { digitSeparator } from 'src/utils/format-number';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -225,7 +226,7 @@ onMounted(async () => {
 
 const showViewer = ref(false);
 async function suratTugas() {
-	urlReport.value = `reports/ugt/surat-tugas/view?id=${gt.value.id}`;
+	urlReport.value = `reports/ugt/surat-tugas/view?id=${gt.value.id}&token=${getToken()}`;
 	showViewer.value = true;
 }
 </script>
