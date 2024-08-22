@@ -29,6 +29,7 @@ import { formatDateShort } from 'src/utils/format-date';
 import { formatHijri, m2h } from 'src/utils/hijri';
 import { getObjectById } from 'src/utils/array-object';
 import apiGet from 'src/api/api-get';
+import getToken from 'src/api/get-token';
 import TempArray from 'src/pages/santri/relations/TemplateArray.vue';
 import KelasIzinCrud from 'src/pages/madrasah/kelas/KelasIzinCrud.vue';
 import ReportViewer from 'src/components/ReportViewer.vue';
@@ -95,7 +96,7 @@ const handleEdit = ({ id }) => {
 
 const showViewer = ref(false);
 function handlePrint(v) {
-	urlReport.value = `reports/izin-madrasah/view?id=${v.id}`;
+	urlReport.value = `reports/izin-madrasah/view?id=${v.id}&token=${getToken()}`;
 	showViewer.value = true;
 }
 </script>
