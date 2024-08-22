@@ -246,7 +246,6 @@ import apiDownload from 'src/api/api-download';
 import TestPrint from './TestPrint.vue';
 import apiGet from 'src/api/api-get';
 import ReportViewer from 'src/components/ReportViewer.vue';
-import getToken from 'src/api/get-token';
 
 const loading = ref([]);
 const lists = ref([]);
@@ -304,9 +303,7 @@ async function onSubmit() {
 
 const showViewer = ref(false);
 function handlePrint() {
-	const query = input.value;
-	query.token = getToken();
-	const queryString = new URLSearchParams(query).toString();
+	const queryString = new URLSearchParams(input.value).toString();
 	// console.log(queryString);
 	// return;
 	let url = '';

@@ -152,7 +152,7 @@ function addKas() {
 
 const showViewer = ref(false);
 async function print(val) {
-	urlReport.value = `reports/ugt/kuitansi/view?id=${val.id}&token=${getToken()}`;
+	urlReport.value = `reports/ugt/kuitansi/view?id=${val.id}`;
 	showViewer.value = true;
 }
 
