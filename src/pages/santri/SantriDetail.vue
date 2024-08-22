@@ -70,6 +70,7 @@
 		</q-card>
 		<!-- modal -->
 		<upload-image
+			img-format="jpg"
 			:show-uploader="showUploader"
 			:url="`/images/santri/${santriId}`"
 			@update-uploader="updateUploader"

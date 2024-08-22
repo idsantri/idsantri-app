@@ -208,8 +208,9 @@
 		<upload-image
 			:show-uploader="showUploader"
 			:url="`/images/users/${user.id}`"
-			:width="450"
-			:height="450"
+			:width="300"
+			:height="300"
+			img-format="webp"
 			@update-uploader="updateUploader"
 			@success-upload="successUpload"
 		/>
