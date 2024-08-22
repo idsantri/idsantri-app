@@ -2,7 +2,11 @@
 	<q-card style="width: 100%; height: 90%">
 		<q-card-section style="width: 100%; height: 100%" class="q-pa-sm">
 			<iframe
-				:src="api.defaults.baseURL + '/' + props.url"
+				:src="
+					api.defaults.baseURL +
+					'/' +
+					`${props.url}&token=${getToken()}`
+				"
 				style="height: 100%; width: 100%"
 				frameborder="0"
 				loading="lazy"
@@ -15,6 +19,7 @@
 </template>
 <script setup>
 import api from 'src/api';
+import getToken from 'src/api/get-token';
 const props = defineProps({ url: String });
 </script>
 <style lang=""></style>

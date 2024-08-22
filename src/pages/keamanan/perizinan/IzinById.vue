@@ -187,7 +187,6 @@ import IzinKembali from 'src/pages/keamanan/perizinan/IzinKembali.vue';
 import CardHeadSantri from 'src/components/CardHeadSantri.vue';
 import ReportViewer from 'src/components/ReportViewer.vue';
 import IzinRiwayat from './IzinRiwayat.vue';
-import getToken from 'src/api/get-token';
 
 const showViewer = ref(false);
 const urlReport = ref('');
@@ -199,7 +198,7 @@ const showKembali = ref(false);
 const santri_id = ref();
 
 function print() {
-	urlReport.value = `reports/izin-pesantren/view?id=${izin.value.id}&token=${getToken()}`;
+	urlReport.value = `reports/izin-pesantren/view?id=${izin.value.id}`;
 	// console.log(urlReport.value);
 	showViewer.value = true;
 }

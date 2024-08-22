@@ -53,7 +53,6 @@
 <script setup>
 import { onMounted, ref, toRefs } from 'vue';
 import apiDownload from 'src/api/api-download';
-import getToken from 'src/api/get-token';
 import loadingStore from 'src/stores/loading-store';
 import ReportViewer from 'src/components/ReportViewer.vue';
 
@@ -64,9 +63,7 @@ const props = defineProps({ data: {} });
 const param = ref('');
 
 onMounted(() => {
-	const query = props.data;
-	query.token = getToken();
-	param.value = new URLSearchParams(query).toString();
+	param.value = new URLSearchParams(props.data).toString();
 });
 
 async function downloadCard() {
