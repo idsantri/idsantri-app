@@ -5,10 +5,10 @@ import { notifyError } from 'src/utils/notify';
 
 const url =
 	process.env.NODE_ENV == 'development'
-		? 'http://localhost:8000/api'
+		? 'http://localhost:8000'
 		: config.BASE_API;
 
-const baseUrl = axios.create({ baseURL: url });
+const baseUrl = axios.create({ baseURL: url + config.END_API });
 baseUrl.defaults.withCredentials = true;
 
 const api = baseUrl;
