@@ -12,16 +12,14 @@
 		:height="props.height"
 		:url="api.defaults.baseURL + props.url"
 		:params="paramsImage"
-		:headers="{
-			Authorization: `Bearer ${getToken()}`,
-		}"
+		:headers="{ Authorization: `Bearer ${getToken()}` }"
 		withCredentials
-		img-format="png"
+		:img-format="props.imgFormat"
 	></my-upload>
 </template>
 <script setup>
 import myUpload from 'vue-image-crop-upload';
-import { notifySuccess } from 'src/utils/notify';
+import { notifyError, notifySuccess } from 'src/utils/notify';
 import { onUpdated, ref, watch } from 'vue';
 import api from 'src/api';
 import getToken from 'src/api/get-token';
@@ -36,7 +34,8 @@ const props = defineProps({
 	height: { type: Number, default: 600 },
 	showUploader: { type: Boolean, default: false },
 	url: { default: null },
-	headers: { default: null },
+	// headers: { default: null },
+	imgFormat: { type: String, default: 'png' },
 });
 const emit = defineEmits(['updateUploader', 'successUpload']);
 
@@ -98,8 +97,10 @@ const cropUploadSuccess = (jsonData /*, field*/) => {
  * [param] field
  */
 const cropUploadFail = (status, field) => {
-	console.log(status);
-	console.log('field: ' + field);
+	console.log('upload status', status);
+	console.log('upload field', field);
+	if (status == 401) {
+		notifyError('Akses ditolak!');
+	}
 };
 </script>
-@/api/get-token

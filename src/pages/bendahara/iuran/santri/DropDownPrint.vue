@@ -61,6 +61,7 @@ const urlReport = ref('');
 const showViewer = ref(false);
 const props = defineProps({ data: {} });
 const param = ref('');
+
 onMounted(() => {
 	param.value = new URLSearchParams(props.data).toString();
 });

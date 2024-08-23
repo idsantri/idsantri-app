@@ -68,6 +68,7 @@
 	<upload-image
 		:show-uploader="showUploader"
 		:url="`/images/aparatur/${route.params.id}`"
+		img-format="webp"
 		@update-uploader="updateUploader"
 		@success-upload="successUpload"
 	/>

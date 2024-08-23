@@ -57,6 +57,14 @@ import config from 'src/config';
 
 const releases = [
 	{
+		ver: '1.3.0',
+		date: 'Agustus 2024',
+		release: {
+			'Fitur Baru': ['Upload tanda tangan pengurus'],
+			Improve: ['Beberapa perbaikan di sisi backend'],
+		},
+	},
+	{
 		ver: '1.2.0',
 		date: 'Juli 2024',
 		release: {

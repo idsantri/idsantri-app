@@ -95,7 +95,7 @@ const handleEdit = ({ id }) => {
 
 const showViewer = ref(false);
 function handlePrint(v) {
-	urlReport.value = `reports/izin-madrasah/view?id=${v.id}`;
+	urlReport.value = `reports/izin-madrasah/view?id=${v.id}}`;
 	showViewer.value = true;
 }
 </script>

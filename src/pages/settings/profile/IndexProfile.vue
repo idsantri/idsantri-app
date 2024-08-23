@@ -102,8 +102,18 @@
 						</q-card-section>
 					</q-card>
 					<q-card class="q-mt-sm">
-						<q-card-section class="q-pa-sm bg-green-1">
+						<q-card-section class="q-pa-sm bg-green-1 flex">
 							Personalia
+							<q-space />
+							<q-btn
+								label="Tanda Tangan"
+								class="q-px-md"
+								dense
+								no-caps
+								outline
+								icon="draw"
+								to="/settings/profile/sign"
+							/>
 						</q-card-section>
 						<q-card-section class="q-pa-sm">
 							<q-input

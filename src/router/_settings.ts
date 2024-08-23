@@ -28,8 +28,19 @@ export default [
 	},
 	{
 		path: 'profile',
-		component: () => import('src/pages/settings/profile/IndexProfile.vue'),
 		meta: { title: 'Setting: Profile' },
+		children: [
+			{
+				path: '',
+				component: () =>
+					import('src/pages/settings/profile/IndexProfile.vue'),
+			},
+			{
+				path: 'sign',
+				component: () =>
+					import('src/pages/settings/profile/TandaTangan.vue'),
+			},
+		],
 	},
 	{
 		path: 'reports',

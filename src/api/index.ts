@@ -5,13 +5,12 @@ import { notifyError } from 'src/utils/notify';
 
 const url =
 	process.env.NODE_ENV == 'development'
-		? 'http://localhost:8000/api'
+		? 'http://localhost:8000'
 		: config.BASE_API;
 
-const baseUrl = axios.create({ baseURL: url });
-baseUrl.defaults.withCredentials = true;
+const api = axios.create({ baseURL: url + config.END_API });
+api.defaults.withCredentials = true;
 
-const api = baseUrl;
 // Tambahkan interceptor untuk menangani kesalahan
 api.interceptors.response.use(
 	(response) => response,
@@ -27,4 +26,5 @@ api.interceptors.response.use(
 		}
 	},
 );
+
 export default api;

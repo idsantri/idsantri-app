@@ -18,14 +18,14 @@ declare module '@vue/runtime-core' {
 
 const url =
 	process.env.NODE_ENV == 'development'
-		? 'http://localhost:8000/api'
+		? 'http://localhost:8000'
 		: config.BASE_API;
 
 /**
  * @deprecated
  */
-const baseUrl = axios.create({ baseURL: url });
-baseUrl.defaults.withCredentials = true;
+const api = axios.create({ baseURL: url + config.END_API });
+api.defaults.withCredentials = true;
 
 export default boot(({ app }) => {
 	// for use inside Vue files (Options API) through this.$axios and this.$api
@@ -34,9 +34,9 @@ export default boot(({ app }) => {
 	// ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
 	//       so you won't necessarily have to import axios in each vue file
 
-	app.config.globalProperties.$api = baseUrl;
+	app.config.globalProperties.$api = api;
 	// ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
 	//       so you can easily perform requests against your app's API
 });
 
-export { baseUrl };
+export { api };
