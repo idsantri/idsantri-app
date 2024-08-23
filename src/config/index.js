@@ -3,7 +3,7 @@ const config = {
 	INS_NAME: 'Pondok Pesantren',
 	INS_SHORT: 'Demo Aplikasi',
 	BASE_API: 'https://demo.idsantri.my.id',
-	END_API: '/api',
+	END_API: '/admin',
 	DEV: true,
 };
 export default config;
