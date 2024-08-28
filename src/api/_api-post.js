@@ -26,7 +26,13 @@ async function postData({ endPoint, data, rerender, loading, notify, params }) {
 	}
 }
 
-async function apiPost({
+/**
+ *
+ * @param {*} param0
+ * @returns
+ * @deprecated
+ */
+async function _apiPost({
 	endPoint,
 	data,
 	confirm = false,
@@ -54,4 +60,4 @@ async function apiPost({
 	}
 }
 
-export default apiPost;
+export default _apiPost;

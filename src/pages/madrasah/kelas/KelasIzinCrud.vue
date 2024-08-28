@@ -180,7 +180,6 @@ const handleDelete = async () => {
 	const result = await apiDelete({
 		endPoint: `izin-madrasah/${input.value.id}`,
 		loading: loadingCrud,
-		rerender: false,
 	});
 	if (result) {
 		document.getElementById('btn-close-crud').click();

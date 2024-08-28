@@ -198,7 +198,6 @@ const handleDelete = async () => {
 	const result = await apiDelete({
 		endPoint: `ugt/kas/${input.value.id}`,
 		loading: loadingMain,
-		rerender: false,
 	});
 	if (result) {
 		document.getElementById('btn-close-crud').click();
@@ -224,4 +223,3 @@ watch(
 );
 </script>
 <style lang=""></style>
-src/components/inputs/CurrencyInput.vue

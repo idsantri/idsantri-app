@@ -2,8 +2,13 @@ import api from '.';
 import getToken from './get-token';
 import { buildTextError } from 'src/utils/array-object';
 import { notifyError, notifySuccess } from 'src/utils/notify';
-
-async function apiGet({ endPoint, loading, params, notify = false }) {
+/**
+ *
+ * @param {*} param0
+ * @returns
+ * @deprecated
+ */
+async function _apiGet({ endPoint, loading, params, notify = false }) {
 	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	try {
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
@@ -24,4 +29,4 @@ async function apiGet({ endPoint, loading, params, notify = false }) {
 	}
 }
 
-export default apiGet;
+export default _apiGet;

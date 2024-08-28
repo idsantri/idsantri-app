@@ -115,6 +115,7 @@ import InputIdentity from './WaliModalCrudIdentity.vue';
 import InputOthers from './WaliModalCrudOthers.vue';
 import { notifyWarning } from 'src/utils/notify';
 import ortuStore from 'src/stores/ortu-store';
+import { forceRerender } from 'src/utils/buttons-click';
 
 const router = useRouter();
 const { wali } = reactive(waliStore());
@@ -179,12 +180,13 @@ const onSubmit = async () => {
 			confirm: true,
 			notify: true,
 			loading: loadingCrud,
-			rerender: true,
 		});
 	}
 	if (response) {
 		if (isNew) {
 			wali_id.value = response.wali.id;
+		} else {
+			forceRerender();
 		}
 		dialogStore().toggleCrudWali(false);
 		dialogStore().toggleSearchWali(false);
@@ -198,8 +200,7 @@ const resetOrDelete = async () => {
 		const result = await apiDelete({
 			endPoint: `wali/${wali.id}`,
 			message:
-				'<span style="color:\'red\'">Hapus Wali?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>',
-			rerender: false,
+				'<span style="color:red">Hapus Wali?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>',
 			loading: loadingCrud,
 		});
 		if (result) {

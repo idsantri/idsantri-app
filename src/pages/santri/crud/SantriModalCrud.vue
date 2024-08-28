@@ -178,7 +178,6 @@ const resetOrDelete = async () => {
 		const result = await apiDelete({
 			endPoint: `santri/${santri.id}`,
 			message: '<span style="color:\'red\'">Hapus santri?</span>',
-			rerender: false,
 			loading: loadingCrud,
 		});
 		if (result) {

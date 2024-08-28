@@ -104,7 +104,9 @@ onMounted(async () => {
 			loading,
 			params: { start_date: startDate.value, end_date: endDate.value },
 		});
-		indisipliner.value = data.indisipliner;
+		if (data) {
+			indisipliner.value = data.indisipliner;
+		}
 		// console.log(izin.value);
 	}
 });

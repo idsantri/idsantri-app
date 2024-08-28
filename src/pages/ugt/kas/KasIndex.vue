@@ -125,7 +125,7 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import apiGet from 'src/api/api-get.js';
+import apiGet from 'src/api/api-get';
 import { digitSeparator } from 'src/utils/format-number';
 import KasCrud from 'src/pages/ugt/kas/KasCrud.vue';
 import ReportViewer from 'src/components/ReportViewer.vue';
@@ -141,7 +141,9 @@ const urlReport = ref('');
 async function loadData() {
 	crudShow.value = false;
 	const data = await apiGet({ endPoint: 'ugt/kas', loading });
-	kas.value = data.kas;
+	if (data) {
+		kas.value = data.kas;
+	}
 }
 
 function addKas() {

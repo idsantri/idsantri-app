@@ -286,7 +286,6 @@ const handleDelete = async () => {
 	const result = await apiDelete({
 		endPoint: `aparatur/${route.params.id}`,
 		loading: loadingCrud,
-		rerender: false,
 	});
 	if (result) {
 		router.push('/personalia');
@@ -323,4 +322,3 @@ const toggleOptions = [
 	},
 ];
 </script>
-src/components/inputs/InputSelectKotaLahir.vue

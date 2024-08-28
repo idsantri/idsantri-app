@@ -105,6 +105,7 @@ import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputIdentity from './OrtuModalCrudIdentity.vue';
 import InputAyah from './OrtuModalCrudAyah.vue';
 import InputIbu from './OrtuModalCrudIbu.vue';
+import { forceRerender } from 'src/utils/buttons-click';
 
 const router = useRouter();
 const { ortu } = reactive(ortuStore());
@@ -140,12 +141,13 @@ const onSubmit = async () => {
 			confirm: true,
 			notify: true,
 			loading: loadingCrud,
-			rerender: true,
 		});
 	}
 	if (response) {
 		if (isNew) {
 			ortu_id.value = response.ortu.id;
+		} else {
+			forceRerender();
 		}
 		dialogStore().toggleCrudOrtu(false);
 		dialogStore().toggleSearchOrtu(false);
@@ -159,8 +161,7 @@ const resetOrDelete = async () => {
 		const result = await apiDelete({
 			endPoint: `ortu/${ortu.id}`,
 			message:
-				'<span style="color:\'red\'">Hapus Orang Tua?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>',
-			rerender: false,
+				'<span style="color:red">Hapus Orang Tua?</span><br/><br/><hr/><em>Pastikan yang bersangkutan tidak memiliki anak!</em><hr/>',
 			loading: loadingCrud,
 		});
 		if (result) {

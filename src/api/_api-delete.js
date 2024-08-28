@@ -4,27 +4,20 @@ import { buildTextError } from 'src/utils/array-object';
 import { forceRerender } from 'src/utils/buttons-click';
 import { notifyError, notifySuccess, notifyConfirm } from 'src/utils/notify';
 
-async function updateData({
-	endPoint,
-	data,
-	rerender,
-	loading,
-	notify,
-	params,
-}) {
+async function deleteData({ endPoint, loading, notify, rerender, params }) {
+	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	try {
-		api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
-		const response = await api.put(endPoint, data, { params });
+		const response = await api.delete(endPoint, { params });
 		if (notify) notifySuccess(response.data.message);
 		if (rerender) forceRerender();
-		return response.data;
+		return true;
 	} catch (error) {
 		const message = error?.response?.data?.message;
 		if (message) {
 			notifyError(buildTextError(message));
 		} else {
-			console.log(`Error during update ${endPoint}`, error);
+			console.log(`Error during delete ${endPoint}`, error);
 		}
 		return false;
 	} finally {
@@ -33,32 +26,24 @@ async function updateData({
 	}
 }
 
-async function apiUpdate({
+/**
+ *
+ * @param {*} param0
+ * @returns
+ * @deprecated
+ */
+async function _apiDelete({
 	endPoint,
-	data,
-	confirm = true,
-	message = 'Update data ini?',
+	message = '<span style="color: red">Hapus data ini?</span>',
 	rerender,
+	params,
 	loading,
 	notify = true,
-	params,
 }) {
-	const execute = () =>
-		updateData({
-			endPoint,
-			data,
-			rerender,
-			loading,
-			notify,
-			params,
-		});
-
-	if (confirm) {
-		const dialog = await notifyConfirm(message, true);
-		return dialog ? await execute() : false;
-	} else {
-		return execute();
-	}
+	const dialog = await notifyConfirm(message, true);
+	return dialog
+		? await deleteData({ endPoint, loading, notify, rerender, params })
+		: false;
 }
 
-export default apiUpdate;
+export default _apiDelete;

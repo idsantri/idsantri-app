@@ -32,29 +32,4 @@ onMounted(async () => {
 		router.go(-1);
 	}
 });
-
-// (() => {
-// 	useQuasar()
-// 		.dialog({
-// 			title: 'Konfirmasi',
-// 			message: 'Keluar dari Aplikasi?',
-// 			cancel: true,
-// 			persistent: true,
-// 		})
-// 		.onOk(async () => {
-// 			await apiTokened.post('logout');
-// 			authState().$reset();
-// 			router.push('/login');
-// 		})
-// 		.onOk(() => {
-// 			// useRouter().push('/login')
-// 			// console.log('Keluar dari dari Aplikasi..')
-// 		})
-// 		.onCancel(() => {
-// 			router.go(-1);
-// 		})
-// 		.onDismiss(() => {
-// 			showSpinner.value = false;
-// 		});
-// })();
 </script>
