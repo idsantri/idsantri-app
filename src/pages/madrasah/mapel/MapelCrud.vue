@@ -167,7 +167,6 @@ const handleDelete = async () => {
 	const result = await apiDelete({
 		endPoint: `mapel/${props.data.id}`,
 		loading: loadingCrud,
-		rerender: false,
 	});
 	if (result) {
 		document.getElementById('btn-close-crud').click();

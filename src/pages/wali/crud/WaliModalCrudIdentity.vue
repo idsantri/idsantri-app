@@ -87,4 +87,3 @@ const props = defineProps({
 const { wali } = waliState();
 const { id, nama, tgl_lahir, nik, sex } = toRefs(wali);
 </script>
-src/components/inputs/InputSelectKotaLahir.vue

@@ -191,7 +191,6 @@ const handleDelete = async () => {
 	const result = await apiDelete({
 		endPoint: `ugt/gt/${input.value.id}`,
 		loading: loadingMain,
-		rerender: false,
 	});
 	if (result) {
 		document.getElementById('btn-close-crud').click();

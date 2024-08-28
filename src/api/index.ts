@@ -1,4 +1,3 @@
-// import { baseUrl } from 'boot/axios';
 import axios from 'axios';
 import config from 'src/config';
 import { notifyError } from 'src/utils/notify';

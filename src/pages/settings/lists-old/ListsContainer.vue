@@ -42,7 +42,7 @@ import ListsModeOne from 'src/pages/settings/lists/ListsModeOne.vue';
 import ListsModeTwo from 'src/pages/settings/lists/ListsModeTwo.vue';
 import ListsModeIuran from 'src/pages/settings/lists/ListsModeIuran.vue';
 
-import apiGet from 'src/api/api-get.js';
+import apiGet from 'src/api/api-get';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import apiPost from 'src/api/api-post';

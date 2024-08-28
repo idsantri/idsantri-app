@@ -11,7 +11,7 @@ async function getLists({ loadingArray, loading, key, sort = null, url = '' }) {
 	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 
 	if (loadingArray) loadingArray.value[key] = true;
-	if (loading) loading.value = true;
+	if (loading && typeof loading.value === 'boolean') loading.value = true;
 
 	const endPoint = url?.length ? url : `lists/${key}`;
 	const snakeCase = key.replace(/-/g, '_');
@@ -43,7 +43,7 @@ async function getLists({ loadingArray, loading, key, sort = null, url = '' }) {
 		return false;
 	} finally {
 		if (loadingArray) loadingArray.value[key] = false;
-		if (loading) loading.value = false;
+		if (loading && typeof loading.value === 'boolean') loading.value = true;
 	}
 }
 

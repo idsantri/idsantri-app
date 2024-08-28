@@ -2,7 +2,13 @@ import api from '.';
 import getToken from './get-token';
 import { notifyConfirm } from 'src/utils/notify';
 
-async function apiDownload({
+/**
+ *
+ * @param {*} param0
+ * @returns
+ * @deprecated
+ */
+async function _apiDownload({
 	message = 'Download data yang dicetak?',
 	endPoint,
 	confirm = false,
@@ -52,4 +58,4 @@ async function apiDownload({
 	}
 }
 
-export default apiDownload;
+export default _apiDownload;
