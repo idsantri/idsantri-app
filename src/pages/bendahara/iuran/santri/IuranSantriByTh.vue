@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 	<div v-if="loading">
 		<q-spinner-cube
 			color="green-12"
@@ -16,9 +16,9 @@
 							<strong>{{ thAjaranH }}</strong></q-item-label
 						>
 						<q-item-label overline>TOTAL PEMBAYARAN</q-item-label>
-						<q-item-label class="text-body1"
-							>Rp{{ digitSeparator(total) }}</q-item-label
-						>
+						<q-item-label class="text-body1 text-weight-medium">{{
+							total.toRupiah()
+						}}</q-item-label>
 					</q-item-section>
 				</q-item>
 
@@ -39,11 +39,11 @@
 
 						<q-item-label>
 							<span class="text-bold">
-								Rp{{ digitSeparator(item.sub_total) }}</span
-							>
-							(Rp{{ digitSeparator(item.nominal) }} x
-							{{ item.qty }})</q-item-label
-						>
+								{{ item.sub_total.toRupiah() }}
+							</span>
+							({{ item.nominal.toRupiah(false) }} x
+							{{ item.qty }})
+						</q-item-label>
 						<q-item-label caption="">
 							<em>Kasir:</em>&nbsp;<strong>{{
 								item.kasir || '-'
@@ -89,15 +89,13 @@
 						<q-item-label overline class="text-green-1"
 							>TOTAL CEK</q-item-label
 						>
-						<q-item-label class="text-body1"
-							>Rp{{
-								digitSeparator(getTotalCheck())
-							}}</q-item-label
-						>
+						<q-item-label class="text-body1">
+							{{ getTotalCheck().toRupiah() }}
+						</q-item-label>
 					</q-item-section>
 					<q-item-section side class="">
 						<div class="flex flex-center">
-							<DropDownPrint
+							<drop-down-print
 								:data="{
 									santri_id: santriId,
 									th_ajaran_h: thAjaranH,
@@ -138,10 +136,10 @@ import { useRoute } from 'vue-router';
 import apiGet from 'src/api/api-get';
 import apiUpdate from 'src/api/api-update';
 import { formatDateShort } from 'src/utils/format-date';
-import { digitSeparator } from 'src/utils/format-number';
 import { formatHijri, m2h } from 'src/utils/hijri';
 import IuranSantriCrud from 'src/pages/bendahara/iuran/santri/IuranSantriCrud.vue';
 import DropDownPrint from 'src/pages/bendahara/iuran/santri/DropDownPrint.vue';
+import 'src/utils/rupiah';
 
 const route = useRoute();
 const thAjaranH = ref(route.params.thAjaranH);
