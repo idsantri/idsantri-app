@@ -1,29 +1,31 @@
 import { Ref } from 'vue';
 
-interface GetParams {
+interface Params {
 	endPoint: string;
 	loading?: Ref<boolean>;
 	params?: object;
 	notify?: boolean;
 }
 
-interface PostParams extends GetParams {
+interface GetParams extends Params {}
+
+interface PostParams extends Params {
 	data: object;
 	confirm?: boolean;
 	message?: string;
 }
 
-interface UpdateParams extends GetParams {
+interface UpdateParams extends Params {
 	data: object;
 	confirm?: boolean;
 	message?: string;
 }
 
-interface DeleteParams extends GetParams {
+interface DeleteParams extends Params {
 	message?: string;
 }
 
-interface DownloadParams extends GetParams {
+interface DownloadParams extends Params {
 	fileName?: string;
 	confirm?: boolean;
 	message?: string;

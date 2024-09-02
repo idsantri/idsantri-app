@@ -43,13 +43,13 @@ export default [
 				component: () =>
 					import('src/pages/santri/relations/ortu/SantriOrtu.vue'),
 			},
-			{
-				path: 'iuran-total',
-				component: () =>
-					import(
-						'src/pages/santri/relations/iuran-total/SantriIuranTotal.vue'
-					),
-			},
+			// {
+			// 	path: 'iuran-total',
+			// 	component: () =>
+			// 		import(
+			// 			'src/pages/santri/relations/iuran-total/SantriIuranTotal.vue'
+			// 		),
+			// },
 			// {
 			// 	path: 'iuran',
 			// 	meta: { title: 'Detail Santri — Iuran' },

@@ -4,7 +4,7 @@
 			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
 				<toolbar-form @emit-button="null">
 					{{ props.title }} &mdash;
-					<em>{{ isNew ? 'baru' : 'edit' }}</em>
+					<em>{{ input.id ? 'edit' : 'baru' }}</em>
 				</toolbar-form>
 			</q-card-section>
 			<q-card-section>
@@ -17,20 +17,23 @@
 						/>
 					</q-dialog>
 				</div>
-				<InputSelectSantriId
-					:active-only="true"
-					@emit-input="(val) => Object.assign(input, val)"
-					:data="props.data"
+				<q-input
+					dense
+					class=""
+					outlined
+					v-model="input.urut"
+					label="Nomor Urut"
+					:rules="[(val) => !val || !isNaN(val) || 'Hanya angka']"
 				/>
-				<InputSelectArray
-					v-model="input.th_ajaran_h"
-					url="tahun-ajaran"
-					label="Tahun Ajaran"
-					sort="desc"
+
+				<q-input
+					dense
 					class="q-mt-sm"
+					outlined
+					v-model="input.paket"
+					required
+					label="Nama Paket"
 					:rules="[(val) => !!val || 'Harus diisi!']"
-					:selected="input.th_ajaran_h"
-					:disable="props.disableThAjaran"
 				/>
 				<InputSelectArray
 					v-model="input.iuran"
@@ -73,26 +76,14 @@
 						(Number(input.qty) * Number(input.nominal)).toRupiah()
 					"
 				/>
-				<InputSelectArray
-					v-model="input.via"
-					url="metode-pembayaran"
-					label="Via"
-					class="q-mt-sm"
-				/>
-				<InputSelectArray
-					v-model="input.keterangan"
-					url="keterangan-iuran"
-					label="Keterangan"
-					class="q-mt-sm"
-				/>
 			</q-card-section>
 			<q-card-actions class="flex bg-green-6">
 				<q-btn
-					v-show="!props.isNew"
+					v-show="input.id"
 					label="Hapus"
 					class="bg-red text-red-1"
 					no-caps=""
-					@click="del(input.id)"
+					@click="deleteData()"
 				/>
 				<q-space />
 				<q-btn
@@ -121,28 +112,22 @@ import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
 import ToolbarForm from 'src/components/ToolbarForm.vue';
 import InputCurrency from 'src/components/inputs/InputCurrency.vue';
-import InputSelectSantriId from 'src/components/inputs/InputSelectSantriId.vue';
 import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
 import 'src/utils/rupiah';
 
 const props = defineProps({
 	data: { type: Object, required: false, default: () => {} },
-	isNew: { type: Boolean, default: true },
 	title: { type: String, default: () => 'Input' },
-	disableSantriId: { type: Boolean, default: false },
-	disableThAjaran: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['successSubmit', 'successDelete']);
 
 const input = ref({ qty: 1 });
 const loadingCrud = ref(false);
-const tahunAjaran = ref([]);
 const iuran = ref([]);
 
 onMounted(async () => {
 	Object.assign(input.value, props.data);
-	tahunAjaran.value = listsStore().getByStateName('tahun-ajaran');
 	iuran.value = listsStore().getByStateName('iuran');
 });
 
@@ -154,41 +139,36 @@ const setNominal = (val) => {
 };
 
 const submit = async () => {
-	const data = {
-		santri_id: input.value.santri_id,
-		th_ajaran_h: input.value.th_ajaran_h,
-		iuran: input.value.iuran,
-		nominal: input.value.nominal,
-		qty: input.value.qty,
-		via: input.value.via || '',
-		keterangan: input.value.keterangan || '',
-	};
+	const data = JSON.parse(JSON.stringify(input.value));
+	delete data.id;
+	// return console.log(data);
+
 	let response = null;
-	if (props.isNew) {
-		response = await apiPost({
-			endPoint: 'iuran',
-			data,
-			loading: loadingCrud,
-		});
-	} else {
+	if (input.value.id) {
 		response = await apiUpdate({
-			endPoint: `iuran/${input.value.id}`,
+			endPoint: `iuran-paket/${input.value.id}`,
 			data,
 			confirm: true,
 			notify: true,
+			loading: loadingCrud,
+		});
+	} else {
+		response = await apiPost({
+			endPoint: 'iuran-paket',
+			data,
 			loading: loadingCrud,
 		});
 	}
 	if (response) {
 		document.getElementById('btn-close').click();
 		// console.log(response.iuran);
-		emit('successSubmit', response?.iuran);
+		emit('successSubmit', response?.iuran_paket);
 	}
 };
 
-const del = async (id) => {
+const deleteData = async () => {
 	const result = await apiDelete({
-		endPoint: `iuran/${id}`,
+		endPoint: `iuran-paket/${input.value.id}`,
 		loading: loadingCrud,
 	});
 	if (result) {
