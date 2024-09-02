@@ -10,6 +10,17 @@
 					</q-toolbar-title>
 
 					<q-btn
+						no-caps
+						label="Kembali"
+						icon="reply"
+						dense
+						class="q-px-md q-mr-sm"
+						outline
+						color="green-11"
+						@click="$router.go(-1)"
+					/>
+
+					<q-btn
 						dense
 						class="q-px-md q-mr-sm text-green-10"
 						label="Tambah"
