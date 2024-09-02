@@ -9,16 +9,15 @@
 					<q-toolbar-title class="text-subtitle1">
 						Modul Kenaikan Kelas
 					</q-toolbar-title>
-					<!-- <q-btn
-						icon="check"
-						label="Hasil"
-						dense
-						outline
+					<q-btn
 						no-caps
-						class="q-mr-xs q-px-sm"
-						@click="null"
-						disable
-					/> -->
+						label="Kembali"
+						icon="reply"
+						dense
+						class="q-px-md"
+						outline
+						@click="$router.go(-1)"
+					/>
 				</q-toolbar>
 			</q-card-section>
 			<q-card-section class="no-padding">

@@ -9,6 +9,15 @@
 						Data Iuran Santri
 					</q-toolbar-title>
 					<q-btn
+						icon="reply"
+						round
+						class="q-mr-md"
+						flat
+						color="green-11"
+						dense
+						@click="$router.go(-1)"
+					/>
+					<q-btn
 						icon="sync"
 						round
 						class="q-mr-md"
