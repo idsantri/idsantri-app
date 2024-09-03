@@ -71,11 +71,13 @@
 </template>
 
 <script setup>
-import api from 'src/api';
+import { onMounted, onUpdated, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { onUpdated, ref } from 'vue';
-import { toArray } from 'src/utils/array-object';
+import { useQuasar } from 'quasar';
 import authState from 'stores/auth-store';
+import api from 'src/api';
+import config from 'src/config';
+import { toArray } from 'src/utils/array-object';
 import { notifyAlert, notifySuccess } from 'src/utils/notify';
 
 const router = useRouter();
@@ -86,6 +88,10 @@ const showSpinner = ref(false);
 const emit = defineEmits(['title', 'errors']);
 emit('title', 'Login');
 emit('errors', []);
+
+const props = defineProps({
+	credential: { type: Object },
+});
 
 const submitLogin = async () => {
 	emit('errors', []);
@@ -121,6 +127,41 @@ const submitLogin = async () => {
 	}
 };
 
+function showNotify() {
+	const $q = useQuasar();
+	$q.notify({
+		message: 'Klik tombol info (kanan-atas) untuk info login.',
+		icon: 'info',
+		color: 'green-7',
+		textColor: 'green-11',
+		// position: 'center',
+		timeout: 7500,
+		actions: [
+			{
+				color: 'green-11',
+				icon: 'close',
+				round: true,
+			},
+		],
+	});
+}
+
+watch(
+	[() => props.credential.username, () => props.credential.password],
+	([nUsername, nPassword]) => {
+		if (config.DEV) {
+			if (nUsername) login.value = nUsername;
+			if (nPassword) password.value = nPassword;
+		}
+	},
+);
+
+onMounted(() => {
+	if (config.DEV) {
+		showNotify();
+	}
+});
+
 onUpdated(() => {
 	const resend = document.getElementById('resend-email');
 	// console.log(resend);
@@ -149,5 +190,4 @@ onUpdated(() => {
 	});
 });
 </script>
-
 <style scoped lang="scss"></style>
