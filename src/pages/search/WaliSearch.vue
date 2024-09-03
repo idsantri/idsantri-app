@@ -200,4 +200,3 @@ onMounted(() => {
 <style lang="scss">
 @import 'datatables.net-dt';
 </style>
-@/api/get-token

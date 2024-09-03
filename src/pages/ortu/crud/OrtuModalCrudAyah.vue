@@ -119,4 +119,3 @@ const input = ref({
 
 onMounted(async () => {});
 </script>
-src/components/inputs/InputSelectKotaLahir.vue

@@ -99,4 +99,3 @@ const props = defineProps({
 const { santri } = santriState();
 const { nama, nisn, nkk, nik, tgl_lahir, sex } = toRefs(santri);
 </script>
-src/components/inputs/InputSelectKotaLahir.vue

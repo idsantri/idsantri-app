@@ -1,9 +1,15 @@
 import api from '.';
 import getToken from './get-token';
-import { buildTextError } from 'src/utils/array-object';
-import { notifyError, notifySuccess } from 'src/utils/notify';
+import apiError from './api-error';
+import { GetParams } from './api-interface';
+import { notifySuccess } from 'src/utils/notify';
 
-async function apiGet({ endPoint, loading, params, notify = false }) {
+async function apiGet({
+	endPoint,
+	loading,
+	params,
+	notify = false,
+}: GetParams): Promise<object | false> {
 	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 	try {
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
@@ -11,12 +17,7 @@ async function apiGet({ endPoint, loading, params, notify = false }) {
 		if (notify) notifySuccess(data.message);
 		return data;
 	} catch (error) {
-		const message = error?.response?.data?.message;
-		if (message) {
-			notifyError(buildTextError(message));
-		} else {
-			console.log(`Error during get ${endPoint}`, error);
-		}
+		apiError(error);
 		return false;
 	} finally {
 		if (loading && typeof loading.value === 'boolean')

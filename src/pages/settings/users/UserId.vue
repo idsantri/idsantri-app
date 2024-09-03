@@ -5,6 +5,15 @@
 				<div class="flex items-center">
 					<div class="text-subtitle2">Profil Pengguna</div>
 					<q-space />
+					<q-btn
+						no-caps
+						label="Kembali"
+						icon="reply"
+						dense
+						class="q-px-md"
+						outline
+						@click="$router.go(-1)"
+					/>
 				</div>
 			</q-card-section>
 

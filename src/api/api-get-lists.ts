@@ -1,65 +1,61 @@
 import api from '.';
 import getToken from './get-token';
-import { buildTextError } from 'src/utils/array-object';
-import { notifyError } from 'src/utils/notify';
+import apiError from './api-error';
+import { ListsCustomParams, ListsParams } from './api-interface';
 
-/**
- * @param {*} object
- * @returns array object
- */
-async function getLists({ loadingArray, loading, key, sort = null, url = '' }) {
+async function getLists({
+	loadingArray,
+	loading,
+	key,
+	sort = null,
+	url = '',
+}: ListsParams): Promise<object | false> {
 	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 
 	if (loadingArray) loadingArray.value[key] = true;
-	if (loading) loading.value = true;
+	if (loading && typeof loading.value === 'boolean') loading.value = true;
 
 	const endPoint = url?.length ? url : `lists/${key}`;
 	const snakeCase = key.replace(/-/g, '_');
 
 	try {
 		const { data } = await api.get(endPoint);
-		let result = data[snakeCase];
+		const result = data[snakeCase] as { val0: string }[];
+
 		if (sort === 'asc' || sort === true) {
-			result.sort((a, b) => {
-				return a.val0.localeCompare(b.val0, undefined, {
+			result.sort((a, b) =>
+				a.val0.localeCompare(b.val0, undefined, {
 					sensitivity: 'base',
-				});
-			});
+				}),
+			);
 		} else if (sort === 'desc' || sort === false) {
-			result.sort((a, b) => {
-				return b.val0.localeCompare(a.val0, undefined, {
+			result.sort((a, b) =>
+				b.val0.localeCompare(a.val0, undefined, {
 					sensitivity: 'base',
-				});
-			});
+				}),
+			);
 		}
+
 		return result;
 	} catch (error) {
-		const message = error?.response?.data?.message;
-		if (message) {
-			notifyError(buildTextError(message));
-		} else {
-			console.log(`Not Found lists: ${key} `, error);
-		}
+		apiError(error);
 		return false;
 	} finally {
 		if (loadingArray) loadingArray.value[key] = false;
-		if (loading) loading.value = false;
+		if (loading && typeof loading.value === 'boolean')
+			loading.value = false;
 	}
 }
 
-function hasObject(array) {
-	for (let i = 0; i < array.length; i++) {
-		if (typeof array[i] === 'object') {
+function hasObject(arr: object[]): boolean {
+	for (let i = 0; i < arr.length; i++) {
+		if (typeof arr[i] === 'object') {
 			return true;
 		}
 	}
 	return false;
 }
 
-/**
- * @param {*} object
- * @returns array object
- */
 async function getListsCustom({
 	loadingArray,
 	loading,
@@ -67,39 +63,35 @@ async function getListsCustom({
 	url,
 	params,
 	sort = null,
-}) {
+}: ListsCustomParams): Promise<object | false> {
 	api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
 
 	if (loadingArray) loadingArray.value[key] = true;
-	if (loading) loading.value = true;
+	if (loading && typeof loading.value === 'boolean') loading.value = true;
 
 	try {
 		const { data } = await api.get(url, { params });
 		// lists.value[key] = data[key];
-		let result = data[key].filter((el) => el != null);
+		const result = data[key].filter((el: object) => el != null);
 		if (!hasObject(result)) {
 			if (sort === 'asc' || sort === true) {
-				result.sort((a, b) =>
+				result.sort((a: string, b: string) =>
 					a.localeCompare(b, undefined, { sensitivity: 'base' }),
 				);
 			} else if (sort === 'desc' || sort === false) {
-				result.sort((a, b) =>
+				result.sort((a: string, b: string) =>
 					b.localeCompare(a, undefined, { sensitivity: 'base' }),
 				);
 			}
 		}
 		return result;
 	} catch (error) {
-		const message = error?.response?.data?.message;
-		if (message) {
-			notifyError(buildTextError(message));
-		} else {
-			console.log(`Not Found lists: ${key} `, error);
-		}
+		apiError(error);
 		return false;
 	} finally {
 		if (loadingArray) loadingArray.value[key] = false;
-		if (loading) loading.value = false;
+		if (loading && typeof loading.value === 'boolean')
+			loading.value = false;
 	}
 }
 

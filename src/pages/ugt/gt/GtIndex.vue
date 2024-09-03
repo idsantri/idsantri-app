@@ -86,8 +86,8 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import apiGet from 'src/api/api-get.js';
-import { getListsCustom } from 'src/api/api-get-lists.js';
+import apiGet from 'src/api/api-get';
+import { getListsCustom } from 'src/api/api-get-lists';
 import GtCrud from 'src/pages/ugt/gt/GtCrud.vue';
 
 const gt = ref([]);
@@ -101,8 +101,10 @@ const optionsThAjaran = ref([]);
 
 async function loadData() {
 	const data = await apiGet({ endPoint: 'ugt/gt', loading });
-	gt.value = data.gt;
-	gtFiltered.value = gt.value;
+	if (data) {
+		gt.value = data.gt;
+		gtFiltered.value = gt.value;
+	}
 }
 
 function filterThAjaranH(v) {
@@ -120,7 +122,9 @@ onMounted(async () => {
 		key: 'th_ajaran_h',
 		loading: loadingThAjaran,
 	});
-	optionsThAjaran.value = data;
+	if (data) {
+		optionsThAjaran.value = data;
+	}
 });
 
 const columns = [

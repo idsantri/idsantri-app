@@ -64,7 +64,7 @@
 		>
 			<div class="text-right">
 				<em>Total: </em>
-				<strong>{{ digitSeparator(calculateTotal()) }}</strong>
+				<strong>{{ calculateTotal().toRupiah() }}</strong>
 			</div>
 		</q-card-section>
 	</q-card>
@@ -86,8 +86,9 @@
 <script setup>
 import { ref } from 'vue';
 import { formatDateShort } from 'src/utils/format-date';
-import { digitSeparator } from 'src/utils/format-number';
 import IuranSantriCrud from 'src/pages/bendahara/iuran/santri/IuranSantriCrud.vue';
+import 'src/utils/rupiah';
+import { digitSeparator } from 'src/utils/format-number';
 
 const props = defineProps({
 	data: Array,
@@ -154,7 +155,8 @@ const columns = [
 		name: 'sub_total',
 		label: 'Nominal',
 		align: 'right',
-		field: (row) => digitSeparator(row.sub_total),
+		field: (row) => row.sub_total,
+		format: (val) => `${digitSeparator(val)}`,
 		sortable: true,
 	},
 	{
@@ -165,5 +167,6 @@ const columns = [
 		sortable: true,
 	},
 ];
+digitSeparator;
 </script>
 <style lang=""></style>

@@ -44,7 +44,7 @@
 </template>
 <script setup>
 import { onMounted, ref, toRefs } from 'vue';
-import apiGet from 'src/api/api-get.js';
+import apiGet from 'src/api/api-get';
 import loadingStore from 'src/stores/loading-store';
 import { notifyWarning } from 'src/utils/notify';
 

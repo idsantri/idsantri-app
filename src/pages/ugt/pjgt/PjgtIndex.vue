@@ -86,8 +86,8 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import apiGet from 'src/api/api-get.js';
-import { getListsCustom } from 'src/api/api-get-lists.js';
+import apiGet from 'src/api/api-get';
+import { getListsCustom } from 'src/api/api-get-lists';
 import ModalPjgt from 'src/pages/ugt/pjgt/PjgtCrud.vue';
 
 const pjgt = ref([]);
@@ -101,8 +101,10 @@ const optionsWilayah = ref([]);
 
 async function loadData() {
 	const data = await apiGet({ endPoint: 'ugt/pjgt', loading });
-	pjgt.value = data.pjgt;
-	pjgtFiltered.value = pjgt.value;
+	if (data) {
+		pjgt.value = data.pjgt;
+		pjgtFiltered.value = pjgt.value;
+	}
 }
 
 function filterWilayah(v) {
@@ -120,7 +122,9 @@ onMounted(async () => {
 		key: 'wilayah',
 		loading: loadingWilayah,
 	});
-	optionsWilayah.value = data;
+	if (data) {
+		optionsWilayah.value = data;
+	}
 });
 
 const columns = [

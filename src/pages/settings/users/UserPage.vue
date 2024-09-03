@@ -1,33 +1,56 @@
 <template>
 	<q-page class="q-pa-sm">
-		<q-table
-			:rows="users"
-			:columns="columns"
-			row-key="name"
-			:loading="loading"
-			:filter="filter"
-			@row-click="
-				(evt, row, index) => $router.push(`/settings/users/${row.id}`)
-			"
-			:rows-per-page-options="[10, 25, 50, 75, 100, 0]"
-		>
-			<template v-slot:top-left>
-				<div class="text-h6 text-green-10">Data Pengguna</div>
-			</template>
-			<template v-slot:top-right>
-				<q-input
-					outlined
-					dense
-					debounce="300"
-					v-model="filter"
-					placeholder="Cari"
-				>
-					<template v-slot:append>
-						<q-icon name="search" />
-					</template>
-				</q-input>
-			</template>
-		</q-table>
+		<q-card>
+			<q-card-section class="bg-green-8 no-padding">
+				<q-toolbar class="no-padding no-margin">
+					<q-toolbar-title
+						class="text-subtitle1 q-ml-sm text-green-11"
+					>
+						Data Pengguna
+					</q-toolbar-title>
+
+					<!-- <q-btn
+						dense
+						class="q-px-md q-mr-sm text-green-10"
+						label="Tambah"
+						no-caps=""
+						icon="add"
+						color="green-2"
+						@click="null"
+						disable
+					/> -->
+				</q-toolbar>
+			</q-card-section>
+			<q-table
+				:rows="users"
+				:columns="columns"
+				row-key="name"
+				:loading="loading"
+				:filter="filter"
+				@row-click="
+					(evt, row, index) =>
+						$router.push(`/settings/users/${row.id}`)
+				"
+				:rows-per-page-options="[10, 25, 50, 75, 100, 0]"
+			>
+				<!-- <template v-slot:top-left>
+					<div class="text-h6 text-green-10">Data Pengguna</div>
+				</template> -->
+				<template v-slot:top-right>
+					<q-input
+						outlined
+						dense
+						debounce="300"
+						v-model="filter"
+						placeholder="Cari"
+					>
+						<template v-slot:append>
+							<q-icon name="search" />
+						</template>
+					</q-input>
+				</template>
+			</q-table>
+		</q-card>
 	</q-page>
 	<!-- <pre>{{ users }}</pre> -->
 </template>

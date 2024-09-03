@@ -1,7 +1,7 @@
 export default [
 	{
 		path: '',
-		redirect: () => '/bendahara/iuran/q/tanggal',
+		redirect: () => '/bendahara/iuran/q/th-ajaran',
 	},
 	{
 		path: 'iuran/export',
@@ -15,6 +15,7 @@ export default [
 	},
 	{
 		path: 'iuran/q',
+		redirect: () => '/bendahara/iuran/q/th-ajaran',
 		children: [
 			{
 				path: 'th-ajaran/:thAjaranH?',
@@ -38,5 +39,10 @@ export default [
 					),
 			},
 		],
+	},
+	{
+		path: 'iuran/atur-paket',
+		component: () =>
+			import('src/pages/bendahara/iuran/paket/SettingPaket.vue'),
 	},
 ];

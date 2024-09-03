@@ -250,7 +250,6 @@ const handleDelete = async () => {
 	const result = await apiDelete({
 		endPoint: `ugt/pjgt/${route.params.id}`,
 		loading: loadingMain,
-		rerender: false,
 	});
 	if (result) {
 		document.getElementById('btn-close-crud').click();

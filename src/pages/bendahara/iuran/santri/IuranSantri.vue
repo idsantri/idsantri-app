@@ -9,6 +9,15 @@
 						Data Iuran Santri
 					</q-toolbar-title>
 					<q-btn
+						icon="reply"
+						round
+						class="q-mr-md"
+						flat
+						color="green-11"
+						dense
+						@click="$router.go(-1)"
+					/>
+					<q-btn
 						icon="sync"
 						round
 						class="q-mr-md"
@@ -27,15 +36,21 @@
 					>
 						Data Iuran
 						<q-space />
-						<q-btn
+						<q-btn-dropdown
+							split
 							dense
-							class="q-px-md text-green-11"
 							label="Tambah"
 							no-caps=""
 							icon="add"
 							color="green-10"
+							padding="xs sm"
+							text-color="green-11"
 							@click="crudShow = true"
-						/>
+						>
+							<dropdown-button
+								@show-paket="crudShowPaket = true"
+							/>
+						</q-btn-dropdown>
 					</q-card-section>
 					<q-card-section class="no-padding" :key="keyIuran">
 						<div v-if="loading && !params.thAjaranH">
@@ -92,8 +107,9 @@
 				</q-card>
 			</q-card-section>
 		</q-card>
+
+		<!-- add new -->
 		<q-dialog v-model="crudShow">
-			<!-- add new -->
 			<iuran-santri-crud
 				:is-new="true"
 				title="Input Iuran"
@@ -101,6 +117,15 @@
 				@success-submit="successSubmit"
 				@success-delete="null"
 				:disable-santri-id="true"
+			/>
+		</q-dialog>
+
+		<!-- add paket-->
+		<q-dialog v-model="crudShowPaket">
+			<IuranSantriCrudPaket
+				title="Input Paket Iuran"
+				:data="dataIuran"
+				@success-submit="successSubmit"
 			/>
 		</q-dialog>
 	</q-page>
@@ -112,6 +137,8 @@ import apiGet from 'src/api/api-get';
 import CardHeadSantri from 'src/components/CardHeadSantri.vue';
 import IuranSantriByTh from 'src/pages/bendahara/iuran/santri/IuranSantriByTh.vue';
 import IuranSantriCrud from 'src/pages/bendahara/iuran/santri/IuranSantriCrud.vue';
+import IuranSantriCrudPaket from './IuranSantriCrudPaket.vue';
+import DropdownButton from './DropdownButton.vue';
 
 const santri = ref({});
 const iuran = ref([]);
@@ -119,6 +146,7 @@ const loading = ref(false);
 const { params } = useRoute();
 const tahunIuran = ref([]);
 const crudShow = ref(false);
+const crudShowPaket = ref(false);
 const dataIuran = ref({});
 const keyIuran = ref(0);
 const router = useRouter();
@@ -148,6 +176,7 @@ async function loadData() {
 	});
 	santri.value.image = img.image_url;
 }
+
 onMounted(async () => {
 	await loadData();
 	dataIuran.value = {

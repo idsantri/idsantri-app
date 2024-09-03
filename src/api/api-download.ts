@@ -1,5 +1,7 @@
 import api from '.';
 import getToken from './get-token';
+import apiError from './api-error';
+import { DownloadParams } from './api-interface';
 import { notifyConfirm } from 'src/utils/notify';
 
 async function apiDownload({
@@ -9,7 +11,7 @@ async function apiDownload({
 	loading,
 	params,
 	fileName = 'dokumen',
-}) {
+}: DownloadParams): Promise<boolean> {
 	if (confirm) {
 		const isConfirmed = await notifyConfirm(message, true);
 		if (!isConfirmed) return false;
@@ -28,8 +30,6 @@ async function apiDownload({
 			params,
 		});
 
-		// console.log('response download', response);
-
 		if (response) {
 			const blob = new Blob([response.data], { type: 'application/pdf' });
 			const href = URL.createObjectURL(blob);
@@ -42,10 +42,13 @@ async function apiDownload({
 
 			document.body.removeChild(link);
 			URL.revokeObjectURL(href);
+			return true;
+		} else {
+			return false;
 		}
-		return true;
 	} catch (error) {
-		console.error('error download', error);
+		apiError(error);
+		return false;
 	} finally {
 		if (loading && typeof loading.value === 'boolean')
 			loading.value = false;
