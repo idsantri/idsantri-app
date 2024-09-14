@@ -6,6 +6,14 @@
 					<div class="text-subtitle1">Data Santri</div>
 					<q-space />
 					<q-btn
+						@click="null"
+						size="sm"
+						color="green-2"
+						class="text-green-10 q-mr-sm"
+						icon="sync"
+						disable
+					/>
+					<q-btn
 						label="Cari"
 						@click="searchSantri = true"
 						size="sm"

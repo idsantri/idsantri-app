@@ -5,9 +5,10 @@
 				<q-input
 					bg-color="green-1"
 					outlined
+					label="Login"
+					name="login"
 					v-model="login"
 					required
-					label="Login"
 					hint="Username atau email/surel Anda!"
 					autocomplete="off"
 					autocapitalize="none"
@@ -19,10 +20,11 @@
 					id="password"
 					bg-color="green-1"
 					outlined
+					label="Password"
+					name="password"
 					v-model="password"
 					type="password"
 					required
-					label="Password"
 					autocomplete="off"
 					autocapitalize="none"
 					readonly
@@ -94,6 +96,22 @@ const props = defineProps({
 });
 
 const submitLogin = async () => {
+	// #CARA 1
+	// const formEl = new FormData(e.target);
+	// console.log(formEl);
+	// const formData = {};
+	// for (const [key, value] of formEl) {
+	// 	formData[key] = value;
+	// }
+	// console.log(formData);
+
+	// #CARA 2
+	// const formData = new FormData(e.target);
+	// const formObject = Object.fromEntries(formData.entries());
+	// console.log(formObject);
+
+	// return;
+
 	emit('errors', []);
 	try {
 		showSpinner.value = true;
@@ -135,7 +153,7 @@ function showNotify() {
 		color: 'green-7',
 		textColor: 'green-11',
 		// position: 'center',
-		timeout: 7500,
+		timeout: 10000,
 		actions: [
 			{
 				color: 'green-11',
