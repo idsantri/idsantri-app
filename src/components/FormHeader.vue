@@ -22,6 +22,14 @@
 	</q-card-section>
 </template>
 <script setup>
+/**
+	@example
+	<FormHeader
+		title="Input Desa/Kelurahan"
+		:is-new="props.data?.id ? false : true"
+	/>
+  **/
+
 import { onMounted, ref, useSlots } from 'vue';
 
 defineProps({
