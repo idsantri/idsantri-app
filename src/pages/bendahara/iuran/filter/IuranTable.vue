@@ -167,6 +167,5 @@ const columns = [
 		sortable: true,
 	},
 ];
-digitSeparator;
 </script>
 <style lang=""></style>

@@ -46,6 +46,7 @@
 						<router-view
 							@title="handleTitle"
 							@errors="handleErrors"
+							:credential="credential"
 						/>
 					</q-card-section>
 				</q-card>
@@ -53,8 +54,10 @@
 
 			<q-dialog v-model="modalInfo">
 				<q-card style="min-width: 300px">
-					<q-card-section class="q-pa-sm bg-green-6 text-green-11">
-						<div class="text-h6">Info Login</div>
+					<q-card-section
+						class="q-pa-sm bg-green-6 text-green-11 text-subtitle1"
+					>
+						Info Login
 					</q-card-section>
 					<q-card-section class="q-pa-sm">
 						<q-markup-table flat bordered separator="horizontal">
@@ -72,7 +75,12 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="(item, index) in login" :key="index">
+								<tr
+									v-for="(item, index) in login"
+									:key="index"
+									@click="rowClick(item)"
+									class="cursor-pointer"
+								>
 									<td class="text-weight-light">
 										{{ item.username }}
 									</td>
@@ -93,6 +101,8 @@
 							no-caps
 							label="Tutup"
 							color="green-11"
+							class="bg-green-6"
+							glossy
 							v-close-popup
 						/>
 					</q-card-actions>
@@ -103,8 +113,8 @@
 </template>
 
 <script setup>
-import config from 'src/config';
 import { ref } from 'vue';
+import config from 'src/config';
 import LogoCircle from 'components/LogoCircle.vue';
 
 const title = ref('Autentikasi');
@@ -112,6 +122,15 @@ const handleTitle = (value) => (title.value = value);
 const errors = ref([]);
 const handleErrors = (value) => (errors.value = value);
 const modalInfo = ref(false);
+const credential = ref({});
+
+function rowClick(item) {
+	if (config.DEV) {
+		credential.value = item;
+	}
+	modalInfo.value = false;
+}
+
 const login = [
 	{
 		password: '112233',

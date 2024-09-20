@@ -60,8 +60,11 @@ const releases = [
 		ver: '1.2.2',
 		date: 'September 2024',
 		release: {
-			'Fitur Baru': ['Pembayaran paket iuran'],
-			Improve: ['Beberapa perbaikan kecil'],
+			'Fitur Baru': ['Pembayaran paket iuran', 'Setting alamat'],
+			Improve: [
+				'Local storage pada input alamat',
+				'Beberapa perbaikan kecil',
+			],
 		},
 	},
 	{

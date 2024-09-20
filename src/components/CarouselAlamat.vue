@@ -10,10 +10,18 @@
 		emit-value
 		map-options
 		v-model="input.provinsi"
-		:options="lists['provinsi']"
-		:loading="loading['provinsi']"
+		:options="listsPro"
+		:loading="loadingPro"
 		behavior="menu"
-	/>
+		clearable
+	>
+		<template v-slot:after>
+			<DropDown
+				@sync-click="fetchProvinsi()"
+				@route-click="$emit('emitClose')"
+			/>
+		</template>
+	</q-select>
 
 	<q-select
 		dense
@@ -24,10 +32,18 @@
 		emit-value
 		map-options
 		v-model="input.kabupaten"
-		:options="lists['kabupaten']"
-		:loading="loading['kabupaten']"
+		:options="listsKab"
+		:loading="loadingKab"
 		behavior="menu"
-	/>
+		clearable
+	>
+		<template v-slot:after>
+			<DropDown
+				@sync-click="fetchKabupaten(input.provinsi)"
+				@route-click="$emit('emitClose')"
+			/>
+		</template>
+	</q-select>
 
 	<q-select
 		dense
@@ -38,10 +54,18 @@
 		emit-value
 		map-options
 		v-model="input.kecamatan"
-		:options="lists['kecamatan']"
-		:loading="loading['kecamatan']"
+		:options="listsKec"
+		:loading="loadingKec"
 		behavior="menu"
-	/>
+		clearable
+	>
+		<template v-slot:after>
+			<DropDown
+				@sync-click="fetchKecamatan(input.provinsi, input.kabupaten)"
+				@route-click="$emit('emitClose')"
+			/>
+		</template>
+	</q-select>
 
 	<q-select
 		dense
@@ -52,12 +76,22 @@
 		emit-value
 		map-options
 		v-model="input.desa"
-		:options="lists['desa']"
-		:loading="loading['desa']"
+		:options="listsDes"
+		:loading="loadingDes"
 		use-input=""
 		new-value-mode="add"
 		behavior="menu"
-	/>
+		clearable
+	>
+		<template v-slot:after>
+			<DropDown
+				@sync-click="
+					fetchDesa(input.provinsi, input.kabupaten, input.kecamatan)
+				"
+				@route-click="$emit('emitClose')"
+			/>
+		</template>
+	</q-select>
 
 	<div class="row">
 		<q-input
@@ -108,69 +142,133 @@
 <script setup>
 /**
  * @example
- * <carousel-alamat
- * @emit-input="(val) => Object.assign(input, val)"
- * :alamat="input"
- * />
+<carousel-alamat
+	@emit-input="(val) => Object.assign(santri, val)"
+	@emit-close="closeModal"
+	:data="santri"
+	/>
  */
 import apiGet from 'src/api/api-get';
+import alamatStore from 'src/stores/alamat-store';
 import { onMounted, ref, watch, watchEffect } from 'vue';
+import DropDown from './CarouselAlamatDropDown.vue';
 
 const props = defineProps({
 	data: { type: Object },
 });
-const emit = defineEmits(['emitInput']);
+const emit = defineEmits(['emitInput', 'emitClose']);
 
+const alamat = alamatStore();
 const input = ref({});
-const lists = ref([]);
-const loading = ref([]);
-
-async function fetchAlamat(request) {
-	let params = {};
-
-	if (request === 'provinsi') {
-		params = {};
-	}
-	if (request === 'kabupaten') {
-		params.provinsi = input.value.provinsi;
-	}
-
-	if (request === 'kecamatan') {
-		params.provinsi = input.value.provinsi;
-		params.kabupaten = input.value.kabupaten;
-	}
-
-	if (request === 'desa') {
-		params.provinsi = input.value.provinsi;
-		params.kabupaten = input.value.kabupaten;
-		params.kecamatan = input.value.kecamatan;
-	}
-
-	try {
-		loading.value[request] = true;
-		const data = await apiGet({ endPoint: 'alamat', params });
-		lists.value[request] = data[request];
-	} catch (error) {
-		console.log(`Not Found list ${request}`, error);
-	} finally {
-		loading.value[request] = false;
-	}
-}
+const listsPro = ref([]);
+const loadingPro = ref(false);
+const listsKab = ref([]);
+const loadingKab = ref(false);
+const listsKec = ref([]);
+const loadingKec = ref(false);
+const listsDes = ref([]);
+const loadingDes = ref(false);
 
 onMounted(async () => {
 	Object.assign(input.value, props.data);
-
-	await fetchAlamat('provinsi');
+	await getProvinsi();
 	if (input.value.provinsi) {
-		await fetchAlamat('kabupaten');
+		await getKabupaten(input.value.provinsi);
 	}
-	if (input.value.kabupaten) {
-		await fetchAlamat('kecamatan');
+	if (input.value.provinsi && input.value.kabupaten) {
+		await getKecamatan(input.value.provinsi, input.value.kabupaten);
 	}
-	if (input.value.kecamatan) {
-		await fetchAlamat('desa');
+	if (
+		input.value.provinsi &&
+		input.value.kabupaten &&
+		input.value.kecamatan
+	) {
+		await getDesa(
+			input.value.provinsi,
+			input.value.kabupaten,
+			input.value.kecamatan,
+		);
 	}
 });
+
+async function fetchProvinsi() {
+	const data = await apiGet({ endPoint: 'alamat', loading: loadingPro });
+	if (data) {
+		alamat.setProvinsi(data.provinsi);
+		listsPro.value = alamat.getProvinsiArr();
+	}
+}
+
+async function getProvinsi() {
+	const provinsi = alamat.getProvinsiArr();
+	if (provinsi.length > 0) {
+		listsPro.value = provinsi;
+	} else {
+		await fetchProvinsi();
+	}
+}
+
+async function fetchKabupaten(provinsi) {
+	const data = await apiGet({
+		endPoint: 'alamat',
+		loading: loadingKab,
+		params: { provinsi },
+	});
+	if (data) {
+		alamat.setKabupaten(data.kabupaten, provinsi);
+		listsKab.value = alamat.getKabupatenArr(provinsi);
+	}
+}
+async function getKabupaten(provinsi) {
+	const kabupaten = alamat.getKabupatenArr(provinsi);
+	if (kabupaten.length > 0) {
+		listsKab.value = kabupaten;
+	} else {
+		await fetchKabupaten(provinsi);
+	}
+}
+
+async function fetchKecamatan(provinsi, kabupaten) {
+	const data = await apiGet({
+		endPoint: 'alamat',
+		loading: loadingKec,
+		params: { provinsi, kabupaten },
+	});
+	if (data) {
+		alamat.setKecamatan(data.kecamatan, provinsi, kabupaten);
+		listsKec.value = alamat.getKecamatanArr(provinsi, kabupaten);
+	}
+}
+
+async function getKecamatan(provinsi, kabupaten) {
+	const kecamatan = alamat.getKecamatanArr(provinsi, kabupaten);
+	if (kecamatan.length > 0) {
+		listsKec.value = kecamatan;
+	} else {
+		await fetchKecamatan(provinsi, kabupaten);
+	}
+}
+
+async function fetchDesa(provinsi, kabupaten, kecamatan) {
+	const data = await apiGet({
+		endPoint: 'alamat',
+		loading: loadingDes,
+		params: { provinsi, kabupaten, kecamatan },
+	});
+	if (data) {
+		alamat.setDesa(data.desa, provinsi, kabupaten, kecamatan);
+		listsDes.value = alamat.getDesaArr(provinsi, kabupaten, kecamatan);
+	}
+}
+
+async function getDesa(provinsi, kabupaten, kecamatan) {
+	const desa = alamat.getDesaArr(provinsi, kabupaten, kecamatan);
+	if (desa.length > 0) {
+		listsDes.value = desa;
+	} else {
+		await fetchDesa(provinsi, kabupaten, kecamatan);
+	}
+}
 
 watchEffect(() => {
 	emit('emitInput', input.value);
@@ -178,15 +276,12 @@ watchEffect(() => {
 
 watch(
 	() => input.value.provinsi,
-	async (newValue, oldValue) => {
-		if (newValue != oldValue && typeof oldValue != 'undefined') {
+	async (newProvinsi, oldProvinsi) => {
+		if (newProvinsi != oldProvinsi && typeof oldProvinsi != 'undefined') {
 			input.value.kabupaten = '';
 			input.value.kecamatan = '';
 			input.value.desa = '';
-			lists.value.kabupaten = [];
-			lists.value.kecamatan = [];
-			lists.value.desa = [];
-			await fetchAlamat('kabupaten');
+			await getKabupaten(newProvinsi);
 		}
 	},
 );
@@ -197,9 +292,7 @@ watch(
 		if (newValue != oldValue && typeof oldValue != 'undefined') {
 			input.value.kecamatan = '';
 			input.value.desa = '';
-			lists.value.kecamatan = [];
-			lists.value.desa = [];
-			await fetchAlamat('kecamatan');
+			await getKecamatan(input.value.provinsi, newValue);
 		}
 	},
 );
@@ -209,55 +302,14 @@ watch(
 	async (newValue, oldValue) => {
 		if (newValue != oldValue && typeof oldValue != 'undefined') {
 			input.value.desa = '';
-			lists.value.desa = [];
-			await fetchAlamat('desa');
+			await getDesa(
+				input.value.provinsi,
+				input.value.kabupaten,
+				newValue,
+			);
 		}
 	},
 );
-
-// watch(
-// 	() => input.value,
-// 	(newValue, oldValue) => {
-// 		// console.log('watch', newValue, oldValue);
-// 		// Lakukan sesuatu dengan nilai baru dan nilai lama dari input.value
-// 		emit('emitInput', input.value);
-// 	},
-// 	{ deep: true }
-// );
-// const watchInput = (property, callback) => {
-// 	watch(
-// 		() => input.value[property],
-// 		async (newValue, oldValue) => {
-// 			if (newValue !== oldValue && typeof oldValue !== 'undefined') {
-// 				if (property == 'provinsi') {
-// 					input.value.kabupaten = '';
-// 					input.value.kecamatan = '';
-// 					input.value.desa = '';
-// 					lists.value.kabupaten = [];
-// 					lists.value.kecamatan = [];
-// 					lists.value.desa = [];
-// 					await callback('kabupaten');
-// 				}
-// 				if (property == 'kabupaten') {
-// 					input.value.kecamatan = '';
-// 					input.value.desa = '';
-// 					lists.value.kecamatan = [];
-// 					lists.value.desa = [];
-// 					await callback('kecamatan');
-// 				}
-// 				if (property == 'kecamatan') {
-// 					input.value.desa = '';
-// 					lists.value.desa = [];
-// 					await callback('desa');
-// 				}
-// 			}
-// 		}
-// 	);
-// };
-
-// watchInput('provinsi', fetchAlamat);
-// watchInput('kabupaten', fetchAlamat);
-// watchInput('kecamatan', fetchAlamat);
 </script>
 
 <style lang=""></style>
