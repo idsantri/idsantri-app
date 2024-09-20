@@ -223,9 +223,9 @@
 				</q-item-section>
 				<q-item-section>
 					<q-item-label>List</q-item-label>
-					<q-item-label caption
-						>Auto Complete (Form Isian)</q-item-label
-					>
+					<q-item-label caption>
+						Auto Complete (Form Isian)
+					</q-item-label>
 				</q-item-section>
 			</q-item>
 
@@ -257,6 +257,16 @@
 				<q-item-section>
 					<q-item-label>Report</q-item-label>
 					<q-item-label caption>Print Out</q-item-label>
+				</q-item-section>
+			</q-item>
+
+			<q-item clickable v-ripple to="/settings/alamat">
+				<q-item-section avatar>
+					<q-icon color="green-1" name="location_on" />
+				</q-item-section>
+				<q-item-section>
+					<q-item-label>Alamat</q-item-label>
+					<q-item-label caption>Daftar Alamat</q-item-label>
 				</q-item-section>
 			</q-item>
 		</q-expansion-item>

@@ -26,7 +26,7 @@
 					to="/cari"
 					class="text-green-11"
 				>
-					<q-badge v-if="badge" floating color="green-13" rounded />
+					<!-- <q-badge v-if="badge" floating color="green-13" rounded /> -->
 				</q-btn>
 
 				<q-btn-dropdown
@@ -132,9 +132,8 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted, computed, toRefs } from 'vue';
+import { ref, onMounted, computed, toRefs } from 'vue';
 import SideBar from 'components/SideBar.vue';
-import ordersStore from 'stores/orders-store';
 import config from 'src/config';
 import ModalsMain from 'components/ModalsMain.vue';
 const leftDrawerOpen = ref(false);
@@ -145,15 +144,6 @@ const componentKey = ref(0);
 const forceRerender = () => componentKey.value++;
 
 const { loadingMain } = toRefs(loadingStore());
-
-const badge = ref(false);
-watchEffect(() => {
-	if (ordersStore().getOrders.length > 0) {
-		badge.value = true;
-	} else {
-		badge.value = false;
-	}
-});
 
 /**
  * ----------------------------------

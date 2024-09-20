@@ -1,12 +1,7 @@
 <template>
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form @emit-button="handleEmitToolbar">
-					Input Data Santri &mdash;
-					<em> {{ isNew ? 'baru' : 'edit' }}</em>
-				</toolbar-form>
-			</q-card-section>
+			<FormHeader title="Input Data Santri" :is-new="isNew" />
 			<q-card-section class="no-padding">
 				<div v-if="loadingCrud" style="height: 70vh">
 					<q-dialog v-model="loadingCrud" persistent="">
@@ -53,6 +48,7 @@
 						<carousel-alamat
 							@emit-input="(val) => Object.assign(santri, val)"
 							:data="santri"
+							@emit-close="closeModal"
 						/>
 						<!-- <input-alamat :title="carousel.alamat.title" /> -->
 					</q-carousel-slide>
@@ -118,15 +114,15 @@ import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
+import apiDelete from 'src/api/api-delete';
+import apiPost from 'src/api/api-post';
+import apiUpdate from 'src/api/api-update';
 import InputRegister from './SantriModalCrudRegister.vue';
 import InputIdentity from './SantriModalCrudIdentity.vue';
 import InputPendidikanAkhir from './SantriModalCrudPendidikanAkhir.vue';
 import InputOrtuWali from './SantriModalCrudOrtuWali.vue';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
-import apiDelete from 'src/api/api-delete';
-import apiPost from 'src/api/api-post';
-import apiUpdate from 'src/api/api-update';
+import FormHeader from 'src/components/FormHeader.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -134,7 +130,7 @@ const { santri } = reactive(santriStore());
 const { isNew } = reactive(santriStore());
 const loadingCrud = ref(false);
 
-function handleEmitToolbar() {
+function closeModal() {
 	dialogStore().toggleCrudSantri(false);
 	dialogStore().toggleSearchSantri(false);
 
@@ -144,6 +140,7 @@ function handleEmitToolbar() {
 	dialogStore().toggleCrudOrtu(false);
 	dialogStore().toggleSearchOrtu(false);
 }
+
 const onSubmit = async () => {
 	const data = JSON.parse(JSON.stringify(santri));
 	let response = null;

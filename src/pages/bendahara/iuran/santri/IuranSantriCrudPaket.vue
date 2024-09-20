@@ -33,6 +33,7 @@
 					:disable="props.disableThAjaran"
 				/>
 				<q-select
+					label="Pilih paket"
 					dense
 					outlined
 					emit-value

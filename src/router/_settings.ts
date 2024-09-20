@@ -47,4 +47,9 @@ export default [
 		component: () => import('src/pages/settings/reports/IndexReport.vue'),
 		meta: { title: 'Setting: Reports' },
 	},
+	{
+		path: 'alamat',
+		component: () => import('src/pages/settings/alamat/IndexAlamat.vue'),
+		meta: { title: 'Setting: Alamat' },
+	},
 ];
