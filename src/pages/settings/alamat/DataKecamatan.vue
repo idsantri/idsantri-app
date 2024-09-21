@@ -6,7 +6,7 @@
 			Kecamatan/Distrik
 			<q-space />
 			<q-btn
-				@click="getData"
+				@click="fetchData"
 				icon="sync"
 				round
 				dense
@@ -25,32 +25,35 @@
 		<q-dialog v-model="crudShow">
 			<CrudKecamatan
 				:data="alamat"
-				@success-delete="getData"
-				@success-submit="getData"
+				@success-delete="fetchData"
+				@success-submit="fetchData"
 			/>
 		</q-dialog>
 	</q-card>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { ref, watch } from 'vue';
-import TableAlamat from './TableAlamat.vue';
+import alamatStore from 'src/stores/alamat-store';
+import apiGet from 'src/api/api-get';
 import { notifyWarning } from 'src/utils/notify';
+import TableAlamat from './TableAlamat.vue';
 import CrudKecamatan from './CrudKecamatan.vue';
 
 const props = defineProps({
-	kabupaten: { type: Object },
+	provinsi_id: { type: String, required: true, default: '' },
+	kabupaten_id: { type: String, required: true, default: '' },
 });
 
 const rows = ref([]);
 const loading = ref(false);
 const alamat = ref({});
 const crudShow = ref(false);
+const state = alamatStore();
 
-async function getData() {
+async function fetchData() {
 	rows.value = [];
-	const kabupaten_id = props.kabupaten?.id ?? null;
-	if (!kabupaten_id) return;
+	const { provinsi_id, kabupaten_id } = props;
+	if (!kabupaten_id || !provinsi_id) return;
 
 	const data = await apiGet({
 		endPoint: 'alamat/kecamatan',
@@ -58,12 +61,26 @@ async function getData() {
 		params: { kabupaten_id },
 	});
 	if (data && data.kecamatan) {
-		rows.value = data.kecamatan;
+		state.setKecamatan(data.kecamatan, { provinsi_id, kabupaten_id });
+		rows.value = state.getKecamatan({ provinsi_id, kabupaten_id });
+	}
+}
+
+async function checkData() {
+	rows.value = [];
+	const { provinsi_id, kabupaten_id } = props;
+	if (!kabupaten_id || !provinsi_id) return;
+
+	const kecamatan = state.getKecamatan({ provinsi_id, kabupaten_id });
+	if (kecamatan?.length > 0) {
+		rows.value = kecamatan;
+	} else {
+		await fetchData();
 	}
 }
 
 function onAdd() {
-	const kabupaten_id = props.kabupaten?.id ?? null;
+	const { kabupaten_id } = props;
 	if (!kabupaten_id) {
 		return notifyWarning('Pilih kabupaten terlebih dahulu!');
 	}
@@ -77,13 +94,12 @@ function onEdit(v) {
 }
 
 watch(
-	() => props.kabupaten,
+	() => props.kabupaten_id,
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async (v) => {
-		// const id = v?.id ?? null;
-		getData();
+		// console.log('w', v);
+		await checkData();
 	},
-	{ deep: true },
 );
 
 const columns = [
@@ -93,6 +109,7 @@ const columns = [
 		align: 'left',
 		field: 'id',
 		sortable: true,
+		format: (val) => `${val.replace(/(\w{2})(\w{2})(\w{2})/, '$1.$2.$3')}`,
 	},
 	{
 		name: 'kecamatan',
