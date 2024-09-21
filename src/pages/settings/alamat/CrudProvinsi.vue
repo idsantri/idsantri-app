@@ -26,7 +26,12 @@
 					outlined
 					required
 					label="Kode Provinsi"
-					:rules="[(val) => !!val || 'Harus diisi!']"
+					:rules="[
+						(val) => !!val || 'Harus diisi!',
+						(val) =>
+							/^[a-zA-Z0-9]+$/.test(val) ||
+							'Harus berisi huruf atau angka!',
+					]"
 				/>
 				<q-input
 					v-model="input.provinsi"

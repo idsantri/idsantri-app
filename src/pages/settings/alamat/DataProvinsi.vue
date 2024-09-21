@@ -6,7 +6,7 @@
 			Provinsi
 			<q-space />
 			<q-btn
-				@click="getData"
+				@click="fetchData"
 				icon="sync"
 				round
 				dense
@@ -25,15 +25,16 @@
 		<q-dialog v-model="crudShow">
 			<CrudProvinsi
 				:data="alamat"
-				@success-delete="getData"
-				@success-submit="getData"
+				@success-delete="fetchData"
+				@success-submit="fetchData"
 			/>
 		</q-dialog>
 	</q-card>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
+import alamatStore from 'src/stores/alamat-store';
+import apiGet from 'src/api/api-get';
 import TableAlamat from './TableAlamat.vue';
 import CrudProvinsi from './CrudProvinsi.vue';
 
@@ -41,15 +42,26 @@ const rows = ref([]);
 const loading = ref(false);
 const alamat = ref({});
 const crudShow = ref(false);
+const state = alamatStore();
 
-async function getData() {
+async function checkData() {
 	rows.value = [];
+	const prov = state.getProvinsi();
+	if (prov?.length > 0) {
+		rows.value = prov;
+	} else {
+		await fetchData();
+	}
+}
+
+async function fetchData() {
 	const data = await apiGet({
 		endPoint: 'alamat/provinsi',
 		loading,
 	});
 	if (data && data.provinsi) {
-		rows.value = data.provinsi;
+		state.setProvinsi(data.provinsi);
+		rows.value = state.getProvinsi();
 	}
 }
 
@@ -64,7 +76,7 @@ function onEdit(v) {
 }
 
 onMounted(async () => {
-	await getData();
+	await checkData();
 });
 
 const columns = [
