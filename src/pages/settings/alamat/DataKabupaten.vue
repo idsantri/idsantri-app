@@ -6,7 +6,7 @@
 			Kabupaten/Kota
 			<q-space />
 			<q-btn
-				@click="getData"
+				@click="fetchData"
 				icon="sync"
 				round
 				dense
@@ -25,31 +25,33 @@
 		<q-dialog v-model="crudShow">
 			<CrudKabupaten
 				:data="alamat"
-				@success-delete="getData"
-				@success-submit="getData"
+				@success-delete="fetchData"
+				@success-submit="fetchData"
 			/>
 		</q-dialog>
 	</q-card>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { ref, watch } from 'vue';
+import alamatStore from 'src/stores/alamat-store';
+import apiGet from 'src/api/api-get';
+import { notifyWarning } from 'src/utils/notify';
 import TableAlamat from './TableAlamat.vue';
 import CrudKabupaten from './CrudKabupaten.vue';
-import { notifyWarning } from 'src/utils/notify';
 
 const props = defineProps({
-	provinsi: { type: Object },
+	provinsi_id: { type: String, required: true, default: '' },
 });
 
 const rows = ref([]);
 const loading = ref(false);
 const alamat = ref({});
 const crudShow = ref(false);
+const state = alamatStore();
 
-async function getData() {
+async function fetchData() {
 	rows.value = [];
-	const provinsi_id = props.provinsi?.id ?? null;
+	const { provinsi_id } = props;
 	if (!provinsi_id) return;
 
 	const data = await apiGet({
@@ -58,12 +60,25 @@ async function getData() {
 		params: { provinsi_id },
 	});
 	if (data && data.kabupaten) {
-		rows.value = data.kabupaten;
+		state.setKabupaten(data.kabupaten, { provinsi_id });
+		rows.value = state.getKabupaten({ provinsi_id });
 	}
 }
 
+async function checkData() {
+	rows.value = [];
+	const { provinsi_id } = props;
+	if (!provinsi_id) return;
+
+	const kabupaten = state.getKabupaten({ provinsi_id });
+	if (kabupaten?.length > 0) {
+		rows.value = kabupaten;
+	} else {
+		fetchData();
+	}
+}
 function onAdd() {
-	const provinsi_id = props.provinsi?.id ?? null;
+	const { provinsi_id } = props;
 	if (!provinsi_id) {
 		return notifyWarning('Pilih provinsi terlebih dahulu!');
 	}
@@ -77,13 +92,12 @@ function onEdit(v) {
 }
 
 watch(
-	() => props.provinsi,
+	() => props.provinsi_id,
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async (v) => {
-		// const id = v?.id ?? null;
-		getData();
+		// console.log('w', v);
+		await checkData();
 	},
-	{ deep: true },
 );
 
 const columns = [
@@ -93,6 +107,7 @@ const columns = [
 		align: 'left',
 		field: 'id',
 		sortable: true,
+		format: (val) => `${val.replace(/(\w{2})(\w{2})/, '$1.$2')}`,
 	},
 	{
 		name: 'kabupaten',

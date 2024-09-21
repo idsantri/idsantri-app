@@ -6,7 +6,7 @@
 			Desa/Kelurahan
 			<q-space />
 			<q-btn
-				@click="getData"
+				@click="fetchData"
 				icon="sync"
 				round
 				dense
@@ -26,32 +26,36 @@
 		<q-dialog v-model="crudShow">
 			<CrudDesa
 				:data="alamat"
-				@success-delete="getData"
-				@success-submit="getData"
+				@success-delete="fetchData"
+				@success-submit="fetchData"
 			/>
 		</q-dialog>
 	</q-card>
 </template>
 <script setup>
-import apiGet from 'src/api/api-get';
 import { ref, watch } from 'vue';
+import alamatStore from 'src/stores/alamat-store';
+import apiGet from 'src/api/api-get';
+import { notifyWarning } from 'src/utils/notify';
 import TableAlamat from './TableAlamat.vue';
 import CrudDesa from './CrudDesa.vue';
-import { notifyWarning } from 'src/utils/notify';
 
 const props = defineProps({
-	kecamatan: { type: Object },
+	provinsi_id: { type: String, required: true, default: '' },
+	kabupaten_id: { type: String, required: true, default: '' },
+	kecamatan_id: { type: String, required: true, default: '' },
 });
 
 const rows = ref([]);
 const loading = ref(false);
 const alamat = ref({});
 const crudShow = ref(false);
+const state = alamatStore();
 
-async function getData() {
+async function fetchData() {
 	rows.value = [];
-	const kecamatan_id = props.kecamatan?.id ?? null;
-	if (!kecamatan_id) return;
+	const { provinsi_id, kabupaten_id, kecamatan_id } = props;
+	if (!kabupaten_id || !provinsi_id || !kecamatan_id) return;
 
 	const data = await apiGet({
 		endPoint: 'alamat/desa',
@@ -59,12 +63,38 @@ async function getData() {
 		params: { kecamatan_id },
 	});
 	if (data && data.desa) {
-		rows.value = data.desa;
+		state.setDesa(data.desa, {
+			provinsi_id,
+			kabupaten_id,
+			kecamatan_id,
+		});
+		rows.value = state.getDesa({
+			provinsi_id,
+			kabupaten_id,
+			kecamatan_id,
+		});
+	}
+}
+
+async function checkData() {
+	rows.value = [];
+	const { provinsi_id, kabupaten_id, kecamatan_id } = props;
+	if (!kabupaten_id || !provinsi_id || !kecamatan_id) return;
+
+	const desa = state.getDesa({
+		provinsi_id,
+		kabupaten_id,
+		kecamatan_id,
+	});
+	if (desa?.length > 0) {
+		rows.value = desa;
+	} else {
+		await fetchData();
 	}
 }
 
 function onAdd() {
-	const kecamatan_id = props.kecamatan?.id ?? null;
+	const { kecamatan_id } = props;
 	if (!kecamatan_id) {
 		return notifyWarning('Pilih kecamatan terlebih dahulu!');
 	}
@@ -78,13 +108,12 @@ function onEdit(v) {
 }
 
 watch(
-	() => props.kecamatan,
+	() => props.kecamatan_id,
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async (v) => {
-		// const id = v?.id ?? null;
-		getData();
+		// console.log('w', v);
+		await checkData();
 	},
-	{ deep: true },
 );
 
 const columns = [
@@ -94,6 +123,8 @@ const columns = [
 		align: 'left',
 		field: 'id',
 		sortable: true,
+		format: (val) =>
+			`${val.replace(/(\w{2})(\w{2})(\w{2})(\w{4})/, '$1.$2.$3.$4')}`,
 	},
 	{
 		name: 'desa',

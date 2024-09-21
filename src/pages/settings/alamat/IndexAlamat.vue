@@ -18,18 +18,21 @@
 					class="q-ma-sm"
 					style="min-width: 400px; max-width: 400px"
 					@on-select="selectKabupaten"
-					:provinsi="provinsi"
+					:provinsi_id="provinsi_id"
 				/>
 				<TableKecamatan
 					class="q-ma-sm"
 					style="min-width: 400px; max-width: 400px"
 					@on-select="selectKecamatan"
-					:kabupaten="kabupaten"
+					:provinsi_id="provinsi_id"
+					:kabupaten_id="kabupaten_id"
 				/>
 				<TableDesa
 					class="q-ma-sm"
 					style="min-width: 400px; max-width: 400px"
-					:kecamatan="kecamatan"
+					:provinsi_id="provinsi_id"
+					:kabupaten_id="kabupaten_id"
+					:kecamatan_id="kecamatan_id"
 				/>
 			</q-card-section>
 		</q-card>
@@ -42,23 +45,23 @@ import TableKecamatan from './DataKecamatan.vue';
 import TableDesa from './DataDesa.vue';
 import { ref } from 'vue';
 
-const provinsi = ref({});
-const kabupaten = ref({});
-const kecamatan = ref({});
+const provinsi_id = ref('');
+const kabupaten_id = ref('');
+const kecamatan_id = ref('');
 
 function selectProvinsi(v) {
-	provinsi.value = v;
-	kabupaten.value = {};
-	kecamatan.value = {};
+	provinsi_id.value = v?.id ?? '';
+	kabupaten_id.value = '';
+	kecamatan_id.value = '';
 }
 
 function selectKabupaten(v) {
-	kabupaten.value = v;
-	kecamatan.value = {};
+	kabupaten_id.value = v?.id ?? '';
+	kecamatan_id.value = '';
 }
 
 function selectKecamatan(v) {
-	kecamatan.value = v;
+	kecamatan_id.value = v?.id ?? '';
 }
 </script>
 <style lang=""></style>
