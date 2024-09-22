@@ -2,11 +2,13 @@
 	<q-page class="q-pa-sm">
 		<q-card style="max-width: 600px">
 			<q-card-section
-				class="q-pa-sm bg-green-8 text-green-11 flex items-center"
+				class="q-pa-sm bg-green-8 text-green-11 text-subtitle1 flex"
 			>
 				Pengaturan Tanda Tangan
+
 				<q-space />
 				<q-btn
+					no-caps
 					icon="reply"
 					dense
 					class="q-px-md"

@@ -1,12 +1,7 @@
 <template>
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form @emit-button="handleEmitToolbar">
-					Input Data Wali &mdash;
-					<em> {{ isNew ? 'baru' : 'edit' }}</em>
-				</toolbar-form>
-			</q-card-section>
+			<FormHeader title="Input Data Wali" :is-new="isNew" />
 			<q-card-section class="no-padding">
 				<div v-if="loadingCrud" style="height: 70vh">
 					<q-dialog v-model="loadingCrud" persistent="">
@@ -45,6 +40,7 @@
 					>
 						<carousel-alamat
 							@emit-input="(val) => Object.assign(wali, val)"
+							@emit-route="closeModal"
 							:data="wali"
 						/>
 						<!-- <input-alamat :title="carousel.alamat.title" /> -->
@@ -106,16 +102,16 @@ import { useRouter } from 'vue-router';
 import waliStore from 'src/stores/wali-store';
 import dialogStore from 'src/stores/dialog-store';
 import santriStore from 'src/stores/santri-store';
+import ortuStore from 'src/stores/ortu-store';
 import apiDelete from 'src/api/api-delete';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
+import { notifyWarning } from 'src/utils/notify';
+import { forceRerender } from 'src/utils/buttons-click';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
+import FormHeader from 'src/components/FormHeader.vue';
 import InputIdentity from './WaliModalCrudIdentity.vue';
 import InputOthers from './WaliModalCrudOthers.vue';
-import { notifyWarning } from 'src/utils/notify';
-import ortuStore from 'src/stores/ortu-store';
-import { forceRerender } from 'src/utils/buttons-click';
 
 const router = useRouter();
 const { wali } = reactive(waliStore());
@@ -153,7 +149,7 @@ onMounted(() => {
 	}
 });
 
-function handleEmitToolbar() {
+function closeModal() {
 	dialogStore().toggleCrudSantri(false);
 	dialogStore().toggleSearchSantri(false);
 

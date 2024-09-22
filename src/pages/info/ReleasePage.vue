@@ -63,7 +63,7 @@ const releases = [
 			'Fitur Baru': ['Pembayaran paket iuran', 'Setting alamat'],
 			Improve: [
 				'Local storage pada input alamat',
-				'Beberapa perbaikan kecil',
+				'Perbaikan dan peningkatan performa',
 			],
 		},
 	},

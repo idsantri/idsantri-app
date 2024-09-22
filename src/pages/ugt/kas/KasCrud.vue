@@ -1,12 +1,7 @@
 <template lang="">
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form @emit-button="null">
-					Input Kas UGT &mdash;
-					<em> {{ $props.isNew ? 'baru' : 'edit' }}</em>
-				</toolbar-form>
-			</q-card-section>
+			<FormHeader title="Input Kas UGT" :is-new="props.isNew" />
 			<q-card-section class="q-pa-sm">
 				<q-input
 					dense
@@ -126,7 +121,7 @@ import apiGet from 'src/api/api-get';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
+import FormHeader from 'src/components/FormHeader.vue';
 import InputCurrency from 'src/components/inputs/InputCurrency.vue';
 
 const { loadingMain } = toRefs(loadingStore());

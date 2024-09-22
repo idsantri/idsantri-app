@@ -1,12 +1,7 @@
 <template lang="">
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form @emit-button="null">
-					Input Santri Indisipliner &mdash;
-					<em> {{ input.id ? 'edit' : 'baru' }}</em>
-				</toolbar-form>
-			</q-card-section>
+			<FormHeader title="Input Santri Indisipliner" :is-new="!input.id" />
 			<q-card-section class="q-pa-sm">
 				<div v-if="loadingCrud">
 					<q-dialog v-model="loadingCrud" persistent="">
@@ -166,7 +161,7 @@ import { isDate, formatDateFull } from 'src/utils/format-date';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
+import FormHeader from 'src/components/FormHeader.vue';
 import InputSelectSantriId from 'src/components/inputs/InputSelectSantriId.vue';
 import InputSelectTatibSantri from 'src/components/inputs/InputSelectTatibSantri.vue';
 import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';

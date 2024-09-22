@@ -18,7 +18,7 @@
 		<template v-slot:after>
 			<DropDown
 				@sync-click="fetchProvinsi()"
-				@route-click="$emit('emitClose')"
+				@route-click="$emit('emitRoute')"
 			/>
 		</template>
 	</q-select>
@@ -40,7 +40,7 @@
 		<template v-slot:after>
 			<DropDown
 				@sync-click="fetchKabupaten(input.provinsi)"
-				@route-click="$emit('emitClose')"
+				@route-click="$emit('emitRoute')"
 			/>
 		</template>
 	</q-select>
@@ -62,7 +62,7 @@
 		<template v-slot:after>
 			<DropDown
 				@sync-click="fetchKecamatan(input.provinsi, input.kabupaten)"
-				@route-click="$emit('emitClose')"
+				@route-click="$emit('emitRoute')"
 			/>
 		</template>
 	</q-select>
@@ -88,7 +88,7 @@
 				@sync-click="
 					fetchDesa(input.provinsi, input.kabupaten, input.kecamatan)
 				"
-				@route-click="$emit('emitClose')"
+				@route-click="$emit('emitRoute')"
 			/>
 		</template>
 	</q-select>
@@ -144,7 +144,7 @@
  * @example
 <carousel-alamat
 	@emit-input="(val) => Object.assign(santri, val)"
-	@emit-close="closeModal"
+	@emit-route="closeModal"
 	:data="santri"
 	/>
  */
@@ -156,7 +156,7 @@ import DropDown from './CarouselAlamatDropDown.vue';
 const props = defineProps({
 	data: { type: Object },
 });
-const emit = defineEmits(['emitInput', 'emitClose']);
+const emit = defineEmits(['emitInput', 'emitRoute']);
 
 const alamat = alamatStore();
 const input = ref({});
