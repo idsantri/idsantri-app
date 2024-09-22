@@ -1,25 +1,20 @@
 <template>
 	<q-page class="q-pa-sm">
 		<q-card>
-			<q-card-section class="bg-green-8 no-padding">
-				<q-toolbar class="no-padding no-margin">
-					<q-toolbar-title
-						class="text-subtitle1 q-ml-sm text-green-11"
-					>
-						Data Pengguna
-					</q-toolbar-title>
-
-					<!-- <q-btn
-						dense
-						class="q-px-md q-mr-sm text-green-10"
-						label="Tambah"
-						no-caps=""
-						icon="add"
-						color="green-2"
-						@click="null"
-						disable
-					/> -->
-				</q-toolbar>
+			<q-card-section
+				class="q-pa-sm bg-green-8 text-green-11 text-subtitle1 flex"
+			>
+				Data Pengguna
+				<q-space />
+				<q-btn
+					no-caps
+					label="Kembali"
+					icon="reply"
+					dense
+					class="q-px-md"
+					outline
+					@click="$router.go(-1)"
+				/>
 			</q-card-section>
 			<q-table
 				:rows="users"

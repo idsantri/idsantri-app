@@ -9,7 +9,7 @@
 		v-model:selected="selected"
 		:rows-per-page-options="[0]"
 		virtual-scroll
-		style="height: 700px"
+		style="height: 75vh"
 		:loading="loading"
 	>
 		<template v-slot:header="props">

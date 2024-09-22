@@ -1,12 +1,7 @@
 <template>
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form @emit-button="null">
-					{{ props.title }} &mdash;
-					<em>{{ input.id ? 'edit' : 'baru' }}</em>
-				</toolbar-form>
-			</q-card-section>
+			<FormHeader :title="props.title" :is-new="!input.id" />
 			<q-card-section>
 				<div v-if="loadingCrud">
 					<q-dialog v-model="loadingCrud" persistent="">
@@ -108,7 +103,7 @@ import listsStore from 'src/stores/lists-store';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
+import FormHeader from 'src/components/FormHeader.vue';
 import InputSelectTingkatPendidikan from 'src/components/inputs/InputSelectTingkatPendidikan.vue';
 
 const props = defineProps({

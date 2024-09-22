@@ -2,7 +2,7 @@
 	<q-page class="q-pa-sm">
 		<q-card>
 			<q-card-section
-				class="bg-green-8 text-green-11 text-subtitle1 flex"
+				class="bg-green-8 text-green-11 text-subtitle1 flex q-pa-sm"
 			>
 				Download
 				<q-space />

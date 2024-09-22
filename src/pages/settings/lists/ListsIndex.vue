@@ -1,33 +1,47 @@
 <template>
 	<q-page class="q-pa-sm">
-		<div class="" style="max-width: 600px">
-			<q-card>
-				<q-card-section class="q-pa-sm">
-					<q-select
-						dense
-						outlined
-						label="Pilih List"
-						v-model="listModel"
-						:options="options"
-						emit-value
-						map-options
-						@update:model-value="(v) => routerPush(v)"
-						behavior="menu"
-					/>
-				</q-card-section>
-			</q-card>
-			<q-card v-if="listModel" class="q-mt-sm">
-				<router-view :key="$route.fullPath" />
-			</q-card>
-			<q-card v-else class="q-mt-sm">
-				<q-card-section
-					class="bg-green-1 text-center text-italic text-subtitle1 q-pa-lg"
-				>
-					Silakan pilih lists yang tersedia!
-				</q-card-section>
-			</q-card>
-		</div>
-
+		<q-card style="max-width: 600px">
+			<q-card-section
+				class="q-pa-sm bg-green-8 text-green-11 text-subtitle1 flex"
+			>
+				Input Auto Complete
+				<q-space />
+				<q-btn
+					no-caps
+					label="Kembali"
+					icon="reply"
+					dense
+					class="q-px-md"
+					outline
+					@click="$router.go(-1)"
+				/>
+			</q-card-section>
+			<q-card-section class="q-pa-sm">
+				<q-select
+					dense
+					outlined
+					label="Pilih List"
+					v-model="listModel"
+					:options="options"
+					emit-value
+					map-options
+					@update:model-value="(v) => routerPush(v)"
+					behavior="menu"
+				/>
+			</q-card-section>
+			<q-card-section class="q-pa-sm">
+				<q-card v-if="listModel" class="">
+					<router-view :key="$route.fullPath" />
+				</q-card>
+				<q-card v-else class="">
+					<q-card-section
+						class="bg-green-1 text-center text-italic text-subtitle1 q-pa-lg"
+					>
+						Silakan pilih lists yang tersedia!
+					</q-card-section>
+				</q-card>
+			</q-card-section>
+		</q-card>
 		<!-- <pre>list model:{{ listModel }}</pre> -->
 		<!-- <pre>list data:{{ listData }}</pre> -->
 	</q-page>

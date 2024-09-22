@@ -1,11 +1,7 @@
 <template lang="">
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form @emit-button="null">
-					Permohonan Berhenti
-				</toolbar-form>
-			</q-card-section>
+			<FormHeader title="Permohonan Berhenti" :is-new="true" />
 			<q-card-section class="q-pa-sm">
 				<div v-if="loadingForm">
 					<q-dialog v-model="loadingForm" persistent="">
@@ -152,7 +148,7 @@
 </template>
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
+import FormHeader from 'src/components/FormHeader.vue';
 import santriStore from 'src/stores/santri-store';
 import { notifyError } from 'src/utils/notify';
 import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';

@@ -1,12 +1,7 @@
 <template>
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form @emit-button="null">
-					Input Data PJGT &mdash;
-					<em> {{ $props.isNew ? 'baru' : 'edit' }}</em>
-				</toolbar-form>
-			</q-card-section>
+			<FormHeader title="Input Data PJGT" :is-new="props.isNew" />
 			<q-card-section class="no-padding">
 				<q-carousel
 					v-model="slide"
@@ -78,7 +73,7 @@
 							error-color="negative"
 							behavior="menu"
 						/>
-						<select-input-array
+						<input-select-array
 							v-model="input.jenis_lembaga"
 							url="jenis-lembaga-pendidikan"
 							label="Jenis Lembaga"
@@ -196,9 +191,9 @@ import loadingStore from 'src/stores/loading-store';
 import apiDelete from 'src/api/api-delete';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
 import CarouselAlamat from 'src/components/CarouselAlamat.vue';
 import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
+import FormHeader from 'src/components/FormHeader.vue';
 
 const loadingState = loadingStore();
 const { loadingMain } = toRefs(loadingState);
