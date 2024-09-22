@@ -47,8 +47,8 @@
 					>
 						<carousel-alamat
 							@emit-input="(val) => Object.assign(santri, val)"
+							@emit-route="closeModal"
 							:data="santri"
-							@emit-close="closeModal"
 						/>
 						<!-- <input-alamat :title="carousel.alamat.title" /> -->
 					</q-carousel-slide>
@@ -117,18 +117,20 @@ import santriStore from 'src/stores/santri-store';
 import apiDelete from 'src/api/api-delete';
 import apiPost from 'src/api/api-post';
 import apiUpdate from 'src/api/api-update';
+import { forceRerender } from 'src/utils/buttons-click';
+import CarouselAlamat from 'src/components/CarouselAlamat.vue';
+import FormHeader from 'src/components/FormHeader.vue';
 import InputRegister from './SantriModalCrudRegister.vue';
 import InputIdentity from './SantriModalCrudIdentity.vue';
 import InputPendidikanAkhir from './SantriModalCrudPendidikanAkhir.vue';
 import InputOrtuWali from './SantriModalCrudOrtuWali.vue';
-import CarouselAlamat from 'src/components/CarouselAlamat.vue';
-import FormHeader from 'src/components/FormHeader.vue';
 
 const router = useRouter();
 const route = useRoute();
 const { santri } = reactive(santriStore());
 const { isNew } = reactive(santriStore());
 const loadingCrud = ref(false);
+const emit = defineEmits(['successSubmit', 'successDelete']);
 
 function closeModal() {
 	dialogStore().toggleCrudSantri(false);
@@ -151,17 +153,18 @@ const onSubmit = async () => {
 			loading: loadingCrud,
 		});
 	} else {
-		const rerender = route.params.id == santri.id ? true : false;
 		response = await apiUpdate({
 			endPoint: `santri/${route.params.id}`,
 			data,
 			confirm: true,
 			notify: true,
 			loading: loadingCrud,
-			rerender,
 		});
 	}
 	if (response) {
+		emit('successSubmit', response.santri);
+
+		route.params.id == santri.id ? forceRerender() : null;
 		dialogStore().toggleCrudSantri(false);
 		dialogStore().toggleSearchSantri(false);
 		router.push(`/santri/${response.santri.id}`);
@@ -178,6 +181,8 @@ const resetOrDelete = async () => {
 			loading: loadingCrud,
 		});
 		if (result) {
+			emit('successDelete');
+
 			router.push('/cari/santri');
 			dialogStore().toggleCrudSantri(false);
 		}

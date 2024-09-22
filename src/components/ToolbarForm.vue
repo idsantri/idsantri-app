@@ -7,6 +7,9 @@
 	</q-toolbar>
 </template>
 <script setup>
+/**
+ * @deprecated
+ */
 import { useRouter } from 'vue-router';
 
 const emit = defineEmits(['emitButton']);

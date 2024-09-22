@@ -2,9 +2,20 @@
 	<q-page class="q-pa-sm">
 		<q-card>
 			<q-card-section
-				class="q-pa-sm bg-green-8 text-green-11 text-subtitle1"
+				class="q-pa-sm bg-green-8 text-green-11 text-subtitle1 flex"
 			>
 				Pengaturan Alamat
+
+				<q-space />
+				<q-btn
+					no-caps
+					label="Kembali"
+					icon="reply"
+					dense
+					class="q-px-md"
+					outline
+					@click="$router.go(-1)"
+				/>
 			</q-card-section>
 			<q-card-section
 				class="no-padding full-width row no-wrap justify-start items-start content-start scroll"

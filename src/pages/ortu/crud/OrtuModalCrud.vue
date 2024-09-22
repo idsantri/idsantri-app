@@ -1,12 +1,7 @@
 <template>
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form @emit-button="handleEmitToolbar">
-					Input Data Orang Tua &mdash;
-					<em> {{ isNew ? 'baru' : 'edit' }}</em>
-				</toolbar-form>
-			</q-card-section>
+			<FormHeader title="Input Data Orang Tua" :is-new="isNew" />
 			<q-card-section class="no-padding">
 				<div v-if="loadingCrud" style="height: 70vh">
 					<q-dialog v-model="loadingCrud" persistent="">
@@ -101,11 +96,11 @@ import santriStore from 'src/stores/santri-store';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import apiPost from 'src/api/api-post';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
+import { forceRerender } from 'src/utils/buttons-click';
 import InputIdentity from './OrtuModalCrudIdentity.vue';
 import InputAyah from './OrtuModalCrudAyah.vue';
 import InputIbu from './OrtuModalCrudIbu.vue';
-import { forceRerender } from 'src/utils/buttons-click';
+import FormHeader from 'src/components/FormHeader.vue';
 
 const router = useRouter();
 const { ortu } = reactive(ortuStore());
@@ -113,17 +108,6 @@ const { isNew } = reactive(ortuStore());
 const { santri } = santriStore();
 const { ortu_id } = toRefs(santri);
 const loadingCrud = ref(false);
-
-function handleEmitToolbar() {
-	dialogStore().toggleCrudSantri(false);
-	dialogStore().toggleSearchSantri(false);
-
-	dialogStore().toggleCrudWali(false);
-	dialogStore().toggleSearchWali(false);
-
-	dialogStore().toggleCrudOrtu(false);
-	dialogStore().toggleSearchOrtu(false);
-}
 
 const onSubmit = async () => {
 	const data = JSON.parse(JSON.stringify(ortu));

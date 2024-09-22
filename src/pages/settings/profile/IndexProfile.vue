@@ -2,8 +2,21 @@
 	<q-page class="q-pa-sm">
 		<q-card style="max-width: 600px">
 			<q-form @submit.prevent="onSubmit">
-				<q-card-section class="q-px-sm bg-green-8 text-green-11">
+				<q-card-section
+					class="q-pa-sm bg-green-8 text-green-11 text-subtitle1 flex"
+				>
 					Profil Lembaga
+
+					<q-space />
+					<q-btn
+						no-caps
+						label="Kembali"
+						icon="reply"
+						dense
+						class="q-px-md"
+						outline
+						@click="$router.go(-1)"
+					/>
 				</q-card-section>
 				<q-card-section class="q-pa-sm">
 					<q-card>

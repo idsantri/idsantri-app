@@ -34,8 +34,9 @@ import { onMounted, ref, useSlots } from 'vue';
 
 defineProps({
 	title: { type: String, default: 'Input' },
-	isNew: { type: Boolean, default: () => false },
+	isNew: { type: Boolean, default: () => true },
 });
+
 const slot = ref(false);
 const checkSlotUsage = () =>
 	useSlots().default ? (slot.value = true) : (slot.value = false);

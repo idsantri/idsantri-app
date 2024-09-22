@@ -1,12 +1,7 @@
 <template>
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<q-card-section class="bg-green-7 text-green-11 q-pa-sm">
-				<toolbar-form @emit-button="null">
-					{{ props.title }} &mdash;
-					<em>{{ isNew ? 'baru' : 'edit' }}</em>
-				</toolbar-form>
-			</q-card-section>
+			<FormHeader :title="props.title" :is-new="isNew" />
 			<q-card-section>
 				<div v-if="loadingCrud">
 					<q-dialog v-model="loadingCrud" persistent="">
@@ -118,12 +113,12 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import ToolbarForm from 'src/components/ToolbarForm.vue';
-import { formatDateFull, isDate } from 'src/utils/format-date';
 import apiUpdate from 'src/api/api-update';
 import apiPost from 'src/api/api-post';
 import apiDelete from 'src/api/api-delete';
+import { formatDateFull, isDate } from 'src/utils/format-date';
 import InputSelectArray from 'src/components/inputs/InputSelectArray.vue';
+import FormHeader from 'src/components/FormHeader.vue';
 
 const props = defineProps({
 	data: { type: Object, required: true },

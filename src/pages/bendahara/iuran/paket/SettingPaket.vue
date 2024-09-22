@@ -137,7 +137,6 @@
 		<q-dialog v-model="crudShow">
 			<!-- add new -->
 			<SettingCrud
-				title="Input Paket Iuran"
 				:data="dataPaket"
 				@success-submit="getData()"
 				@success-delete="getData()"
