@@ -102,7 +102,7 @@
 												(m) =>
 													m.id.toLowerCase() ==
 													col.label.toLowerCase(),
-											)?.mapel || ''
+											)?.name || ''
 										"
 									>
 										{{ col.label.toLowerCase() }}

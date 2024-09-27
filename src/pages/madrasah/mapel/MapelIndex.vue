@@ -65,10 +65,10 @@
 						</tr>
 
 						<tr v-else v-for="item in mapel" :key="item.id">
-							<td>{{ item.urut }}</td>
+							<td>{{ item.sequence }}</td>
 							<td>{{ item.id }}</td>
-							<td>{{ item.mapel }}</td>
-							<td>{{ item.mata_pelajaran }}</td>
+							<td>{{ item.name }}</td>
+							<td>{{ item.alias }}</td>
 							<td>{{ item.category }}</td>
 							<td>
 								<q-toggle

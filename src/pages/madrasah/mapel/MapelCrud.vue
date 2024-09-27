@@ -16,7 +16,7 @@
 					dense
 					outlined
 					label="Urut"
-					v-model="input.urut"
+					v-model="input.sequence"
 					hint="Nomor urut tampil"
 				/>
 				<InputSelectTingkatPendidikan
@@ -39,7 +39,7 @@
 					class="q-mt-sm"
 					outlined
 					label="Mata Pelajaran"
-					v-model="input.mapel"
+					v-model="input.name"
 					hint="Hanya huruf dan spasi"
 				/>
 				<q-input
@@ -47,7 +47,7 @@
 					class="q-mt-sm"
 					outlined
 					label="Mata Pelajaran (Alias)"
-					v-model="input.mata_pelajaran"
+					v-model="input.alias"
 				/>
 				<q-select
 					dense
@@ -125,11 +125,11 @@ const onSubmit = async () => {
 	// console.log(input.value.id);
 	// return;
 	const data = {
-		urut: input.value.urut,
+		sequence: input.value.sequence,
 		id: input.value.id.toLowerCase(),
 		tingkat_id: input.value.tingkat_id,
-		mapel: input.value.mapel,
-		mata_pelajaran: input.value.mata_pelajaran,
+		name: input.value.name,
+		alias: input.value.alias,
 		category: input.value.category,
 		show: input.value.show,
 	};
