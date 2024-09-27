@@ -56,7 +56,7 @@
 				<tbody>
 					<tr v-for="(item, index) in nilai" :key="index">
 						<td class="text-left">{{ item.id }}</td>
-						<td class="text-left">{{ item.mapel }}</td>
+						<td class="text-left">{{ item.name }}</td>
 						<td
 							:title="'Nilai ' + tab + ' pada ujian ke-1'"
 							class="text-right"
