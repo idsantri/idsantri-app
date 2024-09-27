@@ -235,7 +235,7 @@
 															{{ item.id }}
 														</td>
 														<td class="text-left">
-															{{ item.mapel }}
+															{{ item.name }}
 														</td>
 														<td class="text-right">
 															{{ item.nilai_1 }}
