@@ -110,18 +110,6 @@ export default [
 		],
 	},
 
-	// madrasah/nilai-unlock
-	{
-		path: 'nilai-unlock',
-		children: [
-			{
-				path: '',
-				component: () =>
-					import('src/pages/madrasah/nilai-unlock/UnlockIndex.vue'),
-			},
-		],
-	},
-
 	// madrasah/mapel
 	{
 		path: 'mapel',
