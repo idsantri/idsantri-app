@@ -23,10 +23,10 @@
 				<p class="">
 					Download aplikasinya di sini:
 					<a
-						href="https://1drv.ms/f/s!AhJilp6KNtsMg1svO9EROPAUXab9"
+						href="https://1drv.ms/f/c/0cdb368a9e966212/QhJilp6KNtsggAzbAQAAAAAALzvRETjwFF2m_Q"
 						target="_blank"
 					>
-						https://1drv.ms/f/s!AhJilp6KNtsMg1svO9EROPAUXab9
+						https://1drv.ms/f/c/0cdb368a9e966212/QhJilp6KNtsggAzbAQAAAAAALzvRETjwFF2m_Q
 					</a>
 				</p>
 			</q-card-section>

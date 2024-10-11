@@ -60,14 +60,6 @@
 								<q-icon name="settings_accessibility" />
 							</q-item-section>
 						</q-item>
-						<q-item v-close-popup to="/madrasah/nilai-unlock">
-							<q-item-section>
-								<q-item-label>Unlock Nilai</q-item-label>
-							</q-item-section>
-							<q-item-section avatar>
-								<q-icon name="lock_open" />
-							</q-item-section>
-						</q-item>
 					</q-list>
 				</q-btn-dropdown>
 			</q-card-section>
