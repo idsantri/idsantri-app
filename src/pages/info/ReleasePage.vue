@@ -57,6 +57,13 @@ import config from 'src/config';
 
 const releases = [
 	{
+		ver: '1.2.3',
+		date: 'Oktober 2024',
+		release: {
+			'Fitur Baru': ['Cetak Rapor (MS Access)'],
+		},
+	},
+	{
 		ver: '1.2.2',
 		date: 'September 2024',
 		release: {

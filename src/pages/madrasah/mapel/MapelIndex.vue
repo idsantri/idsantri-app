@@ -40,8 +40,8 @@
 						<tr class="text-left">
 							<th>No</th>
 							<th>Kode/ID</th>
-							<th>Mapel</th>
 							<th>Mata Pelajaran</th>
+							<th>Alias</th>
 							<th>Status Fan</th>
 							<th>Tampil</th>
 							<th class="text-center">Edit</th>
